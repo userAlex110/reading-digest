@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="referrer" content="no-referrer">
+<title>收藏即所学 · 微信采集学习站</title>
+<style>
+  :root{
+    --paper:#f6f2ea; --card:#fffdf9; --ink:#231d18; --muted:#7a7066; --line:#e7dfcf;
+    --kaoyan:#d94f2b; --ai:#6d4fe0; --emb:#0e7f96; --dev:#0c8a5f; --job:#c07a10; --idea:#d3317f;
+    --serif:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.75;
+    background-image:radial-gradient(rgba(0,0,0,.028) 1px,transparent 1px);background-size:22px 22px}
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--kaoyan),var(--ai),var(--emb));z-index:99}
+  /* ---------- 顶部 ---------- */
+  header.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,#fbf8f1 0%,#f4eee2 100%)}
+  header.hero::before{content:"";position:absolute;inset:0;
+    background:linear-gradient(115deg,rgba(217,79,43,.06),transparent 45%),linear-gradient(295deg,rgba(109,79,224,.06),transparent 45%)}
+  .hero-in{position:relative;max-width:1080px;margin:0 auto;padding:52px 24px 40px}
+  .kicker{display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.14em;color:var(--muted);
+    border:1px solid var(--line);background:rgba(255,255,255,.7);border-radius:999px;padding:5px 14px;margin-bottom:18px}
+  .hero h1{font-family:var(--serif);font-size:clamp(30px,4.6vw,46px);letter-spacing:.04em;line-height:1.25}
+  .hero h1 em{font-style:normal;color:var(--kaoyan);position:relative}
+  .hero p.sub{margin-top:12px;color:var(--muted);font-size:15px;max-width:640px}
+  .seal{position:absolute;right:28px;top:44px;width:76px;height:76px;border:3px solid var(--kaoyan);color:var(--kaoyan);
+    border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:26px;
+    font-weight:700;letter-spacing:.2em;transform:rotate(8deg);opacity:.82;writing-mode:vertical-rl;
+    box-shadow:0 0 0 2px rgba(217,79,43,.14) inset;background:rgba(217,79,43,.04)}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+  .chip{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 14px;font-size:13px;color:var(--muted)}
+  .chip b{color:var(--ink);font-family:var(--serif);font-size:16px;margin-right:2px}
+  .chip.hot{border-color:rgba(217,79,43,.45);background:linear-gradient(180deg,#fff6f2,#fdeee7);color:var(--kaoyan)}
+  .chip.hot b{color:var(--kaoyan)}
+  .howto{margin-top:22px;font-size:13.5px;color:var(--muted);background:rgba(255,255,255,.65);border:1px dashed var(--line);
+    border-radius:10px;padding:10px 16px;max-width:720px}
+  .howto b{color:var(--ink)}
+  /* ---------- 导航 ---------- */
+  nav.bar{position:sticky;top:0;z-index:50;background:rgba(246,242,234,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .bar-in{max-width:1080px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .brand{font-family:var(--serif);font-weight:700;font-size:16px;letter-spacing:.06em;white-space:nowrap}
+  .filters{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+  .fbtn{border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:4px 13px;font-size:13px;cursor:pointer;transition:.15s}
+  .fbtn:hover{color:var(--ink);border-color:#cfc4ae}
+  .fbtn.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  #q{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 14px;font-size:13px;width:180px;color:var(--ink);outline:none}
+  #q:focus{border-color:#b9ab90}
+  main{max-width:1080px;margin:0 auto;padding:10px 24px 60px}
+  /* ---------- 章节与卡片 ---------- */
+  section{margin-top:46px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:22px}
+  .sec-no{font-family:var(--serif);font-size:30px;color:var(--line2,#c9bda4);font-weight:700;transform:translateY(2px)}
+  .sec-head h2{font-family:var(--serif);font-size:24px;letter-spacing:.05em}
+  .sec-head .cnt{margin-left:auto;font-size:12.5px;color:var(--muted)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--c,#999);border-radius:14px;
+    padding:20px 22px 16px;display:flex;flex-direction:column;box-shadow:0 1px 2px rgba(60,45,20,.05);transition:.18s;position:relative}
+  .card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(60,45,20,.1)}
+  .card-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .badge{font-size:11.5px;font-weight:600;letter-spacing:.08em;color:#fff;background:var(--c,#999);border-radius:5px;padding:2px 8px}
+  .src{font-size:12.5px;color:var(--muted)}
+  .card h3{font-family:var(--serif);font-size:18.5px;line-height:1.45;margin-bottom:10px;letter-spacing:.01em}
+  .tldr{font-size:14px;background:rgba(0,0,0,.028);border-radius:8px;padding:9px 12px;margin-bottom:12px}
+  .tldr b{color:var(--c,#333)}
+  ul.points{list-style:none;font-size:13.8px;margin-bottom:12px}
+  ul.points li{padding-left:18px;position:relative;margin-bottom:6px}
+  ul.points li::before{content:"";position:absolute;left:2px;top:.72em;width:7px;height:7px;border-radius:2px;background:var(--c,#999);opacity:.75}
+  ul.points code, .deep code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88em;background:rgba(0,0,0,.05);border-radius:4px;padding:1px 5px}
+  details.deep{border-top:1px dashed var(--line);padding-top:10px;margin-top:auto}
+  details.deep summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--c,#444);list-style:none;display:flex;align-items:center;gap:6px}
+  details.deep summary::-webkit-details-marker{display:none}
+  details.deep summary::before{content:"▸";transition:.2s;display:inline-block}
+  details.deep[open] summary::before{transform:rotate(90deg)}
+  .deep-body{font-size:13.5px;color:#4a4238;margin-top:10px;display:grid;gap:10px}
+  .deep-body h4{font-family:var(--serif);font-size:14.5px;color:var(--ink);display:flex;align-items:center;gap:7px}
+  .deep-body h4::before{content:"◈";color:var(--c,#999);font-size:12px}
+  .deep-body table{width:100%;border-collapse:collapse;font-size:12.8px}
+  .deep-body th,.deep-body td{border:1px solid var(--line);padding:5px 9px;text-align:left;vertical-align:top}
+  .deep-body th{background:rgba(0,0,0,.035);font-weight:600;white-space:nowrap}
+  .qa{border:1px solid var(--line);border-radius:9px;padding:10px 13px;background:rgba(255,255,255,.6)}
+  .qa .ans{margin-top:5px;font-size:13px}
+  .qa .ans b{color:var(--c)}
+  .qa .why{color:var(--muted);font-size:12.8px}
+  .note{font-size:12.8px;color:var(--muted);border-left:3px solid var(--line);padding:2px 0 2px 11px;margin-top:4px}
+  .card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:11px;border-top:1px solid var(--line)}
+  .btn{font-size:13px;color:var(--ink);text-decoration:none;border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 13px;transition:.15s}
+  .btn:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .when{font-size:12px;color:var(--muted)}
+  /* ---------- 结尾 ---------- */
+  footer{border-top:1px solid var(--line);margin-top:60px}
+  .foot-in{max-width:1080px;margin:0 auto;padding:26px 24px 40px;font-size:12.8px;color:var(--muted)}
+  .empty{display:none;text-align:center;color:var(--muted);padding:50px 0;font-size:14px}
+  @media (max-width:640px){
+    .seal{display:none}
+    .grid{grid-template-columns:1fr}
+    #q{width:130px}
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<header class="hero">
+  <div class="hero-in">
+    <div class="seal">上岸</div>
+    <div class="kicker">微信采集 × 滴答清单 · 个人学习中枢</div>
+    <h1>收藏即所学<br>别让好文章 <em>睡</em> 在清单里</h1>
+    <p class="sub">这里汇总了你 10 月 5 日用「微信采集」收藏的 3 条内容：每条都提炼了摘要与要点，硬核文章附深入讲解，想读原文一键直达。一页学完，不用再一个个点开。</p>
+    <div class="stats">
+      <span class="chip"><b>3</b>条收藏</span>
+      <span class="chip"><b>2</b>大板块</span>
+      <span class="chip"><b>10/05</b>采集</span>
+      <span class="chip"><b>3</b>篇含深入讲解</span>
+      <span class="chip hot" id="countdown"><b>--</b>天距离 27 考研初试</span>
+    </div>
+    <div class="howto"><b>用法：</b>按分类读卡片，标着 <b>深入讲解</b> 的可以展开看干货 → 想读原文点「直达原文」。本期三条都值得展开：一条讲 AI 时代怎么工作，一条讲国产算力，一条是能动手复刻的硬件项目。</div>
+  </div>
+</header>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="brand">收藏即所学</span>
+    <div class="filters" id="filters">
+      <button class="fbtn on" data-f="all">全部</button>
+      <button class="fbtn" data-f="ai">AI 工具</button>
+      <button class="fbtn" data-f="emb">嵌入式</button>
+    </div>
+    <input id="q" type="search" placeholder="搜索关键词…">
+  </div>
+</nav>
+
+<main>
+
+<!-- ============ 壹 AI 工具 ============ -->
+<section data-sec="ai">
+  <div class="sec-head"><span class="sec-no">壹</span><h2>AI 工具前沿</h2><span class="cnt">2 条</span></div>
+  <div class="grid">
+
+    <article class="card" data-cat="ai" style="--c:var(--ai)" data-k="Tibo Sottiaux OpenAI Codex 工作流 语音 异步 批处理 Skill 宝可梦 意图审查 盒子 不变量 Compaction 脚手架 双代理 Token">
+      <div class="card-top"><span class="badge">AI 工具</span><span class="src">EARS · 小耳 · 09-19</span></div>
+      <h3>不缺 Token 的 Tibo 怎么工作：把「人」从流程里拿出来</h3>
+      <p class="tldr"><b>一句话：</b>OpenAI Codex 负责人 Tibo Sottiaux 的工作法核心不是"打字更快"，而是把工作<b>移动化、异步化、自动化</b>——人只在两头出现：早上口述意图，关键节点审批边界。</p>
+      <ul class="points">
+        <li><b>晨间语音口述：</b>早上喝咖啡时根本不开电脑，拿手机用语音向 AI 汇报今天目标，AI 自己读日历、邮件、Slack 并安排下去</li>
+        <li><b>隔夜异步批处理：</b>夜里遇到复杂架构问题、白天没空深挖的思考、长程重构，不熬夜，直接丢给云端静默跑一整夜，早上看报告</li>
+        <li><b>"30 分钟"全局情报：</b>想了解社区反馈 / 生产日志 / 哪些低频功能该废弃，不开会、不要 PPT，直接发个任务，半小时拿到结构化排查报告</li>
+        <li><b>单日原型雕刻与释放：</b>想法不留在概念阶段，一天内用语音＋Agent 雕出可运行原型，推给团队批判，然后立刻"释放"认知负荷做下一件</li>
+        <li><b>像"训宝可梦"一样攒 Skill 库：</b>定时总结 Slack 动态、自动解 Git 冲突修 Build、甚至让 AI 每天随机挑一个代码文件去找潜伏 Bug</li>
+        <li><b>他自己说的瓶颈：</b>"模型已经可以在云端一下子干几百个活，但你还是习惯开一个窗口交代任务、等反馈、再说下一个——一天下来，我自己才是最大的天花板"</li>
+      </ul>
+      <details class="deep"><summary>深入讲解 · 三个范式转移 + Token 有限时的实操策略</summary>
+        <div class="deep-body">
+          <h4>转移一：从"盯着过程"到"定义盒子与不变量"</h4>
+          <div>过去人累，是因为精力都花在<b>盒子内部的具体实现</b>上。新范式里，人的真正价值是定义边界——和 AI 明确输入输出契约、资源限制、安全边界、系统不变量（Invariants）。盒子内部是 1 个 Agent 写还是 100 个并发生成，人根本不用关心。</div>
+          <h4>转移二：从"审查正确性"到"审查意图"</h4>
+          <div>当生成速度极高，检查语法、拼写、低级逻辑错误会耗尽人的注意力。OpenAI 内部把代码正确性与安全校验彻底交给自动化 AI Review 模型，人的审查全面转向<b>意图审查</b>——"你到底想解决什么问题？这件事值不值得做？"</div>
+          <h4>转移三：注意力友好的交互</h4>
+          <div>同时盯 10–15 个 Agent 窗口、频繁切换上下文，脑子很快就崩。正确姿势是保持"心流实时雕刻"：只保留 <b>2–3 个核心任务</b>，像和专家对话一样实时调整意图（mid-term steering），重度任务则完全静默托管给云端。</div>
+          <h4>Token 不够时怎么办：三条实操</h4>
+          <table>
+            <tr><th>策略</th><th>怎么做</th><th>省下什么</th></tr>
+            <tr><td><b>双代理校验</b><br>Primary + Secondary</td><td>主 Agent 干活，另挂一个轻量低成本的"二级安全对齐 Agent"监控它是否越界、输出是否合规，只有高风险操作才弹窗找人审批</td><td>Token ＋ 人的注意力</td></tr>
+            <tr><td><b>长程上下文压缩</b><br>Compaction</td><td>别再手写复杂 Prompt 框架帮 AI 整理记忆（费 Token 还丢上下文）。模型端已用强化学习训练压缩能力，能跨 20 个上下文窗口、数天到数周不掉线</td><td>Prompt Token ＋ 记忆保真</td></tr>
+            <tr><td><b>拆掉过度脚手架</b><br>Scaffolding</td><td>不要为弥补当前模型短板去写几千行 Prompt 规则链——基座一升级（GPT-5 → GPT-6）这些全变冗余。外壳保持极简，只留通用工具接口（如 Markdown 技能说明或 API）</td><td>长期维护成本</td></tr>
+          </table>
+          <div class="note">💡 原文的启发总结：提升生产力的突破口不是训练自己打字更快，而是训练自己<b>表达意图更精准</b>。建立属于自己的 Skill 自动化库，把日常繁琐、重复的搜集和校验交给后台 Agent，你只负责口述意图和关键审批。</div>
+          <div class="note">📌 对照你自己：你正在搭的「凌晨 1 点自动归档微信收藏」就是这套思路的最小实践——把"攒了要读"变成后台静默完成，早上起来直接看成品。Tibo 的"隔夜异步批处理"说的正是这件事。</div>
+        </div>
+      </details>
+      <div class="card-foot"><a class="btn" href="https://mp.weixin.qq.com/s?__biz=MzA5Nzk3MDQ4OQ==&mid=2649736365&idx=1&sn=28c07d18532e207247ba00b0b7a972d0&chksm=89174dfdd54bb951c01316214e7c847ce5d2bd30dde5b64dcc5619cccee112b8d1ddceb31183&mpshare=1&scene=1&srcid=1005Y2IRIcauecT2XceYeGlv&sharer_shareinfo=b49cf88fb49e1db172a6733e320b4fbb&sharer_shareinfo_first=b49cf88fb49e1db172a6733e320b4fbb#rd" target="_blank">直达原文 ↗</a><span class="when">采集 10-05</span></div>
+    </article>
+
+    <article class="card" data-cat="ai" style="--c:var(--ai)" data-k="DeepSeek 华为 昇腾 950 TileLang Ascend CUDA 算子 NPU 128卡 超节点 DeepGEMM DeepEP FlashMLA 国产芯片 科创板">
+      <div class="card-top"><span class="badge">AI 工具</span><span class="src">腾讯科技 · 09-30</span></div>
+      <h3>DeepSeek 加速向华为靠拢：把自家研发工具搬到昇腾上</h3>
+      <p class="tldr"><b>一句话：</b>DeepSeek 开源了一整套面向华为昇腾的基础设施组件，并强调"与此前面向英伟达的开源组件<b>一一对应</b>"——这意味着它的训练工具链第一次有了第二条硬件路线。</p>
+      <ul class="points">
+        <li><b>开源清单：</b>主角是 <code>TileLang</code>（算子编程语言及编译支持），外加计算库 <code>DeepGEMM</code>、分布式通信库 <code>DeepEP</code>，以及 <code>TileKernels</code>、<code>FlashMLA</code>、<code>DeepSelect</code>（向量计算与访存、稀疏注意力、Top-K 选择等）</li>
+        <li><b>TileLang 的分量：</b>相较 CUDA 能简化代码逻辑、提高开发效率；先在英伟达平台验证，如今<b>已承载 V4 系列模型训练中大部分算子的实现</b>——是 DeepSeek 开发高性能算子的核心工具</li>
+        <li><b>昇腾版的实现方式：</b>封装底层 Ascend C 指令。DeepSeek 称"目前训练中使用的每一个 TileLang 算子，在昇腾上都有对应的高性能实现"</li>
+        <li><b>硬件协同：</b>双方共同推进基于<b>昇腾 950 的 128 卡超节点</b>方案，对计算与通信做深度优化；多项关键测试用例性能已接近硬件上限（属特定测试条件下的结果）</li>
+        <li><b>时间线：</b>2025.8 V3.1 的 UE8M0 FP8 设计"面向即将发布的下一代国产芯片" → 2025.9.29 V3.2-Exp 发布 + TileLang-Ascend 开源 → 2026.4.24 V4 预览版，昇腾适配已延伸至推理和训练侧</li>
+        <li><b>背景数字：</b>梁文锋在投资者会议上称 DeepSeek <b>超过 70% 算力用于模型训练</b>，留给推理的不足 30%；500 亿元第二轮融资接近结束，已聘中信证券筹备科创板 IPO</li>
+      </ul>
+      <details class="deep"><summary>深入讲解 · 为什么"一一对应"是关键，软件才是真门槛</summary>
+        <div class="deep-body">
+          <h4>算子是什么，为什么它决定一切</h4>
+          <div>大模型研究里的新想法，必须通过<b>算子</b>翻译成芯片能执行的计算。算子开发越复杂，研究者验证新结构、优化训练效率所需的时间就越长。所以"用什么语言写算子"直接决定了一个硬件平台对模型团队的友好度——这也是为什么 TileLang 比那几个库更值得关注。</div>
+          <h4>"一一对应"的含金量在哪</h4>
+          <div>如果只是"能在昇腾上跑 DeepSeek 模型"，那叫<b>推理适配</b>，生态里早就做了很多轮。而这次是把手写算子、通信库、矩阵库这一整套<b>研发工具</b>搬过去，且声称与英伟达版一一对应。原文举的例子很实在：<code>TileKernels</code> 支持同一套 Python 接口在英伟达 GPU 与华为 NPU 上运行，底层实现按硬件自动选择。</div>
+          <div>代价是——接口能复用，<b>性能仍需针对硬件打磨</b>。所以才有"双方围绕 128 卡超节点共同优化计算与通信"这一段，以及公告里对华为"毫无保留的大力支持"的致谢。</div>
+          <h4>真正的瓶颈不是芯片，是软件</h4>
+          <div>原文的判断：资金可以支持研发和基础设施投入，但<b>新增硬件能否转化为有效算力，取决于软件适配与运行效率</b>。对 DeepSeek 来说，昇腾上的工具与组件越完善，未来换算力平台时要重新投入的工程成本就越低；对华为来说，与模型团队共同优化，能让芯片软件更快跟上模型结构的变化。</div>
+          <div class="note">⚠️ 冷静看：DeepEP 昇腾版仍列有开发中的功能，此次公告也未披露 V4 已在昇腾上完成全流程大规模训练。从"组件开源"到"稳定承担大规模生产任务"，中间还有活要干。另外文中提到 DeepSeek 希望这套东西"为更多 AI 芯片建立高可用软件生态起到示范作用"——如果别的团队能复用，更多国产芯片承接前沿模型的门槛也会降低。</div>
+          <h4>和你有什么关系</h4>
+          <div>你在做嵌入式、也在准备考研。这条新闻的价值不在"谁赢"，而在它示范了一件事：<b>决定技术路线的往往不是峰值算力，而是软件生态的迁移成本</b>。同一个道理在嵌入式和操作系统选型上反复出现——这也是 TOPS 那篇文章（上一期收录）说的是同一件事。</div>
+        </div>
+      </details>
+      <div class="card-foot"><a class="btn" href="https://mp.weixin.qq.com/s?__biz=Mjc1NjM3MjY2MA==&mid=2691573130&idx=1&sn=324110cd30071b35150c6aa6ef4c709f&chksm=a803af3cee357aee9fd762161778b16eab40ed38a666abc6338a835bdc049e32ab69a874b831&mpshare=1&scene=1&srcid=1005OYHxv2M14AFi4SQLKIrP&sharer_shareinfo=9daa665bdf741927439e587bca7f2e72&sharer_shareinfo_first=9daa665bdf741927439e587bca7f2e72#rd" target="_blank">直达原文 ↗</a><span class="when">采集 10-05</span></div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============ 贰 嵌入式 ============ -->
+<section data-sec="emb">
+  <div class="sec-head"><span class="sec-no">贰</span><h2>嵌入式硬核</h2><span class="cnt">1 条</span></div>
+  <div class="grid">
+
+    <article class="card" data-cat="emb" style="--c:var(--emb)" data-k="ESP32-S3 写字机 绘图仪 滚纸 步进电机 TMC2209 舵机 FluidNC GRBL 立创EDA 开源 嘉立创 350元">
+      <div class="card-top"><span class="badge">嵌入式</span><span class="src">立创开源硬件平台 · 09-11</span></div>
+      <h3>ESP32 滚纸写字机：把 Y 轴换成"滚纸"，能写 5 米长</h3>
+      <p class="tldr"><b>一句话：</b>常见写字机是方方正正的 XY 平台——10cm 的纸就要 10cm 的机器；这个项目把 <b>Y 轴改成滚纸轴</b>，用三轴实现 210mm × 5000mm 的书写范围，DIY 成本约 <b>350 元</b>（市售同类 600–1000+）。</p>
+      <ul class="points">
+        <li><b>三轴分工：</b>X 轴让笔左右移动 · Y 轴让纸前后滚动 · Z 轴用舵机负责抬笔落笔。理论上只要纸够长、软件行程继续增大，5 米也不是物理极限</li>
+        <li><b>主控：</b>立创·ESP32S3R8N8 开发板；电路用嘉立创 EDA 设计，板子尺寸可免费打样</li>
+        <li><b>驱动：</b>两路 <code>TMC2209-LA-T</code> 分别驱动两台 42 步进电机——支持最高 256 微步，带 StealthChop 静音驱动，运动更细腻平滑、不易丢步打滑，且有过温短路保护</li>
+        <li><b>电源与外围：</b><code>TPS54202DDCR</code> BUCK 降压、MicroSD 卡座、滑动开关 SS12D06G5、拨码开关 DSWB02LHGET、XH-4AW 线对板针座</li>
+        <li><b>软件几乎零开发：</b>依托 ESP32 生态，可直接跑 <b>FluidNC</b> 运动控制固件，配合炽写3、GRBL Studio、奎享等软件写字绘图</li>
+        <li><b>作者自己说的短板：</b>没有产品级精度，还缺限位开关——但已经能实际完成写字和绘图，且开源了足够复刻的资料</li>
+        <li><b>开源地址：</b><a href="https://oshwhub.com/ymengo/project_mraukvnb" target="_blank" style="color:var(--emb)">oshwhub.com/ymengo/project_mraukvnb</a></li>
+      </ul>
+      <details class="deep"><summary>深入讲解 · 三轴联动原理与复刻要点</summary>
+        <div class="deep-body">
+          <h4>为什么"滚纸"是个聪明的设计</h4>
+          <div>传统 XY 平台里，机器的占地面积必须大于纸张面积——想画 1 米长的图，就得有 1 米长的机器。把 Y 轴从"移动笔"改成"送纸"，等于把空间需求转成了<b>卷材需求</b>：机器本身很细长，纸可以一直往后送。原文还顺手点出这是笔式绘图仪（pen plotter）的原理，能画长线稿。</div>
+          <h4>三轴是怎么联动的：STEP/DIR 信号链</h4>
+          <div>工作流是：<b>运动文件/指令 → ESP32-S3 解析 → 计算各轴运动 → 输出 STEP/DIR 信号 → 步进驱动器 → 步进电机运动</b>。</div>
+          <div>大白话讲：要让机构向右移动，ESP32 就让对应电机驱动器收到<b>一定数量的 STEP 脉冲</b>（脉冲数 = 走的步数）；要反向运动，就改变 <b>DIR 电平</b>。三路电机组合起来，就能完成 X/Y/Z 三轴联动。这也是所有 CNC / 3D 打印机 / 写字机通用的控制抽象——理解了这一层，换任何运动控制项目都能上手。</div>
+          <h4>选型上的两个好处</h4>
+          <table>
+            <tr><th></th><th>选择</th><th>带来的好处</th></tr>
+            <tr><td>主控</td><td>ESP32-S3 ＋ 现成固件</td><td>不用自己写运动控制软件，直接跑 FluidNC，配现成上位机；复刻时调试难度大幅降低</td></tr>
+            <tr><td>驱动</td><td>TMC2209 ×2</td><td>256 微步 ＋ 静音驱动 → 运动细腻平滑、不易丢步，写字不"顿挫"；带过温/短路保护</td></tr>
+          </table>
+          <div class="note">📌 作为练手项目的价值：它把"嵌入式控制 + 机械传动 + 开源固件生态"三件事串在一个 350 元的盒子里，而且有完整的原理图 / PCB / BOM。如果以后要做一个自己的硬件作品放进履历，这类"能跑起来、能看见效果、成本可控"的项目比纯软件 demo 更有说服力。</div>
+          <div class="note">💡 原作者的降级提示：这个方案没有产品级精度，也还没加限位开关（意味着回零和防撞需要自己补）。复刻时这两点是第一个要改进的地方。</div>
+        </div>
+      </details>
+      <div class="card-foot"><a class="btn" href="https://mp.weixin.qq.com/s?__biz=MzE5OTI3MDk5Nw==&mid=2247681691&idx=1&sn=c66a5e332f84003ec9c797ef53d671fb&chksm=97a99ce1cabfe43793c1ee78407dfaf0effff3b4ed513e630c2ad0197a9485057d9d54eb76cc&mpshare=1&scene=1&srcid=1005TVqG7LzwG4j7hWK8f0Kb&sharer_shareinfo=b8d9232b154f089370efafe31048bdb8&sharer_shareinfo_first=b8d9232b154f089370efafe31048bdb8#rd" target="_blank">直达原文 ↗</a><span class="when">采集 10-05</span></div>
+    </article>
+
+  </div>
+</section>
+
+<div class="empty" id="empty">没有匹配的内容，换个关键词试试～</div>
+</main>
+
+<footer>
+  <div class="foot-in">
+    <b>关于本页</b>：内容抓取自你滴答清单「微信采集」标签下 2026-10-05 采集的 3 条收藏（浏览器实时抓取原文后由 AI 提炼摘要与讲解）；观点与细节以原文为准。生成于 2026-10-06 · 单文件 HTML，可离线打开、可转发。
+    <br>归档位置：<code>didaMind/微信收集/微信收藏学习站.html</code>
+    <br>下一步建议：① Tibo 那篇的"隔夜异步批处理"正是你正在搭的定时归档——可以对照着优化 ② 写字机项目如果想动手，先从立创开源页面把原理图和 BOM 拉下来看一遍 ③ DeepSeek 那篇当作"软件生态决定硬件路线"的案例记进脑子里，选型时用得上。
+  </div>
+</footer>
+
+<script>
+  // 倒计时：距 2027 考研初试 2026-12-19
+  (function(){
+    var target = new Date(2026, 11, 19);
+    var now = new Date();
+    var days = Math.ceil((target - now) / 86400000);
+    var el = document.querySelector('#countdown b');
+    if (el) el.textContent = days > 0 ? days : 0;
+  })();
+  // 阅读进度条
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement;
+    var p = h.scrollTop / (h.scrollHeight - h.clientHeight);
+    document.getElementById('progress').style.width = (p * 100) + '%';
+  }, {passive:true});
+  // 分类筛选 + 搜索
+  var curFilter = 'all', curQuery = '';
+  function applyFilter(){
+    var visible = 0;
+    document.querySelectorAll('section[data-sec]').forEach(function(sec){
+      var secShow = (curFilter === 'all') || (sec.dataset.sec === curFilter);
+      var cardsVisible = 0;
+      sec.querySelectorAll('.card').forEach(function(c){
+        var show = secShow && (!curQuery || (c.dataset.k + c.textContent).indexOf(curQuery) > -1);
+        c.style.display = show ? '' : 'none';
+        if (show) { cardsVisible++; visible++; }
+      });
+      sec.style.display = secShow ? '' : 'none';
+      if (secShow && curQuery && cardsVisible === 0) sec.style.visibility = 'hidden';
+      else sec.style.visibility = '';
+    });
+    document.getElementById('empty').style.display = visible ? 'none' : 'block';
+  }
+  document.getElementById('filters').addEventListener('click', function(e){
+    var b = e.target.closest('.fbtn'); if (!b) return;
+    document.querySelectorAll('.fbtn').forEach(function(x){ x.classList.remove('on'); });
+    b.classList.add('on');
+    curFilter = b.dataset.f;
+    applyFilter();
+  });
+  document.getElementById('q').addEventListener('input', function(e){
+    curQuery = e.target.value.trim();
+    applyFilter();
+  });
+</script>
+</body>
+</html>
