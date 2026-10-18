@@ -59,6 +59,7 @@
   .sec-head h2{font-family:var(--serif);font-size:24px;letter-spacing:.05em}
   .sec-head .cnt{margin-left:auto;font-size:12.5px;color:var(--muted)}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px}
+  .grid.solo{grid-template-columns:minmax(0,860px)}
   .card{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--c,#999);border-radius:14px;
     padding:20px 22px 16px;display:flex;flex-direction:column;box-shadow:0 1px 2px rgba(60,45,20,.05);transition:.18s;position:relative}
   .card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(60,45,20,.1)}
@@ -99,7 +100,11 @@
   @media (max-width:640px){
     .seal{display:none}
     .grid{grid-template-columns:1fr}
-    #q{width:130px}
+    .grid.solo{grid-template-columns:1fr}
+    .bar-in{align-items:flex-start}
+    .brand{order:1}
+    #q{order:2;margin-left:auto;width:150px}
+    .filters{order:3;flex:1 0 100%}
   }
 </style>
 </head>
@@ -111,15 +116,15 @@
     <div class="seal">上岸</div>
     <div class="kicker">微信采集 × 滴答清单 · 个人学习中枢</div>
     <h1>收藏即所学<br>别让好文章 <em>睡</em> 在清单里</h1>
-    <p class="sub">这里汇总了你 10 月 5 日用「微信采集」收藏的 3 条内容：每条都提炼了摘要与要点，硬核文章附深入讲解，想读原文一键直达。一页学完，不用再一个个点开。</p>
+    <p class="sub">这里汇总了你 10 月 5 日至 18 日用「微信采集」收藏的 6 条内容：每条都提炼了摘要与要点，硬核文章附深入讲解，想读原文一键直达。一页学完，不用再一个个点开。</p>
     <div class="stats">
-      <span class="chip"><b>3</b>条收藏</span>
-      <span class="chip"><b>2</b>大板块</span>
-      <span class="chip"><b>10/05</b>采集</span>
-      <span class="chip"><b>3</b>篇含深入讲解</span>
+      <span class="chip"><b>6</b>条收藏</span>
+      <span class="chip"><b>3</b>大板块</span>
+      <span class="chip"><b>10/05–10/18</b>采集</span>
+      <span class="chip"><b>5</b>篇含深入讲解</span>
       <span class="chip hot" id="countdown"><b>--</b>天距离 27 考研初试</span>
     </div>
-    <div class="howto"><b>用法：</b>按分类读卡片，标着 <b>深入讲解</b> 的可以展开看干货 → 想读原文点「直达原文」。本期三条都值得展开：一条讲 AI 时代怎么工作，一条讲国产算力，一条是能动手复刻的硬件项目。</div>
+    <div class="howto"><b>用法：</b>按分类读卡片，标着 <b>深入讲解</b> 的可以展开看干货 → 想读原文点「直达原文」。本次新增：DeepSeek V4.1 Flash 更新拆解、徐涛讲《背诵笔记》怎么用（27 考研政治），另有一条 Harness 团队分享因正文为空只保留了标题。</div>
   </div>
 </header>
 
@@ -130,6 +135,7 @@
       <button class="fbtn on" data-f="all">全部</button>
       <button class="fbtn" data-f="ai">AI 工具</button>
       <button class="fbtn" data-f="emb">嵌入式</button>
+      <button class="fbtn" data-f="kaoyan">考研</button>
     </div>
     <input id="q" type="search" placeholder="搜索关键词…">
   </div>
@@ -139,7 +145,7 @@
 
 <!-- ============ 壹 AI 工具 ============ -->
 <section data-sec="ai">
-  <div class="sec-head"><span class="sec-no">壹</span><h2>AI 工具前沿</h2><span class="cnt">2 条</span></div>
+  <div class="sec-head"><span class="sec-no">壹</span><h2>AI 工具前沿</h2><span class="cnt">3 条</span></div>
   <div class="grid">
 
     <article class="card" data-cat="ai" style="--c:var(--ai)" data-k="Tibo Sottiaux OpenAI Codex 工作流 语音 异步 批处理 Skill 宝可梦 意图审查 盒子 不变量 Compaction 脚手架 双代理 Token">
@@ -205,13 +211,61 @@
       <div class="card-foot"><a class="btn" href="https://mp.weixin.qq.com/s?__biz=Mjc1NjM3MjY2MA==&mid=2691573130&idx=1&sn=324110cd30071b35150c6aa6ef4c709f&chksm=a803af3cee357aee9fd762161778b16eab40ed38a666abc6338a835bdc049e32ab69a874b831&mpshare=1&scene=1&srcid=1005OYHxv2M14AFi4SQLKIrP&sharer_shareinfo=9daa665bdf741927439e587bca7f2e72&sharer_shareinfo_first=9daa665bdf741927439e587bca7f2e72#rd" target="_blank">直达原文 ↗</a><span class="when">采集 10-05</span></div>
     </article>
 
+    <article class="card" data-cat="ai" style="--c:var(--ai)" data-k="DeepSeek V4.1 Flash 1017 许愿式编程 Harness CodeBuddy WorkBuddy 强化学习 RL 自反馈 3D 建模 故宫 赛车 Godot 传送门 Valley of Ages 搜索 API Search Fetch 5元千次 开源 HuggingFace ModelScope 帕累托">
+      <div class="card-top"><span class="badge">AI 工具</span><span class="src">DeepSeek · 10-17</span></div>
+      <h3>DeepSeek V4.1 Flash 更新：更便宜更快，还能「许愿式」写完整项目</h3>
+      <p class="tldr"><b>一句话：</b>V4.1-Flash-1017 把「性能—费用」的帕累托前沿又往外推了一格：基准测试提升的同时，任务耗时和输出长度都缩短了；还把自研搜索能力做成 <b>Search / Fetch API</b> 对外开放。</p>
+      <ul class="points">
+        <li><b>全端同步：</b>官方网页端、APP 与 API 已同步切换为新模型；官方建议 DeepSeek Harness 升级到 <code>0.2.1-rc.1</code> 及以上版本以获得最优体验</li>
+        <li><b>成本与速度：</b>在提升性能的同时缩短了任务运行时间与输出长度，在多个 Harness 下达到新的性能—费用帕累托最优；本次重点优化了 DeepSeek Harness、腾讯 CodeBuddy、WorkBuddy 等平台框架</li>
+        <li><b>从零做完整项目：</b>通过基于自反馈的强化学习（RL）训练，提升游戏开发、3D 建模等「从零构建完整项目」的能力，支持更多「许愿式」编程任务</li>
+        <li><b>官方演示案例：</b>故宫 3D 建模、网页版赛车游戏、基于 Godot 引擎复刻《传送门2》、用 3D 场景动态呈现史前到现代历史的 Valley of Ages——均为较少提示词与素材、极短交互轮次在 Harness 内完成</li>
+        <li><b>搜索 API 开放：</b>新增 Search 与 Fetch 接口，均为 <b>5 元 / 千次</b>；自研搜索引擎索引全球千亿级网页，稳定处理每天全球数亿次搜索请求，并过滤 SEO 作弊、GEO 操纵与低质 AIGC</li>
+        <li><b>计费时间点：</b>目前在 DeepSeek Harness / Claude Code / Codex 中通过服务端工具调用 Search/Fetch <b>暂不计费</b>，2026-11-01 00:00（北京时间）起按次收费</li>
+        <li><b>权重开源：</b>模型权重已发布到 HuggingFace 与 ModelScope</li>
+      </ul>
+      <details class="deep"><summary>深入讲解 · 帕累托改进意味着什么 + 搜索 API 对你的实际影响</summary>
+        <div class="deep-body">
+          <h4>一、什么叫「性能—费用帕累托改进」</h4>
+          <div>帕累托改进的核心是<b>没有哪一项变差</b>。这次不只是跑分提升，官方同时缩短了任务运行时间与输出长度——同样的任务，输出更短（也就是更少的输出 token）、耗时更少。对按 token 付费、又被速率限制的人来说，这比单纯涨分更实在。</div>
+          <div class="note">📌 原文正文没有给出具体跑分数字（性能/成本图是图片），所以这里不转述任何分数。要看准确数值，得去原文看图或官方模型卡。</div>
+          <h4>二、「许愿式编程」到底指什么</h4>
+          <div>原文的用法是：用<b>较少的提示词与素材参考</b>，在 Harness 环境里通过<b>极短的交互轮次</b>，直接从零生成一个能展示的完整项目（游戏、3D 场景等）。背后的训练方法是「基于自反馈的强化学习」——让模型自己在试错中改进，而不是靠人一步步喂需求。</div>
+          <div>冷静看：官方展示的是精选案例，没有披露成功率、人工返工量、以及复杂项目的可维护性。它可以当作「原型速度」的证据，不等于能替代工程化开发。</div>
+          <h4>三、搜索 API 开放，为什么值得记一笔</h4>
+          <div>Agent 要干实事，绕不开「查最新信息 + 读网页」。DeepSeek 把底层自研搜索做成 Search / Fetch 两个标准接口，等于把「实时信息获取」变成模型 API 的一部分。原文给的量级是：索引千亿级网页、每天处理全球数亿次搜索请求。</div>
+          <table>
+            <tr><th>项目</th><th>原文信息</th><th>对你的影响</th></tr>
+            <tr><td><b>Search / Fetch 价格</b></td><td>均为 5 元 / 千次（约 0.005 元一次）</td><td>做联网 Agent 的成本可以精确估算</td></tr>
+            <tr><td><b>当前计费状态</b></td><td>Harness / Claude Code / Codex 中经服务端工具调用暂不计费</td><td>如果你正是用 DeepSeek API 跑 Claude Code，现在这段是免费的</td></tr>
+            <tr><td><b>开始收费</b></td><td>2026-11-01 00:00（北京时间）起按次收取</td><td>重度联网的自动化任务，最好在 11 月前确认一下实际调用量</td></tr>
+            <tr><td><b>模型权重</b></td><td>HuggingFace / ModelScope 可下载</td><td>需要私有部署或研究微调时有据可依</td></tr>
+          </table>
+          <h4>四、和你现有工作流的连接</h4>
+          <div>你正在用「夜间自动归档 + Agent」这套东西。这条更新里最直接的两点：① Harness 要升级到 <code>0.2.1-rc.1</code> 以上才能吃到新模型适配；② 如果你的 Agent 会联网搜索，11 月 1 日之后要重新算成本。其余关于「许愿式编程」的演示，可以当作评估「从零原型」能力的参考，但别拿它替代需求澄清和验收。</div>
+        </div>
+      </details>
+      <div class="card-foot"><a class="btn" href="https://mp.weixin.qq.com/s?__biz=Mzk0OTYwNzc3NQ==&mid=2247485876&idx=1&sn=2606d3fa9ac085f94290ddd1d94649cc&chksm=c2bcb5cbba8a8285cd0553b3ebb396b350d4e8bb3d466772646394e2ac66ebde1c426106c0b4&mpshare=1&scene=1&srcid=1017oCuyV4YTjZsvYvMVSDy2&sharer_shareinfo=7ae5346cd55d77a1f8546225b0f86405&sharer_shareinfo_first=7ae5346cd55d77a1f8546225b0f86405#rd" target="_blank">直达原文 ↗</a><span class="when">采集 10-17</span></div>
+    </article>
+
+    <article class="card" data-cat="ai" style="--c:var(--ai)" data-k="DeepSeek Harness 团队 文字分享 抓取失败 空内容 微信客户端 仅标题">
+      <div class="card-top"><span class="badge">AI 工具</span><span class="src">DeepSeek Harness 团队 · 10-17</span></div>
+      <h3>DeepSeek Harness 团队的文字分享</h3>
+      <p class="tldr"><b>仅标题收录：</b>这篇是「文字分享」型内容，抓取器按「原链接 → 裸链接 → 慢等」三轮尝试都只拿到空页面（<code>微信公众平台</code>），正文需要在微信客户端内打开。</p>
+      <ul class="points">
+        <li>除标题外没有可靠正文可供提炼，因此<b>不生成摘要与深入讲解</b>，也不臆测内容</li>
+        <li>对应的滴答任务<b>保留未完成</b>，等你在微信里读完后再手动勾选，或下次自动重试</li>
+      </ul>
+      <div class="card-foot"><a class="btn" href="https://mp.weixin.qq.com/s?scene=1&__biz=MzY4NzM3MTkxOQ==&mid=2247483808&idx=1&sn=280bc4891312017f305754b50d2258c7&sharer_shareinfo_first=5b04d2950e312c1698b943fb3721750b&sharer_shareinfo=5b04d2950e312c1698b943fb3721750b#wechat_redirect" target="_blank">尝试打开原文 ↗</a><span class="when">采集 10-17</span></div>
+    </article>
+
   </div>
 </section>
 
 <!-- ============ 贰 嵌入式 ============ -->
 <section data-sec="emb">
   <div class="sec-head"><span class="sec-no">贰</span><h2>嵌入式硬核</h2><span class="cnt">1 条</span></div>
-  <div class="grid">
+  <div class="grid solo">
 
     <article class="card" data-cat="emb" style="--c:var(--emb)" data-k="ESP32-S3 写字机 绘图仪 滚纸 步进电机 TMC2209 舵机 FluidNC GRBL 立创EDA 开源 嘉立创 350元">
       <div class="card-top"><span class="badge">嵌入式</span><span class="src">立创开源硬件平台 · 09-11</span></div>
@@ -249,14 +303,60 @@
   </div>
 </section>
 
+<!-- ============ 叁 考研 ============ -->
+<section data-sec="kaoyan">
+  <div class="sec-head"><span class="sec-no">叁</span><h2>考研政治</h2><span class="cnt">1 条</span></div>
+  <div class="grid solo">
+
+    <article class="card" data-cat="kaoyan" style="--c:var(--kaoyan)" data-k="徐涛 考研政治 27考研 背诵笔记 核心背诵笔记 客观题10套卷 新大纲 选择题 分析题 论述题 押题 时政 带背 冲刺班 强化班 核心考案 干扰项 关键词踩点">
+      <div class="card-top"><span class="badge">考研</span><span class="src">考研政治徐涛 · 10-04</span></div>
+      <h3>新大纲背景下，《背诵笔记》怎么用？徐涛的八个问答</h3>
+      <p class="tldr"><b>一句话：</b>今年政治大纲和命题风格都没变，但「灵活性逐年加大」的趋势不变；新版《核心背诵笔记》把每章知识点拆成<b>背诵部分</b>（不到全书 1/3）和<b>理解部分</b>（大头），10 月仍以选择题为优先。</p>
+      <ul class="points">
+        <li><b>大纲与风格：</b>今年新大纲没有变化，不必过度解读；命题风格今年也没变，但自 2022、2023 考研起灵活性逐步加大，徐涛判断今年会延续</li>
+        <li><b>对复习的要求：</b>死记硬背、书上能找到原话答案的题目分量在减少，押题命中的比重也在下降；基础知识必要但不充分——「学一遍知识是有必要的，但一直学知识是浪费时间的」</li>
+        <li><b>改版逻辑：</b>每章开头第一部分是<b>背诵部分</b>（考原话的死记硬背点），第二部分是<b>理解部分</b>（理论表格化整编 + 命题思路 + 典型干扰选项特征 + 判断对错的方法）</li>
+        <li><b>篇幅比例：</b>全书 300 个页码，背诵部分占不到 1/3；真正要你背的东西大概不到 1/3，理解部分是大头</li>
+        <li><b>不同进度的时间账：</b>已学完《核心考案》、强化班听完的——每天约 40 分钟做题 + 40 分钟复盘，总时长 1.5 小时内；还没学完甚至没开始的——每天 1 小时听课 + 1 小时做题，共 2–2.5 小时，「现在才 10 月，完全来得及」</li>
+        <li><b>带背安排：</b>冲刺班不逐页讲背诵部分，改用「带背」；预计 10 月 19 日左右开始，手里有正版背诵笔记即可参与，不需要额外花钱报班</li>
+        <li><b>选择题优先：</b>100 分里选择、论述各 50 分，两种题都重要；但节奏上先学知识点 → 再攻克选择题 → 最后背论述题。10 月重点仍是选择题，11 月后论述题权重逐步抬高</li>
+        <li><b>分析题得分：</b>理论准确 + 语言规范，通篇口水话一定低分；语言可速成（约一个月背成篇成段的政治化表达），行文逻辑结构不重要，关键是关键词踩点，往往是断首句、开篇句</li>
+      </ul>
+      <details class="deep"><summary>深入讲解 · 为什么这样改版 + 10–11 月怎么排</summary>
+        <div class="deep-body">
+          <h4>一、为什么要把「背」和「懂」分开</h4>
+          <div>原文的出发点很具体：学生拿到背诵笔记的第一反应是「这本书怎么背？还是背不完」，而老师既不能说「不用背」，也不能说「全要背」——因为很多知识点背了也不会做题，出题本来就灵活。于是改版干脆按<b>考察方式</b>拆开：会考原话的放进「背诵部分」，需要理解辨析的放进「理解部分」。</div>
+          <div>这个设计的真正价值是给了一个<b>明确的动作指令</b>：翻开每章第一部分就直接背；背不住，再用优题库、十套卷里的题通过做题练习去背。理解部分则配命题思路和干扰项特征，解决「知道概念但选不对」的问题。</div>
+          <h4>二、按你的进度排每天的时间</h4>
+          <table>
+            <tr><th>你的状态</th><th>每天安排</th><th>原文的判断</th></tr>
+            <tr><td><b>已学完《核心考案》<br>强化班已听完</b></td><td>约 40 分钟做题 + 40 分钟复盘，政治总学习时间 1.5 小时内</td><td>接下来主要任务就是做题</td></tr>
+            <tr><td><b>还没学完 / 还没开始</b></td><td>1 小时听课 + 1 小时做题，共 2–2.5 小时</td><td>现在才 10 月，完全来得及；别人前期花了时间，你现在多花一点完全说得过去</td></tr>
+          </table>
+          <div>阶段重心：<b>10 月选择题优先</b>；进入 11 月后，论述题的学习逐步抬高重要性。背诵部分的带背预计 10 月 19 日左右启动，正好接上。</div>
+          <h4>三、分析题与押题，原文的三个硬观点</h4>
+          <div>① <b>语言要规范</b>：考研政治论述题看两样——理论准确性和语言规范性，通篇口水话一定是低分。好消息是语言可以速成，大概一个月背成篇成段的政治化表达，量变会改变表达方式。</div>
+          <div>② <b>逻辑结构不是重点，关键词踩点才是</b>：原文明确说「行文逻辑结构是不重要的，关键是关键词踩点，往往是断首句、开篇句的那几个关键词」。这决定了背分析题时该背「点」而不是背「作文模板」。</div>
+          <div>③ <b>时政到题里背，押题要有底座</b>：时政题几乎都是死记硬背，与其背一本本时政资料，不如反复多做那道题；热点大概率还会考，但会更灵活、绕着弯考，押题必须建立在前期学习、练习、理解的基础上。</div>
+          <h4>四、读这篇时要注意的两点</h4>
+          <div class="note">📌 原文后半段是「研途考研」择校小程序的推广（含推荐码），与复习方法无关，本卡未把推广内容当作建议；院校大纲变化请以目标院校官方通知为准。</div>
+          <div class="note">📌 原文是徐涛老师 10 月 4 日的答疑，时间点明确提到「现在才 10 月」「10 月 19 日左右开始带背」。今天已是 10 月 18 日，带背随时可能启动，适合现在就去确认入口。</div>
+        </div>
+      </details>
+      <div class="card-foot"><a class="btn" href="https://mp.weixin.qq.com/s?__biz=MzA4MDUwMzAxNA==&mid=2651442345&idx=1&sn=2b776fd06610d3dfd831e04f8056d3cc&chksm=850fbb39ed978759f2d6dbe9e59db8ba99b06772024c256d21715db20dab4425688fb81b8b39&mpshare=1&scene=1&srcid=1018RkPy9R9rp2n3YeWl8qqy&sharer_shareinfo=987ee144e28a60924e9e9801d2c3dd79&sharer_shareinfo_first=987ee144e28a60924e9e9801d2c3dd79#rd" target="_blank">直达原文 ↗</a><span class="when">采集 10-18</span></div>
+    </article>
+
+  </div>
+</section>
+
 <div class="empty" id="empty">没有匹配的内容，换个关键词试试～</div>
 </main>
 
 <footer>
   <div class="foot-in">
-    <b>关于本页</b>：内容抓取自你滴答清单「微信采集」标签下 2026-10-05 采集的 3 条收藏（浏览器实时抓取原文后由 AI 提炼摘要与讲解）；观点与细节以原文为准。生成于 2026-10-06 · 单文件 HTML，可离线打开、可转发。
+    <b>关于本页</b>：内容抓取自你滴答清单「微信采集」标签下 2026-10-05 至 2026-10-18 采集的 6 条收藏（浏览器实时抓取原文后由 AI 提炼摘要与讲解）；观点与细节以原文为准。生成于 2026-10-18 · 单文件 HTML，可离线打开、可转发。
     <br>归档位置：<code>didaMind/微信收集/微信收藏学习站.html</code>
-    <br>下一步建议：① Tibo 那篇的"隔夜异步批处理"正是你正在搭的定时归档——可以对照着优化 ② 写字机项目如果想动手，先从立创开源页面把原理图和 BOM 拉下来看一遍 ③ DeepSeek 那篇当作"软件生态决定硬件路线"的案例记进脑子里，选型时用得上。
+    <br>下一步建议：① 徐涛的带背预计 10 月 19 日左右开始，先去确认入口；10 月政治继续选择题优先 ② 用 DeepSeek API 跑 Agent 的话，升级 Harness 到 0.2.1-rc.1 以上，并留意 11 月 1 日 Search/Fetch 开始计费 ③ 「Harness 团队的文字分享」抓取为空，留到微信客户端里补读，滴答任务未勾选。
   </div>
 </footer>
 
