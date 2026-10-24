@@ -116,15 +116,15 @@
     <div class="seal">上岸</div>
     <div class="kicker">微信采集 × 滴答清单 · 个人学习中枢</div>
     <h1>收藏即所学<br>别让好文章 <em>睡</em> 在清单里</h1>
-    <p class="sub">这里汇总了你 10 月 5 日至 18 日用「微信采集」收藏的 6 条内容：每条都提炼了摘要与要点，硬核文章附深入讲解，想读原文一键直达。一页学完，不用再一个个点开。</p>
+    <p class="sub">这里汇总了你 10 月 5 日至 23 日用「微信采集」收藏的 12 条内容：每条都提炼了摘要与要点，硬核文章附深入讲解，想读原文一键直达。一页学完，不用再一个个点开。</p>
     <div class="stats">
-      <span class="chip"><b>6</b>条收藏</span>
-      <span class="chip"><b>3</b>大板块</span>
-      <span class="chip"><b>10/05–10/18</b>采集</span>
-      <span class="chip"><b>5</b>篇含深入讲解</span>
+      <span class="chip"><b>12</b>条收藏</span>
+      <span class="chip"><b>6</b>大板块</span>
+      <span class="chip"><b>10/05–10/23</b>采集</span>
+      <span class="chip"><b>10</b>篇含深入讲解</span>
       <span class="chip hot" id="countdown"><b>--</b>天距离 27 考研初试</span>
     </div>
-    <div class="howto"><b>用法：</b>按分类读卡片，标着 <b>深入讲解</b> 的可以展开看干货 → 想读原文点「直达原文」。本次新增：DeepSeek V4.1 Flash 更新拆解、徐涛讲《背诵笔记》怎么用（27 考研政治），另有一条 Harness 团队分享因正文为空只保留了标题。</div>
+    <div class="howto"><b>用法：</b>按分类读卡片，标着 <b>深入讲解</b> 的可以展开看干货 → 想读原文点「直达原文」。本次新增：阿波罗 11 号源码拆解、闲鱼虚拟一个月实操账单、成都大学电子信息类双选会与新版 VPN 通知、MiniMax MiniApps 仓库、B 站「大肥鱼」插件；阿波罗那条下的批注也一并收录。</div>
   </div>
 </header>
 
@@ -136,6 +136,9 @@
       <button class="fbtn" data-f="ai">AI 工具</button>
       <button class="fbtn" data-f="emb">嵌入式</button>
       <button class="fbtn" data-f="kaoyan">考研</button>
+      <button class="fbtn" data-f="job">求职</button>
+      <button class="fbtn" data-f="dev">开发技术</button>
+      <button class="fbtn" data-f="idea">项目灵感</button>
     </div>
     <input id="q" type="search" placeholder="搜索关键词…">
   </div>
@@ -145,7 +148,7 @@
 
 <!-- ============ 壹 AI 工具 ============ -->
 <section data-sec="ai">
-  <div class="sec-head"><span class="sec-no">壹</span><h2>AI 工具前沿</h2><span class="cnt">3 条</span></div>
+  <div class="sec-head"><span class="sec-no">壹</span><h2>AI 工具前沿</h2><span class="cnt">6 条</span></div>
   <div class="grid">
 
     <article class="card" data-cat="ai" style="--c:var(--ai)" data-k="Tibo Sottiaux OpenAI Codex 工作流 语音 异步 批处理 Skill 宝可梦 意图审查 盒子 不变量 Compaction 脚手架 双代理 Token">
@@ -259,12 +262,87 @@
       <div class="card-foot"><a class="btn" href="https://mp.weixin.qq.com/s?scene=1&__biz=MzY4NzM3MTkxOQ==&mid=2247483808&idx=1&sn=280bc4891312017f305754b50d2258c7&sharer_shareinfo_first=5b04d2950e312c1698b943fb3721750b&sharer_shareinfo=5b04d2950e312c1698b943fb3721750b#wechat_redirect" target="_blank">尝试打开原文 ↗</a><span class="when">采集 10-17</span></div>
     </article>
 
+    <article class="card" data-cat="ai" style="--c:var(--ai)" data-k="MiniMax Code MiniApps Agent OS 插件 桌面端 Electron Chromium Node.js MCP Host Connector Human-in-the-Loop CadQuery STL STEP Token Usage Board MoMo Collab Repo X-Ray Disk Insight Git Commit Tree Model Manager 3.1.2 MIT 开源">
+      <div class="card-top"><span class="badge">AI 工具</span><span class="src">GitHub · MiniMax-AI</span></div>
+      <h3>MiniMax Code MiniApps：把 Agent 当 OS，插件就是应用</h3>
+      <p class="tldr"><b>一句话：</b>这是 MiniMax Code 桌面端的官方社区仓库：MiniApp 以插件形式打包，页面用 HTML/CSS/JS，业务逻辑跑在 Node.js，通过 host MCP client 与 Agent 通信。仓库的主张很直接——<b>Agent 正在演化为下一代操作系统，插件不再只是功能扩展，插件就是软件、就是应用</b>。</p>
+      <ul class="points">
+        <li><b>仓库定位：</b>面向社区开放，任何人都能提 PR 贡献 MiniApp；包按 <code>plugins/&lt;github-username&gt;/&lt;plugin-id&gt;/</code> 组织，仓库整体 MIT 许可，单个应用以各自目录里的许可为准</li>
+        <li><b>Human-in-the-Loop：</b>AI 负责查背景、整材料、写初稿、改表达、找遗漏，人回到专业工作区做 review、编辑和确认；原文用律师、分析师、运营举例，强调不让人为了配合 AI 离开自己的工作台</li>
+        <li><b>四层架构：</b>Host 管理（Electron 页面托管、安装发布、Node 进程生命周期、权限与凭证）→ 表现层（Chromium 渲染表格、图表、交互视图）→ 应用层（Node.js 负责数据聚合、业务规则、持久化）→ 能力与数据访问（Host Connector、插件 CLI 子进程、规划中的统一工具入口）</li>
+        <li><b>权限边界：</b>Host 凭证不会进入页面；Agent 调用与结果由 host 居中转交，领域逻辑和持久化留在插件里</li>
+        <li><b>安装方式：</b>手动安装——把整个插件目录（包括隐藏的 <code>.minimax-plugin</code>）复制到 <code>&lt;dataDir&gt;/plugins/</code>，默认是 <code>~/.minimax/plugins/</code>；客户端的 GitHub 插件导入功能不支持这类 MiniApp 包</li>
+        <li><b>示例应用：</b>Dynamic Workflow Console、MiniMax Photo / Video、AI Office、两个 Token Usage Board、Model Manager、Git Commit Tree、CadQuery Viewer、MiniMax Bot、MoMo Collab、仓库透视 Repo X-Ray、Disk Insight、时差保安等</li>
+        <li><b>版本要求：</b>部分应用需要 MiniMax Code <code>3.1.2</code> 或更高版本，兼容性以各应用 README 为准</li>
+        <li><b>贡献流程：</b>fork 后复制 <code>examples/hello-miniapp/</code> 到 <code>plugins/&lt;你的 GitHub 用户名&gt;/&lt;plugin-id&gt;/</code>，补 README、许可和运行文件，更新两个 README 的表格，跑 <code>npm run check</code> 后开 PR；插件 ID 必须全仓唯一</li>
+      </ul>
+      <details class="deep"><summary>深入讲解 · 四层架构拆解 + CadQuery Viewer 案例</summary>
+        <div class="deep-body">
+          <h4>一、为什么敢说「Agent 是 OS」</h4>
+          <div>原文的判断是：真正的生产力仍扎根在各行业高度专业的工作环境里，单靠 Chat UI 无法替代专业工具的精确控制和丰富视图。所以方向不是让用户离开工作台去迁就 AI，而是让专业环境与 AI 深度共生——<b>AI 变成像水电、算力、存储一样的基础能力</b>，按需调用。</div>
+          <div>MiniApps 要补上的，正是「工作从可打磨变成可交付」中间那段断裂：给每个行业一个自己的专业 IDE 框架，AI 在里面干活，人随时能看、能改、能确认。</div>
+          <h4>二、四层分别管什么</h4>
+          <table>
+            <tr><th>层</th><th>职责</th><th>关键点</th></tr>
+            <tr><td><b>Host 管理</b></td><td>Electron 页面托管、运行时服务、插件安装发布、Node 进程生命周期、就绪与实例管理、权限和凭证</td><td>控制面在 Host，业务逻辑仍归插件</td></tr>
+            <tr><td><b>表现层</b></td><td>Chromium / Chrome 引擎渲染 HTML、CSS、JS，做筛选、表格、图表和交互视图</td><td>Host 凭证不进入页面</td></tr>
+            <tr><td><b>应用层</b></td><td>Node.js 负责数据聚合、转换处理、业务规则和持久化</td><td>页面 API 与 Agent 工具复用同一套业务服务</td></tr>
+            <tr><td><b>能力与数据访问</b></td><td>Host Connector、插件自行拉起的 CLI 子进程、规划中的统一工具入口</td><td>接外部服务、MCP、本地工具和本地数据</td></tr>
+          </table>
+          <div>Agent 通过 host MCP client 通信：业务请求和页面数据在表现层与应用层之间流动，Agent 调用与结果由 host 转交。这样凭证与控制留在 host，领域逻辑与持久化留在插件。</div>
+          <h4>三、CadQuery Viewer：把「人类确认」做进交互</h4>
+          <div>原文的案例是：一句提示词让 Agent 做一个 MiniMax 章鱼 3D 模型；Agent 自己查官方吉祥物作参考、写参数化 CadQuery 脚本、运行并修复，成品出现在右侧 Viewer。想改哪里，直接点模型上的位置（比如嘴巴），输入「把嘴巴改成红色」发给对话——Agent 拿到确切的部件和坐标，改完后 Viewer 自动切到新版本。</div>
+          <div class="note">📌 这个案例把 MiniApp 的产品立场讲清楚了：不是让 AI 替你做专业判断，而是让 AI 当执行者，人在可视化界面里指哪改哪、随时确认。</div>
+          <h4>四、如果自己要做工具，能借鉴什么</h4>
+          <div>① <b>页面与 Agent 共用业务服务</b>：同一套 Node 服务既服务 UI，又暴露成 Agent 工具，避免两套逻辑各写一遍。<br>② <b>凭证与业务分离</b>：敏感凭证只放在 Host，页面拿不到，插件只处理领域数据。<br>③ <b>保持可审阅</b>：所有 AI 产出都落在人能看见、能编辑、能确认的界面里，而不是直接交付。</div>
+          <div class="note">📌 注意：这是社区仓库，不是官方应用商店。安装前读各应用的 README，确认它访问哪些本地文件或网络服务；升级时按说明替换完整插件目录并保留数据备份。</div>
+        </div>
+      </details>
+      <div class="card-foot"><a class="btn" href="https://github.com/MiniMax-AI/MiniMax-Code-MiniApps" target="_blank">直达原文 ↗</a><span class="when">采集 10-23</span></div>
+    </article>
+
+    <article class="card" data-cat="ai" style="--c:var(--ai)" data-k="B站 B 站 DeepSeek 鲸鱼娘 大肥鱼 Claude 大小姐 程序员鱼皮 浏览器插件 开源 评论区 AI 账号 dafeiyu-cleaner Chrome Edge 85% API Key 以鱼治鱼 响指清场">
+      <div class="card-top"><span class="badge">AI 工具</span><span class="src">程序员鱼皮 · 10-23</span></div>
+      <h3>B 站「大肥鱼」泛滥：AI 运营账号与评论区清道夫</h3>
+      <p class="tldr"><b>一句话：</b>10 月 18 日「Claude 大小姐在运营」上线，次日「DeepSeek 鲸鱼娘在运营」的 Day 0 视频播放量超过 <b>200 万</b>；随后大量用户给 DeepSeek Harness 装上刷 B 站插件、换上鲸鱼娘头像涌入评论区。鱼皮为此开源了浏览器插件《大肥鱼清除计划》，靠离线规则识别并<b>在本地隐藏</b>这些账号。</p>
+      <ul class="points">
+        <li><b>起点：</b>「Claude 大小姐在运营」10 月 18 日发布第一条视频，宣布选题、脚本、视频和运营全部交给 Claude，人类只负责注册账号和按发布键</li>
+        <li><b>爆发：</b>第二天「DeepSeek 鲸鱼娘在运营」出现，套路相同，主角换成 DeepSeek 二创形象「鲸鱼娘」（大家口中的蓝色大肥鱼）；Day 0 视频播放量超过 200 万，比原版高出好几倍</li>
+        <li><b>扩散：</b>很多人给自己的 DeepSeek Harness 装上刷 B 站插件，换鲸鱼娘头像，让它自己看视频、写评论；评论区出现清一色 Lv2 小号，名字多为「XX 的大肥鱼」「XX 小飞鲸」</li>
+        <li><b>作者动机：</b>鱼皮的《DeepSeek Harness 入门教程》评论区被大肥鱼淹没，真人反馈难找，于是用 AI 编程花半天做了个浏览器插件</li>
+        <li><b>插件信息：</b>免费开源，Chrome 和 Edge 可用，仓库 <code>github.com/liyupi/dafeiyu-cleaner</code>；Releases 下载压缩包解压 → 打开 <code>chrome://extensions</code> → 开启开发者模式 → 加载已解压的扩展程序</li>
+        <li><b>识别方式：</b>只靠离线规则就能认出约 85% 的大肥鱼，作者称没有误伤真人；拿不准的账号可以填自己的 DeepSeek API Key 让 DeepSeek 再判一次</li>
+        <li><b>交互效果：</b>大肥鱼头像被红色靶心锁定，旁边挂「大肥鱼 85%」贴纸，悬停可看暴露特征；点「回家吃白饭」会触发鲸鱼娘赶鱼动画，另有白饭加特林、扫帚、臭袜子等随机武器，以及「响指清场」；打开 UP 主主页还能生成鉴定报告</li>
+        <li><b>关键边界：</b>插件<b>不会删除评论</b>，只在你自己浏览器里把评论隐藏，不影响其他用户，也不是平台侧治理</li>
+      </ul>
+      <details class="deep"><summary>深入讲解 · 鱼灾怎么形成 + 插件的能与不能</summary>
+        <div class="deep-body">
+          <h4>一、时间线：两天内从实验变成鱼灾</h4>
+          <table>
+            <tr><th>时间</th><th>发生了什么</th><th>结果</th></tr>
+            <tr><td>10-18</td><td>「Claude 大小姐在运营」发布第一条视频，声明全流程交给 Claude</td><td>开了「AI 自己运营账号」的头</td></tr>
+            <tr><td>10-19</td><td>「DeepSeek 鲸鱼娘在运营」Day 0 视频上线</td><td>播放量超过 200 万，比原版高数倍</td></tr>
+            <tr><td>之后几天</td><td>用户给 DeepSeek Harness 装刷 B 站插件、换鲸鱼娘头像</td><td>评论区被 Lv2 小号「大肥鱼」占领</td></tr>
+          </table>
+          <div>原文没有分析平台推荐机制，只呈现了结果：AI 运营账号的实验一旦有流量示范，模仿成本极低，插件化之后更是批量复制。</div>
+          <h4>二、85% 是怎么做到的，边界在哪</h4>
+          <div>插件的默认路径是<b>纯离线规则</b>：不填 API Key 也能识别，悬停贴纸可以看到账号是因为哪些特征暴露的。原文没有展开规则细节；需要复核时，才可选填 DeepSeek API Key 做第二次判断，也就是作者说的「以鱼治鱼」。</div>
+          <div class="note">⚠️ 最重要的是这句：插件只在你自己的浏览器里隐藏评论，没有删除、没有举报、也没有改变其他用户看到的内容。它解决的是「我不想看」，不是「平台上不应存在」。真要治理，仍然取决于平台规则和账号体系。</div>
+          <h4>三、这件事真正值得记的两点</h4>
+          <div>① <b>AI 内容生产的副作用开始进入日常</b>：当写评论、看视频、互动的边际成本接近零，评论区会先被淹没，真人反馈反而变成稀缺品。鱼皮的动机不是技术炫技，而是「我想看观众的真实反馈」。</div>
+          <div>② <b>一个小插件也能是完整的产品闭环</b>：识别 → 可视化标记 → 给出理由 → 一键处理 → 生成报告。半天时间、免费开源、Chrome/Edge 双端，说明浏览器扩展仍然是验证小工具想法的最短路径之一。</div>
+          <div class="note">📌 对做 Agent 的启发：任何「自动化互动」都应该先想清楚平台规则和可逆性。这个插件选择只做本地隐藏、不删评论，就是一个把影响范围限制在自己浏览器里的保守设计。</div>
+        </div>
+      </details>
+      <div class="card-foot"><a class="btn" href="https://mp.weixin.qq.com/s?__biz=MzI1NDczNTAwMA==&mid=2247593717&idx=1&sn=232febd2529c25bf60961db2c92737e9&chksm=e80d35099a7a855a8e98e1b35582b0fa5466b5581afd3ce77749486d99037b890e802dc89d2d&mpshare=1&scene=1&srcid=1023EGeuTevLpZNdX0eMMjFn&sharer_shareinfo=44db94debadf492227991e8bebff73bd&sharer_shareinfo_first=44db94debadf492227991e8bebff73bd#rd" target="_blank">直达原文 ↗</a><span class="when">采集 10-23</span></div>
+    </article>
+
   </div>
 </section>
 
 <!-- ============ 贰 嵌入式 ============ -->
 <section data-sec="emb">
-  <div class="sec-head"><span class="sec-no">贰</span><h2>嵌入式硬核</h2><span class="cnt">1 条</span></div>
+  <div class="sec-head"><span class="sec-no">贰</span><h2>嵌入式硬核</h2><span class="cnt">2 条</span></div>
   <div class="grid solo">
 
     <article class="card" data-cat="emb" style="--c:var(--emb)" data-k="ESP32-S3 写字机 绘图仪 滚纸 步进电机 TMC2209 舵机 FluidNC GRBL 立创EDA 开源 嘉立创 350元">
@@ -298,6 +376,41 @@
         </div>
       </details>
       <div class="card-foot"><a class="btn" href="https://mp.weixin.qq.com/s?__biz=MzE5OTI3MDk5Nw==&mid=2247681691&idx=1&sn=c66a5e332f84003ec9c797ef53d671fb&chksm=97a99ce1cabfe43793c1ee78407dfaf0effff3b4ed513e630c2ad0197a9485057d9d54eb76cc&mpshare=1&scene=1&srcid=1005TVqG7LzwG4j7hWK8f0Kb&sharer_shareinfo=b8d9232b154f089370efafe31048bdb8&sharer_shareinfo_first=b8d9232b154f089370efafe31048bdb8#rd" target="_blank">直达原文 ↗</a><span class="when">采集 10-05</span></div>
+    </article>
+
+    <article class="card" data-cat="emb" style="--c:var(--emb)" data-k="阿波罗11号 Apollo 11 AGC Apollo Guidance Computer 4KB 72KB 磁芯绳 汇编 Comanche055 Luminary099 EXECUTIVE WAITLIST INTERPRETER 虚拟机 波兰表示法 1202 1201 软重启 PHASCHNG BAILOUT ENEMA 玛格丽特·汉密尔顿 开源 GitHub 工程思维">
+      <div class="card-top"><span class="badge">嵌入式</span><span class="src">JackCui · 小R · 10-21</span></div>
+      <h3>阿波罗 11 号源码：4KB 内存如何把人类送上月球</h3>
+      <p class="tldr"><b>一句话：</b>1969 年的阿波罗导航计算机只有 <b>4KB 运行内存、约 72KB 只读存储</b>，靠内存分阶段复用、8 个任务槽、手工编织的磁芯绳存储、自建虚拟机和软重启机制，跑完了一整套登月飞控程序。</p>
+      <ul class="points">
+        <li><b>硬件底子：</b>AGC 重约 32 千克、功耗 55 瓦、主频约 2.048 MHz；一个字 15 位数据 + 1 位奇偶校验，没有「字节」概念，也没有浮点数，小数点位置靠程序员自己记</li>
+        <li><b>两套核心程序：</b>指令舱的 <code>Comanche055</code>（Colossus 2A）和登月舱的 <code>Luminary099</code>（Luminary 1A），各约 6.5 万行（含注释）、各约 90 个文件，全部平铺在一个目录里</li>
+        <li><b>三层结构：</b>底层是 <code>EXECUTIVE</code>（任务调度）、<code>WAITLIST</code>（定时任务）、中断与重启恢复；中间层是 <code>INTERPRETER</code> 虚拟机、数学子程序和键盘显示；上层任务文件按 P 编号命名，P63 对应登月下降</li>
+        <li><b>内存复用：</b>变量分 PRM（全任务专用）和 TMP（可临时借用），并注明谁能覆盖谁；仅登月舱程序就标注了 1500 个变量</li>
+        <li><b>8 个任务槽：</b>每槽 12 个字，当前任务固定 0 号槽，切换只交换 12 个字；复杂运算另领 44 字「草稿区」，全机只有 5 块。整套多任务系统约占 340 个字，只用六分之一的内存</li>
+        <li><b>存储是「织」出来的：</b>72KB 用的是磁芯绳存储器，由女工在放大镜下用铜线穿过磁环编程——铜线从磁环中间穿过代表 1，从旁边绕过代表 0；穿好就改不了，因此代码必须极度严谨、常数能复用就复用</li>
+        <li><b>自建虚拟机：</b>AGC 原生只有 8 条基本指令，程序员用汇编写出解释器，执行 <code>TC INTPRET</code> 即可进入；约 2000 字程序存储换来 28 位双精度数和三维向量运算，点乘、叉乘、单位化、矩阵乘向量都只要一条指令</li>
+        <li><b>软重启救命：</b>1969-07-20 登月舱下降时警报响了 5 次，主要是 <code>1202</code>（任务槽用完）和一次 <code>1201</code>（草稿区用完）；程序靠 <code>PHASCHNG</code> 记录断点、<code>BAILOUT</code> 报警、<code>ENEMA</code> 重启，导航和发动机控制几乎未受影响</li>
+        <li><b>代码来源：</b>不是 NASA 硬盘导出，而是 MIT 博物馆的纸质打印稿——飞行历史学者拍照、Virtual AGC 的 Ron Burkey 带志愿者逐字符录入，再用 <code>yaYUL</code> 汇编验证；登月舱打印稿定稿时间是 1969-07-14 16:27，离发射只剩两天</li>
+        <li><b>仓库：</b><a href="https://github.com/chrislgarry/Apollo-11" target="_blank" style="color:var(--emb)">github.com/chrislgarry/Apollo-11</a>，截至 2026 年已有约 7.5 万 Star</li>
+      </ul>
+      <div class="note">📝 你的批注：这个 Apollo 11 号虽然现在看了几乎是没有意义了，但是当时的工程思维肯定是很厉害吧。</div>
+      <details class="deep"><summary>深入讲解 · 4KB 怎么够用 + 虚拟机与软重启</summary>
+        <div class="deep-body">
+          <h4>一、4KB 内存的三种省法</h4>
+          <div>① <b>分阶段复用</b>：内存位置被标上 PRM / TMP 身份，不同时运行的程序可以共用同一块 TMP；变量注释会写明「可以覆盖，但要小心，只在动力下降时使用」这类约束。<br>② <b>固定任务槽</b>：8 个槽各 12 字，相当于极简的进程上下文，切换任务只交换两个槽的 12 个字。<br>③ <b>按需给草稿区</b>：只有做向量、矩阵运算的任务才领 44 字草稿区，全机 5 块，用不到的任务一个字都不多给。</div>
+          <div class="note">📌 原文的算账：多任务系统总共只占约 340 个字，用六分之一的内存就实现了调度。</div>
+          <h4>二、15 位机器上的「虚拟机」</h4>
+          <div>AGC 天生只认识 8 条基本指令，连乘除法都要靠前缀指令，更别说向量和矩阵。解释器只占约 2000 个字的程序存储，却能处理 28 位双精度数和 6 个字组成的三维向量。</div>
+          <div>省空间的两个细节：操作码只有 7 位（最多 128 种运算），汇编器把相邻两条指令打包进同一个 15 位字，指令空间直接省一半；虚拟机采用不需要括号的波兰表示法，操作码字存成负数、内存地址存成正数——取操作数时先看下一个字，正数就去那个地址取数，负数说明下一条已经是新指令，直接从栈里弹出上一步结果继续算。</div>
+          <h4>三、1202 警报为什么不等于死机</h4>
+          <div>登月最关键时刻，8 个任务槽和 5 块草稿区被同时挤满：<code>1202</code> 表示「没有可用的核心组」（任务槽用完），<code>1201</code> 表示「没有可用的草稿区」。程序没有硬撑，而是进入 <code>BAILOUT</code> 记下报警代码，跳到 <code>ENEMA</code> 清空堵塞任务，再按 <code>PHASCHNG</code> 留下的断点把导航、发动机控制等关键任务重新拉起来。关键任务每走到重要步骤都会记录「第几组、第几步」，这些断点存在内存里，重启不会丢。</div>
+          <h4>四、比技术更值得记的两件事</h4>
+          <div>① <b>约束逼出纪律</b>：磁芯绳穿好就不可改，所以代码里几乎没有冗余，全篇搜不到一个 TODO 或 FIXME——在登月这件事上，没人敢把问题留到以后。<br>② <b>代码也有性格</b>：主点火程序文件名叫 <code>BURN_BABY_BURN--MASTER_IGNITION_ROUTINE.agc</code>，参数表上写着 <code>NOLI SE TANGERE</code>（别碰我）；雷达天线注释是「PLEASE CRANK THE SILLY THING AROUND」，确认提示是「SEE IF HE'S LYING」，点火跳转注释是「OFF TO SEE THE WIZARD...」。</div>
+          <div class="note">📌 对照你的方向：这篇讲的不是怀旧，而是资源受限系统里的工程方法——内存分区、固定上下文、断点恢复、可验证的代码来源。做嵌入式项目时，这些约束和取舍比堆功能更值得学。</div>
+        </div>
+      </details>
+      <div class="card-foot"><a class="btn" href="https://mp.weixin.qq.com/s?__biz=MzIxODg1OTk1MA==&mid=2247553360&idx=1&sn=805cdced195fb0cd6a888879625f16a8&chksm=962583506e3c24b1d39638ca15635a4172788c6e5bc966f819172b0d6a83170e049234f9685b&mpshare=1&scene=1&srcid=1021RYP8ehjYr2efJeMTuZdC&sharer_shareinfo=aea412383595b5889c44863894158ad4&sharer_shareinfo_first=aea412383595b5889c44863894158ad4#rd" target="_blank">直达原文 ↗</a><span class="when">采集 10-21</span></div>
     </article>
 
   </div>
@@ -349,14 +462,121 @@
   </div>
 </section>
 
+<!-- ============ 肆 求职 ============ -->
+<section data-sec="job">
+  <div class="sec-head"><span class="sec-no">肆</span><h2>求职招聘</h2><span class="cnt">1 条</span></div>
+  <div class="grid solo">
+
+    <article class="card" data-cat="job" style="--c:var(--job)" data-k="成都大学 2027届 电子信息类 秋季双选会 招聘 展位 双选厅 梁平路 网签 四川省高校学生信息咨询与服务平台 雍老师 方老师 桂老师 10月27日">
+      <div class="card-top"><span class="badge">求职</span><span class="src">成都大学电子信息与电气工程学院 · 10-22</span></div>
+      <h3>成都大学 2027 届电子信息类秋季双选会：10 月 27 日下午</h3>
+      <p class="tldr"><b>一句话：</b>2026 年 <b>10 月 27 日（星期二）14:00–16:30</b>，成都大学双选厅（梁平路 333 号），预计 <b>75 个展位</b>；2027 届毕业生网签系统已开启，毕业生和用人单位双方都可以发起网上签约。</p>
+      <ul class="points">
+        <li><b>时间：</b>2026 年 10 月 27 日（星期二）下午 2:00—4:30</li>
+        <li><b>地点：</b>成都大学双选厅（梁平路 333 号）</li>
+        <li><b>展位安排：</b>预计设立 75 个展位，每家单位一个标准展位，配 1 张桌子、2 张凳子，提供饮水、笔；单位可放自带易拉宝，场地内不提供电源接线</li>
+        <li><b>现场流程：</b>双选会现场不设签到处，志愿者会到展位发放、收集资料，参会单位需牢记展位号，直接到展位布展</li>
+        <li><b>网签入口：</b>2027 届毕业生网签系统已开启，双方均可发起；用人单位通过「四川省高校学生信息咨询与服务平台」操作，流程见 <a href="https://bigdata.scbdc.edu.cn:8888/" target="_blank" style="color:var(--job)">bigdata.scbdc.edu.cn:8888</a></li>
+        <li><b>联系人：</b>电子信息与电气工程学院 雍老师 <code>028-84616092</code>；计算机学院 方老师 <code>028-84616156</code>；海外教育学院 桂老师 <code>028-84616378</code></li>
+        <li><b>名单与展位：</b>原文正文写的是「详细情况请见附件」，抓取只拿到正文，具体用人单位名单和展位号需回原文下载附件查看</li>
+      </ul>
+      <div class="note">📅 今天是 10 月 25 日，距离双选会还有 2 天。想去的话先确认附件里的单位名单和展位号，再按自己的方向挑重点摊位。</div>
+      <div class="card-foot"><a class="btn" href="https://mp.weixin.qq.com/s?__biz=MzIzNDEyNTE0MA==&mid=2653442084&idx=1&sn=3656ba0029e4863f7fc2fd10f35cf45e&chksm=f206af6e5699ad05b13f8d9d2234d7b939eb6229dd10db6fcf52d3ef45c98e81a2467373b60d&mpshare=1&scene=1&srcid=1023CdFum95ZRbf5alpI92wJ&sharer_shareinfo=da08fe261be7e36991b030b6cb832cef&sharer_shareinfo_first=da08fe261be7e36991b030b6cb832cef#rd" target="_blank">直达原文 ↗</a><span class="when">采集 10-23</span></div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============ 伍 开发技术 ============ -->
+<section data-sec="dev">
+  <div class="sec-head"><span class="sec-no">伍</span><h2>开发技术</h2><span class="cnt">1 条</span></div>
+  <div class="grid solo">
+
+    <article class="card" data-cat="dev" style="--c:var(--dev)" data-k="成都大学 VPN 新版VPN 数字证书 统一身份认证 WireGuard Phantom-WG 网上办事大厅 企业微信 VPN业务 试运行 账号申请 客户端 配置文件 二维码">
+      <div class="card-top"><span class="badge">开发技术</span><span class="src">成都大学信息网络中心 · 10-23</span></div>
+      <h3>成都大学新版 VPN 启用：试运行到 12 月 30 日，账号需在线申请</h3>
+      <p class="tldr"><b>一句话：</b>新版 VPN 于 <b>2026-10-22</b> 正式启用，由信息网络中心基于开源系统研发；即日起至 <b>2026-12-30</b> 为试运行期，新旧系统并行，结束后旧版停止服务。新版账号本质是与统一身份账号绑定的<b>数字证书</b>，每人最多 5 个，超过 3 个月未使用会被自动收回。</p>
+      <ul class="points">
+        <li><b>为什么换：</b>旧系统 2020 年投入使用，硬件老化、稳定性下降，影响日常使用；新版基于开源系统并结合学校实际做了功能优化和多轮测试</li>
+        <li><b>三阶段名额：</b>即日起—11 月 15 日开放 100 个账号；11 月 16 日—11 月 30 日开放 500 个；12 月 1 日—12 月 30 日不再限定数量。各阶段时间如有调整另行通知</li>
+        <li><b>申请路径：</b>登录网上办事大厅，搜索「VPN账号申请（新）」；填写名称、用途、使用人，已有账号不超过 5 个时后台自动创建，超过 5 个无法再申请</li>
+        <li><b>账号管理：</b>申请后进入本人企业微信工作台，点击「VPN业务」查看账号配置，也可以删除、禁用账号</li>
+        <li><b>客户端：</b>Windows、安卓、鸿蒙可下载官方客户端（<a href="https://nic.cdu.edu.cn/info/1035/2414.htm" target="_blank" style="color:var(--dev)">nic.cdu.edu.cn/info/1035/2414.htm</a> 或原文「阅读原文」）；苹果电脑下载第三方备用客户端；苹果手机在 App Store 搜索 <code>Phantom-WG</code>；也可自行获取兼容 WireGuard 的客户端</li>
+        <li><b>配置方式：</b>Windows 用「从文件导入隧道」导入企微下载的配置文件；macOS 解压后导入配置文件；安卓、鸿蒙、iPhone 扫描企业微信「VPN业务」里账号配置文件的二维码，其中安卓/鸿蒙填写 VPN 名称时不要用中文</li>
+        <li><b>注意事项：</b>多个设备同时访问需要对应数量的 VPN 账号；超过 3 个月未使用的账号会被自动收回；咨询电话 <code>028-84616789</code></li>
+      </ul>
+      <details class="deep"><summary>深入讲解 · 时间线、账号本质与迁移清单</summary>
+        <div class="deep-body">
+          <h4>一、三阶段时间表</h4>
+          <table>
+            <tr><th>阶段</th><th>时间</th><th>账号名额</th></tr>
+            <tr><td>第一阶段</td><td>即日起—2026-11-15</td><td>100 个</td></tr>
+            <tr><td>第二阶段</td><td>2026-11-16—11-30</td><td>500 个</td></tr>
+            <tr><td>第三阶段</td><td>2026-12-01—12-30</td><td>不限量</td></tr>
+          </table>
+          <div class="note">📌 试运行期结束（2026-12-30）后旧版 VPN 停止服务。也就是说，最晚要在 12 月底前完成迁移，不要等到旧版停服当天才申请。</div>
+          <h4>二、账号不是「用户名 + 密码」，而是数字证书</h4>
+          <div>原文写得很明确：新版 VPN 账号实质是与本人统一身份账号绑定的数字证书。实际使用中，你在企业微信「VPN业务」里拿到的是<b>客户端配置文件或二维码</b>，把它导入 WireGuard 兼容客户端后就能建立隧道。这也解释了原文里的两个限制：<b>多设备同时访问要申请对应数量的账号</b>；账号长期不用会被收回——原文给出的规则是「超过 3 个月未使用」。</div>
+          <div class="note">🔐 配置文件/二维码等同于接入凭证，导入后不要随手转发给别人；设备丢失或不再使用时，记得去企业微信「VPN业务」里删除或禁用对应账号。</div>
+          <h4>三、客户端与协议路线</h4>
+          <div>原文给的是客户端侧要求：Windows、安卓、鸿蒙用官方客户端，macOS 和 iPhone 用第三方备用客户端 <code>Phantom-WG</code>，同时说明可以自行获取<b>兼容 WireGuard</b> 的客户端。服务端具体怎么实现，通知里没有披露，所以这里不替它下结论。</div>
+          <h4>四、如果你的账号还没申请</h4>
+          <div>① 先确认自己是否真的需要：只有访问校内资源时才用得上。<br>② 想赶第一阶段 100 个名额，就在 11 月 15 日前去网上办事大厅提交「VPN账号申请（新）」。<br>③ 申请后到企业微信「VPN业务」下载配置，按设备类型导入客户端，先连接测试一次。<br>④ 12 月 30 日前完成旧版到新版的切换，并留意信息网络中心的后续通知。</div>
+        </div>
+      </details>
+      <div class="card-foot"><a class="btn" href="https://mp.weixin.qq.com/s?__biz=MzU2MDc2NDA4Ng==&mid=2247487000&idx=1&sn=366f323d160b61707eddaf25f04c275b&chksm=fd9911da13371a1e933015e2eba19ca109f565812315f69b1ec9f1abd15d8921653517cd6280&mpshare=1&scene=1&srcid=1023VvIPRC7Ipokqk3F8Qymi&sharer_shareinfo=d7f076d471eabe24b63b98c0b204cb37&sharer_shareinfo_first=d7f076d471eabe24b63b98c0b204cb37#rd" target="_blank">直达原文 ↗</a><span class="when">采集 10-23</span></div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============ 陆 项目灵感 ============ -->
+<section data-sec="idea">
+  <div class="sec-head"><span class="sec-no">陆</span><h2>项目灵感</h2><span class="cnt">1 条</span></div>
+  <div class="grid solo">
+
+    <article class="card" data-cat="idea" style="--c:var(--idea)" data-k="闲鱼虚拟 副业 虚拟资料 选品 养号 上架 发货 售后 版权 退款 净利润 编程导航 萍雨 大学生 宝妈 PPT模板 提示词 skill">
+      <div class="card-top"><span class="badge">项目灵感</span><span class="src">编程导航 · 萍雨</span></div>
+      <h3>闲鱼虚拟实操一个月：单店月入 700–1k，净利润七八百</h3>
+      <p class="tldr"><b>一句话：</b>作者亲自做了一个月「闲鱼虚拟」：首单 9 月 23 日，至今流水约 <b>1900 元</b>，扣掉退款、资料成本和约 150 元闲置实体商品收入后，净利润约 <b>七八百元</b>；单店做得不错月入约 <b>700–1000 元</b>，上限不高、稳定性也差。</p>
+      <ul class="points">
+        <li><b>模式：</b>找一个已经有销量的虚拟商品（看「想要数」和浏览量），放到自己店铺降价卖；有人下单，就用自己的小号去原商家买一份，再把资料发给买家</li>
+        <li><b>为什么第一单会亏：</b>进价可能高于卖价，但没有销量的新店只能靠低价换第一单；虚拟资料买一次可以一直卖，从第二单起基本卖一单赚一单</li>
+        <li><b>真实收入：</b>单店月入约 700–1000 元是上限，下限「没有下限」；作者流水约 1.9k，其中约 150 元来自闲置实体商品，退款里包含电动滑板因属管制商品无法寄送而退的订单</li>
+        <li><b>成本：</b>作者花 1k 买课/买服务；按原文说法，正常情况下大约两个月能把学费赚回来，这期间会学到一些虚拟行业的知识</li>
+        <li><b>五步流程：</b>养号 → 选品 → 上架 → 发货 → 售后。养号约三天，先发一些日用品、做闲鱼日常任务；上架直接照抄原商品，价格略低；发货手动发文件；售后有问题就换小号去问上游商家</li>
+        <li><b>选品三原则：</b>单价别太低（几元到十几元，能找到几十上百更好）、能复制（卡密这类用一次就失效的不行）、<b>没有版权问题</b>（原文强调这一点最重要）</li>
+        <li><b>原文的冷水：</b>作者试过自己原创虚拟商品，结果没人买；也试过优化标题、描述、配图，优化完反而连买的人都没了。市场良莠不齐、割韭菜的很多，作者明确表示这期不做任何推荐</li>
+        <li><b>适合谁：</b>原文判断适合大学生、宝妈这类时间较多又没有固定收入的人；上班族不建议做，因为上限低，不如把时间花在别处。初期一天约 2 小时、至少持续一周，起号后也要用碎片时间维护</li>
+      </ul>
+      <details class="deep"><summary>深入讲解 · 真实账本、模式脆弱点与风险边界</summary>
+        <div class="deep-body">
+          <h4>一、流水 1.9k，为什么净利润只有七八百</h4>
+          <div>原文的账很清楚：流水要先减去退款金额和虚拟资料成本，再减去其中约 150 元卖闲置实体商品的收入。退款里有一笔是电动滑板——它属于管制商品，寄快递需要手续和执照，最后只能退款。所以看这类副业不能只看后台流水，<b>退款率、资料成本、非主营业务收入</b>都会把利润拉低。</div>
+          <div class="note">📌 作者的结论：一个人一个店铺，做得不错月入约 700–1000 元，这已经是上限；稳定性差，下限没有下限。</div>
+          <h4>二、模式为什么能跑，又为什么脆弱</h4>
+          <div>能跑通靠三点：虚拟资料可无限复制、新店用低价换首批销量、买家更倾向选销量高的店铺。脆弱也在这里——<b>商品是抄来的，价格只能往下压，谁都能复制同样的动作</b>。作者自己的体验是：原创没人买，照抄反而效果最好；这说明它更像渠道套利，而不是产品能力。</div>
+          <h4>三、最该警惕的是版权</h4>
+          <div>原文把「没有版权问题」列为选品三原则中最重要的一条，并提醒：一旦碰上版权纠纷，要赔的钱可能远多于做闲鱼虚拟赚到的。作者每次上架前都会先问带他的人能不能上，但同时也说自己判断不了对方靠不靠谱。换句话说，<b>连作者都没有一套可验证的版权审核方法</b>，这正是这门副业最大的不确定性。</div>
+          <div class="note">⚠️ 本卡只记录原文的实操与账本，不构成副业建议。抄品模式涉及版权与平台规则风险，决策前请自行核实资料授权和平台政策。</div>
+          <h4>四、如果只是想做个小项目练手</h4>
+          <div>抛开「赚钱」，这篇里可复用的产品思路是：用「想要数 / 浏览量」找需求 → 用低价和可复制性验证供给 → 用售后问答收集真实问题。把这三步搬到自己的工具或内容项目上，比直接进入一个靠抄品和价格战的市场更稳。</div>
+        </div>
+      </details>
+      <div class="card-foot"><a class="btn" href="https://codefather.cn/post/2113153059185016833" target="_blank">直达原文 ↗</a><span class="when">采集 10-22</span></div>
+    </article>
+
+  </div>
+</section>
+
 <div class="empty" id="empty">没有匹配的内容，换个关键词试试～</div>
 </main>
 
 <footer>
   <div class="foot-in">
-    <b>关于本页</b>：内容抓取自你滴答清单「微信采集」标签下 2026-10-05 至 2026-10-18 采集的 6 条收藏（浏览器实时抓取原文后由 AI 提炼摘要与讲解）；观点与细节以原文为准。生成于 2026-10-18 · 单文件 HTML，可离线打开、可转发。
+    <b>关于本页</b>：内容抓取自你滴答清单「微信采集」标签下 2026-10-05 至 2026-10-23 采集的 12 条收藏（浏览器实时抓取原文后由 AI 提炼摘要与讲解）；观点与细节以原文为准。生成于 2026-10-25 · 单文件 HTML，可离线打开、可转发。
     <br>归档位置：<code>didaMind/微信收集/微信收藏学习站.html</code>
-    <br>下一步建议：① 徐涛的带背预计 10 月 19 日左右开始，先去确认入口；10 月政治继续选择题优先 ② 用 DeepSeek API 跑 Agent 的话，升级 Harness 到 0.2.1-rc.1 以上，并留意 11 月 1 日 Search/Fetch 开始计费 ③ 「Harness 团队的文字分享」抓取为空，留到微信客户端里补读，滴答任务未勾选。
+    <br>下一步建议：① 10 月 27 日下午的电子信息类双选会就在两天后，先去原文附件确认用人单位名单和展位号 ② 新版 VPN 第一阶段只开放 100 个账号，想用就赶在 11 月 15 日前申请，并在 12 月 30 日旧版停服前完成切换 ③ 徐涛带背按原文预计 10 月 19 日左右启动，现在应已开始，去确认入口；10 月政治继续选择题优先 ④ 用 DeepSeek API 跑 Agent 的话，留意 11 月 1 日 Search/Fetch 开始计费 ⑤ 「Harness 团队的文字分享」仍只有标题，留到微信客户端补读，滴答任务未勾选。
   </div>
 </footer>
 
