@@ -50,15 +50,15 @@
 | `source.published` | 原文发布日期，`YYYY-MM-DD`。卡片上只显示月-日 |
 | `points_html` | 要点数组，每项是一段 HTML |
 | `notes_html` | 卡片上、深入讲解之外的批注，每项是一段 HTML |
-| `detail.summary` | 「深入讲解」折叠条上的标题 |
+| `detail.summary` | 阅读页里「深入讲解」一节的标题。不再做成折叠条 |
 | `detail.body_html` | 深入讲解正文 HTML（小标题用 `<h4>`，表格用 `<table>`） |
 | `keywords` | 搜不到正文里的词时，补在这里。搜索框会连同正文一起匹配 |
 | `wechat` | 微信文章的 `biz`、`mid`、`idx`，有 `sn` 也写上。`biz` 保留链接里的 `=` |
 | `ticktick_task_id` | 有对应的滴答任务 id 再填。页面上不展示，只放在 `data-task` 里。没有就不要写这个字段，也不要写 `null` |
 
-`summary_html`、`points_html`、`notes_html`、`detail.body_html` 会原样插入页面。`title` 这类纯文本字段会被转义。正文里如果写了 `color:var(--分类id)`，构建会把每个分类 id 定义成朱砂，链接仍是同一种颜色。
+`summary_html`、`points_html`、`notes_html`、`detail.body_html` 会原样插入页面。`title` 这类纯文本字段会被转义。
 
-抓取失败时：`status` 设为 `fetch_failed`，`summary_label` 写 `仅标题收录`，在摘要里写明失败原因，**不要编造正文**。这种卡片是虚线边、斜印「未录入」，标题用意大利体，没有首字下沉，链接写成「尝试打开原文」。其余条目的链接是「阅读原文」。
+抓取失败时：`status` 设为 `fetch_failed`，`summary_label` 写 `仅标题收录`，在摘要里写明失败原因，**不要编造正文**。这种条目没有 `detail`，阅读页底部的链接是「尝试打开原文」，其他条目是「直达原文」。
 
 ### id 怎么取
 
@@ -120,7 +120,7 @@ node -e "const c=require('crypto');console.log('url:'+c.createHash('sha256').upd
 
 ### 分类
 
-八个分类已经在 `categories` 里：`ai`、`emb`、`kaoyan`、`job`、`dev`、`idea`、`hw`、`life`。新增分类就往这个数组加一项，带上 `id`、`numeral`、`title`、`badge`、`filter_label`、`color`（`#rrggbb`）。`id` 仍须小写字母开头，后接小写字母、数字或连字符。`color` 仍要通过校验，页面本身只用墨色和朱砂，不再按分类上色。筛选按钮的文字来自 `filter_label`。
+八个分类已经在 `categories` 里：`ai`、`emb`、`kaoyan`、`job`、`dev`、`idea`、`hw`、`life`。新增分类就往这个数组加一项，带上 `id`、`numeral`、`title`、`badge`、`filter_label`、`color`（`#rrggbb`）。`id` 要用小写字母开头，因为它会变成 CSS 变量名。筛选按钮从这里来。`color` 仍写在数据里，方便以后使用；页面本身只用墨色和朱砂两色，正文里旧的 `var(--分类)` 也会被收成朱砂，不再按分类铺彩虹。
 
 ### 校验失败的情况
 
@@ -157,11 +157,9 @@ npm run check
 python3 -m http.server
 ```
 
-页面是一本册页，同一批文章在手机和桌面上共用。窄于 800 像素时一次一张：左右滑动或方向键翻页，底部有上一张、第几张、下一张。点「第几张」或「目录」打开目录，可按时间或分类跳到任意一篇；正文在卡片内部滚动。宽于 800 像素时按章排成三列。默认按采集日期从新到旧，同一天里再按分类（壹到捌）；「按分类」改成按类目分章。左边是章目录（窄于 1100 像素时改到正文上方横排）。讲解在卡片里展开，旁边的卡片保持原来的高度。筛选、搜索、阅读进度和距 27 考研初试的倒计时都还在。倒计时的日期是 `site.exam`。
+页面按**采集日期从新到旧**分批，同一天里再按分类（壹到捌）排成卡片。点卡片进入同一页的阅读视图（地址栏带 `#`），左上角「返回篇目」回到目录。阅读视图里有目录，滚动时高亮当前小节，页顶有阅读进度。不要再做卡片内的上下展开。分类筛选、搜索、距 27 考研初试的倒计时都还在。倒计时的日期是 `site.exam`。
 
-搜索匹配标题、来源、摘要、要点、批注、深入讲解和 `keywords`。篇目到几百时，筛选只改卡片的显隐，换排列方式是把已有节点移进新的章，不重画整页。
-
-取舍和参照写在 [`design/README.md`](design/README.md)。对照用的三套原型留在 [PR #2](https://github.com/userAlex110/reading-digest/pull/2)。
+取舍和参照写在 [`design/README.md`](design/README.md)。对照用的三套原型留在 [PR #2](https://github.com/userAlex110/reading-digest/pull/2)。线上页是卡片目录加阅读视图，不是原型里在格子内展开讲解的那一版。
 
 ---
 
