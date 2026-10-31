@@ -218,102 +218,116 @@ function chineseDate(iso) {
   return `${month} 月 ${day} 日`;
 }
 
-function rangeProse(min, max) {
-  const [y1, m1, d1] = min.split('-').map(Number);
-  const [y2, m2, d2] = max.split('-').map(Number);
-  if (y1 === y2 && m1 === m2) return `${m1} 月 ${d1} 日至 ${d2} 日`;
-  if (y1 === y2) return `${m1} 月 ${d1} 日至 ${m2} 月 ${d2} 日`;
-  return `${y1} 年 ${m1} 月 ${d1} 日至 ${y2} 年 ${m2} 月 ${d2} 日`;
+function yearCn(iso) {
+  const digits = '〇一二三四五六七八九';
+  return iso.slice(0, 4).replace(/\d/g, (digit) => digits[digit]);
 }
 
-function slashDate(iso) {
-  return iso.slice(5).replace('-', '/');
+function dateLine(article) {
+  const published = article.source && article.source.published ? article.source.published.slice(5) : '';
+  const added = article.added.slice(5);
+  if (published && published !== added) return `刊 ${published} · 采集 ${added}`;
+  return published || added;
 }
 
-function rangeChip(min, max) {
-  if (min.slice(0, 4) === max.slice(0, 4)) return `${slashDate(min)}–${slashDate(max)}`;
-  return `${min.replace(/-/g, '/')}–${max.replace(/-/g, '/')}`;
-}
-
-function sourceLine(article) {
-  const source = article.source || {};
-  const account = source.account || '';
-  const published = source.published ? source.published.slice(5) : '';
-  if (account && published) return `${account} · ${published}`;
-  return account || published;
-}
-
-function renderCard(article, category) {
+function extraHtml(article) {
+  const parts = [];
+  if (article.detail && article.detail.summary) parts.push(`<p class="dk">${esc(article.detail.summary)}</p>`);
   const points = article.points_html || [];
-  const notes = article.notes_html || [];
-  const linkText = article.status === 'fetch_failed' ? '尝试打开原文 ↗' : '直达原文 ↗';
+  if (points.length) parts.push(`<ol class="points">${points.map((point) => `<li>${raw(point)}</li>`).join('')}</ol>`);
+  if (article.detail && article.detail.body_html) parts.push(`<div class="body">${raw(article.detail.body_html)}</div>`);
+  for (const note of article.notes_html || []) parts.push(`<p class="note">${raw(note)}</p>`);
+  return parts.join('');
+}
+
+function renderCard(article, category, index) {
+  const failed = article.status === 'fetch_failed';
   const taskAttr = article.ticktick_task_id ? ` data-task="${esc(article.ticktick_task_id)}"` : '';
-  const pointsHtml = points.length
-    ? `\n      <ul class="points">\n${points.map((point) => `        <li>${raw(point)}</li>`).join('\n')}\n      </ul>`
+  const account = article.source && article.source.account ? article.source.account : '';
+  const when = article.source && article.source.published ? article.source.published : article.added;
+  const extra = extraHtml(article);
+  const more = extra
+    ? `<div class="more" id="more-${index}" hidden>${extra}</div>`
     : '';
-  const notesHtml = notes.map((note) => `\n      <div class="note">${raw(note)}</div>`).join('');
-  const detail = article.detail
-    ? `\n      <details class="deep"><summary>${esc(article.detail.summary)}</summary>\n        <div class="deep-body">\n${raw(article.detail.body_html)}\n        </div>\n      </details>`
+  const expand = extra
+    ? `<button type="button" class="expand" aria-expanded="false" aria-controls="more-${index}">展开讲解</button>`
     : '';
-  return `    <article class="card" data-id="${esc(article.id)}" data-cat="${esc(category.id)}" style="--c:var(--${category.id})" data-k="${esc(article.keywords || '')}"${taskAttr}>
-      <div class="card-top"><span class="badge">${esc(category.badge)}</span><span class="src">${esc(sourceLine(article))}</span></div>
-      <h3>${esc(article.title)}</h3>
-      <p class="tldr"><b>${esc(article.summary_label)}：</b>${raw(article.summary_html)}</p>${pointsHtml}${notesHtml}${detail}
-      <div class="card-foot"><a class="btn" href="${esc(article.url)}" target="_blank">${linkText}</a><span class="when">采集 ${esc(article.added.slice(5))}</span></div>
+  return `    <article class="card${failed ? ' is-failed' : ''}" data-id="${esc(article.id)}" data-cat="${esc(category.id)}" data-added="${esc(article.added)}" data-i="${index}" data-k="${esc(article.keywords || '')}"${taskAttr}>
+      <div class="scroll">
+        <div class="meta"><span class="cat">${esc(category.badge)}</span><span class="sep" aria-hidden="true">·</span><time datetime="${esc(when)}">${esc(dateLine(article))}</time>${failed ? '<span class="stamp">未录入</span>' : ''}</div>
+        <h3 class="title">${esc(article.title)}</h3>
+        <p class="source">${esc(account)}</p>
+        <p class="label">${esc(article.summary_label)}</p>
+        <div class="lead">${raw(article.summary_html)}</div>
+        ${more}
+      </div>
+      <div class="actions">${expand}<a href="${esc(article.url)}" target="_blank" rel="noopener noreferrer">${failed ? '尝试打开原文' : '阅读原文'}</a></div>
     </article>`;
+}
+
+function orderedItems(doc) {
+  const order = new Map(doc.categories.map((category, index) => [category.id, index]));
+  return doc.articles.map((article, index) => ({ article, index })).sort((a, b) => {
+    if (a.article.added !== b.article.added) return a.article.added < b.article.added ? 1 : -1;
+    const diff = order.get(a.article.category) - order.get(b.article.category);
+    if (diff) return diff;
+    return a.index - b.index;
+  });
+}
+
+function filterButtons(categories) {
+  const all = `        <button type="button" class="chip" data-filter="all" aria-pressed="true">全部</button>`;
+  const rest = categories.map((category) => `        <button type="button" class="chip" data-filter="${esc(category.id)}" data-title="${esc(category.title)}" data-numeral="${esc(category.numeral)}" data-badge="${esc(category.badge)}" aria-pressed="false">${esc(category.filter_label)}</button>`).join('\n');
+  return `${all}\n${rest}`;
+}
+
+function arrangeButtons() {
+  return `        <div class="seg" role="group" aria-label="排列方式">
+          <button type="button" data-arrange="time" aria-pressed="true">按时间</button>
+          <button type="button" data-arrange="tag" aria-pressed="false">按分类</button>
+        </div>`;
 }
 
 function renderPage(doc) {
   const { site, categories, articles } = doc;
   const byId = new Map(categories.map((category) => [category.id, category]));
-  const dates = [...new Set(articles.map((article) => article.added))].sort().reverse();
+  const items = orderedItems(doc);
+  const groups = [];
+  for (const item of items) {
+    const key = item.article.added;
+    let group = groups[groups.length - 1];
+    if (!group || group.key !== key) {
+      group = { key, items: [] };
+      groups.push(group);
+    }
+    group.items.push(item);
+  }
+  const dates = groups.map((group) => group.key);
   const minDate = dates[dates.length - 1];
   const maxDate = dates[0];
-  const usedCategoryCount = categories.filter((category) => articles.some((article) => article.category === category.id)).length;
-  const detailCount = articles.filter((article) => article.detail).length;
-  const failed = articles.filter((article) => article.status === 'fetch_failed');
-  const newest = articles.filter((article) => article.added === maxDate);
-  const newestTitles = newest.map((article) => esc(article.title)).join('、');
-  const failedTitles = failed.map((article) => esc(article.title)).join('、');
-
-  const sub = `这里是完整阅读归档，共 ${articles.length} 条，采集于 ${rangeProse(minDate, maxDate)}，按日期分成 ${dates.length} 批。每条都提炼了摘要与要点，硬核文章附深入讲解，想读原文一键直达。`;
-  let howto = `<b>用法：</b>按采集日期从新到旧往下读，也可以用分类或搜索缩小范围。标着 <b>深入讲解</b> 的可以展开。最近一批（${esc(chineseDate(maxDate))}，${newest.length} 条）：${newestTitles}。`;
-  if (failed.length) {
-    howto += `另有 ${failed.length} 条正文抓取失败，只收录了标题：${failedTitles}。`;
-  }
-
-  const filters = categories.map((category) => `      <button class="fbtn" data-f="${esc(category.id)}">${esc(category.filter_label)}</button>`).join('\n');
-  const batches = dates.map((date) => {
-    const inBatch = articles.filter((article) => article.added === date);
-    const sections = categories.map((category) => {
-      const cards = inBatch.filter((article) => article.category === category.id);
-      if (!cards.length) return '';
-      const grid = cards.length <= 3 ? 'grid solo' : 'grid';
-      return `    <section data-sec="${esc(category.id)}">
-      <div class="sec-head"><span class="sec-no">${esc(category.numeral)}</span><h2>${esc(category.title)}</h2><span class="cnt">${cards.length} 条</span></div>
-      <div class="${grid}">
-${cards.map((article) => renderCard(article, byId.get(article.category))).join('\n\n')}
+  const chapters = groups.map((group) => `    <section class="group" id="grp-${esc(group.key)}" data-key="${esc(group.key)}">
+      <header class="ghead"><span class="year">${esc(yearCn(group.key))}</span><h2>${esc(chineseDate(group.key))}</h2><span class="gcount">${group.items.length} 篇</span></header>
+      <div class="grid">
+${group.items.map(({ article, index }) => renderCard(article, byId.get(article.category), index)).join('\n')}
       </div>
-    </section>`;
-    }).filter(Boolean).join('\n\n');
-    return `  <div class="batch" data-batch="${esc(date)}">
-    <div class="batch-head"><h2>${esc(chineseDate(date))}</h2><span class="year">${esc(date.slice(0, 4))}</span><span class="cnt">${inBatch.length} 条</span></div>
-${sections}
-  </div>`;
-  }).join('\n\n');
-
+    </section>`).join('\n');
+  const indexLinks = groups.map((group) => `          <a href="#grp-${esc(group.key)}"><span>${esc(chineseDate(group.key))}</span><small>${group.items.length}</small></a>`).join('\n');
   const notes = Array.isArray(site.archive_notes) ? site.archive_notes : [];
   const notesHtml = notes.length
-    ? `\n    <br>归档时记下的后续事项：${notes.map((note, index) => `${CIRCLED[index] || `${index + 1}.`} ${esc(note)}`).join(' ')}`
+    ? `<br>归档时记下的后续事项：${notes.map((note, index) => `${CIRCLED[index] || `${index + 1}.`} ${esc(note)}`).join(' ')}`
     : '';
-
   const [examYear, examMonth, examDay] = site.exam.date.split('-').map(Number);
-  const css = fs.readFileSync(path.join(__dirname, 'page.css'), 'utf8').trim();
-  const colorVars = categories.map((category) => `--${category.id}:${category.color};`).join('');
+  const catVars = doc.categories.map((category) => `  --${category.id}: var(--accent);`).join('\n');
+  const css = fs.readFileSync(path.join(__dirname, 'page.css'), 'utf8')
+    .replace('/* __CAT_VARS__ */', catVars)
+    .trim();
   const client = fs.readFileSync(path.join(__dirname, 'client.js'), 'utf8')
     .replace(/__EXAM_Y__/g, String(examYear))
     .replace(/__EXAM_M__/g, String(examMonth - 1))
     .replace(/__EXAM_D__/g, String(examDay));
+  const brand = site.title.split('·')[0].trim();
+  const filters = filterButtons(categories);
+  const arrange = arrangeButtons();
 
   return `<!DOCTYPE html>
 <html lang="zh-CN">
@@ -325,53 +339,76 @@ ${sections}
 <title>${esc(site.title)}</title>
 <style>
 ${css}
-:root{${colorVars}}
 </style>
 </head>
 <body>
-<div id="progress"></div>
+<a class="skip" href="#chapters">跳到正文</a>
+<div id="desk-prog" class="prog" role="progressbar" aria-label="阅读进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
+<div id="mob-prog" class="prog" role="progressbar" aria-label="翻页进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
 <!-- Generated from data/articles.json by scripts/build.js. Edit the data, then rebuild. -->
 
-<header class="hero">
-  <div class="hero-in">
-    <div class="seal">${esc(site.seal)}</div>
-    <div class="kicker">${esc(site.kicker)}</div>
+<header class="top">
+  <div class="brand">
+    <p class="eyebrow">${esc(site.kicker)}</p>
     <h1>${raw(site.headline_html)}</h1>
-    <p class="sub">${esc(sub)}</p>
-    <div class="stats">
-      <span class="chip"><b>${articles.length}</b>条收藏</span>
-      <span class="chip"><b>${usedCategoryCount}</b>大板块</span>
-      <span class="chip"><b>${rangeChip(minDate, maxDate)}</b>采集</span>
-      <span class="chip"><b>${detailCount}</b>篇含深入讲解</span>
-      <span class="chip hot" id="countdown"><b>--</b>天距离 ${esc(site.exam.label)}</span>
-    </div>
-    <div class="howto">${howto}</div>
+    <p class="exam" id="countdown">距 ${esc(site.exam.label)} <b>--</b> 天</p>
   </div>
+  <div class="tools">
+${arrange}
+    <input id="q" class="search" type="search" placeholder="检索篇目" aria-label="检索篇目" autocomplete="off">
+  </div>
+  <div class="filters" id="filters" role="group" aria-label="分类">
+${filters}
+  </div>
+  <p class="countline" id="countline">${articles.length} 篇 · 按时间</p>
 </header>
 
-<nav class="bar">
-  <div class="bar-in">
-    <span class="brand">收藏即所学</span>
-    <div class="filters" id="filters">
-      <button class="fbtn on" data-f="all">全部</button>
-${filters}
-    </div>
-    <input id="q" type="search" placeholder="搜索关键词…" aria-label="搜索关键词">
-  </div>
-</nav>
+<div class="desk-body">
+  <aside class="sidebar">
+    <p class="side-label">章节</p>
+    <nav id="side-index" aria-label="章节">
+${indexLinks}
+    </nav>
+  </aside>
+  <main id="chapters">
+${chapters}
+    <p id="empty-desk" class="empty" hidden>这一叠里没有相符的篇目。</p>
+  </main>
+</div>
 
-<main>
-${batches}
-
-<div class="empty" id="empty">没有匹配的内容，换个关键词试试～</div>
-</main>
-
-<footer>
+<footer class="site-foot">
   <div class="foot-in">
-    <b>关于本页</b>：由 <code>data/articles.json</code> 构建的个人阅读归档，共 ${articles.length} 条，采集于 ${esc(minDate)} 至 ${esc(maxDate)}。摘要与讲解依据原文整理，观点与细节以原文为准。单文件 HTML，可离线打开。
+    <b>关于本页</b>：由 <code>data/articles.json</code> 构建的个人阅读归档，共 ${articles.length} 篇，采集于 ${esc(minDate)} 至 ${esc(maxDate)}。手机一次读一篇，桌面按时间或分类分章。摘要与讲解依据原文整理，观点与细节以原文为准。标着「未录入」的是正文没抓到的篇目。单文件 HTML，可离线打开。
     <br>早期整页由 Mac 上的 didaMind / wxdigest 重写并推送。那条流水线已停用；现在只往数据文件追加条目，再构建这一页。${notesHtml}
   </div>
 </footer>
+
+<div id="mob">
+  <header class="mhead">
+    <div class="who"><p class="eyebrow">册页</p><p>${esc(brand)}</p></div>
+    <button type="button" id="open-search">检索</button>
+    <button type="button" id="open-catalog">目录</button>
+  </header>
+  <div id="pager" tabindex="0" aria-label="文章卡片"></div>
+  <p id="empty-mob" class="empty" hidden>这一叠里没有相符的篇目。</p>
+  <footer class="mfoot">
+    <button type="button" id="prev">上一张</button>
+    <button type="button" id="pos" aria-live="polite">1 / 1</button>
+    <button type="button" id="next">下一张</button>
+  </footer>
+  <div id="catalog" role="dialog" aria-modal="true" aria-labelledby="catalog-title" hidden>
+    <div class="cat-bar"><button type="button" id="close-catalog">回到这张</button><h2 id="catalog-title">目录</h2></div>
+    <div class="tools">
+${arrange}
+      <input id="q-m" class="search" type="search" placeholder="检索篇目" aria-label="检索篇目" autocomplete="off">
+    </div>
+    <div class="filters" id="filters-m" role="group" aria-label="分类">
+${filters}
+    </div>
+    <div id="cat-list"></div>
+  </div>
+</div>
+<div id="bin" hidden></div>
 
 <script>
 ${client}
