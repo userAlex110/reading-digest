@@ -50,7 +50,7 @@
 | `source.published` | 原文发布日期，`YYYY-MM-DD`。卡片上只显示月-日 |
 | `points_html` | 要点数组，每项是一段 HTML |
 | `notes_html` | 卡片上、深入讲解之外的批注，每项是一段 HTML |
-| `detail.summary` | 「深入讲解」折叠条上的标题 |
+| `detail.summary` | 阅读页里「深入讲解」一节的标题。不再做成折叠条 |
 | `detail.body_html` | 深入讲解正文 HTML（小标题用 `<h4>`，表格用 `<table>`） |
 | `keywords` | 搜不到正文里的词时，补在这里。搜索框会连同正文一起匹配 |
 | `wechat` | 微信文章的 `biz`、`mid`、`idx`，有 `sn` 也写上。`biz` 保留链接里的 `=` |
@@ -58,7 +58,7 @@
 
 `summary_html`、`points_html`、`notes_html`、`detail.body_html` 会原样插入页面。`title` 这类纯文本字段会被转义。
 
-抓取失败时：`status` 设为 `fetch_failed`，`summary_label` 写 `仅标题收录`，在摘要里写明失败原因，**不要编造正文**。这种条目没有 `detail`，按钮文案是「尝试打开原文」，其他条目是「直达原文」。
+抓取失败时：`status` 设为 `fetch_failed`，`summary_label` 写 `仅标题收录`，在摘要里写明失败原因，**不要编造正文**。这种条目没有 `detail`，阅读页底部的链接是「尝试打开原文」，其他条目是「直达原文」。
 
 ### id 怎么取
 
@@ -120,7 +120,7 @@ node -e "const c=require('crypto');console.log('url:'+c.createHash('sha256').upd
 
 ### 分类
 
-八个分类已经在 `categories` 里：`ai`、`emb`、`kaoyan`、`job`、`dev`、`idea`、`hw`、`life`。新增分类就往这个数组加一项，带上 `id`、`numeral`、`title`、`badge`、`filter_label`、`color`（`#rrggbb`）。`id` 要用小写字母开头，因为它会变成 CSS 变量名。筛选按钮和配色都从这里来。
+八个分类已经在 `categories` 里：`ai`、`emb`、`kaoyan`、`job`、`dev`、`idea`、`hw`、`life`。新增分类就往这个数组加一项，带上 `id`、`numeral`、`title`、`badge`、`filter_label`、`color`（`#rrggbb`）。`id` 要用小写字母开头，因为它会变成 CSS 变量名。筛选按钮从这里来。`color` 仍写在数据里，方便以后使用；页面本身只用墨色和朱砂两色，正文里旧的 `var(--分类)` 也会被收成朱砂，不再按分类铺彩虹。
 
 ### 校验失败的情况
 
@@ -157,7 +157,7 @@ npm run check
 python3 -m http.server
 ```
 
-页面按**采集日期从新到旧**分批，同一天里再按分类（壹到捌）排开。分类筛选、搜索、阅读进度条、距 27 考研初试的倒计时都还在。倒计时的日期是 `site.exam`。
+页面按**采集日期从新到旧**分批，同一天里再按分类（壹到捌）排成卡片。点卡片进入同一页的阅读视图（地址栏带 `#`），左上角「返回篇目」回到目录。阅读视图里有目录，滚动时高亮当前小节，页顶有阅读进度。不要再做卡片内的上下展开。分类筛选、搜索、距 27 考研初试的倒计时都还在。倒计时的日期是 `site.exam`。
 
 ---
 
