@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>方案 B · 目录卡 — 设计原型</title>
+<style>
+:root {
+  --paper: #f4efe4;
+  --paper-deep: #e7e0d2;
+  --ink: #2c241c;
+  --ink-soft: rgba(44, 36, 28, 0.64);
+  --ink-faint: rgba(44, 36, 28, 0.38);
+  --line: rgba(44, 36, 28, 0.16);
+  --accent: #8f3d32;
+  --serif: "Noto Serif CJK SC", "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
+  --mono: "Noto Sans Mono CJK SC", "Source Han Mono SC", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+html { color-scheme: light; scrollbar-width: none; }
+html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.7;
+  text-rendering: optimizeLegibility;
+}
+body.reader-on { overflow: hidden; }
+::selection { background: rgba(143, 61, 50, 0.18); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+button:disabled { opacity: 0.35; cursor: default; }
+a { color: var(--accent); text-underline-offset: 3px; }
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.prog {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  z-index: 60;
+  background: rgba(44, 36, 28, 0.12);
+  pointer-events: none;
+}
+.prog > span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+}
+.mob-only { display: none; }
+
+.eyebrow {
+  margin: 0;
+  letter-spacing: 0.22em;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+h1, h2, h3 { font-weight: 600; }
+
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: rgba(244, 239, 228, 0.94);
+  backdrop-filter: blur(8px);
+  padding: 20px 36px 12px;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  gap: 8px 28px;
+  align-items: end;
+}
+.brand h1 {
+  margin: 2px 0 0;
+  font-size: 1.85rem;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.controls {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.filters {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+.countline {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.86rem;
+}
+
+.seg {
+  display: inline-flex;
+  border: 1px solid var(--ink);
+}
+.seg button {
+  min-height: 42px;
+  padding: 0 14px;
+  border: 0;
+  background: transparent;
+}
+.seg button + button { border-left: 1px solid var(--ink); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+
+.chip {
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: none;
+  color: var(--ink-soft);
+  padding: 6px 0;
+  min-height: 40px;
+}
+.chip[aria-pressed="true"] {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+.search {
+  width: 11rem;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--ink);
+  border-radius: 0;
+  padding: 6px 0;
+  outline: none;
+}
+.search:focus { border-bottom-color: var(--accent); }
+
+#desk-main { padding: 8px 36px 72px; min-width: 0; }
+.group { scroll-margin-top: 196px; }
+.ghead {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 28px 0 14px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--ink);
+}
+.ghead h2 { margin: 0; font-size: 1.55rem; letter-spacing: 0.04em; }
+.ghead .numeral { color: var(--accent); font-size: 1.35rem; }
+.ghead .year { letter-spacing: 0.28em; font-size: 0.75rem; color: var(--ink-soft); }
+.gcount { margin-left: auto; color: var(--ink-soft); font-size: 0.85rem; }
+.grid { display: grid; gap: 16px; align-items: stretch; }
+.mode-a .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.mode-b .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 32px; }
+.mode-c .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+
+.desk-body.with-side {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  align-items: start;
+}
+.sidebar {
+  position: sticky;
+  top: 188px;
+  max-height: calc(100vh - 204px);
+  overflow: auto;
+  padding: 18px 8px 28px 28px;
+}
+.side-label {
+  margin: 0 0 8px;
+  letter-spacing: 0.22em;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+.sidebar a {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  color: inherit;
+  text-decoration: none;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--line);
+}
+.sidebar a small { color: var(--ink-soft); }
+.sidebar a:hover { color: var(--accent); }
+
+.card .meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+}
+.card .cat { color: var(--ink); letter-spacing: 0.12em; }
+.card .title {
+  margin: 8px 0 4px;
+  font-size: 1.28rem;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+}
+.card .source { margin: 0; color: var(--ink-soft); font-size: 0.92rem; }
+.card .label {
+  margin: 10px 0 0;
+  letter-spacing: 0.18em;
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+.card .lead { margin: 6px 0 0; }
+.card .actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+.card .actions button {
+  min-height: 44px;
+  padding: 0 2px;
+  border: 0;
+  background: none;
+  letter-spacing: 0.08em;
+}
+.card .actions a { min-height: 44px; display: inline-flex; align-items: center; }
+
+.stamp {
+  margin-left: auto;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 0 6px;
+  letter-spacing: 0.16em;
+  font-size: 0.75rem;
+  line-height: 1.7;
+  transform: rotate(-2deg);
+}
+.is-failed .title,
+.is-failed .lead { font-style: italic; }
+.is-failed .label { letter-spacing: 0.08em; }
+
+.lead.clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+.card.library .lead.clamp { -webkit-line-clamp: 5; }
+.card.compact .lead.clamp { -webkit-line-clamp: 3; }
+.card.is-open .lead.clamp {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+.lead.drop::first-letter,
+.card.is-open:not(.is-failed) .lead::first-letter,
+#reader .lead.drop::first-letter {
+  float: left;
+  font-size: 3.15em;
+  line-height: 0.82;
+  padding: 0.06em 0.08em 0 0;
+  color: var(--accent);
+  font-weight: 650;
+}
+.is-failed .lead::first-letter {
+  float: none !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+  padding: 0 !important;
+  color: inherit !important;
+  font-weight: inherit !important;
+}
+
+.more { margin-top: 8px; }
+.more[hidden] { display: none !important; }
+.dk { margin: 0.8em 0 0.2em; color: var(--ink-soft); font-size: 0.92rem; }
+.points { margin: 0.4em 0 0; padding-left: 1.2em; }
+.points li { margin: 0.35em 0; }
+.body h4 { margin: 1.15em 0 0.35em; font-size: 1.05rem; }
+.body div { margin: 0.45em 0; }
+.body table { width: 100%; border-collapse: collapse; font-size: 0.92rem; display: block; overflow-x: auto; }
+.body th, .body td {
+  border-bottom: 1px solid var(--line);
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+.body code, .points code, .note code { font-family: var(--mono); font-size: 0.86em; }
+.note {
+  margin: 0.8em 0 0;
+  padding-left: 10px;
+  border-left: 2px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+.qa { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
+.empty { padding: 36px 8px; color: var(--ink-soft); }
+
+/* A — 册页：朱砂左边线的杂志小卡 */
+.card.tile {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  background: rgba(255, 252, 247, 0.55);
+  padding: 14px 14px 10px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+.card.tile .actions { margin-top: auto; }
+.card.tile.is-failed {
+  border: 1px dashed rgba(44, 36, 28, 0.55);
+  background: transparent;
+}
+
+/* B — 目录卡：双线书目，没有色条 */
+.card.library {
+  border-top: 3px double var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding: 14px 2px 12px;
+  background: transparent;
+}
+.card.library.is-failed {
+  border-top: 1px dashed rgba(44, 36, 28, 0.7);
+  border-bottom: 1px dashed rgba(44, 36, 28, 0.7);
+}
+
+/* C — 牌叠：编号密卡 */
+.card.compact {
+  border: 1px solid var(--line);
+  padding: 12px 12px 8px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: transparent;
+}
+.card.compact.is-failed { border-style: dashed; }
+.card.compact .no {
+  font-size: 1.15rem;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  margin-right: 2px;
+}
+.card.compact .title { font-size: 1.05rem; }
+.card.compact .actions { margin-top: auto; }
+.card.compact .actions button,
+.card.compact .actions a { min-height: 40px; }
+
+#reader {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+}
+#reader[hidden] { display: none !important; }
+#reader .rprog { position: absolute; }
+.rbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 22px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.rbar button {
+  min-height: 44px;
+  padding: 0 14px;
+  background: transparent;
+  border: 1px solid var(--ink);
+}
+.rscroll { overflow: auto; flex: 1; scrollbar-width: none; }
+.rscroll::-webkit-scrollbar { width: 0; height: 0; }
+.rsheet { max-width: 40rem; margin: 0 auto; padding: 28px 22px 88px; }
+.rsheet h2 { margin: 8px 0; font-size: 2rem; line-height: 1.35; letter-spacing: 0.02em; }
+.rsheet .source { color: var(--ink-soft); }
+.rsheet .label { letter-spacing: 0.18em; font-size: 0.78rem; color: var(--accent); }
+
+#mob { display: none; }
+#ticks { display: none; }
+
+@media (max-width: 800px) {
+  body { overflow: hidden; height: 100%; }
+  .desk-only { display: none !important; }
+  .mob-only { display: block; }
+  #mob {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    min-height: 0;
+  }
+  .mhead {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    min-height: 52px;
+    border-bottom: 1px solid var(--line);
+    flex: none;
+  }
+  .brand-mini p { margin: 0; line-height: 1.25; }
+  .brand-mini .eyebrow { letter-spacing: 0.18em; }
+  .hint {
+    margin-left: auto;
+    color: var(--ink-soft);
+    letter-spacing: 0.14em;
+    font-size: 0.78rem;
+  }
+  .mhead button {
+    min-height: 44px;
+    padding: 0 8px;
+    background: none;
+    border: 0;
+  }
+  .mhead [data-act="catalog"] {
+    margin-left: auto;
+    border: 1px solid var(--ink);
+    padding: 0 12px;
+  }
+  .mode-c .mhead [data-act="catalog"] { margin-left: 0; }
+  .mode-b .brand-mini { display: none; }
+  .mode-b .mhead { justify-content: space-between; }
+  .mode-b .mhead .pos { color: var(--accent); letter-spacing: 0.06em; }
+
+  .pager, .deck, .stage { flex: 1; min-height: 0; }
+  .pager {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+  .pager::-webkit-scrollbar { display: none; }
+  .pager .page {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  .deck {
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    overscroll-behavior-y: contain;
+    scrollbar-width: none;
+  }
+  .deck::-webkit-scrollbar { display: none; }
+  .deck .page {
+    height: calc(100% - 86px);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  #desk { display: none !important; }
+  .card.sheet.is-failed {
+    outline: 1px dashed rgba(44, 36, 28, 0.62);
+    outline-offset: -8px;
+  }
+  .card.sheet, .card.front {
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 16px 18px 10px;
+  }
+  .mode-b .card.sheet { padding-right: 26px; }
+  .card.sheet .scroll, .card.front .scroll {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+  }
+  .card.sheet .title, .card.front .title { font-size: 1.55rem; }
+  .card.sheet .actions, .card.front .actions { flex: none; }
+
+  .mfoot {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 6px 12px calc(8px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--line);
+  }
+  .mfoot > button {
+    min-height: 44px;
+    min-width: 76px;
+    background: transparent;
+    border: 1px solid var(--ink);
+  }
+  .mfoot .status { text-align: center; }
+  .mfoot .pos {
+    border: 0;
+    background: none;
+    min-height: 32px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    font-variant-numeric: tabular-nums;
+  }
+  .mfoot small { display: block; color: var(--ink-soft); letter-spacing: 0.08em; font-size: 0.75rem; }
+
+  .mode-b #ticks {
+    display: flex;
+    position: fixed;
+    right: 7px;
+    top: 50%;
+    transform: translateY(-50%);
+    flex-direction: column;
+    gap: 5px;
+    z-index: 6;
+  }
+  #ticks i { display: block; width: 7px; height: 2px; background: rgba(44, 36, 28, 0.28); }
+  #ticks i.on { width: 14px; background: var(--accent); }
+
+  .stage { position: relative; margin: 14px 16px 8px; }
+  .stage .back, .stage .front { position: absolute; inset: 0; }
+  .stage .back {
+    transform: translate(12px, 16px);
+    border: 1px solid var(--line);
+    background: var(--paper-deep);
+    padding: 20px 18px;
+    color: var(--ink-soft);
+  }
+  .stage .back p { margin: 12px 0 0; font-size: 1.05rem; }
+  .stage .back.end { display: flex; align-items: flex-end; }
+  .stage .front {
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    box-shadow: 0 16px 36px rgba(44, 36, 28, 0.13);
+    touch-action: none;
+  }
+  .stage .front.is-failed { border-style: dashed; box-shadow: none; }
+  .stage .front .scroll { touch-action: pan-y; }
+  .stage .front.dragging { user-select: none; }
+
+  .catalog {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 45;
+    background: var(--paper);
+    flex-direction: column;
+    padding: 12px 16px 20px;
+  }
+  .catalog.is-on { display: flex; }
+  .cat-bar { display: flex; align-items: center; gap: 12px; }
+  .cat-bar h2 { margin: 0; font-size: 1.4rem; letter-spacing: 0.12em; }
+  .cat-bar button {
+    min-height: 44px;
+    padding: 0 12px;
+    background: transparent;
+    border: 1px solid var(--ink);
+  }
+  .catalog .controls { margin: 12px 0 4px; justify-content: flex-start; }
+  .catalog .search { width: min(100%, 16rem); }
+  .catalog .chip { min-height: 44px; }
+  #cat-list { overflow: auto; flex: 1; min-height: 0; margin-top: 8px; }
+  #cat-list h3 {
+    margin: 16px 0 2px;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    letter-spacing: 0.08em;
+  }
+  #cat-list button {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    text-align: left;
+    background: none;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 10px 0;
+    min-height: 48px;
+    font: inherit;
+  }
+  #cat-list em { font-style: normal; color: var(--ink-faint); letter-spacing: 0.06em; flex: none; }
+  #cat-list button.is-current em { color: var(--accent); }
+  #cat-list button.is-failed span { font-style: italic; }
+  #cat-list i { font-style: normal; color: var(--accent); letter-spacing: 0.12em; font-size: 0.78rem; }
+}
+
+@media (max-width: 1100px) and (min-width: 801px) {
+  .mode-a .grid, .mode-c .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mode-b .grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; }
+}
+
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const MODE = "b";
+const PAYLOAD = {"title":"收藏即所学 · 微信采集学习站","kicker":"微信采集 × 滴答清单 · 个人学习中枢","exam":{"date":"2026-12-19","label":"27 考研初试"},"categories":[{"id":"ai","numeral":"壹","title":"AI 工具前沿","badge":"AI 工具","filter":"AI 工具"},{"id":"emb","numeral":"贰","title":"嵌入式硬核","badge":"嵌入式","filter":"嵌入式"},{"id":"kaoyan","numeral":"叁","title":"考研政治","badge":"考研","filter":"考研"},{"id":"job","numeral":"肆","title":"求职招聘","badge":"求职","filter":"求职"},{"id":"dev","numeral":"伍","title":"开发技术","badge":"开发技术","filter":"开发技术"},{"id":"idea","numeral":"陆","title":"项目灵感","badge":"项目灵感","filter":"项目灵感"},{"id":"hw","numeral":"柒","title":"数码科技","badge":"数码","filter":"数码科技"},{"id":"life","numeral":"捌","title":"生活随笔","badge":"城市","filter":"生活随笔"}],"articles":[{"i":0,"id":"wx:MzA5Nzk3MDQ4OQ:2649736365:1","title":"不缺 Token 的 Tibo 怎么工作：把「人」从流程里拿出来","url":"https://mp.weixin.qq.com/s?__biz=MzA5Nzk3MDQ4OQ==&mid=2649736365&idx=1&sn=28c07d18532e207247ba00b0b7a972d0&chksm=89174dfdd54bb951c01316214e7c847ce5d2bd30dde5b64dcc5619cccee112b8d1ddceb31183&mpshare=1&scene=1&srcid=1005Y2IRIcauecT2XceYeGlv&sharer_shareinfo=b49cf88fb49e1db172a6733e320b4fbb&sharer_shareinfo_first=b49cf88fb49e1db172a6733e320b4fbb#rd","category":"ai","account":"EARS · 小耳","published":"2026-09-19","added":"2026-10-05","status":"ok","summary_label":"一句话","summary_html":"OpenAI Codex 负责人 Tibo Sottiaux 的工作法核心不是\"打字更快\"，而是把工作\u003cb>移动化、异步化、自动化\u003c/b>——人只在两头出现：早上口述意图，关键节点审批边界。","points_html":["\u003cb>晨间语音口述：\u003c/b>早上喝咖啡时根本不开电脑，拿手机用语音向 AI 汇报今天目标，AI 自己读日历、邮件、Slack 并安排下去","\u003cb>隔夜异步批处理：\u003c/b>夜里遇到复杂架构问题、白天没空深挖的思考、长程重构，不熬夜，直接丢给云端静默跑一整夜，早上看报告","\u003cb>\"30 分钟\"全局情报：\u003c/b>想了解社区反馈 / 生产日志 / 哪些低频功能该废弃，不开会、不要 PPT，直接发个任务，半小时拿到结构化排查报告","\u003cb>单日原型雕刻与释放：\u003c/b>想法不留在概念阶段，一天内用语音＋Agent 雕出可运行原型，推给团队批判，然后立刻\"释放\"认知负荷做下一件","\u003cb>像\"训宝可梦\"一样攒 Skill 库：\u003c/b>定时总结 Slack 动态、自动解 Git 冲突修 Build、甚至让 AI 每天随机挑一个代码文件去找潜伏 Bug","\u003cb>他自己说的瓶颈：\u003c/b>\"模型已经可以在云端一下子干几百个活，但你还是习惯开一个窗口交代任务、等反馈、再说下一个——一天下来，我自己才是最大的天花板\""],"notes_html":[],"detail_summary":"深入讲解 · 三个范式转移 + Token 有限时的实操策略","detail_html":"\u003ch4>转移一：从\"盯着过程\"到\"定义盒子与不变量\"\u003c/h4>\n          \u003cdiv>过去人累，是因为精力都花在\u003cb>盒子内部的具体实现\u003c/b>上。新范式里，人的真正价值是定义边界——和 AI 明确输入输出契约、资源限制、安全边界、系统不变量（Invariants）。盒子内部是 1 个 Agent 写还是 100 个并发生成，人根本不用关心。\u003c/div>\n          \u003ch4>转移二：从\"审查正确性\"到\"审查意图\"\u003c/h4>\n          \u003cdiv>当生成速度极高，检查语法、拼写、低级逻辑错误会耗尽人的注意力。OpenAI 内部把代码正确性与安全校验彻底交给自动化 AI Review 模型，人的审查全面转向\u003cb>意图审查\u003c/b>——\"你到底想解决什么问题？这件事值不值得做？\"\u003c/div>\n          \u003ch4>转移三：注意力友好的交互\u003c/h4>\n          \u003cdiv>同时盯 10–15 个 Agent 窗口、频繁切换上下文，脑子很快就崩。正确姿势是保持\"心流实时雕刻\"：只保留 \u003cb>2–3 个核心任务\u003c/b>，像和专家对话一样实时调整意图（mid-term steering），重度任务则完全静默托管给云端。\u003c/div>\n          \u003ch4>Token 不够时怎么办：三条实操\u003c/h4>\n          \u003ctable>\n            \u003ctr>\u003cth>策略\u003c/th>\u003cth>怎么做\u003c/th>\u003cth>省下什么\u003c/th>\u003c/tr>\n            \u003ctr>\u003ctd>\u003cb>双代理校验\u003c/b>\u003cbr>Primary + Secondary\u003c/td>\u003ctd>主 Agent 干活，另挂一个轻量低成本的\"二级安全对齐 Agent\"监控它是否越界、输出是否合规，只有高风险操作才弹窗找人审批\u003c/td>\u003ctd>Token ＋ 人的注意力\u003c/td>\u003c/tr>\n            \u003ctr>\u003ctd>\u003cb>长程上下文压缩\u003c/b>\u003cbr>Compaction\u003c/td>\u003ctd>别再手写复杂 Prompt 框架帮 AI 整理记忆（费 Token 还丢上下文）。模型端已用强化学习训练压缩能力，能跨 20 个上下文窗口、数天到数周不掉线\u003c/td>\u003ctd>Prompt Token ＋ 记忆保真\u003c/td>\u003c/tr>\n            \u003ctr>\u003ctd>\u003cb>拆掉过度脚手架\u003c/b>\u003cbr>Scaffolding\u003c/td>\u003ctd>不要为弥补当前模型短板去写几千行 Prompt 规则链——基座一升级（GPT-5 → GPT-6）这些全变冗余。外壳保持极简，只留通用工具接口（如 Markdown 技能说明或 API）\u003c/td>\u003ctd>长期维护成本\u003c/td>\u003c/tr>\n          \u003c/table>\n          \u003cdiv class=\"note\">💡 原文的启发总结：提升生产力的突破口不是训练自己打字更快，而是训练自己\u003cb>表达意图更精准\u003c/b>。建立属于自己的 Skill 自动化库，把日常繁琐、重复的搜集和校验交给后台 Agent，你只负责口述意图和关键审批。\u003c/div>\n          \u003cdiv class=\"note\">📌 对照你自己：你正在搭的「凌晨 1 点自动归档微信收藏」就是这套思路的最小实践——把\"攒了要读\"变成后台静默完成，早上起来直接看成品。Tibo 的\"隔夜异步批处理\"说的正是这件事。\u003c/div>","keywords":"Tibo Sottiaux OpenAI Codex 工作流 语音 异步 批处理 Skill 宝可梦 意图审查 盒子 不变量 Compaction 脚手架 双代理 Token"},{"i":1,"id":"wx:Mjc1NjM3MjY2MA:2691573130:1","title":"DeepSeek 加速向华为靠拢：把自家研发工具搬到昇腾上","url":"https://mp.weixin.qq.com/s?__biz=Mjc1NjM3MjY2MA==&mid=2691573130&idx=1&sn=324110cd30071b35150c6aa6ef4c709f&chksm=a803af3cee357aee9fd762161778b16eab40ed38a666abc6338a835bdc049e32ab69a874b831&mpshare=1&scene=1&srcid=1005OYHxv2M14AFi4SQLKIrP&sharer_shareinfo=9daa665bdf741927439e587bca7f2e72&sharer_shareinfo_first=9daa665bdf741927439e587bca7f2e72#rd","category":"ai","account":"腾讯科技","published":"2026-09-30","added":"2026-10-05","status":"ok","summary_label":"一句话","summary_html":"DeepSeek 开源了一整套面向华为昇腾的基础设施组件，并强调\"与此前面向英伟达的开源组件\u003cb>一一对应\u003c/b>\"——这意味着它的训练工具链第一次有了第二条硬件路线。","points_html":["\u003cb>开源清单：\u003c/b>主角是 \u003ccode>TileLang\u003c/code>（算子编程语言及编译支持），外加计算库 \u003ccode>DeepGEMM\u003c/code>、分布式通信库 \u003ccode>DeepEP\u003c/code>，以及 \u003ccode>TileKernels\u003c/code>、\u003ccode>FlashMLA\u003c/code>、\u003ccode>DeepSelect\u003c/code>（向量计算与访存、稀疏注意力、Top-K 选择等）","\u003cb>TileLang 的分量：\u003c/b>相较 CUDA 能简化代码逻辑、提高开发效率；先在英伟达平台验证，如今\u003cb>已承载 V4 系列模型训练中大部分算子的实现\u003c/b>——是 DeepSeek 开发高性能算子的核心工具","\u003cb>昇腾版的实现方式：\u003c/b>封装底层 Ascend C 指令。DeepSeek 称\"目前训练中使用的每一个 TileLang 算子，在昇腾上都有对应的高性能实现\"","\u003cb>硬件协同：\u003c/b>双方共同推进基于\u003cb>昇腾 950 的 128 卡超节点\u003c/b>方案，对计算与通信做深度优化；多项关键测试用例性能已接近硬件上限（属特定测试条件下的结果）","\u003cb>时间线：\u003c/b>2025.8 V3.1 的 UE8M0 FP8 设计\"面向即将发布的下一代国产芯片\" → 2025.9.29 V3.2-Exp 发布 + TileLang-Ascend 开源 → 2026.4.24 V4 预览版，昇腾适配已延伸至推理和训练侧","\u003cb>背景数字：\u003c/b>梁文锋在投资者会议上称 DeepSeek \u003cb>超过 70% 算力用于模型训练\u003c/b>，留给推理的不足 30%；500 亿元第二轮融资接近结束，已聘中信证券筹备科创板 IPO"],"notes_html":[],"detail_summary":"深入讲解 · 为什么\"一一对应\"是关键，软件才是真门槛","detail_html":"\u003ch4>算子是什么，为什么它决定一切\u003c/h4>\n          \u003cdiv>大模型研究里的新想法，必须通过\u003cb>算子\u003c/b>翻译成芯片能执行的计算。算子开发越复杂，研究者验证新结构、优化训练效率所需的时间就越长。所以\"用什么语言写算子\"直接决定了一个硬件平台对模型团队的友好度——这也是为什么 TileLang 比那几个库更值得关注。\u003c/div>\n          \u003ch4>\"一一对应\"的含金量在哪\u003c/h4>\n          \u003cdiv>如果只是\"能在昇腾上跑 DeepSeek 模型\"，那叫\u003cb>推理适配\u003c/b>，生态里早就做了很多轮。而这次是把手写算子、通信库、矩阵库这一整套\u003cb>研发工具\u003c/b>搬过去，且声称与英伟达版一一对应。原文举的例子很实在：\u003ccode>TileKernels\u003c/code> 支持同一套 Python 接口在英伟达 GPU 与华为 NPU 上运行，底层实现按硬件自动选择。\u003c/div>\n          \u003cdiv>代价是——接口能复用，\u003cb>性能仍需针对硬件打磨\u003c/b>。所以才有\"双方围绕 128 卡超节点共同优化计算与通信\"这一段，以及公告里对华为\"毫无保留的大力支持\"的致谢。\u003c/div>\n          \u003ch4>真正的瓶颈不是芯片，是软件\u003c/h4>\n          \u003cdiv>原文的判断：资金可以支持研发和基础设施投入，但\u003cb>新增硬件能否转化为有效算力，取决于软件适配与运行效率\u003c/b>。对 DeepSeek 来说，昇腾上的工具与组件越完善，未来换算力平台时要重新投入的工程成本就越低；对华为来说，与模型团队共同优化，能让芯片软件更快跟上模型结构的变化。\u003c/div>\n          \u003cdiv class=\"note\">⚠️ 冷静看：DeepEP 昇腾版仍列有开发中的功能，此次公告也未披露 V4 已在昇腾上完成全流程大规模训练。从\"组件开源\"到\"稳定承担大规模生产任务\"，中间还有活要干。另外文中提到 DeepSeek 希望这套东西\"为更多 AI 芯片建立高可用软件生态起到示范作用\"——如果别的团队能复用，更多国产芯片承接前沿模型的门槛也会降低。\u003c/div>\n          \u003ch4>和你有什么关系\u003c/h4>\n          \u003cdiv>你在做嵌入式、也在准备考研。这条新闻的价值不在\"谁赢\"，而在它示范了一件事：\u003cb>决定技术路线的往往不是峰值算力，而是软件生态的迁移成本\u003c/b>。同一个道理在嵌入式和操作系统选型上反复出现——这也是 TOPS 那篇文章（上一期收录）说的是同一件事。\u003c/div>","keywords":"DeepSeek 华为 昇腾 950 TileLang Ascend CUDA 算子 NPU 128卡 超节点 DeepGEMM DeepEP FlashMLA 国产芯片 科创板"},{"i":2,"id":"wx:Mzk0OTYwNzc3NQ:2247485876:1","title":"DeepSeek V4.1 Flash 更新：更便宜更快，还能「许愿式」写完整项目","url":"https://mp.weixin.qq.com/s?__biz=Mzk0OTYwNzc3NQ==&mid=2247485876&idx=1&sn=2606d3fa9ac085f94290ddd1d94649cc&chksm=c2bcb5cbba8a8285cd0553b3ebb396b350d4e8bb3d466772646394e2ac66ebde1c426106c0b4&mpshare=1&scene=1&srcid=1017oCuyV4YTjZsvYvMVSDy2&sharer_shareinfo=7ae5346cd55d77a1f8546225b0f86405&sharer_shareinfo_first=7ae5346cd55d77a1f8546225b0f86405#rd","category":"ai","account":"DeepSeek","published":"2026-10-17","added":"2026-10-17","status":"ok","summary_label":"一句话","summary_html":"V4.1-Flash-1017 把「性能—费用」的帕累托前沿又往外推了一格：基准测试提升的同时，任务耗时和输出长度都缩短了；还把自研搜索能力做成 \u003cb>Search / Fetch API\u003c/b> 对外开放。","points_html":["\u003cb>全端同步：\u003c/b>官方网页端、APP 与 API 已同步切换为新模型；官方建议 DeepSeek Harness 升级到 \u003ccode>0.2.1-rc.1\u003c/code> 及以上版本以获得最优体验","\u003cb>成本与速度：\u003c/b>在提升性能的同时缩短了任务运行时间与输出长度，在多个 Harness 下达到新的性能—费用帕累托最优；本次重点优化了 DeepSeek Harness、腾讯 CodeBuddy、WorkBuddy 等平台框架","\u003cb>从零做完整项目：\u003c/b>通过基于自反馈的强化学习（RL）训练，提升游戏开发、3D 建模等「从零构建完整项目」的能力，支持更多「许愿式」编程任务","\u003cb>官方演示案例：\u003c/b>故宫 3D 建模、网页版赛车游戏、基于 Godot 引擎复刻《传送门2》、用 3D 场景动态呈现史前到现代历史的 Valley of Ages——均为较少提示词与素材、极短交互轮次在 Harness 内完成","\u003cb>搜索 API 开放：\u003c/b>新增 Search 与 Fetch 接口，均为 \u003cb>5 元 / 千次\u003c/b>；自研搜索引擎索引全球千亿级网页，稳定处理每天全球数亿次搜索请求，并过滤 SEO 作弊、GEO 操纵与低质 AIGC","\u003cb>计费时间点：\u003c/b>目前在 DeepSeek Harness / Claude Code / Codex 中通过服务端工具调用 Search/Fetch \u003cb>暂不计费\u003c/b>，2026-11-01 00:00（北京时间）起按次收费","\u003cb>权重开源：\u003c/b>模型权重已发布到 HuggingFace 与 ModelScope"],"notes_html":[],"detail_summary":"深入讲解 · 帕累托改进意味着什么 + 搜索 API 对你的实际影响","detail_html":"\u003ch4>一、什么叫「性能—费用帕累托改进」\u003c/h4>\n          \u003cdiv>帕累托改进的核心是\u003cb>没有哪一项变差\u003c/b>。这次不只是跑分提升，官方同时缩短了任务运行时间与输出长度——同样的任务，输出更短（也就是更少的输出 token）、耗时更少。对按 token 付费、又被速率限制的人来说，这比单纯涨分更实在。\u003c/div>\n          \u003cdiv class=\"note\">📌 原文正文没有给出具体跑分数字（性能/成本图是图片），所以这里不转述任何分数。要看准确数值，得去原文看图或官方模型卡。\u003c/div>\n          \u003ch4>二、「许愿式编程」到底指什么\u003c/h4>\n          \u003cdiv>原文的用法是：用\u003cb>较少的提示词与素材参考\u003c/b>，在 Harness 环境里通过\u003cb>极短的交互轮次\u003c/b>，直接从零生成一个能展示的完整项目（游戏、3D 场景等）。背后的训练方法是「基于自反馈的强化学习」——让模型自己在试错中改进，而不是靠人一步步喂需求。\u003c/div>\n          \u003cdiv>冷静看：官方展示的是精选案例，没有披露成功率、人工返工量、以及复杂项目的可维护性。它可以当作「原型速度」的证据，不等于能替代工程化开发。\u003c/div>\n          \u003ch4>三、搜索 API 开放，为什么值得记一笔\u003c/h4>\n          \u003cdiv>Agent 要干实事，绕不开「查最新信息 + 读网页」。DeepSeek 把底层自研搜索做成 Search / Fetch 两个标准接口，等于把「实时信息获取」变成模型 API 的一部分。原文给的量级是：索引千亿级网页、每天处理全球数亿次搜索请求。\u003c/div>\n          \u003ctable>\n            \u003ctr>\u003cth>项目\u003c/th>\u003cth>原文信息\u003c/th>\u003cth>对你的影响\u003c/th>\u003c/tr>\n            \u003ctr>\u003ctd>\u003cb>Search / Fetch 价格\u003c/b>\u003c/td>\u003ctd>均为 5 元 / 千次（约 0.005 元一次）\u003c/td>\u003ctd>做联网 Agent 的成本可以精确估算\u003c/td>\u003c/tr>\n            \u003ctr>\u003ctd>\u003cb>当前计费状态\u003c/b>\u003c/td>\u003ctd>Harness / Claude Code / Codex 中经服务端工具调用暂不计费\u003c/td>\u003ctd>如果你正是用 DeepSeek API 跑 Claude Code，现在这段是免费的\u003c/td>\u003c/tr>\n            \u003ctr>\u003ctd>\u003cb>开始收费\u003c/b>\u003c/td>\u003ctd>2026-11-01 00:00（北京时间）起按次收取\u003c/td>\u003ctd>重度联网的自动化任务，最好在 11 月前确认一下实际调用量\u003c/td>\u003c/tr>\n            \u003ctr>\u003ctd>\u003cb>模型权重\u003c/b>\u003c/td>\u003ctd>HuggingFace / ModelScope 可下载\u003c/td>\u003ctd>需要私有部署或研究微调时有据可依\u003c/td>\u003c/tr>\n          \u003c/table>\n          \u003ch4>四、和你现有工作流的连接\u003c/h4>\n          \u003cdiv>你正在用「夜间自动归档 + Agent」这套东西。这条更新里最直接的两点：① Harness 要升级到 \u003ccode>0.2.1-rc.1\u003c/code> 以上才能吃到新模型适配；② 如果你的 Agent 会联网搜索，11 月 1 日之后要重新算成本。其余关于「许愿式编程」的演示，可以当作评估「从零原型」能力的参考，但别拿它替代需求澄清和验收。\u003c/div>","keywords":"DeepSeek V4.1 Flash 1017 许愿式编程 Harness CodeBuddy WorkBuddy 强化学习 RL 自反馈 3D 建模 故宫 赛车 Godot 传送门 Valley of Ages 搜索 API Search Fetch 5元千次 开源 HuggingFace ModelScope 帕累托"},{"i":3,"id":"wx:MzY4NzM3MTkxOQ:2247483808:1","title":"DeepSeek Harness 团队的文字分享","url":"https://mp.weixin.qq.com/s?scene=1&__biz=MzY4NzM3MTkxOQ==&mid=2247483808&idx=1&sn=280bc4891312017f305754b50d2258c7&sharer_shareinfo_first=5b04d2950e312c1698b943fb3721750b&sharer_shareinfo=5b04d2950e312c1698b943fb3721750b#wechat_redirect","category":"ai","account":"DeepSeek Harness 团队","published":"2026-10-17","added":"2026-10-17","status":"fetch_failed","summary_label":"仅标题收录","summary_html":"这篇是「文字分享」型内容，抓取器按「原链接 → 裸链接 → 慢等」三轮尝试都只拿到空页面（\u003ccode>微信公众平台\u003c/code>），正文需要在微信客户端内打开。","points_html":["除标题外没有可靠正文可供提炼，因此\u003cb>不生成摘要与深入讲解\u003c/b>，也不臆测内容","对应的滴答任务\u003cb>保留未完成\u003c/b>，等你在微信里读完后再手动勾选，或下次自动重试"],"notes_html":[],"detail_summary":"","detail_html":"","keywords":"DeepSeek Harness 团队 文字分享 抓取失败 空内容 微信客户端 仅标题"},{"i":4,"id":"url:fba76d45b13e6e19fb02","title":"MiniMax Code MiniApps：把 Agent 当 OS，插件就是应用","url":"https://github.com/MiniMax-AI/MiniMax-Code-MiniApps","category":"ai","account":"GitHub · MiniMax-AI","added":"2026-10-23","status":"ok","summary_label":"一句话","summary_html":"这是 MiniMax Code 桌面端的官方社区仓库：MiniApp 以插件形式打包，页面用 HTML/CSS/JS，业务逻辑跑在 Node.js，通过 host MCP client 与 Agent 通信。仓库的主张很直接——\u003cb>Agent 正在演化为下一代操作系统，插件不再只是功能扩展，插件就是软件、就是应用\u003c/b>。","points_html":["\u003cb>仓库定位：\u003c/b>面向社区开放，任何人都能提 PR 贡献 MiniApp；包按 \u003ccode>plugins/&lt;github-username&gt;/&lt;plugin-id&gt;/\u003c/code> 组织，仓库整体 MIT 许可，单个应用以各自目录里的许可为准","\u003cb>Human-in-the-Loop：\u003c/b>AI 负责查背景、整材料、写初稿、改表达、找遗漏，人回到专业工作区做 review、编辑和确认；原文用律师、分析师、运营举例，强调不让人为了配合 AI 离开自己的工作台","\u003cb>四层架构：\u003c/b>Host 管理（Electron 页面托管、安装发布、Node 进程生命周期、权限与凭证）→ 表现层（Chromium 渲染表格、图表、交互视图）→ 应用层（Node.js 负责数据聚合、业务规则、持久化）→ 能力与数据访问（Host Connector、插件 CLI 子进程、规划中的统一工具入口）","\u003cb>权限边界：\u003c/b>Host 凭证不会进入页面；Agent 调用与结果由 host 居中转交，领域逻辑和持久化留在插件里","\u003cb>安装方式：\u003c/b>手动安装——把整个插件目录（包括隐藏的 \u003ccode>.minimax-plugin\u003c/code>）复制到 \u003ccode>&lt;dataDir&gt;/plugins/\u003c/code>，默认是 \u003ccode>~/.minimax/plugins/\u003c/code>；客户端的 GitHub 插件导入功能不支持这类 MiniApp 包","\u003cb>示例应用：\u003c/b>Dynamic Workflow Console、MiniMax Photo / Video、AI Office、两个 Token Usage Board、Model Manager、Git Commit Tree、CadQuery Viewer、MiniMax Bot、MoMo Collab、仓库透视 Repo X-Ray、Disk Insight、时差保安等","\u003cb>版本要求：\u003c/b>部分应用需要 MiniMax Code \u003ccode>3.1.2\u003c/code> 或更高版本，兼容性以各应用 README 为准","\u003cb>贡献流程：\u003c/b>fork 后复制 \u003ccode>examples/hello-miniapp/\u003c/code> 到 \u003ccode>plugins/&lt;你的 GitHub 用户名&gt;/&lt;plugin-id&gt;/\u003c/code>，补 README、许可和运行文件，更新两个 README 的表格，跑 \u003ccode>npm run check\u003c/code> 后开 PR；插件 ID 必须全仓唯一"],"notes_html":[],"detail_summary":"深入讲解 · 四层架构拆解 + CadQuery Viewer 案例","detail_html":"\u003ch4>一、为什么敢说「Agent 是 OS」\u003c/h4>\n          \u003cdiv>原文的判断是：真正的生产力仍扎根在各行业高度专业的工作环境里，单靠 Chat UI 无法替代专业工具的精确控制和丰富视图。所以方向不是让用户离开工作台去迁就 AI，而是让专业环境与 AI 深度共生——\u003cb>AI 变成像水电、算力、存储一样的基础能力\u003c/b>，按需调用。\u003c/div>\n          \u003cdiv>MiniApps 要补上的，正是「工作从可打磨变成可交付」中间那段断裂：给每个行业一个自己的专业 IDE 框架，AI 在里面干活，人随时能看、能改、能确认。\u003c/div>\n          \u003ch4>二、四层分别管什么\u003c/h4>\n          \u003ctable>\n            \u003ctr>\u003cth>层\u003c/th>\u003cth>职责\u003c/th>\u003cth>关键点\u003c/th>\u003c/tr>\n            \u003ctr>\u003ctd>\u003cb>Host 管理\u003c/b>\u003c/td>\u003ctd>Electron 页面托管、运行时服务、插件安装发布、Node 进程生命周期、就绪与实例管理、权限和凭证\u003c/td>\u003ctd>控制面在 Host，业务逻辑仍归插件\u003c/td>\u003c/tr>\n            \u003ctr>\u003ctd>\u003cb>表现层\u003c/b>\u003c/td>\u003ctd>Chromium / Chrome 引擎渲染 HTML、CSS、JS，做筛选、表格、图表和交互视图\u003c/td>\u003ctd>Host 凭证不进入页面\u003c/td>\u003c/tr>\n            \u003ctr>\u003ctd>\u003cb>应用层\u003c/b>\u003c/td>\u003ctd>Node.js 负责数据聚合、转换处理、业务规则和持久化\u003c/td>\u003ctd>页面 API 与 Agent 工具复用同一套业务服务\u003c/td>\u003c/tr>\n            \u003ctr>\u003ctd>\u003cb>能力与数据访问\u003c/b>\u003c/td>\u003ctd>Host Connector、插件自行拉起的 CLI 子进程、规划中的统一工具入口\u003c/td>\u003ctd>接外部服务、MCP、本地工具和本地数据\u003c/td>\u003c/tr>\n          \u003c/table>\n          \u003cdiv>Agent 通过 host MCP client 通信：业务请求和页面数据在表现层与应用层之间流动，Agent 调用与结果由 host 转交。这样凭证与控制留在 host，领域逻辑与持久化留在插件。\u003c/div>\n          \u003ch4>三、CadQuery Viewer：把「人类确认」做进交互\u003c/h4>\n          \u003cdiv>原文的案例是：一句提示词让 Agent 做一个 MiniMax 章鱼 3D 模型；Agent 自己查官方吉祥物作参考、写参数化 CadQuery 脚本、运行并修复，成品出现在右侧 Viewer。想改哪里，直接点模型上的位置（比如嘴巴），输入「把嘴巴改成红色」发给对话——Agent 拿到确切的部件和坐标，改完后 Viewer 自动切到新版本。\u003c/div>\n          \u003cdiv class=\"note\">📌 这个案例把 MiniApp 的产品立场讲清楚了：不是让 AI 替你做专业判断，而是让 AI 当执行者，人在可视化界面里指哪改哪、随时确认。\u003c/div>\n          \u003ch4>四、如果自己要做工具，能借鉴什么\u003c/h4>\n          \u003cdiv>① \u003cb>页面与 Agent 共用业务服务\u003c/b>：同一套 Node 服务既服务 UI，又暴露成 Agent 工具，避免两套逻辑各写一遍。\u003cbr>② \u003cb>凭证与业务分离\u003c/b>：敏感凭证只放在 Host，页面拿不到，插件只处理领域数据。\u003cbr>③ \u003cb>保持可审阅\u003c/b>：所有 AI 产出都落在人能看见、能编辑、能确认的界面里，而不是直接交付。\u003c/div>\n          \u003cdiv class=\"note\">📌 注意：这是社区仓库，不是官方应用商店。安装前读各应用的 README，确认它访问哪些本地文件或网络服务；升级时按说明替换完整插件目录并保留数据备份。\u003c/div>","keywords":"MiniMax Code MiniApps Agent OS 插件 桌面端 Electron Chromium Node.js MCP Host Connector Human-in-the-Loop CadQuery STL STEP Token Usage Board MoMo Collab Repo X-Ray Disk Insight Git Commit Tree Model Manager 3.1.2 MIT 开源"},{"i":5,"id":"wx:MzI1NDczNTAwMA:2247593717:1","title":"B 站「大肥鱼」泛滥：AI 运营账号与评论区清道夫","url":"https://mp.weixin.qq.com/s?__biz=MzI1NDczNTAwMA==&mid=2247593717&idx=1&sn=232febd2529c25bf60961db2c92737e9&chksm=e80d35099a7a855a8e98e1b35582b0fa5466b5581afd3ce77749486d99037b890e802dc89d2d&mpshare=1&scene=1&srcid=1023EGeuTevLpZNdX0eMMjFn&sharer_shareinfo=44db94debadf492227991e8bebff73bd&sharer_shareinfo_first=44db94debadf492227991e8bebff73bd#rd","category":"ai","account":"程序员鱼皮","published":"2026-10-23","added":"2026-10-23","status":"ok","summary_label":"一句话","summary_html":"10 月 18 日「Claude 大小姐在运营」上线，次日「DeepSeek 鲸鱼娘在运营」的 Day 0 视频播放量超过 \u003cb>200 万\u003c/b>；随后大量用户给 DeepSeek Harness 装上刷 B 站插件、换上鲸鱼娘头像涌入评论区。鱼皮为此开源了浏览器插件《大肥鱼清除计划》，靠离线规则识别并\u003cb>在本地隐藏\u003c/b>这些账号。","points_html":["\u003cb>起点：\u003c/b>「Claude 大小姐在运营」10 月 18 日发布第一条视频，宣布选题、脚本、视频和运营全部交给 Claude，人类只负责注册账号和按发布键","\u003cb>爆发：\u003c/b>第二天「DeepSeek 鲸鱼娘在运营」出现，套路相同，主角换成 DeepSeek 二创形象「鲸鱼娘」（大家口中的蓝色大肥鱼）；Day 0 视频播放量超过 200 万，比原版高出好几倍","\u003cb>扩散：\u003c/b>很多人给自己的 DeepSeek Harness 装上刷 B 站插件，换鲸鱼娘头像，让它自己看视频、写评论；评论区出现清一色 Lv2 小号，名字多为「XX 的大肥鱼」「XX 小飞鲸」","\u003cb>作者动机：\u003c/b>鱼皮的《DeepSeek Harness 入门教程》评论区被大肥鱼淹没，真人反馈难找，于是用 AI 编程花半天做了个浏览器插件","\u003cb>插件信息：\u003c/b>免费开源，Chrome 和 Edge 可用，仓库 \u003ccode>github.com/liyupi/dafeiyu-cleaner\u003c/code>；Releases 下载压缩包解压 → 打开 \u003ccode>chrome://extensions\u003c/code> → 开启开发者模式 → 加载已解压的扩展程序","\u003cb>识别方式：\u003c/b>只靠离线规则就能认出约 85% 的大肥鱼，作者称没有误伤真人；拿不准的账号可以填自己的 DeepSeek API Key 让 DeepSeek 再判一次","\u003cb>交互效果：\u003c/b>大肥鱼头像被红色靶心锁定，旁边挂「大肥鱼 85%」贴纸，悬停可看暴露特征；点「回家吃白饭」会触发鲸鱼娘赶鱼动画，另有白饭加特林、扫帚、臭袜子等随机武器，以及「响指清场」；打开 UP 主主页还能生成鉴定报告","\u003cb>关键边界：\u003c/b>插件\u003cb>不会删除评论\u003c/b>，只在你自己浏览器里把评论隐藏，不影响其他用户，也不是平台侧治理"],"notes_html":[],"detail_summary":"深入讲解 · 鱼灾怎么形成 + 插件的能与不能","detail_html":"\u003ch4>一、时间线：两天内从实验变成鱼灾\u003c/h4>\n          \u003ctable>\n            \u003ctr>\u003cth>时间\u003c/th>\u003cth>发生了什么\u003c/th>\u003cth>结果\u003c/th>\u003c/tr>\n            \u003ctr>\u003ctd>10-18\u003c/td>\u003ctd>「Claude 大小姐在运营」发布第一条视频，声明全流程交给 Claude\u003c/td>\u003ctd>开了「AI 自己运营账号」的头\u003c/td>\u003c/tr>\n            \u003ctr>\u003ctd>10-19\u003c/td>\u003ctd>「DeepSeek 鲸鱼娘在运营」Day 0 视频上线\u003c/td>\u003ctd>播放量超过 200 万，比原版高数倍\u003c/td>\u003c/tr>\n            \u003ctr>\u003ctd>之后几天\u003c/td>\u003ctd>用户给 DeepSeek Harness 装刷 B 站插件、换鲸鱼娘头像\u003c/td>\u003ctd>评论区被 Lv2 小号「大肥鱼」占领\u003c/td>\u003c/tr>\n          \u003c/table>\n          \u003cdiv>原文没有分析平台推荐机制，只呈现了结果：AI 运营账号的实验一旦有流量示范，模仿成本极低，插件化之后更是批量复制。\u003c/div>\n          \u003ch4>二、85% 是怎么做到的，边界在哪\u003c/h4>\n          \u003cdiv>插件的默认路径是\u003cb>纯离线规则\u003c/b>：不填 API Key 也能识别，悬停贴纸可以看到账号是因为哪些特征暴露的。原文没有展开规则细节；需要复核时，才可选填 DeepSeek API Key 做第二次判断，也就是作者说的「以鱼治鱼」。\u003c/div>\n          \u003cdiv class=\"note\">⚠️ 最重要的是这句：插件只在你自己的浏览器里隐藏评论，没有删除、没有举报、也没有改变其他用户看到的内容。它解决的是「我不想看」，不是「平台上不应存在」。真要治理，仍然取决于平台规则和账号体系。\u003c/div>\n          \u003ch4>三、这件事真正值得记的两点\u003c/h4>\n          \u003cdiv>① \u003cb>AI 内容生产的副作用开始进入日常\u003c/b>：当写评论、看视频、互动的边际成本接近零，评论区会先被淹没，真人反馈反而变成稀缺品。鱼皮的动机不是技术炫技，而是「我想看观众的真实反馈」。\u003c/div>\n          \u003cdiv>② \u003cb>一个小插件也能是完整的产品闭环\u003c/b>：识别 → 可视化标记 → 给出理由 → 一键处理 → 生成报告。半天时间、免费开源、Chrome/Edge 双端，说明浏览器扩展仍然是验证小工具想法的最短路径之一。\u003c/div>\n          \u003cdiv class=\"note\">📌 对做 Agent 的启发：任何「自动化互动」都应该先想清楚平台规则和可逆性。这个插件选择只做本地隐藏、不删评论，就是一个把影响范围限制在自己浏览器里的保守设计。\u003c/div>","keywords":"B站 B 站 DeepSeek 鲸鱼娘 大肥鱼 Claude 大小姐 程序员鱼皮 浏览器插件 开源 评论区 AI 账号 dafeiyu-cleaner Chrome Edge 85% API Key 以鱼治鱼 响指清场"},{"i":6,"id":"wx:MzcwNjM5NDE4Nw:2247494419:1","title":"用飞书邮箱 + 自有域名批量注册 Claude / GPT：这篇「黑科技」讲了什么，又有什么代价","url":"https://mp.weixin.qq.com/s?__biz=MzcwNjM5NDE4Nw==&mid=2247494419&idx=1&sn=fdc71eb8d7cdce81ba8b03c1aaffbaa2&chksm=f5a24fe66d373e7df50211d3f83da4b016c9d6bda14ba78d6432d7973394a6fd3bbc7849c3d0&mpshare=1&scene=1&srcid=1025POQ1bPpu4NNt6ytnxz5d&sharer_shareinfo=256c18cd8fd7af7b4d878965fe63acf3&sharer_shareinfo_first=256c18cd8fd7af7b4d878965fe63acf3#rd","category":"ai","account":"小宇黑科技","published":"2026-10-25","added":"2026-10-25","status":"ok","summary_label":"一句话","summary_html":"原文介绍的是一套用\u003cb>自有域名绑定飞书邮箱\u003c/b>、再批量创建公共邮箱与邮箱别名来注册 Claude、GPT 账号的方法，作者称可以绕开 Google 邮箱、地区与信用卡的麻烦；但这类做法通常违反平台条款、封号随机，本卡只记录现象与风险，不展开具体操作。","points_html":["\u003cb>它想解决的痛点：\u003c/b>原文说常见教程用 Google 邮箱注册，成本较高，还要改地区、绑信用卡，比较麻烦","\u003cb>它的思路（概述）：\u003c/b>原文利用「自有域名 + 飞书邮箱」的公共邮箱与别名能力批量获得可用邮箱，再拿去注册海外 AI 账号；本卡不复述后台配置步骤","\u003cb>作者的说法：\u003c/b>域名后缀会影响能否注册，太小众的域名和二级域名可能失败；他称注册当天可开通 Pro，稳定使用一周没有遇到 KYC","\u003cb>作者也没答案的部分：\u003c/b>他说 Claude 封号「非常玄学」，全中文环境有稳定的案例，部署到美国也有被封的，网上对封号原因的推测都没有参考性","\u003cb>本卡判断：\u003c/b>批量注册与邮箱别名属于规避平台用量限制和风控的行为，通常违反服务条款；账号、支付方式与域名都可能被牵连，学习资料和项目不该押在这种随时会消失的账号上"],"notes_html":[],"detail_summary":"深入讲解 · 为什么这类教程不值得跟","detail_html":"\u003ch4>一、它绕开的是「账号—付费—风控」这条链\u003c/h4>\n          \u003cdiv>海外 AI 产品的免费额度、学生优惠和订阅价格，都是按\u003cb>账号\u003c/b>计算的。批量建邮箱等于把「一个账号」变成「很多个账号」，直接冲击的是厂商的付费墙与滥用防护。原文没有讨论合规性，只把封号归因于网络环境——这恰好回避了真正的原因。\u003c/div>\n          \u003ch4>二、代价不止是「可能封号」\u003c/h4>\n          \u003cdiv>① 账号随时可能失效，聊天记录、项目、API Key 一起没；\u003cbr>② 同一域名或支付方式下的多个账号容易被关联处置；\u003cbr>③ 用别名邮箱注册后，找回与申诉链路也更脆弱；\u003cbr>④ 为了省订阅费投入的时间，往往高于直接使用免费额度或学生方案。\u003c/div>\n          \u003ch4>三、对学生更稳的替代路径\u003c/h4>\n          \u003cdiv>原文没有给替代方案，这里补三条通用方向（不涉及具体优惠信息）：优先使用官方提供的学生认证或免费额度；把重活放到按量计费的 API 上，用多少付多少；国内模型作为日常主力，海外模型只在确有必要时使用。至于这篇只有 500 多字的短文，本身也没有可验证的技术细节，更像一篇引流内容。\u003c/div>\n          \u003cdiv class=\"note\">⚠️ 本卡只做内容记录，不构成对原文方法的推荐。账号合规问题以各平台服务条款为准。\u003c/div>","keywords":"Claude GPT 账号 注册 飞书邮箱 域名 邮箱别名 免费版 Pro KYC 封号 服务条款 风险"},{"i":7,"id":"wx:MzkxMTY4NTAyNQ:2247521014:1","title":"TRAE 官方训练营开启报名：手把手教你开发并上线产品","url":"https://mp.weixin.qq.com/s?__biz=MzkxMTY4NTAyNQ==&mid=2247521014&idx=1&sn=c0a6c9bcd62e816f011f56381d1ef352&chksm=c00257087b804869d93d9d582829119257aa84a7e9fcfab5df21e159ac5a2268b86c6a9d2461&mpshare=1&scene=1&srcid=1025xlgJzcMBMky6AWvQb91e&sharer_shareinfo=a8048e6dc26c967fe433b6724902668a&sharer_shareinfo_first=a8048e6dc26c967fe433b6724902668a#rd","category":"ai","account":"TRAE","published":"2026-10-25","added":"2026-10-25","status":"fetch_failed","summary_label":"仅标题收录","summary_html":"这篇是 TRAE 官方训练营的报名文章，抓取器按「原链接 → 裸链接 → 慢等」三轮尝试都只拿到空内容，正文需要在微信客户端内打开。","points_html":["除标题外没有可靠正文可供提炼，因此\u003cb>不生成摘要与深入讲解\u003c/b>，也不臆测课程内容、报名条件与时间","对应的滴答任务\u003cb>保留未完成\u003c/b>，等你在微信里读完后再手动勾选，或下次自动重试"],"notes_html":[],"detail_summary":"","detail_html":"","keywords":"TRAE 训练营 报名 开发 上线 产品 抓取失败 空内容 微信客户端 仅标题"},{"i":8,"id":"wx:MzE5OTI3MDk5Nw:2247681691:1","title":"ESP32 滚纸写字机：把 Y 轴换成\"滚纸\"，能写 5 米长","url":"https://mp.weixin.qq.com/s?__biz=MzE5OTI3MDk5Nw==&mid=2247681691&idx=1&sn=c66a5e332f84003ec9c797ef53d671fb&chksm=97a99ce1cabfe43793c1ee78407dfaf0effff3b4ed513e630c2ad0197a9485057d9d54eb76cc&mpshare=1&scene=1&srcid=1005TVqG7LzwG4j7hWK8f0Kb&sharer_shareinfo=b8d9232b154f089370efafe31048bdb8&sharer_shareinfo_first=b8d9232b154f089370efafe31048bdb8#rd","category":"emb","account":"立创开源硬件平台","published":"2026-09-11","added":"2026-10-05","status":"ok","summary_label":"一句话","summary_html":"常见写字机是方方正正的 XY 平台——10cm 的纸就要 10cm 的机器；这个项目把 \u003cb>Y 轴改成滚纸轴\u003c/b>，用三轴实现 210mm × 5000mm 的书写范围，DIY 成本约 \u003cb>350 元\u003c/b>（市售同类 600–1000+）。","points_html":["\u003cb>三轴分工：\u003c/b>X 轴让笔左右移动 · Y 轴让纸前后滚动 · Z 轴用舵机负责抬笔落笔。理论上只要纸够长、软件行程继续增大，5 米也不是物理极限","\u003cb>主控：\u003c/b>立创·ESP32S3R8N8 开发板；电路用嘉立创 EDA 设计，板子尺寸可免费打样","\u003cb>驱动：\u003c/b>两路 \u003ccode>TMC2209-LA-T\u003c/code> 分别驱动两台 42 步进电机——支持最高 256 微步，带 StealthChop 静音驱动，运动更细腻平滑、不易丢步打滑，且有过温短路保护","\u003cb>电源与外围：\u003c/b>\u003ccode>TPS54202DDCR\u003c/code> BUCK 降压、MicroSD 卡座、滑动开关 SS12D06G5、拨码开关 DSWB02LHGET、XH-4AW 线对板针座","\u003cb>软件几乎零开发：\u003c/b>依托 ESP32 生态，可直接跑 \u003cb>FluidNC\u003c/b> 运动控制固件，配合炽写3、GRBL Studio、奎享等软件写字绘图","\u003cb>作者自己说的短板：\u003c/b>没有产品级精度，还缺限位开关——但已经能实际完成写字和绘图，且开源了足够复刻的资料","\u003cb>开源地址：\u003c/b>\u003ca href=\"https://oshwhub.com/ymengo/project_mraukvnb\" target=\"_blank\" style=\"color:var(--emb)\">oshwhub.com/ymengo/project_mraukvnb\u003c/a>"],"notes_html":[],"detail_summary":"深入讲解 · 三轴联动原理与复刻要点","detail_html":"\u003ch4>为什么\"滚纸\"是个聪明的设计\u003c/h4>\n          \u003cdiv>传统 XY 平台里，机器的占地面积必须大于纸张面积——想画 1 米长的图，就得有 1 米长的机器。把 Y 轴从\"移动笔\"改成\"送纸\"，等于把空间需求转成了\u003cb>卷材需求\u003c/b>：机器本身很细长，纸可以一直往后送。原文还顺手点出这是笔式绘图仪（pen plotter）的原理，能画长线稿。\u003c/div>\n          \u003ch4>三轴是怎么联动的：STEP/DIR 信号链\u003c/h4>\n          \u003cdiv>工作流是：\u003cb>运动文件/指令 → ESP32-S3 解析 → 计算各轴运动 → 输出 STEP/DIR 信号 → 步进驱动器 → 步进电机运动\u003c/b>。\u003c/div>\n          \u003cdiv>大白话讲：要让机构向右移动，ESP32 就让对应电机驱动器收到\u003cb>一定数量的 STEP 脉冲\u003c/b>（脉冲数 = 走的步数）；要反向运动，就改变 \u003cb>DIR 电平\u003c/b>。三路电机组合起来，就能完成 X/Y/Z 三轴联动。这也是所有 CNC / 3D 打印机 / 写字机通用的控制抽象——理解了这一层，换任何运动控制项目都能上手。\u003c/div>\n          \u003ch4>选型上的两个好处\u003c/h4>\n          \u003ctable>\n            \u003ctr>\u003cth>\u003c/th>\u003cth>选择\u003c/th>\u003cth>带来的好处\u003c/th>\u003c/tr>\n            \u003ctr>\u003ctd>主控\u003c/td>\u003ctd>ESP32-S3 ＋ 现成固件\u003c/td>\u003ctd>不用自己写运动控制软件，直接跑 FluidNC，配现成上位机；复刻时调试难度大幅降低\u003c/td>\u003c/tr>\n            \u003ctr>\u003ctd>驱动\u003c/td>\u003ctd>TMC2209 ×2\u003c/td>\u003ctd>256 微步 ＋ 静音驱动 → 运动细腻平滑、不易丢步，写字不\"顿挫\"；带过温/短路保护\u003c/td>\u003c/tr>\n          \u003c/table>\n          \u003cdiv class=\"note\">📌 作为练手项目的价值：它把\"嵌入式控制 + 机械传动 + 开源固件生态\"三件事串在一个 350 元的盒子里，而且有完整的原理图 / PCB / BOM。如果以后要做一个自己的硬件作品放进履历，这类\"能跑起来、能看见效果、成本可控\"的项目比纯软件 demo 更有说服力。\u003c/div>\n          \u003cdiv class=\"note\">💡 原作者的降级提示：这个方案没有产品级精度，也还没加限位开关（意味着回零和防撞需要自己补）。复刻时这两点是第一个要改进的地方。\u003c/div>","keywords":"ESP32-S3 写字机 绘图仪 滚纸 步进电机 TMC2209 舵机 FluidNC GRBL 立创EDA 开源 嘉立创 350元"},{"i":9,"id":"wx:MzIxODg1OTk1MA:2247553360:1","title":"阿波罗 11 号源码：4KB 内存如何把人类送上月球","url":"https://mp.weixin.qq.com/s?__biz=MzIxODg1OTk1MA==&mid=2247553360&idx=1&sn=805cdced195fb0cd6a888879625f16a8&chksm=962583506e3c24b1d39638ca15635a4172788c6e5bc966f819172b0d6a83170e049234f9685b&mpshare=1&scene=1&srcid=1021RYP8ehjYr2efJeMTuZdC&sharer_shareinfo=aea412383595b5889c44863894158ad4&sharer_shareinfo_first=aea412383595b5889c44863894158ad4#rd","category":"emb","account":"JackCui · 小R","published":"2026-10-21","added":"2026-10-21","status":"ok","summary_label":"一句话","summary_html":"1969 年的阿波罗导航计算机只有 \u003cb>4KB 运行内存、约 72KB 只读存储\u003c/b>，靠内存分阶段复用、8 个任务槽、手工编织的磁芯绳存储、自建虚拟机和软重启机制，跑完了一整套登月飞控程序。","points_html":["\u003cb>硬件底子：\u003c/b>AGC 重约 32 千克、功耗 55 瓦、主频约 2.048 MHz；一个字 15 位数据 + 1 位奇偶校验，没有「字节」概念，也没有浮点数，小数点位置靠程序员自己记","\u003cb>两套核心程序：\u003c/b>指令舱的 \u003ccode>Comanche055\u003c/code>（Colossus 2A）和登月舱的 \u003ccode>Luminary099\u003c/code>（Luminary 1A），各约 6.5 万行（含注释）、各约 90 个文件，全部平铺在一个目录里","\u003cb>三层结构：\u003c/b>底层是 \u003ccode>EXECUTIVE\u003c/code>（任务调度）、\u003ccode>WAITLIST\u003c/code>（定时任务）、中断与重启恢复；中间层是 \u003ccode>INTERPRETER\u003c/code> 虚拟机、数学子程序和键盘显示；上层任务文件按 P 编号命名，P63 对应登月下降","\u003cb>内存复用：\u003c/b>变量分 PRM（全任务专用）和 TMP（可临时借用），并注明谁能覆盖谁；仅登月舱程序就标注了 1500 个变量","\u003cb>8 个任务槽：\u003c/b>每槽 12 个字，当前任务固定 0 号槽，切换只交换 12 个字；复杂运算另领 44 字「草稿区」，全机只有 5 块。整套多任务系统约占 340 个字，只用六分之一的内存","\u003cb>存储是「织」出来的：\u003c/b>72KB 用的是磁芯绳存储器，由女工在放大镜下用铜线穿过磁环编程——铜线从磁环中间穿过代表 1，从旁边绕过代表 0；穿好就改不了，因此代码必须极度严谨、常数能复用就复用","\u003cb>自建虚拟机：\u003c/b>AGC 原生只有 8 条基本指令，程序员用汇编写出解释器，执行 \u003ccode>TC INTPRET\u003c/code> 即可进入；约 2000 字程序存储换来 28 位双精度数和三维向量运算，点乘、叉乘、单位化、矩阵乘向量都只要一条指令","\u003cb>软重启救命：\u003c/b>1969-07-20 登月舱下降时警报响了 5 次，主要是 \u003ccode>1202\u003c/code>（任务槽用完）和一次 \u003ccode>1201\u003c/code>（草稿区用完）；程序靠 \u003ccode>PHASCHNG\u003c/code> 记录断点、\u003ccode>BAILOUT\u003c/code> 报警、\u003ccode>ENEMA\u003c/code> 重启，导航和发动机控制几乎未受影响","\u003cb>代码来源：\u003c/b>不是 NASA 硬盘导出，而是 MIT 博物馆的纸质打印稿——飞行历史学者拍照、Virtual AGC 的 Ron Burkey 带志愿者逐字符录入，再用 \u003ccode>yaYUL\u003c/code> 汇编验证；登月舱打印稿定稿时间是 1969-07-14 16:27，离发射只剩两天","\u003cb>仓库：\u003c/b>\u003ca href=\"https://github.com/chrislgarry/Apollo-11\" target=\"_blank\" style=\"color:var(--emb)\">github.com/chrislgarry/Apollo-11\u003c/a>，截至 2026 年已有约 7.5 万 Star"],"notes_html":["📝 你的批注：这个 Apollo 11 号虽然现在看了几乎是没有意义了，但是当时的工程思维肯定是很厉害吧。"],"detail_summary":"深入讲解 · 4KB 怎么够用 + 虚拟机与软重启","detail_html":"\u003ch4>一、4KB 内存的三种省法\u003c/h4>\n          \u003cdiv>① \u003cb>分阶段复用\u003c/b>：内存位置被标上 PRM / TMP 身份，不同时运行的程序可以共用同一块 TMP；变量注释会写明「可以覆盖，但要小心，只在动力下降时使用」这类约束。\u003cbr>② \u003cb>固定任务槽\u003c/b>：8 个槽各 12 字，相当于极简的进程上下文，切换任务只交换两个槽的 12 个字。\u003cbr>③ \u003cb>按需给草稿区\u003c/b>：只有做向量、矩阵运算的任务才领 44 字草稿区，全机 5 块，用不到的任务一个字都不多给。\u003c/div>\n          \u003cdiv class=\"note\">📌 原文的算账：多任务系统总共只占约 340 个字，用六分之一的内存就实现了调度。\u003c/div>\n          \u003ch4>二、15 位机器上的「虚拟机」\u003c/h4>\n          \u003cdiv>AGC 天生只认识 8 条基本指令，连乘除法都要靠前缀指令，更别说向量和矩阵。解释器只占约 2000 个字的程序存储，却能处理 28 位双精度数和 6 个字组成的三维向量。\u003c/div>\n          \u003cdiv>省空间的两个细节：操作码只有 7 位（最多 128 种运算），汇编器把相邻两条指令打包进同一个 15 位字，指令空间直接省一半；虚拟机采用不需要括号的波兰表示法，操作码字存成负数、内存地址存成正数——取操作数时先看下一个字，正数就去那个地址取数，负数说明下一条已经是新指令，直接从栈里弹出上一步结果继续算。\u003c/div>\n          \u003ch4>三、1202 警报为什么不等于死机\u003c/h4>\n          \u003cdiv>登月最关键时刻，8 个任务槽和 5 块草稿区被同时挤满：\u003ccode>1202\u003c/code> 表示「没有可用的核心组」（任务槽用完），\u003ccode>1201\u003c/code> 表示「没有可用的草稿区」。程序没有硬撑，而是进入 \u003ccode>BAILOUT\u003c/code> 记下报警代码，跳到 \u003ccode>ENEMA\u003c/code> 清空堵塞任务，再按 \u003ccode>PHASCHNG\u003c/code> 留下的断点把导航、发动机控制等关键任务重新拉起来。关键任务每走到重要步骤都会记录「第几组、第几步」，这些断点存在内存里，重启不会丢。\u003c/div>\n          \u003ch4>四、比技术更值得记的两件事\u003c/h4>\n          \u003cdiv>① \u003cb>约束逼出纪律\u003c/b>：磁芯绳穿好就不可改，所以代码里几乎没有冗余，全篇搜不到一个 TODO 或 FIXME——在登月这件事上，没人敢把问题留到以后。\u003cbr>② \u003cb>代码也有性格\u003c/b>：主点火程序文件名叫 \u003ccode>BURN_BABY_BURN--MASTER_IGNITION_ROUTINE.agc\u003c/code>，参数表上写着 \u003ccode>NOLI SE TANGERE\u003c/code>（别碰我）；雷达天线注释是「PLEASE CRANK THE SILLY THING AROUND」，确认提示是「SEE IF HE'S LYING」，点火跳转注释是「OFF TO SEE THE WIZARD...」。\u003c/div>\n          \u003cdiv class=\"note\">📌 对照你的方向：这篇讲的不是怀旧，而是资源受限系统里的工程方法——内存分区、固定上下文、断点恢复、可验证的代码来源。做嵌入式项目时，这些约束和取舍比堆功能更值得学。\u003c/div>","keywords":"阿波罗11号 Apollo 11 AGC Apollo Guidance Computer 4KB 72KB 磁芯绳 汇编 Comanche055 Luminary099 EXECUTIVE WAITLIST INTERPRETER 虚拟机 波兰表示法 1202 1201 软重启 PHASCHNG BAILOUT ENEMA 玛格丽特·汉密尔顿 开源 GitHub 工程思维"},{"i":10,"id":"wx:MzE5OTI3MDk5Nw:2247682579:1","title":"150 元的「智能锁贴」：不换锁芯，夹在旧锁上就能远程开门","url":"https://mp.weixin.qq.com/s?__biz=MzE5OTI3MDk5Nw==&mid=2247682579&idx=1&sn=2fc13b84373380780322151e28a3f632&chksm=974e132793251991ad3abec88d1dfab9a790661cc31df12d45decdbac39f9ac08f05259488cf&mpshare=1&scene=1&srcid=1026utsMJJOIiANr706qxvAR&sharer_shareinfo=cb74dd8e8b6ffcd1ffec2a7c56d39bc8&sharer_shareinfo_first=cb74dd8e8b6ffcd1ffec2a7c56d39bc8#rd","category":"emb","account":"立创开源硬件平台","published":"2026-10-26","added":"2026-10-26","status":"ok","summary_label":"一句话","summary_html":"立创开源项目 LockDrive 用 \u003cb>ESP32-C3 + 减速电机 + 同步带 + 可换夹具\u003c/b>，夹在原有门锁旋钮上带动开锁；支持 4 种锁型、蓝牙与远程开锁、撬锁警报和开锁日志，作者给出的复刻成本约 \u003cb>150 元\u003c/b>。","points_html":["\u003cb>背景：\u003c/b>作者搬过几次家，没有一位房东同意拆锁换智能锁，于是做了这个「智能锁贴」","\u003cb>七项功能：\u003c/b>手机 App 远程开锁、蓝牙开锁、4 个圆形夹具适配 4 种锁、不影响继续用钥匙开锁、撬锁警报、加密存储 50+ 条开锁日志、续航约 6 个月","\u003cb>报警逻辑：\u003c/b>MPU-6050 监测异常震动 → 锁死电机 + 推送警报 + 超过 2 次确认后蜂鸣器报警","\u003cb>硬件清单：\u003c/b>主控 ESP32-C3、电池管理 TP4056、DC-DC \u003ccode>SGM6036-3.3\u003c/code>、陀螺仪 MPU-6050、电机驱动 TC118S、蜂鸣器 HYG-9605B、磁编码器 AS5600、两节 18650 供电","\u003cb>机械结构：\u003c/b>ESP32-C3 控制 TC118S 驱动 520 减速电机 → 同步带 → 中空大齿轮 → 可更换夹具 → 带动原锁旋钮完成开关锁","\u003cb>闭环与软件：\u003c/b>AS5600 实时反馈旋转角度，实现精准开关锁；软件基于 \u003ccode>ESP-IDF v5.5\u003c/code> + FreeRTOS，手机 App 与 ESP32-C3 通信","\u003cb>开源与成本：\u003c/b>源码、外壳、电路均已开源，作者给出的参考复刻成本约 150 元；项目页：\u003ca href=\"https://oshwhub.com/foiuuy/project_cvzewjvd\" target=\"_blank\" style=\"color:var(--emb)\">oshwhub.com/foiuuy/project_cvzewjvd\u003c/a>","\u003cb>注意：\u003c/b>原文是立创开源硬件平台的项目介绍，文末带星火计划与商城活动推广；功能描述以作者自述为准"],"notes_html":[],"detail_summary":"深入讲解 · 为什么「贴」比「换」聪明，闭环与功耗怎么算","detail_html":"\u003ch4>一、不改锁芯，绕开的是「房东 + 门体」两道约束\u003c/h4>\n          \u003cdiv>租房场景里，换智能锁要拆原锁、改门孔，退租还得复原；这个项目把执行机构做成一个\u003cb>外挂贴\u003c/b>：夹具夹住原旋钮，电机带着旋钮转，原锁芯和钥匙完全不动。好处是可逆、无损、搬家能带走；代价是对夹具的适配和安装同心度要求高——夹具打滑，再好的电机也开不了门。\u003c/div>\n          \u003ch4>二、为什么要加磁编码器做闭环\u003c/h4>\n          \u003cdiv>开环控制只知道「电机转了多少步」，不知道「锁舌到底转到位没有」。夹具公差、皮带打滑、电池电压下降都会让实际角度偏离。AS5600 把旋钮角度实时反馈给 ESP32-C3，控制器才能判断「到位/没到位/被卡住」，这也是它能做精准开关锁和异常检测的基础。原文没有披露具体的控制算法与阈值，不能假设它已经做到工业级可靠。\u003c/div>\n          \u003ch4>三、安全与功耗，原文说到的和没说的\u003c/h4>\n          \u003cdiv>说到的：异常震动锁死电机、推送、二次确认后蜂鸣器报警、开锁日志加密存储 50+ 条。没说的：加密方式、通信协议、云端权限模型、断网/没电时的降级策略。两节 18650 撑 6 个月，意味着大部分时间必须深度休眠，只在蓝牙连接或定时唤醒时工作——电机峰值电流很大，电源设计（TP4056 + SGM6036）和休眠策略才是续航的关键。\u003c/div>\n          \u003cdiv class=\"note\">📌 复刻提醒：这是门锁，不是玩具。先确认租房合同与消防/安全要求；保留钥匙开锁的备份路径；不要把开锁权限交给来路不明的云端服务。原文只给到参考成本，实际还要算夹具加工、PCB 打样和电池的费用。\u003c/div>\n          \u003ch4>四、和你做过的项目是同一类\u003c/h4>\n          \u003cdiv>它和站内那台 ESP32 滚纸写字机共享同一套骨架：\u003cb>ESP32 + 电机驱动 + 机械传动 + 现成固件/框架\u003c/b>。区别在于这个项目多了传感器闭环和安全逻辑，更适合作为「有真实痛点、能演示、成本可控」的作品放进履历。\u003c/div>","keywords":"ESP32-C3 智能锁 锁贴 LockDrive TP4056 SGM6036 MPU6050 TC118S AS5600 520减速电机 同步带 夹具 ESP-IDF FreeRTOS 蓝牙 远程开锁 撬锁警报 18650 立创 开源 150元"},{"i":11,"id":"wx:MzA4MDUwMzAxNA:2651442345:1","title":"新大纲背景下，《背诵笔记》怎么用？徐涛的八个问答","url":"https://mp.weixin.qq.com/s?__biz=MzA4MDUwMzAxNA==&mid=2651442345&idx=1&sn=2b776fd06610d3dfd831e04f8056d3cc&chksm=850fbb39ed978759f2d6dbe9e59db8ba99b06772024c256d21715db20dab4425688fb81b8b39&mpshare=1&scene=1&srcid=1018RkPy9R9rp2n3YeWl8qqy&sharer_shareinfo=987ee144e28a60924e9e9801d2c3dd79&sharer_shareinfo_first=987ee144e28a60924e9e9801d2c3dd79#rd","category":"kaoyan","account":"考研政治徐涛","published":"2026-10-04","added":"2026-10-18","status":"ok","summary_label":"一句话","summary_html":"今年政治大纲和命题风格都没变，但「灵活性逐年加大」的趋势不变；新版《核心背诵笔记》把每章知识点拆成\u003cb>背诵部分\u003c/b>（不到全书 1/3）和\u003cb>理解部分\u003c/b>（大头），10 月仍以选择题为优先。","points_html":["\u003cb>大纲与风格：\u003c/b>今年新大纲没有变化，不必过度解读；命题风格今年也没变，但自 2022、2023 考研起灵活性逐步加大，徐涛判断今年会延续","\u003cb>对复习的要求：\u003c/b>死记硬背、书上能找到原话答案的题目分量在减少，押题命中的比重也在下降；基础知识必要但不充分——「学一遍知识是有必要的，但一直学知识是浪费时间的」","\u003cb>改版逻辑：\u003c/b>每章开头第一部分是\u003cb>背诵部分\u003c/b>（考原话的死记硬背点），第二部分是\u003cb>理解部分\u003c/b>（理论表格化整编 + 命题思路 + 典型干扰选项特征 + 判断对错的方法）","\u003cb>篇幅比例：\u003c/b>全书 300 个页码，背诵部分占不到 1/3；真正要你背的东西大概不到 1/3，理解部分是大头","\u003cb>不同进度的时间账：\u003c/b>已学完《核心考案》、强化班听完的——每天约 40 分钟做题 + 40 分钟复盘，总时长 1.5 小时内；还没学完甚至没开始的——每天 1 小时听课 + 1 小时做题，共 2–2.5 小时，「现在才 10 月，完全来得及」","\u003cb>带背安排：\u003c/b>冲刺班不逐页讲背诵部分，改用「带背」；预计 10 月 19 日左右开始，手里有正版背诵笔记即可参与，不需要额外花钱报班","\u003cb>选择题优先：\u003c/b>100 分里选择、论述各 50 分，两种题都重要；但节奏上先学知识点 → 再攻克选择题 → 最后背论述题。10 月重点仍是选择题，11 月后论述题权重逐步抬高","\u003cb>分析题得分：\u003c/b>理论准确 + 语言规范，通篇口水话一定低分；语言可速成（约一个月背成篇成段的政治化表达），行文逻辑结构不重要，关键是关键词踩点，往往是断首句、开篇句"],"notes_html":[],"detail_summary":"深入讲解 · 为什么这样改版 + 10–11 月怎么排","detail_html":"\u003ch4>一、为什么要把「背」和「懂」分开\u003c/h4>\n          \u003cdiv>原文的出发点很具体：学生拿到背诵笔记的第一反应是「这本书怎么背？还是背不完」，而老师既不能说「不用背」，也不能说「全要背」——因为很多知识点背了也不会做题，出题本来就灵活。于是改版干脆按\u003cb>考察方式\u003c/b>拆开：会考原话的放进「背诵部分」，需要理解辨析的放进「理解部分」。\u003c/div>\n          \u003cdiv>这个设计的真正价值是给了一个\u003cb>明确的动作指令\u003c/b>：翻开每章第一部分就直接背；背不住，再用优题库、十套卷里的题通过做题练习去背。理解部分则配命题思路和干扰项特征，解决「知道概念但选不对」的问题。\u003c/div>\n          \u003ch4>二、按你的进度排每天的时间\u003c/h4>\n          \u003ctable>\n            \u003ctr>\u003cth>你的状态\u003c/th>\u003cth>每天安排\u003c/th>\u003cth>原文的判断\u003c/th>\u003c/tr>\n            \u003ctr>\u003ctd>\u003cb>已学完《核心考案》\u003cbr>强化班已听完\u003c/b>\u003c/td>\u003ctd>约 40 分钟做题 + 40 分钟复盘，政治总学习时间 1.5 小时内\u003c/td>\u003ctd>接下来主要任务就是做题\u003c/td>\u003c/tr>\n            \u003ctr>\u003ctd>\u003cb>还没学完 / 还没开始\u003c/b>\u003c/td>\u003ctd>1 小时听课 + 1 小时做题，共 2–2.5 小时\u003c/td>\u003ctd>现在才 10 月，完全来得及；别人前期花了时间，你现在多花一点完全说得过去\u003c/td>\u003c/tr>\n          \u003c/table>\n          \u003cdiv>阶段重心：\u003cb>10 月选择题优先\u003c/b>；进入 11 月后，论述题的学习逐步抬高重要性。背诵部分的带背预计 10 月 19 日左右启动，正好接上。\u003c/div>\n          \u003ch4>三、分析题与押题，原文的三个硬观点\u003c/h4>\n          \u003cdiv>① \u003cb>语言要规范\u003c/b>：考研政治论述题看两样——理论准确性和语言规范性，通篇口水话一定是低分。好消息是语言可以速成，大概一个月背成篇成段的政治化表达，量变会改变表达方式。\u003c/div>\n          \u003cdiv>② \u003cb>逻辑结构不是重点，关键词踩点才是\u003c/b>：原文明确说「行文逻辑结构是不重要的，关键是关键词踩点，往往是断首句、开篇句的那几个关键词」。这决定了背分析题时该背「点」而不是背「作文模板」。\u003c/div>\n          \u003cdiv>③ \u003cb>时政到题里背，押题要有底座\u003c/b>：时政题几乎都是死记硬背，与其背一本本时政资料，不如反复多做那道题；热点大概率还会考，但会更灵活、绕着弯考，押题必须建立在前期学习、练习、理解的基础上。\u003c/div>\n          \u003ch4>四、读这篇时要注意的两点\u003c/h4>\n          \u003cdiv class=\"note\">📌 原文后半段是「研途考研」择校小程序的推广（含推荐码），与复习方法无关，本卡未把推广内容当作建议；院校大纲变化请以目标院校官方通知为准。\u003c/div>\n          \u003cdiv class=\"note\">📌 原文是徐涛老师 10 月 4 日的答疑，时间点明确提到「现在才 10 月」「10 月 19 日左右开始带背」。今天已是 10 月 18 日，带背随时可能启动，适合现在就去确认入口。\u003c/div>","keywords":"徐涛 考研政治 27考研 背诵笔记 核心背诵笔记 客观题10套卷 新大纲 选择题 分析题 论述题 押题 时政 带背 冲刺班 强化班 核心考案 干扰项 关键词踩点"},{"i":12,"id":"wx:MzIzNDEyNTE0MA:2653442084:1","title":"成都大学 2027 届电子信息类秋季双选会：10 月 27 日下午","url":"https://mp.weixin.qq.com/s?__biz=MzIzNDEyNTE0MA==&mid=2653442084&idx=1&sn=3656ba0029e4863f7fc2fd10f35cf45e&chksm=f206af6e5699ad05b13f8d9d2234d7b939eb6229dd10db6fcf52d3ef45c98e81a2467373b60d&mpshare=1&scene=1&srcid=1023CdFum95ZRbf5alpI92wJ&sharer_shareinfo=da08fe261be7e36991b030b6cb832cef&sharer_shareinfo_first=da08fe261be7e36991b030b6cb832cef#rd","category":"job","account":"成都大学电子信息与电气工程学院","published":"2026-10-22","added":"2026-10-23","status":"ok","summary_label":"一句话","summary_html":"2026 年 \u003cb>10 月 27 日（星期二）14:00–16:30\u003c/b>，成都大学双选厅（梁平路 333 号），预计 \u003cb>75 个展位\u003c/b>；2027 届毕业生网签系统已开启，毕业生和用人单位双方都可以发起网上签约。","points_html":["\u003cb>时间：\u003c/b>2026 年 10 月 27 日（星期二）下午 2:00—4:30","\u003cb>地点：\u003c/b>成都大学双选厅（梁平路 333 号）","\u003cb>展位安排：\u003c/b>预计设立 75 个展位，每家单位一个标准展位，配 1 张桌子、2 张凳子，提供饮水、笔；单位可放自带易拉宝，场地内不提供电源接线","\u003cb>现场流程：\u003c/b>双选会现场不设签到处，志愿者会到展位发放、收集资料，参会单位需牢记展位号，直接到展位布展","\u003cb>网签入口：\u003c/b>2027 届毕业生网签系统已开启，双方均可发起；用人单位通过「四川省高校学生信息咨询与服务平台」操作，流程见 \u003ca href=\"https://bigdata.scbdc.edu.cn:8888/\" target=\"_blank\" style=\"color:var(--job)\">bigdata.scbdc.edu.cn:8888\u003c/a>","\u003cb>联系人：\u003c/b>电子信息与电气工程学院 雍老师 \u003ccode>028-84616092\u003c/code>；计算机学院 方老师 \u003ccode>028-84616156\u003c/code>；海外教育学院 桂老师 \u003ccode>028-84616378\u003c/code>","\u003cb>名单与展位：\u003c/b>原文正文写的是「详细情况请见附件」，抓取只拿到正文，具体用人单位名单和展位号需回原文下载附件查看"],"notes_html":["📅 双选会已于 2026-10-27 举行。如果当时没去，可以回原文附件看参会单位名单与联系方式，作为后续投递的线索；日期已过，本卡保留作为存档。"],"detail_summary":"","detail_html":"","keywords":"成都大学 2027届 电子信息类 秋季双选会 招聘 展位 双选厅 梁平路 网签 四川省高校学生信息咨询与服务平台 雍老师 方老师 桂老师 10月27日"},{"i":13,"id":"wx:Mzg2NjU1MzIxNg:2247501870:1","title":"杭电前几任 ACM 队长去哪了？外加蓝桥杯、实习与「考研还是工作」五问","url":"https://mp.weixin.qq.com/s?__biz=Mzg2NjU1MzIxNg==&mid=2247501870&idx=1&sn=c42e574c97a1bf19a669d6c8841913cb&chksm=cff4ee3c7ceb6d98d6657a74f50d4dbdfa238f85a8ecf429028a8540e49d0d05609d3c7fb3b9&mpshare=1&scene=1&srcid=1026e81QhosNTg4weqyusXD6&sharer_shareinfo=19fca9d64c581e3f3bf9c74c88f3a5ac&sharer_shareinfo_first=19fca9d64c581e3f3bf9c74c88f3a5ac#rd","category":"job","account":"夜深人静写算法","published":"2026-10-26","added":"2026-10-26","status":"ok","summary_label":"一句话","summary_html":"一篇社群问答合集：作者列了杭电前六任 ACM 集训队队长的去向（网易、游戏公司、字节等），并回答了蓝桥杯路线、大二要不要实习、C 语言大数组放哪、考研还是找工作等问题；作者的核心建议是\u003cb>把实习放在大三、用海投和面试查漏补缺\u003c/b>。","points_html":["\u003cb>队长去向（作者自述）：\u003c/b>第一届卢**** 网易雷火事业群技术副总裁；第二届徐**** 网易《倩女幽魂》主程；第三届林** 网易某爆款项目主程；第四届黄**** 游戏公司合伙人（CTO）；第五届作者本人，全网 300 万粉丝技术博主；第六届胡** 四块 ACM 亚洲赛金牌、两届 WorldFinal、字节某线负责人","\u003cb>作者对「队长」的判断：\u003c/b>校队能不能重启和队长没关系，需要的是教练；队长的作用是榜样，以激情感化团队","\u003cb>蓝桥杯语言选择：\u003c/b>平时练习可以用 C，比赛用 C++ 更好——STL 省去手写数据结构；但会调 STL 不等于不用学数据结构原理","\u003cb>训练路径：\u003c/b>C++ 面向过程 → 面向对象 → 基础数据结构 → STL → 基础算法 → 进阶数据结构 → 进阶算法；看视频要跟着写代码并加入自己的思考","\u003cb>大二实习：\u003c/b>作者不建议；大二课最多，实习多是感受工作氛围，像「计算机网络处」这类岗位能力提升不大","\u003cb>考研还是找工作：\u003c/b>先准备简历 → 海投实习 → 面挂了继续面 → 按面试题查漏补缺；实习最适合的时间是大三","\u003cb>实习的四个好处：\u003c/b>干得好直接转正、提前进入工作状态、简历上有经历、填补没有竞赛/项目经历的空白","\u003cb>面试策略：\u003c/b>最想去的公司最后面，先拿不太想去的公司练手；面试考的不只是技术，还有心态","\u003cb>C 语言大数组：\u003c/b>静态分配受栈大小限制（多数系统 1MB–8MB），动态 \u003ccode>malloc\u003c/code> 只受可用内存限制；32 位进程地址空间只有 4GB；作者建议把大数组放全局","\u003cb>注意：\u003c/b>文章是作者「英雄算法联盟」社群的问答与推广，含优惠券与课程链接；队长经历为作者自述，未独立核实"],"notes_html":[],"detail_summary":"深入讲解 · 队长样本、竞赛路线与实习时间账","detail_html":"\u003ch4>一、六个队长的样本，能说明什么、不能说明什么\u003c/h4>\n          \u003cdiv>能说明的：杭电 ACM 集训队确实产出过一批进入网易、字节和游戏公司的人，竞赛经历在游戏/后端方向有可见的敲门砖作用。不能说明的：这是\u003cb>六个被挑出来的「最努力最突出」的人\u003c/b>，样本极小，也没有对照组——不能用它证明「进集训队就能进大厂」。作者自己也把队长定位成「榜样」而不是「教练」，真正带队的是教练。\u003c/div>\n          \u003ch4>二、蓝桥杯路线为什么这样排\u003c/h4>\n          \u003cdiv>竞赛里的 C++ 优势主要来自 STL：\u003ccode>vector\u003c/code>、\u003ccode>map\u003c/code>、\u003ccode>priority_queue\u003c/code> 这些容器和算法直接可用，省掉手写链表、堆、排序的时间。但作者强调「会 STL 不等于不用学数据结构」——因为比赛里真正卡人的是\u003cb>建模与复杂度分析\u003c/b>，STL 只解决「怎么实现」。他给的七段路线本质是：语法 → 基础结构 → 标准库 → 基础算法 → 进阶结构与算法，顺序不能反。\u003c/div>\n          \u003ch4>三、实习的时间账：大二、大三、考研怎么排\u003c/h4>\n          \u003cdiv>作者的建议有明确前提：\u003cb>大三课少、没有其他安排\u003c/b>时去实习最合适。大二课最多，实习往往只能做边缘工作，收益低。对准备考研的人，这条建议要反过来算——大三暑假正是备考黄金期，实习与初试时间直接冲突。判断顺序应该是：先定方向（考研/就业），再排实习；而不是用「海投」代替方向选择。\u003c/div>\n          \u003cdiv class=\"note\">📌 原文的「先投实习再说」适合已经决定就业、需要补简历的人；如果你在备考，别被这句话带偏。把实习当成「就业方向的验证」而不是「必须完成的动作」。\u003c/div>\n          \u003ch4>四、C 语言那问的技术补充\u003c/h4>\n          \u003cdiv>原文说静态数组受栈大小限制、动态分配只受可用内存限制，这是对的。再补一层：全局数组放在静态存储区（\u003ccode>.bss\u003c/code>/\u003ccode>.data\u003c/code>），确实不受函数栈限制，但它仍受链接器、可执行文件大小和进程地址空间约束；「全部用全局变量」是应急手段，不是好设计。更稳的做法是 \u003ccode>malloc\u003c/code> 后检查返回值，或把大缓冲区做成静态池。\u003c/div>","keywords":"杭电 ACM 集训队 队长 网易 雷火 倩女幽魂 字节 WorldFinal 蓝桥杯 C++ STL 数据结构 实习 大三 考研 找工作 简历 海投 面试 C语言 内存 栈 malloc 全局变量"},{"i":14,"id":"wx:MzU2MDc2NDA4Ng:2247487000:1","title":"成都大学新版 VPN 启用：试运行到 12 月 30 日，账号需在线申请","url":"https://mp.weixin.qq.com/s?__biz=MzU2MDc2NDA4Ng==&mid=2247487000&idx=1&sn=366f323d160b61707eddaf25f04c275b&chksm=fd9911da13371a1e933015e2eba19ca109f565812315f69b1ec9f1abd15d8921653517cd6280&mpshare=1&scene=1&srcid=1023VvIPRC7Ipokqk3F8Qymi&sharer_shareinfo=d7f076d471eabe24b63b98c0b204cb37&sharer_shareinfo_first=d7f076d471eabe24b63b98c0b204cb37#rd","category":"dev","account":"成都大学信息网络中心","published":"2026-10-23","added":"2026-10-23","status":"ok","summary_label":"一句话","summary_html":"新版 VPN 于 \u003cb>2026-10-22\u003c/b> 正式启用，由信息网络中心基于开源系统研发；即日起至 \u003cb>2026-12-30\u003c/b> 为试运行期，新旧系统并行，结束后旧版停止服务。新版账号本质是与统一身份账号绑定的\u003cb>数字证书\u003c/b>，每人最多 5 个，超过 3 个月未使用会被自动收回。","points_html":["\u003cb>为什么换：\u003c/b>旧系统 2020 年投入使用，硬件老化、稳定性下降，影响日常使用；新版基于开源系统并结合学校实际做了功能优化和多轮测试","\u003cb>三阶段名额：\u003c/b>即日起—11 月 15 日开放 100 个账号；11 月 16 日—11 月 30 日开放 500 个；12 月 1 日—12 月 30 日不再限定数量。各阶段时间如有调整另行通知","\u003cb>申请路径：\u003c/b>登录网上办事大厅，搜索「VPN账号申请（新）」；填写名称、用途、使用人，已有账号不超过 5 个时后台自动创建，超过 5 个无法再申请","\u003cb>账号管理：\u003c/b>申请后进入本人企业微信工作台，点击「VPN业务」查看账号配置，也可以删除、禁用账号","\u003cb>客户端：\u003c/b>Windows、安卓、鸿蒙可下载官方客户端（\u003ca href=\"https://nic.cdu.edu.cn/info/1035/2414.htm\" target=\"_blank\" style=\"color:var(--dev)\">nic.cdu.edu.cn/info/1035/2414.htm\u003c/a> 或原文「阅读原文」）；苹果电脑下载第三方备用客户端；苹果手机在 App Store 搜索 \u003ccode>Phantom-WG\u003c/code>；也可自行获取兼容 WireGuard 的客户端","\u003cb>配置方式：\u003c/b>Windows 用「从文件导入隧道」导入企微下载的配置文件；macOS 解压后导入配置文件；安卓、鸿蒙、iPhone 扫描企业微信「VPN业务」里账号配置文件的二维码，其中安卓/鸿蒙填写 VPN 名称时不要用中文","\u003cb>注意事项：\u003c/b>多个设备同时访问需要对应数量的 VPN 账号；超过 3 个月未使用的账号会被自动收回；咨询电话 \u003ccode>028-84616789\u003c/code>"],"notes_html":[],"detail_summary":"深入讲解 · 时间线、账号本质与迁移清单","detail_html":"\u003ch4>一、三阶段时间表\u003c/h4>\n          \u003ctable>\n            \u003ctr>\u003cth>阶段\u003c/th>\u003cth>时间\u003c/th>\u003cth>账号名额\u003c/th>\u003c/tr>\n            \u003ctr>\u003ctd>第一阶段\u003c/td>\u003ctd>即日起—2026-11-15\u003c/td>\u003ctd>100 个\u003c/td>\u003c/tr>\n            \u003ctr>\u003ctd>第二阶段\u003c/td>\u003ctd>2026-11-16—11-30\u003c/td>\u003ctd>500 个\u003c/td>\u003c/tr>\n            \u003ctr>\u003ctd>第三阶段\u003c/td>\u003ctd>2026-12-01—12-30\u003c/td>\u003ctd>不限量\u003c/td>\u003c/tr>\n          \u003c/table>\n          \u003cdiv class=\"note\">📌 试运行期结束（2026-12-30）后旧版 VPN 停止服务。也就是说，最晚要在 12 月底前完成迁移，不要等到旧版停服当天才申请。\u003c/div>\n          \u003ch4>二、账号不是「用户名 + 密码」，而是数字证书\u003c/h4>\n          \u003cdiv>原文写得很明确：新版 VPN 账号实质是与本人统一身份账号绑定的数字证书。实际使用中，你在企业微信「VPN业务」里拿到的是\u003cb>客户端配置文件或二维码\u003c/b>，把它导入 WireGuard 兼容客户端后就能建立隧道。这也解释了原文里的两个限制：\u003cb>多设备同时访问要申请对应数量的账号\u003c/b>；账号长期不用会被收回——原文给出的规则是「超过 3 个月未使用」。\u003c/div>\n          \u003cdiv class=\"note\">🔐 配置文件/二维码等同于接入凭证，导入后不要随手转发给别人；设备丢失或不再使用时，记得去企业微信「VPN业务」里删除或禁用对应账号。\u003c/div>\n          \u003ch4>三、客户端与协议路线\u003c/h4>\n          \u003cdiv>原文给的是客户端侧要求：Windows、安卓、鸿蒙用官方客户端，macOS 和 iPhone 用第三方备用客户端 \u003ccode>Phantom-WG\u003c/code>，同时说明可以自行获取\u003cb>兼容 WireGuard\u003c/b> 的客户端。服务端具体怎么实现，通知里没有披露，所以这里不替它下结论。\u003c/div>\n          \u003ch4>四、如果你的账号还没申请\u003c/h4>\n          \u003cdiv>① 先确认自己是否真的需要：只有访问校内资源时才用得上。\u003cbr>② 想赶第一阶段 100 个名额，就在 11 月 15 日前去网上办事大厅提交「VPN账号申请（新）」。\u003cbr>③ 申请后到企业微信「VPN业务」下载配置，按设备类型导入客户端，先连接测试一次。\u003cbr>④ 12 月 30 日前完成旧版到新版的切换，并留意信息网络中心的后续通知。\u003c/div>","keywords":"成都大学 VPN 新版VPN 数字证书 统一身份认证 WireGuard Phantom-WG 网上办事大厅 企业微信 VPN业务 试运行 账号申请 客户端 配置文件 二维码"},{"i":15,"id":"wx:MzI0NjM3NjI1NQ:2247623648:1","title":"JetBrains 26 年来首次年度亏损：不是 IDE 没人用，是 AI 改了收费逻辑","url":"https://mp.weixin.qq.com/s?__biz=MzI0NjM3NjI1NQ==&mid=2247623648&idx=1&sn=1e6aa4260f6d8ec3581a82fa09aaf6c3&chksm=e8051e42e1f2f116b424c60a304a298bd34b6751b2369aa340037c9e5a38f78809a68047498f&mpshare=1&scene=1&srcid=102531DgJrvSoRSrassGdN0a&sharer_shareinfo=02cc793b96159ba57b19feec534fda47&sharer_shareinfo_first=02cc793b96159ba57b19feec534fda47#rd","category":"dev","account":"黑马程序员","published":"2026-10-25","added":"2026-10-25","status":"ok","summary_label":"一句话","summary_html":"网传 JetBrains 全年营收约 \u003cb>7.1 亿美元\u003c/b>创历史新高，但净亏损约 \u003cb>1350 万美元\u003c/b>，是 2005 年有公开财务记录以来首次年度亏损；原文判断主因不是 IDE 需求萎缩，而是 \u003cb>AI 研发投入半年涨近 10 倍\u003c/b>，加上 AI 从「卖许可证」变成「每次调用都有算力账单」。","points_html":["\u003cb>亏损数字：\u003c/b>原文引用网传数据——全年营收约 7.1 亿美元（历史新高），净亏损约 1350 万美元；账上还有三亿多美元现金","\u003cb>主业仍在赚钱：\u003c/b>原文称亏损主要受汇率等因素影响，属于「战略性失血」，不是大厦将倾","\u003cb>钱花在哪：\u003c/b>过去半年 AI 研发相关成本涨了近 10 倍；官方博客承认 AI 开发费用显著推高了整体支出","\u003cb>四步转型：\u003c/b>① AI Assistant 嵌入 IDEA/PyCharm 全家桶；② 推出编程智能体 Junie；③ 开源自研模型 Mellum；④ 停掉 Fleet、团队全部转向 Agent 产品 Air","\u003cb>商业模式的变化：\u003c/b>过去卖许可证，多卖一份几乎不增加成本；AI 每次调用背后都是真实算力账单，用户越多成本越高，AI 收入还追不上投入","\u003cb>原文引用的行业数据：\u003c/b>2026 年 GitHub 新代码约 41% 为 AI 生成或辅助生成；Cursor 年化收入突破 20 亿美元；GitHub Copilot 付费用户达数百万级","\u003cb>注意：\u003c/b>文章后半是「黑马程序员」课程广告，就业率、薪资、学员案例均为机构宣传口径，本卡不把它们当作行业结论"],"notes_html":[],"detail_summary":"深入讲解 · 营收新高为什么还会亏，IDE 会被谁取代","detail_html":"\u003ch4>一、「营收创新高 + 净亏损」并不矛盾\u003c/h4>\n          \u003cdiv>订阅制的收入是按时间确认的，而 AI 投入是当期费用。JetBrains 把未来几年的船票钱提前花了：模型训练、推理算力、Agent 产品研发都记在今年的成本里。原文说主业仍赚钱、账上还有三亿多美元现金，这说明亏损来自\u003cb>投入前置\u003c/b>，不是客户流失。把「亏损」直接翻译成「IDE 没人用了」，是读错了财报。\u003c/div>\n          \u003ch4>二、许可证生意 vs 推理生意，差在边际成本\u003c/h4>\n          \u003cdiv>软件许可证的边际成本接近零：做一套 IDEA，卖给十万人和一百万人，复制成本几乎一样。AI 功能的边际成本不是零——每次补全、每次 Junie 改代码、每次 Agent 跑测试，都要付算力钱。于是出现一个结构性问题：\u003cb>用户越活跃，成本越高\u003c/b>。这就是为什么 AI 收入在涨，利润表反而变红。传统 IDE 厂商要么把 AI 成本转嫁给用户（涨价/限额），要么用自研模型和端侧推理压成本——原文提到的 Mellum 就是后一条路。\u003c/div>\n          \u003ch4>三、砍掉 Fleet、押注 Air，信号是什么\u003c/h4>\n          \u003cdiv>Fleet 停止下载和迭代，团队转向面向智能体开发的 Air。这不是「少做一个产品」，而是\u003cb>入口的迁移\u003c/b>：从「人坐在编辑器前敲代码」转向「人给 Agent 派任务、做验收」。IDE 不会消失，但会从「主工作台」变成「Agent 的运行与审查界面」。对程序员来说，稀缺能力从「记得住快捷键、写得快」转向「能把问题拆成可验证的任务、能审查 Agent 的输出」。\u003c/div>\n          \u003ch4>四、这篇里哪些能信，哪些要打折扣\u003c/h4>\n          \u003cdiv>能信的：JetBrains 的亏损、AI 成本上涨、Fleet 停更、Air 转向——这些是可查的公司动作。要打折的：文章后半的就业率、平均薪资、学员最高年薪，属于培训机构招生文案，样本和口径都不透明。读这类「行业分析 + 课程广告」的混合文，先把广告段落划掉，再看剩下的论据是否站得住。\u003c/div>\n          \u003cdiv class=\"note\">📌 给你的落点：工具会商品化，别把职业安全感绑在某个 IDE 上。把时间投在调试能力、系统理解、项目交付和「把意图说清楚」上——这些是换工具也带得走的东西。\u003c/div>","keywords":"JetBrains IDEA PyCharm WebStorm DataGrip 亏损 营收 净亏损 AI Assistant Junie Mellum Fleet Air Agent 订阅 许可证 算力 Cursor Copilot GitHub AI 编程 黑马程序员 广告"},{"i":16,"id":"url:3966be417d40b423c7a0","title":"闲鱼虚拟实操一个月：单店月入 700–1k，净利润七八百","url":"https://codefather.cn/post/2113153059185016833","category":"idea","account":"编程导航 · 萍雨","added":"2026-10-22","status":"ok","summary_label":"一句话","summary_html":"作者亲自做了一个月「闲鱼虚拟」：首单 9 月 23 日，至今流水约 \u003cb>1900 元\u003c/b>，扣掉退款、资料成本和约 150 元闲置实体商品收入后，净利润约 \u003cb>七八百元\u003c/b>；单店做得不错月入约 \u003cb>700–1000 元\u003c/b>，上限不高、稳定性也差。","points_html":["\u003cb>模式：\u003c/b>找一个已经有销量的虚拟商品（看「想要数」和浏览量），放到自己店铺降价卖；有人下单，就用自己的小号去原商家买一份，再把资料发给买家","\u003cb>为什么第一单会亏：\u003c/b>进价可能高于卖价，但没有销量的新店只能靠低价换第一单；虚拟资料买一次可以一直卖，从第二单起基本卖一单赚一单","\u003cb>真实收入：\u003c/b>单店月入约 700–1000 元是上限，下限「没有下限」；作者流水约 1.9k，其中约 150 元来自闲置实体商品，退款里包含电动滑板因属管制商品无法寄送而退的订单","\u003cb>成本：\u003c/b>作者花 1k 买课/买服务；按原文说法，正常情况下大约两个月能把学费赚回来，这期间会学到一些虚拟行业的知识","\u003cb>五步流程：\u003c/b>养号 → 选品 → 上架 → 发货 → 售后。养号约三天，先发一些日用品、做闲鱼日常任务；上架直接照抄原商品，价格略低；发货手动发文件；售后有问题就换小号去问上游商家","\u003cb>选品三原则：\u003c/b>单价别太低（几元到十几元，能找到几十上百更好）、能复制（卡密这类用一次就失效的不行）、\u003cb>没有版权问题\u003c/b>（原文强调这一点最重要）","\u003cb>原文的冷水：\u003c/b>作者试过自己原创虚拟商品，结果没人买；也试过优化标题、描述、配图，优化完反而连买的人都没了。市场良莠不齐、割韭菜的很多，作者明确表示这期不做任何推荐","\u003cb>适合谁：\u003c/b>原文判断适合大学生、宝妈这类时间较多又没有固定收入的人；上班族不建议做，因为上限低，不如把时间花在别处。初期一天约 2 小时、至少持续一周，起号后也要用碎片时间维护"],"notes_html":[],"detail_summary":"深入讲解 · 真实账本、模式脆弱点与风险边界","detail_html":"\u003ch4>一、流水 1.9k，为什么净利润只有七八百\u003c/h4>\n          \u003cdiv>原文的账很清楚：流水要先减去退款金额和虚拟资料成本，再减去其中约 150 元卖闲置实体商品的收入。退款里有一笔是电动滑板——它属于管制商品，寄快递需要手续和执照，最后只能退款。所以看这类副业不能只看后台流水，\u003cb>退款率、资料成本、非主营业务收入\u003c/b>都会把利润拉低。\u003c/div>\n          \u003cdiv class=\"note\">📌 作者的结论：一个人一个店铺，做得不错月入约 700–1000 元，这已经是上限；稳定性差，下限没有下限。\u003c/div>\n          \u003ch4>二、模式为什么能跑，又为什么脆弱\u003c/h4>\n          \u003cdiv>能跑通靠三点：虚拟资料可无限复制、新店用低价换首批销量、买家更倾向选销量高的店铺。脆弱也在这里——\u003cb>商品是抄来的，价格只能往下压，谁都能复制同样的动作\u003c/b>。作者自己的体验是：原创没人买，照抄反而效果最好；这说明它更像渠道套利，而不是产品能力。\u003c/div>\n          \u003ch4>三、最该警惕的是版权\u003c/h4>\n          \u003cdiv>原文把「没有版权问题」列为选品三原则中最重要的一条，并提醒：一旦碰上版权纠纷，要赔的钱可能远多于做闲鱼虚拟赚到的。作者每次上架前都会先问带他的人能不能上，但同时也说自己判断不了对方靠不靠谱。换句话说，\u003cb>连作者都没有一套可验证的版权审核方法\u003c/b>，这正是这门副业最大的不确定性。\u003c/div>\n          \u003cdiv class=\"note\">⚠️ 本卡只记录原文的实操与账本，不构成副业建议。抄品模式涉及版权与平台规则风险，决策前请自行核实资料授权和平台政策。\u003c/div>\n          \u003ch4>四、如果只是想做个小项目练手\u003c/h4>\n          \u003cdiv>抛开「赚钱」，这篇里可复用的产品思路是：用「想要数 / 浏览量」找需求 → 用低价和可复制性验证供给 → 用售后问答收集真实问题。把这三步搬到自己的工具或内容项目上，比直接进入一个靠抄品和价格战的市场更稳。\u003c/div>","keywords":"闲鱼虚拟 副业 虚拟资料 选品 养号 上架 发货 售后 版权 退款 净利润 编程导航 萍雨 大学生 宝妈 PPT模板 提示词 skill"},{"i":17,"id":"wx:MjM5MDYxMDA0MQ:2751699618:1","title":"中端机卷向 10000mAh：REDMI Turbo 6 Max 的 7 英寸 2K 屏与三台新机爆料","url":"https://mp.weixin.qq.com/s?__biz=MjM5MDYxMDA0MQ==&mid=2751699618&idx=1&sn=cfd0b22f53eaf978f86184b832468d13&chksm=863df92d0925b5f369a0f163af4ebeacf8a5d430e26d921763bc1c729f63a7b0e52f6c48bd60&mpshare=1&scene=1&srcid=1025E0oyW0OAJYibR5ICswtB&sharer_shareinfo=11a9ddcf07d675af6017b5a96b5c0081&sharer_shareinfo_first=11a9ddcf07d675af6017b5a96b5c0081#rd","category":"hw","account":"好机友","published":"2026-10-24","added":"2026-10-25","status":"ok","summary_label":"一句话","summary_html":"原文汇总了三台尚未发布的中端性能机爆料：REDMI Turbo 6 Max 用 \u003cb>7 英寸 2K 165Hz 直屏 + 10000mAh 电池 + 天玑 9500s\u003c/b>；一加 Turbo 7 Pro 与 iQOO Z12 Turbo 也都在堆万级电池、超高刷和散热，原文判断起售价都能压在 \u003cb>3000 元以内\u003c/b>。","points_html":["\u003cb>REDMI Turbo 6 Max（原文称暂定明年 1 月发布）：\u003c/b>7 英寸 2K 大直屏、165Hz 超高刷；背面 Deco 从竖向改成类似 iPhone Air 的横向条形","\u003cb>它的芯片：\u003c/b>搭载 Turbo 5 Max 同款天玑 9500s；原文说这看着像挤牙膏，但内存涨价背景下，中端机用 N-2（前两代）旗舰芯片是「性能仍强、成本能压」的打法","\u003cb>它的电池与影像：\u003c/b>10000mAh + 100W 有线快充；5000 万主摄 + 800 万超广角，没有潜望和长焦，原文称影像是「扫码水平」","\u003cb>一加 Turbo 7 Pro：\u003c/b>6.78 英寸 1.5K + 165Hz 直屏；SM8845 Pro（原文推测是骁龙 8 Gen5 的优化版，最终命名未定）；2 亿像素大底主摄；工程机在测试 10000mAh","\u003cb>一加的散热方案：\u003c/b>外置散热风扇配件 + PIN 外壳方案，手机壳贴上去就能通电开转；原文认为配风扇后游戏体验未必弱于 2nm 旗舰性能机","\u003cb>iQOO Z12 Turbo：\u003c/b>延续 6.59 英寸中屏并升级超高刷；同款骁龙新芯；主动散热风扇 + 大电池，前代 Z11 Turbo 是 7600mAh，这代预计 8000mAh 级别；主摄可能沿用 2 亿像素 HP5","\u003cb>原文的定位总结：\u003c/b>要大屏长续航、能接受扫码拍照和「半斤重量」选 REDMI；要超高刷 + 拍照跟上主流选一加；要中屏手感选 iQOO","\u003cb>重要前提：\u003c/b>以上全部是爆料，不是官方发布；参数、命名和价格都可能变"],"notes_html":[],"detail_summary":"深入讲解 · 万毫安电池的代价、2K 屏回归与 N-2 芯片策略","detail_html":"\u003ch4>一、10000mAh 不是白来的：重量、厚度、散热三笔账\u003c/h4>\n          \u003cdiv>原文没有披露电池技术路线，但把代价说得很直白：想要 2K 超大屏和超长续航，就得接受「扫码拍照和半斤重量」。电池容量上去，电芯体积和重量同步上去；机身变厚又会影响握持和散热。中端机通常没有旗舰级的均热板堆料，所以一加和 iQOO 都选择\u003cb>外置或主动散热\u003c/b>来补——这也反过来说明，10000mAh + 高性能芯片的组合，热是绕不过去的。\u003c/div>\n          \u003ch4>二、「物理 2K」回归，和「超级像素」差在哪\u003c/h4>\n          \u003cdiv>原文提到，小米已经很久没在真机上用物理 2K 屏，改推「超级像素」方案，连 K 系列也不例外；Turbo 6 Max 让物理 2K 回归。对屏幕精细度敏感的人，物理 2K 的价值在于\u003cb>每个像素都是真实子像素\u003c/b>，文字边缘和细线更干净；「超级像素」类方案则是在子像素排列上做文章，用更少成本逼近高 PPI 的观感。两者不是谁绝对更好，而是成本、功耗、精细度的取舍。\u003c/div>\n          \u003ch4>三、为什么中端机开始用「上一代/上两代」旗舰芯片\u003c/h4>\n          \u003cdiv>原文给的逻辑是内存涨价：新旗舰芯片 + 涨价的内存会把整机成本顶穿 3000 元。用 N-2 旗舰芯片，CPU/GPU 性能仍然够用，成本却能压下来；代价通常在\u003cb>能效、ISP（影像处理）和基带\u003c/b>上——这也解释了为什么这些机器的影像普遍是「扫码水平」。换句话说，它们把预算集中投在了屏幕、电池、散热这些「感知强」的地方，影像和轻薄则被牺牲。\u003c/div>\n          \u003ctable>\n            \u003ctr>\u003cth>机型\u003c/th>\u003cth>屏幕\u003c/th>\u003cth>芯片\u003c/th>\u003cth>电池/影像\u003c/th>\u003cth>取向\u003c/th>\u003c/tr>\n            \u003ctr>\u003ctd>REDMI Turbo 6 Max\u003c/td>\u003ctd>7\" 2K 165Hz 直屏\u003c/td>\u003ctd>天玑 9500s\u003c/td>\u003ctd>10000mAh + 100W；50MP + 8MP\u003c/td>\u003ctd>大屏 + 长续航，影像短板明显\u003c/td>\u003c/tr>\n            \u003ctr>\u003ctd>一加 Turbo 7 Pro\u003c/td>\u003ctd>6.78\" 1.5K 165Hz\u003c/td>\u003ctd>SM8845 Pro（命名未定）\u003c/td>\u003ctd>工程机测 10000mAh；2 亿像素主摄\u003c/td>\u003ctd>高刷 + 拍照兼顾，外置风扇\u003c/td>\u003c/tr>\n            \u003ctr>\u003ctd>iQOO Z12 Turbo\u003c/td>\u003ctd>6.59\" 中屏 + 超高刷\u003c/td>\u003ctd>骁龙新芯\u003c/td>\u003ctd>预计 8000mAh 级；2 亿 HP5\u003c/td>\u003ctd>中屏手感 + 主动散热\u003c/td>\u003c/tr>\n          \u003c/table>\n          \u003cdiv class=\"note\">📌 购买建议：现在别急着按爆料做决定。等发布会确认国行价格、重量、厚度和实际续航，再对比自己的使用场景——如果只是看网课、刷题、看 PDF，大屏长续航的收益可能高于影像；如果要拍照记录生活，REDMI 那台的短板会很直接。\u003c/div>","keywords":"REDMI Turbo 6 Max 小米 一加 Turbo 7 Pro iQOO Z12 Turbo 10000mAh 7英寸 2K 165Hz 天玑9500s SM8845 Pro 骁龙8 Gen5 2亿像素 主动散热 风扇 中端机 爆料 3000元"},{"i":18,"id":"wx:MjM5MDYxMDA0MQ:2751699852:1","title":"「REA 逆向一切」：把 Ghidra / IDA 打包成 MCP，AI Agent 开始拆系统","url":"https://mp.weixin.qq.com/s?__biz=MjM5MDYxMDA0MQ==&mid=2751699852&idx=1&sn=9b5569cc8e66c3199301334dcaa04334&chksm=86c64a0b94312d78a01c1b4774aa5d5c73dc8f91bfbd1a4758b48afc375f1ed00f3a30429580&mpshare=1&scene=1&srcid=10262xGSWabnNNJ6Tee6EhIE&sharer_shareinfo=87f9c08ea7b17e65f246a413cd58caee&sharer_shareinfo_first=87f9c08ea7b17e65f246a413cd58caee#rd","category":"hw","account":"好机友","published":"2026-10-26","added":"2026-10-26","status":"ok","summary_label":"一句话","summary_html":"原文介绍一个叫「REA 逆向一切」的开源项目：它把 Ghidra、IDA、Hopper、JADX、mitmproxy、Binwalk 等逆向工具封装成 \u003cb>MCP 服务\u003c/b>，接上 Codex、WorkBuddy、Claude Code 等 Agent 后，可以用自然语言驱动逆向；文章据此罗列了安卓刷 iOS/鸿蒙、Mac 跑安卓 App、iPhone 跑 Switch 游戏等案例。","points_html":["\u003cb>REA 是什么：\u003c/b>把多款祖师爷级逆向工具打包成一个便捷的 MCP 服务，接到 Codex、WorkBuddy、Claude Code 等 AI Agent 工具上","\u003cb>怎么用：\u003c/b>对 Agent 提一句「帮我看看这个 App 核心功能怎么实现的」，Agent 自己调工具反编译、读代码、写脚本验证；原文说人主要负责点「Yes / No」","\u003cb>案例·小米显示器：\u003c/b>网友因为显示器不支持 DDC/CI 切换、按钮控制麻烦，用 AI 逆向小米显示器内置的澎湃 OS，做出快捷切换接口的软件，还加了调光、色温、分辨率、屏幕时间；作者实测能用","\u003cb>案例·徕卡一瞬：\u003c/b>小米官方用徕卡 M9 实拍数十万张照片训练端侧模型；GitHub 上有项目逆向并开源了模型权重，作者把项目喂给 AI 搓了个简易 App，效果与小米 17 Ultra 的「徕卡一瞬」约八成相似","\u003cb>案例·安卓刷 iOS：\u003c/b>原文称有开源项目把苹果的 XNU 内核移植出来，配合 iPhone X 的 iOS 16 系统套件，让部分安卓老机型刷入 iOS","\u003cb>案例·Mac 跑安卓 App：\u003c/b>macOS 上的 \u003ccode>Mac.APK\u003c/code> 让安卓 App 安装后直接使用，无需模拟器或虚拟机；作者实测部分常用 App 正常、部分布局错乱","\u003cb>案例·iPhone 跑 Switch：\u003c/b>项目让 Switch 游戏代码直接运行在苹果芯片上，原文称已支持马里奥、塞尔达、猎天使魔女等","\u003cb>其他被点名的玩法：\u003c/b>安卓刷原生鸿蒙、安卓平板刷原生 Linux、重做电视桌面、用 adb 让 AI 自动关手机广告、逆向智能马桶做遥控程序","\u003cb>作者的判断：\u003c/b>逆向的难点不在思路，而在试错和验证要花大量时间；AI 接管这些耗时活之后，门槛降到「有手就行」","\u003cb>注意：\u003c/b>文中案例多为网络视频或个人演示，原文没有给项目链接与可复现步骤；「能开机」不等于「能日常使用」"],"notes_html":[],"detail_summary":"深入讲解 · MCP 为什么能降低门槛，以及这些案例的可信度分层","detail_html":"\u003ch4>一、把工具 MCP 化，降低的是「操作成本」\u003c/h4>\n          \u003cdiv>传统逆向的流程是：选工具 → 反编译 → 读汇编/伪代码 → 猜实现 → 写脚本验证 → 失败重来。每一步都要人切换工具、记命令、判断结果。MCP 的作用是给 Agent 一套\u003cb>标准化的工具接口\u003c/b>，让它可以自己调用 Ghidra/IDA/JADX、自己读输出、自己写验证脚本。人从「操作员」变成「定目标和验收的人」——这就是原文说的「点 Yes/No」。\u003c/div>\n          \u003cdiv>但要注意：降低的是操作成本，不是理解成本。Agent 不懂「这个函数为什么这样写」，也不承担「改坏了变砖」的后果。目标怎么定、结果怎么验，仍然要人来做。\u003c/div>\n          \u003ch4>二、案例的可信度要分层看\u003c/h4>\n          \u003cdiv>第一层，作者亲自实测：小米显示器工具、Mac.APK——有具体使用体验，可信度相对高。\u003cbr>第二层，有视频/截图演示：一加刷鸿蒙、小米 8 刷 iOS——能看到结果，但驱动完整性、稳定性未知。\u003cbr>第三层，纯转述：安卓刷原生鸿蒙、平板刷 Linux、智能马桶遥控——原文只有一句话，没有项目名和链接，无法核验。\u003cbr>把这三层混在一起读，很容易高估「AI 逆向已经无所不能」。\u003c/div>\n          \u003ch4>三、真正难的是驱动，不是反编译\u003c/h4>\n          \u003cdiv>系统移植能不能「日常用」，取决于 Wi-Fi、蓝牙、GPU、相机、基带这些驱动有没有适配。原文自己也承认，一加那台「Wi-Fi 功能未完成修复」，小米 8 的移植「很多硬件驱动还需要继续适配，暂时不能作为日常系统使用」。反编译只解决了「看懂」，驱动适配才是「能用」。\u003c/div>\n          \u003ch4>四、风险清单\u003c/h4>\n          \u003cdiv>① \u003cb>法律/版权：\u003c/b>移植苹果系统、任天堂游戏涉及 EULA 与版权，原文也提到任天堂的法务；\u003cbr>② \u003cb>硬件：\u003c/b>刷机可能变砖、失去保修，来路不明的固件还可能植入后门；\u003cbr>③ \u003cb>数据：\u003c/b>刷机前不备份，聊天记录和照片可能一起没；\u003cbr>④ \u003cb>安全：\u003c/b>把开锁、支付、账号权限交给逆向出来的程序，风险远高于省下的时间。\u003c/div>\n          \u003cdiv class=\"note\">📌 对你更有用的落点：这套「工具 MCP 化 + Agent 编排」的思路，可以搬到自己的嵌入式调试上——把串口日志、示波器截图、编译错误交给 Agent 做初步归因，人负责定边界和验收。但底层知识（启动链、驱动模型、协议）仍是判断力的来源。\u003c/div>","keywords":"REA 逆向一切 MCP Ghidra IDA Hopper JADX mitmproxy Binwalk Codex WorkBuddy Claude Code 小米显示器 澎湃OS DDC CI 徕卡一瞬 模型权重 Mac.APK 安卓 iOS XNU Switch 鸿蒙 Linux 刷机 逆向"},{"i":19,"id":"wx:MjM5Mzg4NzExMQ:2651510072:1","title":"一加刷鸿蒙、小米刷 iOS：AI 加持下的「系统互相偷家」","url":"https://mp.weixin.qq.com/s?__biz=MjM5Mzg4NzExMQ==&mid=2651510072&idx=1&sn=9d53ce4ee44572ce4460f978d5fd4b23&chksm=bc216f1513d8ac4631dc85b01c086b70e127f7fc29dcd0a2fa1837aa0de2fdb1ff64b2f3bbcc&mpshare=1&scene=1&srcid=1026uttY1YuvjwhSlI6yBHcs&sharer_shareinfo=62f58cbe1cf038cc84eb0457119ed2b2&sharer_shareinfo_first=62f58cbe1cf038cc84eb0457119ed2b2#rd","category":"hw","account":"IT之家","published":"2026-10-26","added":"2026-10-26","status":"ok","summary_label":"一句话","summary_html":"IT之家汇总了近期一批跨系统移植案例：一加 Ace 5 刷入 \u003cb>HarmonyOS 6\u003c/b>（机型显示 Mate 80 Pro）、小米 8 / Redmi Note 12 刷入 \u003cb>iOS 16\u003c/b>、Surface Duo 2 跑 iPadOS 26、HTC HD2 跑 iOS 7；共同点是移植 XNU 内核/系统组件，且大多仍处早期、驱动不全。","points_html":["\u003cb>一加 Ace 5 → HarmonyOS 6：\u003c/b>B 站网友 10 月 25 日发布视频，刷入后机型显示华为 Mate 80 Pro，壁纸、系统动效、侧边快捷栏、应用小窗可正常使用","\u003cb>它的限制：\u003c/b>刷的不是 OpenHarmony，而是华为手机预装的 HarmonyOS 6；目前不支持 HMS 驱动，Wi-Fi 功能也未完成修复","\u003cb>小米 8 → iOS 16.5：\u003c/b>机型伪装为 iPhone X；最初 GPU 卡顿，修复后流畅不少；桌面显示和动画较流畅，但很多硬件驱动仍需适配，不能作为日常系统","\u003cb>Redmi Note 12 4G → iOS 16：\u003c/b>不是主题/启动器/模拟器，而是移植苹果开源的 XNU 内核 + iPhone X 原版用户界面；「关于本机」显示 iOS 16.7.16、iPhone X，触摸和音量键可用","\u003cb>HTC HD2 → iOS 7：\u003c/b>10 月 7 日公布的复古硬件移植项目，iOS 用户态组件与触摸屏已能工作；HD2 是 2009 年的「刷机之王」","\u003cb>Surface Duo 2 → iOS / iPadOS 26：\u003c/b>已实现双屏运行，两块屏幕可达 37 FPS（此前仅 3–10 FPS）；作者用的是屏幕有破损的「专门折腾机」，后续计划移植 iOS 27","\u003cb>相机也被逆向：\u003c/b>索尼 A7C II 的定制固件解锁 FL2/FL3 胶片模式、支持导入 LUT、自定义快门声；仅支持固件 2.01，且有变砖、影响保修、副厂电池识别等问题","\u003cb>游戏移植：\u003c/b>《超级马力欧兄弟：惊奇》原生移植到 Windows，RTX 3050 笔记本约 60 帧，使用重编译 C++ 代码 + NVN→Vulkan 转换层；原文提醒任天堂的版权风险","\u003cb>原文判断：\u003c/b>AI 让反编译和重编译变简单，厂商壁垒「四面漏风」；但驱动、稳定性和版权仍是硬约束"],"notes_html":[],"detail_summary":"深入讲解 · 刷机到底刷了什么，为什么「能开机」离「能用」很远","detail_html":"\u003ch4>一、一次「刷系统」包含四层\u003c/h4>\n          \u003cdiv>自下而上是：\u003cb>引导链（bootloader）→ 内核 → 硬件驱动 → 用户态系统与应用\u003c/b>。网友说的「移植 XNU 内核 + iPhone X 用户界面」，实际是替换了内核和用户态，但驱动层必须针对每台机器的屏幕、触摸、Wi-Fi、GPU、电源管理逐项适配。这就是为什么演示视频里系统能亮、能滑，但 Wi-Fi 没修好、HMS 不能用、相机打不开——\u003cb>能开机只证明引导链和显示通了，不证明整机可用\u003c/b>。\u003c/div>\n          \u003ch4>二、XNU 是什么，为什么这几个项目都绕不开它\u003c/h4>\n          \u003cdiv>XNU 是苹果 Darwin 系统的混合内核（Mach + BSD），iOS/macOS 的用户态都跑在它上面。把 XNU 和 iOS 的用户态组件移植到非苹果硬件，理论上能得到「像 iOS 的体验」；但苹果的驱动是闭源的，移植者只能自己写或借用开源驱动，这部分工作量远大于「把内核跑起来」。原文提到的 HTC HD2、小米 8、Redmi Note 12、Surface Duo 2，走的都是这条路线。\u003c/div>\n          \u003ch4>三、为什么这两三个月集中冒出来\u003c/h4>\n          \u003cdiv>原文的归因是 AI：反编译、重编译、驱动调试的试错成本被 Agent 拉低，原本要几个月的活可以压缩。但要注意，这是\u003cb>原文的判断，不是可验证的因果\u003c/b>——文章没有给项目链接、开发者访谈或时间线对比。更稳妥的说法是：AI 降低了门槛，加上一批老机型社区本来就活跃，两个因素叠加。\u003c/div>\n          \u003ch4>四、三类风险，按严重程度排\u003c/h4>\n          \u003cdiv>① \u003cb>硬件：\u003c/b>变砖、丢保修、电池/充电异常；索尼固件那段原文明确写了「可能导致无法开机、反复重启、功能异常或数据丢失，写入成功也不代表启动安全」。\u003cbr>② \u003cb>法律/版权：\u003c/b>苹果 EULA、任天堂游戏版权；移植者自己也强调不提供游戏文件。\u003cbr>③ \u003cb>安全：\u003c/b>来路不明的固件可能带后门；刷机后账号、支付、照片都在这台设备上。\u003c/div>\n          \u003cdiv class=\"note\">📌 实用建议：别拿主力机折腾；要玩就用闲置老机型，先备份，再确认 Wi-Fi/基带/相机这些「日常必需」的驱动状态。对嵌入式方向来说，这类项目的价值不在「刷成功」，而在它暴露的启动链与驱动适配问题——那才是系统移植的真功夫。\u003c/div>\n          \u003ch4>五、产业视角：护城河从「锁系统」转向「留生态」\u003c/h4>\n          \u003cdiv>原文最后抛了一个问题：如果用户能随意跳到竞争对手的生态，厂商靠什么留住人？答案不会是「把 bootloader 锁得更死」，而是服务、账号体系、跨设备协同这些\u003cb>迁移成本\u003c/b>。对用户来说，这意味着「选生态」比「选参数」更重要——这也是买手机时值得多想一步的地方。\u003c/div>","keywords":"一加 Ace 5 鸿蒙 HarmonyOS 6 Mate 80 Pro 小米 8 iOS 16.5 iPhone X XNU Redmi Note 12 HTC HD2 iOS 7 Surface Duo 2 iPadOS 26 索尼 A7C II 固件 超级马力欧 惊奇 NVN Vulkan 移植 刷机 变砖 保修"},{"i":20,"id":"wx:MzA4MTg1NzYyNQ:2653227700:1","title":"「先头部队」抵达成都：三岔湖候鸟季与太阳神鸟的原型之争","url":"https://mp.weixin.qq.com/s?__biz=MzA4MTg1NzYyNQ==&mid=2653227700&idx=1&sn=cf74507f2b328c331c08e05891ab47d1&chksm=855a6c83fb6e51538ad29b0a7faa2c08032e85edfaeb9b591ff10a19e4dcbc26eba68e435941&mpshare=1&scene=1&srcid=10257g1tECiJBUyNwnPT8sbm&sharer_shareinfo=457432c8de992dd8cf1385403ac7949e&sharer_shareinfo_first=457432c8de992dd8cf1385403ac7949e#rd","category":"life","account":"成都发布","published":"2026-10-25","added":"2026-10-25","status":"ok","summary_label":"一句话","summary_html":"10 月中旬起，成都东部新区三岔湖的白鹭、苍鹭成群，绿头鸭等过境水鸟陆续飞抵，红嘴鸥的先头个体已被看到，预计 \u003cb>11 月集体抵达\u003c/b>；龙泉山城市森林公园同时迎来今年罕见的秋季猛禽迁徙高峰。原文借候鸟季串起成都的三种鸟文化：太阳神鸟、杜鹃与白鹭。","points_html":["\u003cb>三岔湖：\u003c/b>白鹭、苍鹭等「常驻民」成群游弋，绿头鸭等过境水鸟陆续飞抵停歇；游船工作人员称近日航行途中偶见红嘴鸥，三三两两掠过船头，预计 11 月集体抵达","\u003cb>龙泉山：\u003c/b>猛禽监测点位迎来本年度罕见的秋季猛禽迁徙高峰，成群猛禽乘风而上、编队掠过城市上空；驻守山间的监测志愿者和观鸟爱好者称「壮观」","\u003cb>太阳神鸟的原型之争：\u003c/b>流传最广的说法是「金乌」（三足乌鸦）；也有学者从西南出土铜鼓的「翔鹭纹」推测是水鸟鸀鳿；还有苍鹭、鸬鹚、鹤类、秧鸡科等观点","\u003cb>沈尤的判断：\u003c/b>四川省野生动植物保护协会理事沈尤认为最可能是\u003cb>火烈鸟\u003c/b>——飞行时脖颈向前完全伸直、双腿向后笔直舒展、喙向下弯曲，三个特征与金箔飞鸟形象高度吻合","\u003cb>气候旁证：\u003c/b>三千年前成都平原处于全球气候温暖期，年均气温比现在高 3–5℃，森林密布、河渠纵横；近代成都平原有两次明确的火烈鸟观测记录（三星堆附近鸭子河、金堂沱江），都发生在连续降温后的回暖时段","\u003cb>杜鹃：\u003c/b>望帝杜宇把帝位禅让给鳖灵后隐居西山，时在春天，蜀人思念他，便把子规鸟叫作杜鹃鸟；望丛祠是中国唯一一座「一祠祭二主」的祀祠","\u003cb>白鹭：\u003c/b>杜甫在成都写下「两个黄鹂鸣翠柳，一行白鹭上青天」；唐代观鹭胜地是市中心的摩诃池；今天锦江的苍鹭成了火爆全网的「洗jio鸟」","\u003cb>其他被点名的鸟与点位：\u003c/b>三岔湖的红嘴鸥、兴隆湖/青龙湖过冬的青头潜鸭、飞跃龙泉山的猛禽；原文称越来越多鸟类选择在成都安家","\u003cb>性质：\u003c/b>原文是成都发布的城市文化科普，不是观鸟攻略；具体鸟况以现场为准"],"notes_html":[],"detail_summary":"深入讲解 · 三条证据链，与成都三千年的「鸟文化层」","detail_html":"\u003ch4>一、「太阳神鸟 = 火烈鸟」是怎么推出来的\u003c/h4>\n          \u003cdiv>原文给的论证分三层：\u003cb>形态比对\u003c/b>——火烈鸟飞行时脖颈前伸、双腿后展、喙向下弯曲，与金箔上四只飞鸟的线条吻合；\u003cb>气候条件\u003c/b>——三千年前成都平原年均气温比现在高 3–5℃，属于亚热带湿润环境，火烈鸟因气候波动偶然到访是可能的；\u003cb>观测记录\u003c/b>——近代成都平原有两次明确的火烈鸟记录，都发生在降温后回暖的时段。三条证据指向同一个结论，但原文用的词是「最有可能」，不是「确定」——这仍是一个有争议的推断，不是考古定论。\u003c/div>\n          \u003cdiv>最容易被忽略的反驳点，原文也替读者问了：成都平原不是火烈鸟的传统分布区，古蜀人见得到吗？沈尤的回答是「能，但很罕见」，并用气候和观测记录来支撑。这个回答合理，但仍属于\u003cb>可能性论证\u003c/b>，不是直接证据。\u003c/div>\n          \u003ch4>二、成都的「鸟文化层」：神话 → 传说 → 诗歌 → 日常\u003c/h4>\n          \u003cdiv>原文其实串了一条很清晰的文化线：\u003cbr>① \u003cb>神话层\u003c/b>：太阳神鸟/金乌，把鸟和太阳崇拜绑在一起；\u003cbr>② \u003cb>传说层\u003c/b>：望帝化杜鹃，鸟成了思念与政治的载体；鱼凫王以水鸟为名，留下「柳城」；\u003cbr>③ \u003cb>诗歌层\u003c/b>：杜甫写白鹭，薛涛写春鸟，鸟进入文人审美；\u003cbr>④ \u003cb>日常层\u003c/b>：今天的苍鹭「洗jio鸟」、三岔湖候鸟季、龙泉山猛禽监测，鸟重新变成市民可参与的自然体验。\u003c/div>\n          \u003cdiv>四层叠在一起，才是原文说「火了几千年的老鹏友」的意思——不是某一种鸟火了，而是成都这座城市一直在用鸟来标记季节、权力和情感。\u003c/div>\n          \u003ch4>三、生态视角：为什么鸟会回来\u003c/h4>\n          \u003cdiv>原文的因果链是：公园城市建设 → 湿地连片、绿道成网 → 锦江水质与鱼类资源提升 → 鸟类主动「入驻」。它还举了具体例子：长居锦江的白鹭/苍鹭、常到三岔湖的红嘴鸥、在兴隆湖/青龙湖过冬的青头潜鸭、飞跃龙泉山的猛禽。这些点位和物种都来自原文，可以作为下次观鸟的线索。\u003c/div>\n          \u003cdiv class=\"note\">📌 留给你的小任务：11 月是三岔湖红嘴鸥集体抵达的时间窗。如果那周复习累了，可以挑一个下午去湖边走走——不投喂、不惊扰，带个望远镜就够。原文没有给观鸟礼仪和交通信息，这部分需要你自己查。\u003c/div>","keywords":"成都 三岔湖 候鸟 红嘴鸥 绿头鸭 白鹭 苍鹭 龙泉山 猛禽 迁徙 太阳神鸟 金乌 火烈鸟 沈尤 杜鹃 望帝 杜宇 望丛祠 鱼凫 杜甫 白鹭湾 洗jio鸟 公园城市"}]};
+/* Inlined into prototypes/a.html, b.html, c.html. Expects MODE and PAYLOAD. */
+(function () {
+  "use strict";
+
+  var NAME = { a: "册页", b: "目录卡", c: "牌叠" }[MODE];
+  var BRAND = String(PAYLOAD.title || "").split("·")[0].trim() || "收藏即所学";
+  var mq = window.matchMedia("(max-width: 800px)");
+  var state = {
+    arrange: "time",
+    filter: "all",
+    q: "",
+    index: 0,
+    open: new Set(),
+    catalog: false,
+    reader: null
+  };
+  var groups = [];
+  var items = [];
+  var locking = false;
+  var CN = "〇一二三四五六七八九";
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function safe(html) {
+    return String(html || "").replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "");
+  }
+
+  function strip(html) {
+    return String(html || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  }
+
+  function catOf(a) {
+    for (var i = 0; i < PAYLOAD.categories.length; i++) {
+      if (PAYLOAD.categories[i].id === a.category) return PAYLOAD.categories[i];
+    }
+    return { id: a.category, title: a.category, badge: a.category, filter: a.category, numeral: "" };
+  }
+
+  function yearCn(iso) {
+    return String(iso).slice(0, 4).replace(/\d/g, function (d) { return CN[Number(d)]; });
+  }
+
+  function monthDay(iso) {
+    return Number(iso.slice(5, 7)) + " 月 " + Number(iso.slice(8, 10)) + " 日";
+  }
+
+  function dateLine(a) {
+    var pub = (a.published || "").slice(5);
+    var added = (a.added || "").slice(5);
+    if (!pub) return added;
+    if (!added || pub === added) return pub;
+    return "刊 " + pub + " · 采集 " + added;
+  }
+
+  function filtered() {
+    var q = state.q.trim().toLowerCase();
+    return PAYLOAD.articles.filter(function (a) {
+      if (state.filter !== "all" && a.category !== state.filter) return false;
+      if (!q) return true;
+      var blob = [a.title, a.account, a.keywords, a.summary_label, strip(a.summary_html)].join("\n").toLowerCase();
+      return blob.indexOf(q) !== -1;
+    });
+  }
+
+  function compute() {
+    var list = filtered();
+    var order = PAYLOAD.categories.map(function (c) { return c.id; });
+    if (state.arrange === "time") {
+      var sorted = list.slice().sort(function (a, b) {
+        if (a.added !== b.added) return a.added < b.added ? 1 : -1;
+        var d = order.indexOf(a.category) - order.indexOf(b.category);
+        if (d) return d;
+        return a.i - b.i;
+      });
+      var map = new Map();
+      sorted.forEach(function (a) {
+        if (!map.has(a.added)) map.set(a.added, []);
+        map.get(a.added).push(a);
+      });
+      groups = Array.from(map.entries()).map(function (entry) {
+        return {
+          key: entry[0],
+          kind: "time",
+          title: monthDay(entry[0]),
+          sub: yearCn(entry[0]),
+          numeral: "",
+          items: entry[1]
+        };
+      });
+    } else {
+      groups = PAYLOAD.categories.map(function (c) {
+        return {
+          key: c.id,
+          kind: "tag",
+          title: c.title,
+          sub: c.badge,
+          numeral: c.numeral,
+          items: list.filter(function (a) { return a.category === c.id; }).sort(function (a, b) { return a.i - b.i; })
+        };
+      }).filter(function (g) { return g.items.length; });
+    }
+    items = groups.reduce(function (acc, g) { return acc.concat(g.items); }, []);
+    if (state.index > items.length - 1) state.index = Math.max(0, items.length - 1);
+    if (state.reader && !items.some(function (a) { return a.id === state.reader; })) state.reader = null;
+  }
+
+  function seg() {
+    return '<div class="seg" role="group" aria-label="排列方式">' +
+      '<button type="button" data-act="arrange" data-arrange="time">按时间</button>' +
+      '<button type="button" data-act="arrange" data-arrange="tag">按分类</button>' +
+      "</div>";
+  }
+
+  function filters() {
+    var html = '<button type="button" class="chip" data-act="filter" data-filter="all">全部</button>';
+    PAYLOAD.categories.forEach(function (c) {
+      html += '<button type="button" class="chip" data-act="filter" data-filter="' + esc(c.id) + '">' + esc(c.filter) + "</button>";
+    });
+    return html;
+  }
+
+  function extra(a) {
+    var html = "";
+    if (a.detail_summary) html += '<p class="dk">' + esc(a.detail_summary) + "</p>";
+    if (a.points_html && a.points_html.length) {
+      html += '<ol class="points">' + a.points_html.map(function (p) { return "<li>" + safe(p) + "</li>"; }).join("") + "</ol>";
+    }
+    if (a.detail_html) html += '<div class="body">' + safe(a.detail_html) + "</div>";
+    (a.notes_html || []).forEach(function (n) { html += '<p class="note">' + safe(n) + "</p>"; });
+    return html;
+  }
+
+  function card(a, variant) {
+    var failed = a.status !== "ok";
+    var cat = catOf(a);
+    var open = state.open.has(a.id);
+    var idx = items.indexOf(a);
+    var num = String(idx + 1).padStart(2, "0");
+    var drop = !failed && (variant === "sheet" || variant === "front");
+    var clamp = variant === "tile" || variant === "library" || variant === "compact";
+    var more = "";
+    if (variant !== "compact") {
+      more = '<div class="more"' + (open ? "" : " hidden") + ">" + extra(a) + "</div>";
+    }
+    var act = variant === "compact" ? "read" : "expand";
+    var actLabel = variant === "compact" ? "展开讲解" : (open ? "收起讲解" : "展开讲解");
+    return '<article class="card ' + variant + (failed ? " is-failed" : "") + (open ? " is-open" : "") + '" data-card="' + esc(a.id) + '">' +
+      '<div class="scroll">' +
+        '<div class="meta">' +
+          (variant === "compact" ? '<span class="no">' + num + "</span>" : "") +
+          '<span class="cat">' + esc(cat.badge) + "</span>" +
+          '<span class="sep" aria-hidden="true">·</span>' +
+          '<time datetime="' + esc(a.published || a.added) + '">' + esc(dateLine(a)) + "</time>" +
+          (failed ? '<span class="stamp">未录入</span>' : "") +
+        "</div>" +
+        "<h3 class=\"title\">" + esc(a.title) + "</h3>" +
+        '<p class="source">' + esc(a.account) + "</p>" +
+        '<p class="label">' + esc(a.summary_label) + "</p>" +
+        '<div class="lead' + (drop ? " drop" : "") + (clamp ? " clamp" : "") + '">' + safe(a.summary_html) + "</div>" +
+        more +
+      "</div>" +
+      '<div class="actions">' +
+        '<button type="button" data-act="' + act + '" data-id="' + esc(a.id) + '"' +
+          (act === "expand" ? ' aria-expanded="' + (open ? "true" : "false") + '"' : "") + ">" + actLabel + "</button>" +
+        '<a href="' + esc(a.url) + '" target="_blank" rel="noopener noreferrer">' + (failed ? "尝试打开原文" : "阅读原文") + "</a>" +
+      "</div>" +
+    "</article>";
+  }
+
+  function deskHtml() {
+    if (!groups.length) return '<p class="empty">这一叠里没有相符的篇目。</p>';
+    return groups.map(function (g) {
+      var variant = MODE === "c" ? "compact" : MODE === "b" ? "library" : "tile";
+      return '<section class="group" id="grp-' + esc(g.key) + '">' +
+        '<header class="ghead">' +
+          (g.numeral ? '<span class="numeral">' + esc(g.numeral) + "</span>" : '<span class="year">' + esc(g.sub) + "</span>") +
+          "<h2>" + esc(g.title) + "</h2>" +
+          '<span class="gcount">' + g.items.length + " 篇</span>" +
+        "</header>" +
+        '<div class="grid">' + g.items.map(function (a) { return card(a, variant); }).join("") + "</div>" +
+      "</section>";
+    }).join("");
+  }
+
+  function sideHtml() {
+    if (!groups.length) return '<p class="empty">没有索引</p>';
+    return groups.map(function (g) {
+      var label = g.kind === "tag" ? g.numeral + " " + g.sub : g.title;
+      return '<a href="#grp-' + esc(g.key) + '"><span>' + esc(label) + "</span><small>" + g.items.length + "</small></a>";
+    }).join("");
+  }
+
+  function pagesHtml() {
+    if (!items.length) return '<div class="page"><p class="empty">这一叠里没有相符的篇目。</p></div>';
+    return items.map(function (a) {
+      return '<div class="page">' + card(a, "sheet") + "</div>";
+    }).join("");
+  }
+
+  function catHtml() {
+    if (!groups.length) return '<p class="empty">这一叠里没有相符的篇目。</p>';
+    var i = 0;
+    return groups.map(function (g) {
+      var buttons = g.items.map(function (a) {
+        var failed = a.status !== "ok";
+        var current = i === state.index;
+        var html = '<button type="button" data-act="jump" data-i="' + i + '" class="' +
+          (current ? "is-current " : "") + (failed ? "is-failed" : "") + '">' +
+          "<em>" + String(i + 1).padStart(2, "0") + "</em><span>" + esc(a.title) +
+          (failed ? " <i>未录入</i>" : "") + "</span></button>";
+        i += 1;
+        return html;
+      }).join("");
+      return "<section><h3>" + esc(g.numeral ? g.numeral + " " + g.title : g.title) + "</h3>" + buttons + "</section>";
+    }).join("");
+  }
+
+  function readerBody(a) {
+    var failed = a.status !== "ok";
+    var cat = catOf(a);
+    return '<div class="meta">' +
+      '<span class="cat">' + esc(cat.badge) + "</span>" +
+      '<span class="sep" aria-hidden="true">·</span>' +
+      "<time>" + esc(dateLine(a)) + "</time>" +
+      (failed ? '<span class="stamp">未录入</span>' : "") +
+      "</div>" +
+      "<h2>" + esc(a.title) + "</h2>" +
+      '<p class="source">' + esc(a.account) + "</p>" +
+      '<p class="label">' + esc(a.summary_label) + "</p>" +
+      '<div class="lead' + (failed ? "" : " drop") + '">' + safe(a.summary_html) + "</div>" +
+      extra(a);
+  }
+
+  function shell() {
+    var side = MODE === "b"
+      ? '<aside class="sidebar"><p class="side-label">索引</p><nav id="side-index"></nav></aside>'
+      : "";
+    var stage = MODE === "a"
+      ? '<div id="pager" class="pager" tabindex="0" aria-roledescription="卡片轮播"></div>'
+      : MODE === "b"
+        ? '<div id="deck" class="deck" tabindex="0" aria-roledescription="卡片轮播"></div><div id="ticks" aria-hidden="true"></div>'
+        : '<div id="stage" class="stage"></div>';
+    var foot = MODE === "b" ? "" : (
+      '<footer class="mfoot">' +
+        '<button type="button" data-act="prev">上一张</button>' +
+        '<div class="status"><button type="button" class="pos" data-act="pos" data-pos aria-label="打开目录">1 / 1</button>' +
+        (MODE === "c" ? '<small id="remain"></small>' : "") +
+        "</div>" +
+        '<button type="button" data-act="next">下一张</button>' +
+      "</footer>"
+    );
+    var bControls = MODE === "b"
+      ? '<button type="button" data-act="prev">上一张</button><button type="button" class="pos" data-act="pos" data-pos aria-label="打开目录">1 / 1</button><button type="button" data-act="next">下一张</button>'
+      : (MODE === "c" ? '<span class="hint">左滑翻篇</span>' : "");
+    var reader = MODE === "c"
+      ? '<div id="reader" hidden><div class="prog rprog"><span id="reader-fill"></span></div>' +
+        '<div class="rbar"><button type="button" data-act="close-reader">回到网格</button><a class="rlink" href="#" target="_blank" rel="noopener noreferrer">阅读原文</a></div>' +
+        '<div class="rscroll"><article class="rsheet"></article></div></div>'
+      : "";
+    return (
+      '<div id="desk-prog" class="prog desk-only" aria-hidden="true"><span></span></div>' +
+      '<div id="mob-prog" class="prog mob-only" aria-hidden="true"><span></span></div>' +
+      '<div id="desk"><header class="top">' +
+        '<div class="brand"><p class="eyebrow">设计原型 · ' + esc(NAME) + "</p><h1>" + esc(BRAND) + "</h1></div>" +
+        '<div class="controls">' + seg() +
+          '<label class="search-wrap"><span class="sr">检索</span><input class="search" type="search" placeholder="检索篇目" aria-label="检索篇目"></label>' +
+        "</div>" +
+        '<div class="filters" role="group" aria-label="分类">' + filters() + "</div>" +
+        '<p class="countline" data-count></p>' +
+      "</header>" +
+      '<div class="desk-body' + (MODE === "b" ? " with-side" : "") + '">' + side + '<main id="desk-main"></main></div></div>' +
+      '<div id="mob"><header class="mhead"><div class="brand-mini"><p class="eyebrow">' + esc(NAME) + "</p><p>" + esc(BRAND) + "</p></div>" +
+        bControls +
+        '<button type="button" data-act="catalog">目录</button></header>' +
+        stage + foot +
+        '<div id="catalog" class="catalog" role="dialog" aria-modal="true" aria-label="目录">' +
+          '<div class="cat-bar"><button type="button" data-act="close-cat">回到这张</button><h2>目录</h2></div>' +
+          '<div class="controls">' + seg() +
+            '<label class="search-wrap"><span class="sr">检索</span><input class="search" type="search" placeholder="检索篇目" aria-label="检索篇目"></label>' +
+          "</div>" +
+          '<div class="filters" role="group" aria-label="分类">' + filters() + "</div>" +
+          '<div id="cat-list"></div>' +
+        "</div></div>" +
+      reader
+    );
+  }
+
+  function syncChrome() {
+    document.querySelectorAll("[data-arrange]").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.arrange === state.arrange));
+    });
+    document.querySelectorAll("[data-filter]").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.filter === state.filter));
+    });
+    var line = items.length + " 篇 · " + (state.arrange === "time" ? "按时间" : "按分类");
+    if (state.filter !== "all") {
+      var c = PAYLOAD.categories.filter(function (x) { return x.id === state.filter; })[0];
+      line += " · " + (c ? c.filter : "");
+    }
+    if (state.q.trim()) line += " · 检索中";
+    document.querySelectorAll("[data-count]").forEach(function (el) { el.textContent = line; });
+    var cat = document.getElementById("catalog");
+    if (cat) cat.classList.toggle("is-on", state.catalog);
+  }
+
+  function updateIndicator() {
+    var n = items.length;
+    var i = n ? state.index : 0;
+    var label = n ? (i + 1) + " / " + n : "0 / 0";
+    document.querySelectorAll("[data-pos]").forEach(function (el) { el.textContent = label; });
+    document.querySelectorAll('[data-act="prev"]').forEach(function (b) { b.disabled = !n || i <= 0; });
+    document.querySelectorAll('[data-act="next"]').forEach(function (b) { b.disabled = !n || i >= n - 1; });
+    var fill = document.querySelector("#mob-prog > span");
+    if (fill) fill.style.width = n ? ((i + 1) / n * 100) + "%" : "0%";
+    document.querySelectorAll("#ticks i").forEach(function (tick, idx) {
+      tick.classList.toggle("on", idx === i);
+    });
+    document.querySelectorAll("#cat-list button").forEach(function (b) {
+      b.classList.toggle("is-current", Number(b.dataset.i) === i);
+    });
+    document.querySelectorAll("#pager > .page, #deck > .page").forEach(function (el, idx) {
+      if (idx === i) el.setAttribute("aria-current", "true");
+      else el.removeAttribute("aria-current");
+    });
+    var remain = document.getElementById("remain");
+    if (remain) remain.textContent = n ? "还剩 " + Math.max(0, n - 1 - i) + " 张" : "";
+  }
+
+  function align(smooth) {
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var behavior = smooth && !reduce ? "smooth" : "auto";
+    var node = MODE === "a" ? document.getElementById("pager") : document.getElementById("deck");
+    if (!node || MODE === "c") return;
+    locking = true;
+    if (MODE === "a") {
+      if (node.clientWidth) node.scrollTo({ left: state.index * node.clientWidth, behavior: behavior });
+    } else {
+      var el = node.children[state.index];
+      if (el) node.scrollTo({ top: el.offsetTop, behavior: behavior });
+    }
+    window.setTimeout(function () { locking = false; }, smooth ? 480 : 60);
+  }
+
+  function paintMobileC() {
+    var stage = document.getElementById("stage");
+    if (!stage) return;
+    if (!items.length) {
+      stage.innerHTML = '<p class="empty">这一叠里没有相符的篇目。</p>';
+      return;
+    }
+    var a = items[state.index];
+    var next = items[state.index + 1];
+    var back = next
+      ? '<div class="back">' + (next.status !== "ok" ? '<span class="stamp">未录入</span>' : "") + "<p>" + esc(next.title) + "</p></div>"
+      : '<div class="back end"><p>这一叠的末页</p></div>';
+    stage.innerHTML = back + card(a, "front");
+    bindDeck();
+  }
+
+  function paintReader() {
+    var root = document.getElementById("reader");
+    if (!root) return;
+    var a = null;
+    for (var i = 0; i < PAYLOAD.articles.length; i++) {
+      if (PAYLOAD.articles[i].id === state.reader) a = PAYLOAD.articles[i];
+    }
+    root.hidden = !a;
+    document.body.classList.toggle("reader-on", !!a);
+    if (!a) return;
+    root.querySelector(".rsheet").innerHTML = readerBody(a);
+    var link = root.querySelector(".rlink");
+    link.href = a.url;
+    link.textContent = a.status === "ok" ? "阅读原文" : "尝试打开原文";
+    var sc = root.querySelector(".rscroll");
+    sc.scrollTop = 0;
+    var fill = document.getElementById("reader-fill");
+    if (fill) fill.style.width = "0%";
+  }
+
+  function paintLists() {
+    compute();
+    document.getElementById("desk-main").innerHTML = deskHtml();
+    var side = document.getElementById("side-index");
+    if (side) side.innerHTML = sideHtml();
+    document.getElementById("cat-list").innerHTML = catHtml();
+    var ticks = document.getElementById("ticks");
+    if (ticks) {
+      ticks.innerHTML = items.map(function (_, k) {
+        return '<i class="' + (k === state.index ? "on" : "") + '"></i>';
+      }).join("");
+    }
+    if (MODE === "c") paintMobileC();
+    else {
+      var host = document.getElementById(MODE === "a" ? "pager" : "deck");
+      host.innerHTML = pagesHtml();
+      align(false);
+    }
+    syncChrome();
+    updateIndicator();
+    paintReader();
+  }
+
+  function go(i, smooth) {
+    if (!items.length) return;
+    state.index = Math.max(0, Math.min(items.length - 1, i));
+    if (MODE === "c") {
+      if (mq.matches) paintMobileC();
+      updateIndicator();
+      return;
+    }
+    align(!!smooth);
+    updateIndicator();
+  }
+
+  function toggleOpen(id) {
+    if (state.open.has(id)) state.open.delete(id);
+    else state.open.add(id);
+    var on = state.open.has(id);
+    document.querySelectorAll("[data-card]").forEach(function (el) {
+      if (el.getAttribute("data-card") !== id) return;
+      el.classList.toggle("is-open", on);
+      var more = el.querySelector(".more");
+      if (more) more.hidden = !on;
+      var btn = el.querySelector('[data-act="expand"]');
+      if (btn) {
+        btn.textContent = on ? "收起讲解" : "展开讲解";
+        btn.setAttribute("aria-expanded", on ? "true" : "false");
+      }
+    });
+  }
+
+  function bindDeck() {
+    var cardEl = document.querySelector("#stage .front");
+    if (!cardEl) return;
+    var dx = 0;
+    var active = false;
+    var horiz = null;
+    var sc = cardEl.querySelector(".scroll");
+    cardEl.addEventListener("pointerdown", function (e) {
+      if (e.target.closest("a, button")) return;
+      if (state.open.has(cardEl.getAttribute("data-card"))) return;
+      active = true;
+      horiz = null;
+      dx = 0;
+      cardEl._x0 = e.clientX;
+      cardEl._y0 = e.clientY;
+      cardEl._scroll0 = sc ? sc.scrollTop : 0;
+      cardEl.classList.add("dragging");
+      try { cardEl.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+    });
+    cardEl.addEventListener("pointermove", function (e) {
+      if (!active) return;
+      dx = e.clientX - cardEl._x0;
+      var dy = e.clientY - cardEl._y0;
+      if (horiz === null) {
+        if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+        horiz = Math.abs(dx) > Math.abs(dy);
+      }
+      if (horiz) {
+        cardEl.style.transform = "translateX(" + dx + "px) rotate(" + (dx / 38) + "deg)";
+      } else if (sc) {
+        sc.scrollTop = cardEl._scroll0 - dy;
+      }
+    });
+    function end() {
+      if (!active && horiz !== true) {
+        horiz = null;
+        cardEl.classList.remove("dragging");
+        return;
+      }
+      var thrown = horiz === true ? dx : 0;
+      active = false;
+      horiz = null;
+      cardEl.classList.remove("dragging");
+      cardEl.style.transform = "";
+      if (thrown <= -80) go(state.index + 1, true);
+      else if (thrown >= 80) go(state.index - 1, true);
+    }
+    cardEl.addEventListener("pointerup", end);
+    cardEl.addEventListener("pointercancel", end);
+  }
+
+  function onScrollHost(node, vertical) {
+    if (!node) return;
+    node.addEventListener("scroll", function () {
+      if (locking || !items.length) return;
+      var i;
+      if (!vertical) {
+        if (!node.clientWidth) return;
+        i = Math.round(node.scrollLeft / node.clientWidth);
+      } else {
+        var best = 0;
+        var bestD = Infinity;
+        Array.prototype.forEach.call(node.children, function (el, idx) {
+          var d = Math.abs(el.offsetTop - node.scrollTop);
+          if (d < bestD) { bestD = d; best = idx; }
+        });
+        i = best;
+      }
+      i = Math.max(0, Math.min(items.length - 1, i));
+      if (i === state.index) return;
+      state.index = i;
+      updateIndicator();
+    }, { passive: true });
+  }
+
+  function bind() {
+    document.body.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-act]");
+      if (!b || b.disabled) return;
+      var act = b.dataset.act;
+      if (act === "prev") go(state.index - 1, true);
+      else if (act === "next") go(state.index + 1, true);
+      else if (act === "catalog" || act === "pos") {
+        state.catalog = true;
+        syncChrome();
+        var field = document.querySelector("#catalog .search");
+        if (field) field.focus();
+      } else if (act === "close-cat") {
+        state.catalog = false;
+        syncChrome();
+      } else if (act === "jump") {
+        state.catalog = false;
+        syncChrome();
+        go(Number(b.dataset.i), false);
+      } else if (act === "arrange") {
+        if (state.arrange === b.dataset.arrange) return;
+        state.arrange = b.dataset.arrange;
+        state.index = 0;
+        paintLists();
+      } else if (act === "filter") {
+        if (state.filter === b.dataset.filter) return;
+        state.filter = b.dataset.filter;
+        state.index = 0;
+        paintLists();
+      } else if (act === "expand") {
+        toggleOpen(b.dataset.id || (b.closest("[data-card]") && b.closest("[data-card]").getAttribute("data-card")));
+      } else if (act === "read") {
+        state.reader = b.dataset.id;
+        paintReader();
+      } else if (act === "close-reader") {
+        state.reader = null;
+        paintReader();
+      }
+    });
+
+    document.querySelectorAll(".search").forEach(function (el) {
+      el.addEventListener("input", function () {
+        state.q = el.value;
+        document.querySelectorAll(".search").forEach(function (other) {
+          if (other !== el) other.value = state.q;
+        });
+        state.index = 0;
+        paintLists();
+      });
+    });
+
+    onScrollHost(document.getElementById("pager"), false);
+    onScrollHost(document.getElementById("deck"), true);
+
+    var rscroll = document.querySelector("#reader .rscroll");
+    if (rscroll) {
+      rscroll.addEventListener("scroll", function () {
+        var fill = document.getElementById("reader-fill");
+        if (!fill) return;
+        var h = rscroll.scrollHeight - rscroll.clientHeight;
+        fill.style.width = (h > 0 ? rscroll.scrollTop / h * 100 : 0) + "%";
+      }, { passive: true });
+    }
+
+    window.addEventListener("scroll", function () {
+      if (mq.matches) return;
+      var bar = document.querySelector("#desk-prog > span");
+      if (!bar) return;
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (h > 0 ? window.scrollY / h * 100 : 0) + "%";
+    }, { passive: true });
+
+    window.addEventListener("resize", function () {
+      if (MODE !== "c") align(false);
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.target && e.target.matches && e.target.matches("input, textarea")) {
+        if (e.key === "Escape") e.target.blur();
+        return;
+      }
+      if (e.key === "Escape") {
+        if (state.reader) { state.reader = null; paintReader(); return; }
+        if (state.catalog) { state.catalog = false; syncChrome(); }
+        return;
+      }
+      if (!mq.matches) return;
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); go(state.index + 1, true); }
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); go(state.index - 1, true); }
+    });
+  }
+
+  document.body.classList.add("mode-" + MODE);
+  document.getElementById("app").innerHTML = shell();
+  bind();
+  paintLists();
+
+  window.__cards = {
+    mode: MODE,
+    go: function (i) { go(i, false); },
+    arrange: function (v) { state.arrange = v; state.index = 0; paintLists(); },
+    filter: function (v) { state.filter = v; state.index = 0; paintLists(); },
+    search: function (v) {
+      state.q = v;
+      document.querySelectorAll(".search").forEach(function (el) { el.value = v; });
+      state.index = 0;
+      paintLists();
+    },
+    open: function (id) {
+      if (MODE === "c" && !mq.matches) { state.reader = id; paintReader(); return; }
+      if (!state.open.has(id)) toggleOpen(id);
+    },
+    index: function () { return state.index; },
+    count: function () { return items.length; },
+    ids: function () { return items.map(function (a) { return a.id; }); },
+    titleAt: function (i) { return items[i] ? items[i].title : ""; },
+    reader: function () { return state.reader; }
+  };
+})();
+
+</script>
+</body>
+</html>
