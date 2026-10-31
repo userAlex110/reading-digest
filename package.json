@@ -1,0 +1,12 @@
+{
+  "name": "reading-digest",
+  "private": true,
+  "description": "Personal reading digest. The source of truth is data/articles.json.",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "check": "node scripts/build.js --check"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

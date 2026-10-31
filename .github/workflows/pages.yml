@@ -1,0 +1,34 @@
+# 构建并核对阅读归档。
+# 线上 GitHub Pages 仍是「从分支部署」（main 根目录）。推送到 main 的 index.html
+# 会由现有 Pages 发布。本工作流不调用 actions/deploy-pages，因此不需要把
+# Pages 来源改成 GitHub Actions。改那个开关之前，不要删掉提交里的 index.html。
+
+name: Build digest page
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Validate data and confirm index.html is up to date
+        run: node scripts/build.js --check
+
+      - name: Confirm the page stays out of search indexes
+        run: |
+          grep -q 'Disallow: /' robots.txt
+          grep -q 'noindex' index.html

@@ -1,129 +1,176 @@
-# 微信采集 → 单页学习站
+# 收藏即所学 · 阅读归档
 
-> 一个跑在**凌晨 1 点**的自动化流水线：把我在滴答清单「微信采集」标签里攒的微信文章，
-> 自动抓正文、提炼摘要、生成一页能离线读的学习站，再发布到这里。
+线上地址：https://useralex110.github.io/reading-digest/
 
-**线上地址**：https://useralex110.github.io/reading-digest/
+这是一份个人阅读摘要。文章写在 [`data/articles.json`](data/articles.json)，[`scripts/build.js`](scripts/build.js) 把它生成**一个**可以离线打开的 `index.html`。GitHub Pages 从 `main` 分支的根目录发布这个文件。
 
----
-
-## 它做了什么
-
-```mermaid
-flowchart TD
-    A["launchd<br/>每天 01:00 触发"] --> B{"距上次成功<br/>满 3 天？"}
-    B -- 否 --> Z["跳过，记日志"]
-    B -- 是 --> C["cc-switch 代理探测<br/>127.0.0.1:15721"]
-    C --> D["拉起 Chrome<br/>CDP 127.0.0.1:9222"]
-    D --> E["无头 Claude 会话<br/>claude -p"]
-    E --> F["查滴答清单<br/>未完成的「微信采集」"]
-    F --> G["抓正文<br/>三轮重试"]
-    G --> H["读原文 → 提炼摘要<br/>写深入讲解"]
-    H --> I["生成 / 并入<br/>单页 HTML"]
-    I --> J["截图自查排版"]
-    J --> K["回写滴答<br/>勾选已完成"]
-    K --> L["推送 GitHub Pages<br/>Contents API"]
-```
-
-**关键点：中间那步是真的 AI 在跑，不是脚本在跑。** launchd 只是个闹钟；
-被它唤醒的 `claude -p` 是一个完整的 Claude 会话——它自己决定先查什么、
-抓失败了怎么换策略重试、读完全文后写什么摘要。摘要、分类、"三个范式转移"
-这类内容全部是读完原文现写的，不是模板套的。
+页面带 `noindex`，仓库里的 [`robots.txt`](robots.txt) 是 `Disallow: /`。不要去掉这两处。
 
 ---
 
-## 三条绕不开的约束
+## 旧流水线已停用
 
-这三条都是**实测撞出来的**，每一条都能让整条流水线静默死掉。
-写在这里，是因为以后想改东西时，不知道这些就会白折腾。
+以前这页是在 Mac 上由 didaMind / `wxdigest` 维护的：launchd 凌晨拉起无头会话，整页重写 `index.html`，再经 GitHub Contents API 推上去。
 
-### 1. 项目必须待在 `~/code`，不能放 `~/Documents`
-
-macOS 的 TCC 保护让 **launchd 启动的进程读不了 `~/Documents`**。实测表现很反直觉：
-
-```
-ls   ~/Documents/.../项目     → Operation not permitted
-bash ~/Documents/.../脚本.sh  → Operation not permitted   ← 连执行都挡
-touch ~/Documents/.../新文件  → OK                        ← 写入反而放行
-```
-
-**最阴的地方**：在终端里手动跑同一个脚本一切正常——终端自己持有授权，把问题盖住了。
-只有让 launchd 真正拉起任务才暴露（退出码 126）。
-
-所以项目现在在 `~/code/didaMind`。**别再搬回 `~/Documents`。**
-
-### 2. 抓微信正文必须走真实浏览器
-
-`curl` 带正常 UA 请求微信文章，会被 302 到验证页（`mp/wappoc_appmsgcaptcha`），
-返回体里根本没有正文容器 `#js_content`。换成裸链接（只留 `__biz&mid&idx&sn`）也一样。
-
-这不是 UA 问题，是服务端对无浏览器环境的拦截。所以抓取器直接驱动
-Chrome DevTools 协议，并内置三轮重试：原链接 → 裸链接 → 裸链接+加长等待。
-
-### 3. 部署走 GitHub Contents API，不能用 `git push`
-
-这台机器上 `github.com:443` **不通**，但 `api.github.com` **通**。
-所以任何 `git push` / `git clone` 都会失败，而 `gh api` 一切正常。
-
-部署脚本用 `gh api -X PUT .../contents/...` 写文件，同样生成真实 commit。
+那条流水线已经停用。现在在 Linux 上改数据文件、本地构建，然后用 git 推送。不要再整页手改 `index.html`。
 
 ---
 
-## 怎么用
+## 加一篇
 
-日常操作走 `wxdigest`：
+1. 在 `data/articles.json` 的 `articles` 数组里追加一条（字段见下）。同一天、同一分类里，页面顺序就是数组顺序。
+2. 构建：
+
+   ```bash
+   node scripts/build.js
+   ```
+
+3. 把 `data/articles.json` 和生成的 `index.html` **一起**提交，推到 `main`。
+
+只推数据、不推重新构建的 `index.html`，线上不会变，GitHub Actions 的核对也会失败。
+
+### 必填字段
+
+| 字段 | 说明 |
+| --- | --- |
+| `id` | 稳定 id，规则见下。全文件唯一 |
+| `title` | 标题 |
+| `url` | 原文链接，`http` 或 `https`，全文件唯一 |
+| `category` | 必须是 `categories` 里已有的 `id` |
+| `added` | 采集日期，`YYYY-MM-DD`。页面按这个日期分批，新的在前 |
+| `status` | `ok`，或正文没抓到时的 `fetch_failed` |
+| `summary_label` | 摘要前的标签。正常写 `一句话`，抓取失败写 `仅标题收录` |
+| `summary_html` | 摘要。按 HTML 插入，需要强调就写 `<b>`、`<code>` |
+
+### 选填字段
+
+| 字段 | 说明 |
+| --- | --- |
+| `source.account` | 公众号、作者或仓库名。卡片上显示在标题上方 |
+| `source.published` | 原文发布日期，`YYYY-MM-DD`。卡片上只显示月-日 |
+| `points_html` | 要点数组，每项是一段 HTML |
+| `notes_html` | 卡片上、深入讲解之外的批注，每项是一段 HTML |
+| `detail.summary` | 「深入讲解」折叠条上的标题 |
+| `detail.body_html` | 深入讲解正文 HTML（小标题用 `<h4>`，表格用 `<table>`） |
+| `keywords` | 搜不到正文里的词时，补在这里。搜索框会连同正文一起匹配 |
+| `wechat` | 微信文章的 `biz`、`mid`、`idx`，有 `sn` 也写上。`biz` 保留链接里的 `=` |
+| `ticktick_task_id` | 有对应的滴答任务 id 再填。页面上不展示，只放在 `data-task` 里。没有就不要写这个字段，也不要写 `null` |
+
+`summary_html`、`points_html`、`notes_html`、`detail.body_html` 会原样插入页面。`title` 这类纯文本字段会被转义。
+
+抓取失败时：`status` 设为 `fetch_failed`，`summary_label` 写 `仅标题收录`，在摘要里写明失败原因，**不要编造正文**。这种条目没有 `detail`，按钮文案是「尝试打开原文」，其他条目是「直达原文」。
+
+### id 怎么取
+
+1. 链接里有 `__biz`、`mid`、`idx`：`wx:{去掉末尾 = 的 biz}:{mid}:{idx}`。同时填写 `wechat`。构建会核对 id 与这三个字段一致。
+2. 只有 `sn`：`wxsn:{sn}`。
+3. 其他链接：`url:` 加上该 URL 字符串的 SHA-256 前 20 位十六进制。
 
 ```bash
-wxdigest            # 状态：定时是否启用 / 上次成功 / 下次执行 / 线上地址
-wxdigest run        # 立刻跑一次（尊重 3 天节流）
-wxdigest now        # 强制跑一次（无视节流）
-wxdigest log        # 最近一次运行的完整日志
-wxdigest deplog     # 部署日志
-wxdigest on | off   # 启用 / 停用定时任务
-wxdigest open       # 打开本地成品 HTML
-wxdigest site       # 打开线上站点
+node -e "const c=require('crypto');console.log('url:'+c.createHash('sha256').update(process.argv[1]).digest('hex').slice(0,20))" -- 'https://example.com/post'
 ```
 
-平时**什么都不用做**——在微信里往「微信采集」标签丢链接就行，剩下的它自己会处理。
+### 例子
+
+正常一条：
+
+```json
+{
+  "id": "wx:MzA5Nzk3MDQ4OQ:2649736365:1",
+  "title": "文章标题",
+  "url": "https://mp.weixin.qq.com/s?__biz=MzA5Nzk3MDQ4OQ==&mid=2649736365&idx=1&sn=替换成真实sn",
+  "category": "ai",
+  "source": { "account": "公众号名", "published": "2026-10-26" },
+  "added": "2026-10-26",
+  "status": "ok",
+  "summary_label": "一句话",
+  "summary_html": "摘要可以含 <b>强调</b>。",
+  "points_html": ["<b>要点：</b>一句话说明"],
+  "keywords": "额外搜索词",
+  "detail": {
+    "summary": "深入讲解 · 这一节在讲什么",
+    "body_html": "<h4>小节</h4><div>正文。</div>"
+  },
+  "wechat": {
+    "biz": "MzA5Nzk3MDQ4OQ==",
+    "mid": "2649736365",
+    "idx": "1",
+    "sn": "替换成真实sn"
+  }
+}
+```
+
+正文没抓到：
+
+```json
+{
+  "id": "wx:MzkxMTY4NTAyNQ:2247521014:1",
+  "title": "只有标题的文章",
+  "url": "https://mp.weixin.qq.com/s?__biz=...&mid=...&idx=1&sn=...",
+  "category": "ai",
+  "source": { "account": "公众号名", "published": "2026-10-25" },
+  "added": "2026-10-25",
+  "status": "fetch_failed",
+  "summary_label": "仅标题收录",
+  "summary_html": "抓取失败的原因。不要根据标题猜正文。",
+  "points_html": ["除标题外没有可靠正文，不生成摘要与深入讲解"],
+  "wechat": { "biz": "...==", "mid": "...", "idx": "1", "sn": "..." }
+}
+```
+
+### 分类
+
+八个分类已经在 `categories` 里：`ai`、`emb`、`kaoyan`、`job`、`dev`、`idea`、`hw`、`life`。新增分类就往这个数组加一项，带上 `id`、`numeral`、`title`、`badge`、`filter_label`、`color`（`#rrggbb`）。`id` 要用小写字母开头，因为它会变成 CSS 变量名。筛选按钮和配色都从这里来。
+
+### 校验失败的情况
+
+构建遇到下面任一情况会直接退出，不写出页面：
+
+- `schema_version` 不是 `1`
+- 缺必填字段，或字段类型不对
+- `id` 重复，或 `url` 重复
+- `category` 不在 `categories` 里
+- `status` 不是 `ok` / `fetch_failed`
+- 日期不是合法的 `YYYY-MM-DD`
+- `detail` 缺 `summary` 或 `body_html`
+- 填了 `wechat`，但 `id` 与 `biz` + `mid` + `idx` 对不上
+- `articles` 为空
+
+多出来的字段不会报错，构建会忽略。以后要加字段，可以先写上。
 
 ---
 
-## 要注意什么
+## 本地构建
 
-**手动跑通 ≠ 定时任务没问题。** 改完必须让 launchd 真跑一次：
+需要 Node.js 18 或更新版本。没有第三方依赖。
 
 ```bash
-launchctl kickstart -p "gui/$(id -u)/com.didamind.wxdigest"
-launchctl print "gui/$(id -u)/com.didamind.wxdigest" | grep -E 'last exit|runs'
+node scripts/build.js            # 写出 index.html
+node scripts/build.js --check    # 只核对，不写文件
+npm run build
+npm run check
 ```
 
-`last exit code = 126` 就是权限被拒。改完 plist 要先 `bootout` 再 `bootstrap` 才生效。
+用浏览器直接打开 `index.html` 即可。要看筛选和搜索，也可以：
 
-**失败不会浪费那 3 天额度。** 只有 `claude` 退出码为 0 才写入"上次成功"时间戳——
-代理挂了、Chrome 起不来、会话崩了，第二天都会自动重试。
+```bash
+python3 -m http.server
+```
 
-**内容只能从原文提炼，不编造。** 原文没有的数字、结论、人名一律不写。
-抓取失败的条目如实标注，并且**不勾选**对应的滴答任务，留到下次重试。
-
-**只勾「微信采集」标签下的任务**，绝不碰其他标签。
+页面按**采集日期从新到旧**分批，同一天里再按分类（壹到捌）排开。分类筛选、搜索、阅读进度条、距 27 考研初试的倒计时都还在。倒计时的日期是 `site.exam`。
 
 ---
 
-## 我学到了什么
+## 部署
 
-<!-- TODO(human) 用你自己的话写 3–5 条。提示（可以直接删掉）：
-     · 这次最让你意外的"原来是这样"是什么？
-     · 哪个坑是你觉得"换了我也想不到"的？
-     · 关于「收藏 ≠ 学会」，这个项目有没有改变你的看法？
-     · 如果重来一次，你会先做哪一步？
--->
-laudnchd
-claude code
-githubpages
+当前 Pages 来源是**从分支部署**：`main` 的根目录（`build_type: legacy`）。所以发布方式就是把构建好的 `index.html` 提交进仓库。推到 `main` 之后，现有的 Pages 会照常更新。
 
----
+[`.github/workflows/pages.yml`](.github/workflows/pages.yml) 在推送到 `main` 时运行，也可以在 Actions 页手动触发。它会重新构建，并确认提交里的 `index.html` 和数据一致，同时确认 `robots.txt` 与 `noindex` 还在。不一致就让这次检查失败。失败不会改线上的文件，站点仍是上一次成功提交的那一页。
 
-## 技术栈
+### 为什么不用 actions/deploy-pages
 
-macOS launchd · Bash · Node.js (Chrome DevTools Protocol) · Claude Code 无头模式 ·
-滴答清单 MCP · GitHub Contents API · GitHub Pages
+`actions/deploy-pages` 要先在仓库 **Settings → Pages → Build and deployment** 里把 Source 改成 **GitHub Actions**，否则它的产物不会变成线上页面。在改完之前如果又不再提交 `index.html`，线上会停在旧版本；来源切换和 workflow 如果没对上，站点还可能短暂空白。
+
+这次不改那个开关，发布路径和现在一样。**你不需要做任何 Pages 设置。**
+
+以后如果真想换成 Actions 部署：先确认 workflow 能成功上传页面产物，再把 Pages 来源改成 GitHub Actions，然后才可以不再把 `index.html` 当发布物提交。在那之前保持现状。
