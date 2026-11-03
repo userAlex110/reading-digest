@@ -94,6 +94,13 @@
   .howto b{color:var(--ink);font-weight:600}
   .howto summary{cursor:pointer;color:var(--ink);font-weight:600;letter-spacing:.06em}
   .howto p{margin:.5em 0 0}
+  .cred-key{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.35em .7em;margin:.4em 0 0}
+  .cred-key dt{margin:0}
+  .cred-key dd{margin:0}
+  .xv{display:inline-block;margin-left:.6em;padding:0 .45em;font-size:11px;letter-spacing:.06em;line-height:1.7;border:1px solid var(--line-strong);border-radius:2px;white-space:nowrap}
+  .xv-yes{color:#0c6b4a;border-color:rgba(12,107,74,.45)}
+  .xv-no{color:var(--muted);border-style:dashed}
+  .also{display:block;font-size:12.5px;color:var(--muted);margin-top:.15em}
 
   .bar{
     position:sticky;top:0;z-index:40;
@@ -365,8 +372,24 @@
     .grid::-webkit-scrollbar{display:none}
     .grid > .card{flex:0 0 86%;scroll-snap-align:start;min-height:300px}
     .grid > .card:only-child{flex-basis:100%}
-    .feature{grid-template-columns:minmax(0,1fr);padding:20px 18px 18px;gap:16px}
-    .feature-toc{columns:1}
+    .feature{grid-template-columns:minmax(0,1fr);padding:16px 16px 14px;gap:14px;margin-top:14px}
+    .feature h2{font-size:1.3rem;margin:.35rem 0 .45rem}
+    .feature-dek{font-size:.95rem;line-height:1.7}
+    .feature-toc{display:none}
+    .feature-foot{margin-top:10px;padding-top:10px}
+    /* 手机首屏：压缩刊头，让专题入口露出来 */
+    .mast{padding:16px 0 10px}
+    .mast-top{grid-template-columns:minmax(0,1fr)}
+    .kicker{margin-bottom:6px;font-size:11px}
+    .mast h1{font-size:1.45rem;line-height:1.28;letter-spacing:.03em}
+    .sub,.seal,.stats .m-hide{display:none}
+    .stats{margin-top:8px;font-size:12.5px}
+    .stats b{font-size:1.05rem}
+    .howto{margin-top:8px;font-size:13px}
+    .filters{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+    .filters::-webkit-scrollbar{display:none}
+    .fbtn{flex:0 0 auto}
+    .bar-in{padding-top:7px;padding-bottom:7px}
     .feature-older{border-left:none;padding-left:0;border-top:1px solid var(--line);padding-top:12px}
     .rel{grid-template-columns:minmax(0,1fr);gap:.1em}
     .rel dd{margin-bottom:.6em}
@@ -418,7 +441,7 @@
 <ol>
 <li><b>智能体编排</b>，指的是一个常驻 Router 负责对人交互和分派，多个上下文隔离的 Worker 并行干活，由环境事件驱动，外面再挂一个 Watchdog。它目前只是研究原型。</li>
 <li><b>bot 的回归</b>不是走回头路：2016 年的 bot 失败是因为办不成事，2026 年的 bot 能执行任务，所以入口又回到了 IM。新的瓶颈变成了<b>人的注意力</b>和<b>安全</b>。</li>
-<li><b>「产品能力更重要」只对了一半</b>：头部模型确实在趋同，但薄薄一层的产品最容易被模型厂商吃掉。真正难复制的是「选对问题 + 系统工程 + 场景或数据」的组合。</li>
+<li><b>「产品能力更重要」只对了一半</b>：头部模型确实在趋同，但薄薄一层的产品最容易被替代（Jasper 增长失速、2025 年关停数据都指向这一点，但没有可靠的具体比例）。真正难复制的是「选对问题 + 系统工程 + 场景或数据」的组合。</li>
 <li><b>对你：</b>初试前只收藏、不深挖；Super-agent 里的缓存、批处理、发布订阅、看门狗，正好是复试能讲的操作系统和嵌入式素材。</li>
 </ol>
             </div>
@@ -465,7 +488,7 @@
             <h2>bot 的「否定之否定」</h2>
             <div class="study-body">
 <div class="table-scroll"><table><thead><tr><th>阶段</th><th>形态</th><th>结果</th></tr></thead><tbody>
-<tr><td>2016</td><td>Messenger Bots，「对话即平台」</td><td>入口在 IM。2017 年 2 月报道约 70% 的请求需要人工接手，Facebook 收缩</td></tr>
+<tr><td>2016</td><td>Messenger Bots，「对话即平台」</td><td>入口在 IM。据 The Information 2017 年 2 月报道（The Register 转述），测试中只有约 30% 的请求能在没有人工介入时完成，Facebook 随后收缩</td></tr>
 <tr><td>2022–2024</td><td>ChatGPT 式聊天窗口</td><td>不再进 IM，用户自己打开窗口提问</td></tr>
 <tr><td>2025</td><td>Claude Code、Codex、Cursor 等编程智能体</td><td>能干活了，但要一个个 Session 盯着</td></tr>
 <tr><td>2026.1</td><td>OpenClaw 爆火，约 60 天破 25 万星</td><td>bot 回到 IM，这次能执行</td></tr>
@@ -476,7 +499,7 @@
 <li><b>驱动一：</b>模型能独立完成单个任务了。AI Index 2026 说智能体仍有约三分之一的尝试会失败，但已经够让人放手。</li>
 <li><b>驱动二：</b>瓶颈从模型转到人。DeepSeek 说一个人只能盯 3 到 5 个 Session，你收藏过的 Tibo（Codex 负责人）也说「我自己才是最大的天花板」，两边独立得出了同一个结论。</li>
 <li><b>驱动三：</b>Session 被重新看作实现细节，交互回到 GitHub、IM 这类原本就在用的界面。</li>
-<li><b>新问题是安全：</b>OpenClaw 官方已发布 722 个修复（其中 39 个有 CVE），CertiK 统计到约 13.5 万个暴露在公网的实例。</li>
+<li><b>新问题是安全：</b>OpenClaw 官方安全页（2026-09-11 更新）列出 2026 年 1 月以来收到 1,799 份报告，已修复并发布 722 个，其中 39 个带 CVE；CertiK 截至 2026-03-18 的报告统计到 280 多个 GitHub 安全公告、100 多个 CVE，以及 13.5 万多个暴露在公网的实例。两家统计口径和时间窗不同，数字不能直接相加或比较。</li>
 </ul>
 <p>所以更准确的说法是「螺旋上升」：入口回到了 IM，内核换成了能执行的智能体，难点也从「听不懂」变成了「权限和注意力怎么分配」。</p>
             </div>
@@ -486,20 +509,20 @@
             <div class="study-body">
 <h3>支持的证据</h3>
 <ul>
-<li>AI Index 2026：头部 4 家模型在 Arena 上的分差小于 25 Elo（一年前约 97），报告认为能力不再是明显的差异点，竞争转向成本、可靠性和实用性。</li>
+<li>AI Index 2026（第 2 章）：截至 2026 年 3 月，Arena 头部 4 家（Anthropic 1503、xAI 1495、Google 1494、OpenAI 1481）相差不到 25 分，上一版报告里约 97 分。报告原话：「With capability no longer a clear differentiator, competitive pressure is shifting toward cost, reliability, and real-world usefulness」。报告同时提醒，Arena 排名可能部分反映对平台的适应，不完全等于能力。</li>
 <li>DeepSeek 原文：把 Session 从底层解耦之后，「向用户暴露怎样的交互，成为一个独立的产品问题」。</li>
 <li>同一个模型，换一种编排，p95 从 29.5 分钟降到 15.7 分钟，差别全在系统设计。</li>
 <li>构建成本骤降：vista8 几天做出 HackerBooks；江山时序 2.5 周 200 多次提交；鱼皮实测同一道题从 102 分钟降到 61 分钟。</li>
 </ul>
 <h3>反驳与限制</h3>
 <ul>
-<li><b>模型厂商会吞掉功能：</b>Jasper 被 ChatGPT 原生写作冲击，营收约从 1.2 亿美元掉到 5500 万美元；TechRadar 2026 年 10 月的文章称，2025 年美国关停的 AI 创业公司中 81% 是套壳和应用。</li>
+<li><b>模型厂商会吞掉功能：</b>Jasper 在 ChatGPT 推出后增长失速：2022 年 ARR 约 8000 万美元，2023 年夏把当年 ARR 预期下调至少 30%，同年 9 月内部估值下调约 20%（Contrary Research）。流传的「营收从 1.2 亿掉到 5500 万美元」只见于 TechRadar 的观点文章（作者是一家 AI 公司 CEO）和第三方估算站，Jasper 没有公开财务，这里不采用。SimpleClosure 的 2025 年关停报告（样本是它经手的数百家关停公司）说 AI 是关停最多的类别（占 15.9%），主流模式是「套壳与应用层」；TechRadar 引用的「81%」在报告正文里找不到，未核实。</li>
 <li><b>模型和产品在协同设计：</b>DeepSeek V4.1 Flash 1017 专门针对自家 Harness 优化，护城河是「产品 + 数据 + 训练闭环」，不是纯产品。</li>
 <li><b>门槛降低对所有人都成立：</b>你能几天做出来，别人也能。HackerBooks 的数据来自 hackerbooks.org，界面谁都能重做。</li>
-<li><b>AI 有边际成本：</b>JetBrains 被传营收新高却亏损（网传，未核实），产品必须算得清 token 账。</li>
+<li><b>AI 有边际成本，但别算错账：</b>JetBrains 捷克主体 2025 年营收 160 亿克朗创新高，却首次净亏 3.15 亿克朗（捷克商业登记数据，Helgi Library 整理）。不过营业利润仍为正，亏损主要来自财务费用；把它全归因于 AI 投入是媒体推断。毛利率逐年下滑倒是事实，AI 产品必须算清 token 账。</li>
 <li><b>效率不一定兑现：</b>METR 2025 年的随机对照试验里，资深开源开发者用 AI 后实际慢了 19%，自己却以为快了 20%。</li>
 </ul>
-<p class="caveat">修正后的判断：模型能力越接近，决定成败的越是「选对问题 + 把系统工程做扎实 + 拥有场景或数据」。产品判断是必要条件，但不充分。Super-agent 本身就是例子：价值一半来自产品洞察（注意力是瓶颈），一半来自扎实的系统设计。</p>
+<p class="caveat">注意证据强度不对称：支持一侧有 AI Index 这样的一手报告，反驳一侧多是私营公司估算和观点文章，所以下面的判断要打折。修正后的判断：模型能力越接近，决定成败的越是「选对问题 + 把系统工程做扎实 + 拥有场景或数据」。产品判断是必要条件，但不充分。Super-agent 本身就是例子：价值一半来自产品洞察（注意力是瓶颈），一半来自扎实的系统设计。</p>
             </div>
           </section>
           <section class="study-sec" id="s-2026-w45-agent-orchestration-s6" data-spy>
@@ -545,13 +568,17 @@
               <li><a href="https://theaiengineer.substack.com/p/how-anthropic-built-multi-agent-deep" target="_blank" rel="noopener noreferrer">Anthropic 多智能体研究系统解读（90.2%、15 倍 token）</a><span class="src">The AI Engineer</span></li>
               <li><a href="https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance" target="_blank" rel="noopener noreferrer">The 2026 AI Index Report: Technical Performance</a><span class="src">Stanford HAI，2026</span></li>
               <li><a href="https://github.blog/open-source/maintainers/openclaw-went-viral-meet-the-maintainers-building-and-securing-it/" target="_blank" rel="noopener noreferrer">OpenClaw went viral. Meet the maintainers</a><span class="src">GitHub Blog，2026</span></li>
-              <li><a href="https://openclaw.ai/security" target="_blank" rel="noopener noreferrer">OpenClaw Security</a><span class="src">openclaw.ai</span></li>
-              <li><a href="https://www.certik.com/zh-CN/blog/openclaw-security-report" target="_blank" rel="noopener noreferrer">OpenClaw Security Report</a><span class="src">CertiK，2026</span></li>
+              <li><a href="https://openclaw.ai/security" target="_blank" rel="noopener noreferrer">OpenClaw Security</a><span class="src">openclaw.ai，2026-09-11</span></li>
+              <li><a href="https://www.certik.com/zh-CN/blog/openclaw-security-report" target="_blank" rel="noopener noreferrer">OpenClaw Security Report</a><span class="src">CertiK，2026-03-31</span></li>
               <li><a href="https://www.ncsti.gov.cn/kjdt/kjrd/202603/t20260310_240399.html" target="_blank" rel="noopener noreferrer">开源 AI 助手框架 OpenClaw 火了，这只「龙虾」养了也要防</a><span class="src">国家科技创新中心网，2026-03</span></li>
               <li><a href="https://thenextweb.com/news/anthropic-claude-duet-ai-agent" target="_blank" rel="noopener noreferrer">Anthropic previews Claude Duet</a><span class="src">The Next Web，2026-10</span></li>
-              <li><a href="https://www.theregister.com/2017/02/22/facebook_ai_fail" target="_blank" rel="noopener noreferrer">Facebook scales back AI flagship after chatbots hit 70% failure rate</a><span class="src">The Register，2017-02-22</span></li>
-              <li><a href="https://www.techradar.com/pro/when-the-model-takes-away-the-moat" target="_blank" rel="noopener noreferrer">When the model takes away the moat</a><span class="src">TechRadar，2026-10-20</span></li>
+              <li><a href="https://www.theregister.com/2017/02/22/facebook_ai_fail" target="_blank" rel="noopener noreferrer">Facebook scales back AI flagship after chatbots hit 70% failure rate</a><span class="src">The Register（转述 The Information），2017-02-22</span></li>
+              <li><a href="https://www.techradar.com/pro/when-the-model-takes-away-the-moat" target="_blank" rel="noopener noreferrer">When the model takes away the moat</a><span class="src">TechRadar（观点文章，作者为 Boltzbit CEO），2026-10-20</span></li>
               <li><a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" target="_blank" rel="noopener noreferrer">Measuring the Impact of Early-2025 AI on Experienced OS Developers</a><span class="src">METR，2025-07-10</span></li>
+              <li><a href="https://research.contrary.com/report/jasper" target="_blank" rel="noopener noreferrer">Jasper Business Breakdown</a><span class="src">Contrary Research，2024-02-02</span></li>
+              <li><a href="https://simpleclosure.com/blog/insights/state-of-startup-shutdowns-2025/" target="_blank" rel="noopener noreferrer">State of Startup Shutdowns - 2025</a><span class="src">SimpleClosure，2025-12-03</span></li>
+              <li><a href="https://www.helgilibrary.com/companies/jetbrains/" target="_blank" rel="noopener noreferrer">JetBrains: Revenue, Profit, Employees</a><span class="src">Helgi Library（捷克商业登记数据），2026</span></li>
+              <li><a href="https://hai.stanford.edu/assets/files/ai_index_report_2026_chapter_2_technical.pdf" target="_blank" rel="noopener noreferrer">AI Index Report 2026, Chapter 2: Technical Performance (PDF)</a><span class="src">Stanford HAI，2026</span></li>
             </ol>
           </section>
         </div>
@@ -1410,6 +1437,7 @@
             <li><b>四步转型：</b>① AI Assistant 嵌入 IDEA/PyCharm 全家桶；② 推出编程智能体 Junie；③ 开源自研模型 Mellum；④ 停掉 Fleet、团队全部转向 Agent 产品 Air</li>
             <li><b>商业模式的变化：</b>过去卖许可证，多卖一份几乎不增加成本；AI 每次调用背后都是真实算力账单，用户越多成本越高，AI 收入还追不上投入</li>
             <li><b>原文引用的行业数据：</b>2026 年 GitHub 新代码约 41% 为 AI 生成或辅助生成；Cursor 年化收入突破 20 亿美元；GitHub Copilot 付费用户达数百万级</li>
+            <li><b>核实（11 月 3 日）：</b>捷克商业登记数据（Helgi Library 整理）显示，JetBrains s.r.o.（捷克主体、非合并口径）2025 年营收 160.08 亿克朗（+6.3%，创新高），净亏 3.15 亿克朗，是 2005 年有账目以来首次。营业利润仍为正（约 7.5 亿克朗），亏损主要来自约 10.8 亿克朗的财务费用；「主因是 AI 投入」是媒体和本文的推断，JetBrains 没有在财报里这样说</li>
             <li><b>注意：</b>文章后半是「黑马程序员」课程广告，就业率、薪资、学员案例均为机构宣传口径，本卡不把它们当作行业结论</li>
           </ol>
         </section>
@@ -1758,9 +1786,9 @@
           <section class="an an-facts" id="e-url-39d90486b312a6c00c7a-facts" data-spy>
             <h2>关键事实与数据</h2>
             <ol class="facts">
-              <li>HachimoDock 用 ESP32-P4（RISC-V 双核 400MHz、32MB PSRAM）驱动 2.8 英寸 480×640 MIPI-DSI 屏，桌面端经 USB 串口下发 Agent 状态<span class="src"><a href="https://github.com/YizhengWw/HachimoDock" target="_blank" rel="noopener noreferrer">GitHub YizhengWw/HachimoDock</a>，2026-11</span></li>
-              <li>HachimoDock 许可是非商用的 source-available，不是 OSI 认可的开源许可<span class="src"><a href="https://github.com/YizhengWw/HachimoDock" target="_blank" rel="noopener noreferrer">GitHub YizhengWw/HachimoDock</a>，2026-11</span></li>
-              <li>gpu-unlock 作者称解除张量核心限速后 LLM prefill 快 25–55%，属于作者自报，没有第三方复测<span class="src"><a href="https://github.com/Zagitta/gpu-unlock" target="_blank" rel="noopener noreferrer">GitHub Zagitta/gpu-unlock</a>，2026-11</span></li>
+              <li>HachimoDock 用 ESP32-P4（RISC-V 双核 400MHz、32MB PSRAM）驱动 2.8 英寸 480×640 MIPI-DSI 屏，桌面端经 USB 串口下发 Agent 状态<span class="src"><a href="https://github.com/YizhengWw/HachimoDock" target="_blank" rel="noopener noreferrer">GitHub YizhengWw/HachimoDock</a>，2026-11<span class="xv xv-yes" title="除原文外，已用一手来源或独立来源复核">已交叉验证</span></span></li>
+              <li>HachimoDock 许可是非商用的 source-available，不是 OSI 认可的开源许可<span class="src"><a href="https://github.com/YizhengWw/HachimoDock" target="_blank" rel="noopener noreferrer">GitHub YizhengWw/HachimoDock</a>，2026-11<span class="xv xv-yes" title="除原文外，已用一手来源或独立来源复核">已交叉验证</span></span></li>
+              <li>gpu-unlock 作者称解除张量核心限速后 LLM prefill 快 25–55%，属于作者自报，没有第三方复测<span class="src"><a href="https://github.com/Zagitta/gpu-unlock" target="_blank" rel="noopener noreferrer">GitHub Zagitta/gpu-unlock</a>，2026-11<span class="xv xv-no" title="只有这一个来源，没有找到独立复核">单一来源</span></span></li>
             </ol>
           </section>
           <section class="an an-critique" id="e-url-39d90486b312a6c00c7a-critique" data-spy>
@@ -1847,9 +1875,9 @@
           <section class="an an-facts" id="e-url-21f283cd43976195ba7f-facts" data-spy>
             <h2>关键事实与数据</h2>
             <ol class="facts">
-              <li>站点收录 2007–2026 年 Hacker News 评论中提到的 1.5 万多本书，按提及的不同读者数排序<span class="src"><a href="https://hackerbooks.qiaomu.ai/" target="_blank" rel="noopener noreferrer">hackerbooks.qiaomu.ai 站点</a>，2026-11</span></li>
-              <li>页脚写明数据整理自 hackerbooks.org（roansh 的作品），书籍元数据与封面来自 Open Library<span class="src"><a href="https://hackerbooks.qiaomu.ai/" target="_blank" rel="noopener noreferrer">hackerbooks.qiaomu.ai 站点</a>，2026-11</span></li>
-              <li>作者帖子称起因是发现 Hugging Face 上有约 12G 的 HN 数据集，开发「消耗了大量 Token」<span class="src"><a href="https://x.com/vista8/status/2117290723255226820" target="_blank" rel="noopener noreferrer">X @vista8</a>，2026-11-03</span></li>
+              <li>站点收录 2007–2026 年 Hacker News 评论中提到的 1.5 万多本书，按提及的不同读者数排序<span class="src"><a href="https://hackerbooks.qiaomu.ai/" target="_blank" rel="noopener noreferrer">hackerbooks.qiaomu.ai 站点</a>，2026-11<span class="xv xv-yes" title="除原文外，已用一手来源或独立来源复核">已交叉验证</span></span><span class="also">另见：<a href="https://hackerbooks.org/" target="_blank" rel="noopener noreferrer">hackerbooks.org 页脚：15,766 本书、281,363 次提及、2007–2026</a></span></li>
+              <li>页脚写明数据整理自 hackerbooks.org（roansh 的作品），书籍元数据与封面来自 Open Library<span class="src"><a href="https://hackerbooks.qiaomu.ai/" target="_blank" rel="noopener noreferrer">hackerbooks.qiaomu.ai 站点</a>，2026-11<span class="xv xv-yes" title="除原文外，已用一手来源或独立来源复核">已交叉验证</span></span><span class="also">另见：<a href="https://hackerbooks.org/" target="_blank" rel="noopener noreferrer">hackerbooks.org（roansh）</a></span></li>
+              <li>作者帖子称起因是发现 Hugging Face 上有约 12G 的 HN 数据集，开发「消耗了大量 Token」<span class="src"><a href="https://x.com/vista8/status/2117290723255226820" target="_blank" rel="noopener noreferrer">X @vista8</a>，2026-11-03<span class="xv xv-no" title="只有这一个来源，没有找到独立复核">单一来源</span></span></li>
             </ol>
           </section>
           <section class="an an-critique" id="e-url-21f283cd43976195ba7f-critique" data-spy>
@@ -1931,11 +1959,11 @@
           <section class="an an-facts" id="e-wx-MzY4NzM3MTkxOQ-2247483844-1-facts" data-spy>
             <h2>关键事实与数据</h2>
             <ol class="facts">
-              <li>实验负载约 300 条消息，其中约 20 条是工作请求，编码动作用「耗时占位工具」代替，每种方案跑 5 次<span class="src"><a href="https://mp.weixin.qq.com/s?__biz=MzY4NzM3MTkxOQ==&amp;mid=2247483844&amp;idx=1&amp;sn=1e93a1f1dc5ae0996f9c45794b896495" target="_blank" rel="noopener noreferrer">DeepSeek Harness 团队原文</a>，2026-10-31</span></li>
-              <li>Super-agent 完成时间 p50 12.4 分钟、p95 15.7 分钟；对照组「单 Session + Subagent（中性提示）」p95 为 29.5 分钟<span class="src"><a href="https://mp.weixin.qq.com/s?__biz=MzY4NzM3MTkxOQ==&amp;mid=2247483844&amp;idx=1&amp;sn=1e93a1f1dc5ae0996f9c45794b896495" target="_blank" rel="noopener noreferrer">DeepSeek Harness 团队原文</a>，2026-10-31</span></li>
-              <li>去掉 Thread 订阅直通后，Router 决策数约多 30%，token 从 2323 万涨到 3177 万（约 +37%）<span class="src"><a href="https://mp.weixin.qq.com/s?__biz=MzY4NzM3MTkxOQ==&amp;mid=2247483844&amp;idx=1&amp;sn=1e93a1f1dc5ae0996f9c45794b896495" target="_blank" rel="noopener noreferrer">DeepSeek Harness 团队原文</a>，2026-10-31</span></li>
-              <li>Trigger 频率从每分钟约 1 条升到 40 条时，Router 平均每批处理 1.0→2.8 条，单个决策分摊耗时 6.4 秒→1.6 秒<span class="src"><a href="https://mp.weixin.qq.com/s?__biz=MzY4NzM3MTkxOQ==&amp;mid=2247483844&amp;idx=1&amp;sn=1e93a1f1dc5ae0996f9c45794b896495" target="_blank" rel="noopener noreferrer">DeepSeek Harness 团队原文</a>，2026-10-31</span></li>
-              <li>开源仓库 dsh-superagent-prototype 采用 MIT 许可，README 写明不是官方产品、不是生产级；我查看时约 1.36 万星<span class="src"><a href="https://github.com/deepseek-ai/dsh-superagent-prototype" target="_blank" rel="noopener noreferrer">GitHub deepseek-ai</a>，2026-11</span></li>
+              <li>实验负载约 300 条消息，其中约 20 条是工作请求，编码动作用「耗时占位工具」代替，每种方案跑 5 次<span class="src"><a href="https://mp.weixin.qq.com/s?__biz=MzY4NzM3MTkxOQ==&amp;mid=2247483844&amp;idx=1&amp;sn=1e93a1f1dc5ae0996f9c45794b896495" target="_blank" rel="noopener noreferrer">DeepSeek Harness 团队原文</a>，2026-10-31<span class="xv xv-no" title="只有这一个来源，没有找到独立复核">单一来源</span></span></li>
+              <li>Super-agent 完成时间 p50 12.4 分钟、p95 15.7 分钟；对照组「单 Session + Subagent（中性提示）」p95 为 29.5 分钟<span class="src"><a href="https://mp.weixin.qq.com/s?__biz=MzY4NzM3MTkxOQ==&amp;mid=2247483844&amp;idx=1&amp;sn=1e93a1f1dc5ae0996f9c45794b896495" target="_blank" rel="noopener noreferrer">DeepSeek Harness 团队原文</a>，2026-10-31<span class="xv xv-no" title="只有这一个来源，没有找到独立复核">单一来源</span></span></li>
+              <li>去掉 Thread 订阅直通后，Router 决策数约多 30%，token 从 2323 万涨到 3177 万（约 +37%）<span class="src"><a href="https://mp.weixin.qq.com/s?__biz=MzY4NzM3MTkxOQ==&amp;mid=2247483844&amp;idx=1&amp;sn=1e93a1f1dc5ae0996f9c45794b896495" target="_blank" rel="noopener noreferrer">DeepSeek Harness 团队原文</a>，2026-10-31<span class="xv xv-no" title="只有这一个来源，没有找到独立复核">单一来源</span></span></li>
+              <li>Trigger 频率从每分钟约 1 条升到 40 条时，Router 平均每批处理 1.0→2.8 条，单个决策分摊耗时 6.4 秒→1.6 秒<span class="src"><a href="https://mp.weixin.qq.com/s?__biz=MzY4NzM3MTkxOQ==&amp;mid=2247483844&amp;idx=1&amp;sn=1e93a1f1dc5ae0996f9c45794b896495" target="_blank" rel="noopener noreferrer">DeepSeek Harness 团队原文</a>，2026-10-31<span class="xv xv-no" title="只有这一个来源，没有找到独立复核">单一来源</span></span></li>
+              <li>开源仓库 dsh-superagent-prototype 采用 MIT 许可，README 写明不是官方产品、不是生产级；我查看时约 1.36 万星<span class="src"><a href="https://github.com/deepseek-ai/dsh-superagent-prototype" target="_blank" rel="noopener noreferrer">GitHub deepseek-ai</a>，2026-11<span class="xv xv-yes" title="除原文外，已用一手来源或独立来源复核">已交叉验证</span></span></li>
             </ol>
           </section>
           <section class="an an-critique" id="e-wx-MzY4NzM3MTkxOQ-2247483844-1-critique" data-spy>
@@ -2028,9 +2056,9 @@
           <section class="an an-facts" id="e-wx-MzkxMTY4NTAyNQ-2247521374-1-facts" data-spy>
             <h2>关键事实与数据</h2>
             <ol class="facts">
-              <li>TRAE 宝分「全局助理」（跨项目记忆）与「项目助理」（拆分并行子任务）两种形态<span class="src">TRAE.ai 公众号《一周更新》，2026-11-01</span></li>
-              <li>同期上线交互式代码评审报告，以及覆盖微信、抖音、支付宝的小程序开发插件<span class="src">TRAE.ai 公众号《一周更新》，2026-11-01</span></li>
-              <li>支持任务在本地电脑和云电脑之间接续<span class="src">TRAE.ai 公众号《一周更新》，2026-11-01</span></li>
+              <li>TRAE 宝分「全局助理」（跨项目记忆）与「项目助理」（拆分并行子任务）两种形态<span class="src">TRAE.ai 公众号《一周更新》，2026-11-01<span class="xv xv-yes" title="除原文外，已用一手来源或独立来源复核">已交叉验证</span></span><span class="also">另见：<a href="https://docs.trae.cn/ide_personal-assistant" target="_blank" rel="noopener noreferrer">TRAE 官方文档《个人助理：TRAE 宝》</a>；<a href="https://www.ithome.com/1/019/458.htm" target="_blank" rel="noopener noreferrer">IT之家</a></span></li>
+              <li>同期上线交互式代码评审报告，以及覆盖微信、抖音、支付宝的小程序开发插件<span class="src">TRAE.ai 公众号《一周更新》，2026-11-01<span class="xv xv-no" title="只有这一个来源，没有找到独立复核">单一来源</span></span></li>
+              <li>支持任务在本地电脑和云电脑之间接续<span class="src">TRAE.ai 公众号《一周更新》，2026-11-01<span class="xv xv-no" title="只有这一个来源，没有找到独立复核">单一来源</span></span></li>
             </ol>
           </section>
           <section class="an an-critique" id="e-wx-MzkxMTY4NTAyNQ-2247521374-1-critique" data-spy>
@@ -2112,9 +2140,9 @@
           <section class="an an-facts" id="e-wx-MzU4Mjg3MDAyMQ-2247638275-1-facts" data-spy>
             <h2>关键事实与数据</h2>
             <ol class="facts">
-              <li>江山时序网页版地址为 deanchen.me/jiangshan-map，源码仓库 DeanChensj/jiangshan-map，GPL-3.0 许可；我查看时约 3.5k 星，仓库创建于 2026 年 7 月<span class="src"><a href="https://github.com/DeanChensj/jiangshan-map" target="_blank" rel="noopener noreferrer">GitHub</a>，2026-11</span></li>
-              <li>作者自述开发期约 2.5 周提交 200 多次；自己发小红书被限流，X 上被转发后几天内多了一千多个 star，文中写到涨到 1400<span class="src">少数派 Matrix 原文（作者自述），2026-10-29</span></li>
-              <li>Silverlinger 余阅文中版本为 v1.3.3，仅 macOS<span class="src">少数派 Matrix 原文（作者自述），2026-10-29</span></li>
+              <li>江山时序网页版地址为 deanchen.me/jiangshan-map，源码仓库 DeanChensj/jiangshan-map，GPL-3.0 许可；我查看时约 3.5k 星，仓库创建于 2026 年 7 月<span class="src"><a href="https://github.com/DeanChensj/jiangshan-map" target="_blank" rel="noopener noreferrer">GitHub</a>，2026-11<span class="xv xv-yes" title="除原文外，已用一手来源或独立来源复核">已交叉验证</span></span></li>
+              <li>作者自述开发期约 2.5 周提交 200 多次；自己发小红书被限流，X 上被转发后几天内多了一千多个 star，文中写到涨到 1400<span class="src">少数派 Matrix 原文（作者自述），2026-10-29<span class="xv xv-no" title="只有这一个来源，没有找到独立复核">单一来源</span></span></li>
+              <li>Silverlinger 余阅文中版本为 v1.3.3，仅 macOS<span class="src">少数派 Matrix 原文（作者自述），2026-10-29<span class="xv xv-no" title="只有这一个来源，没有找到独立复核">单一来源</span></span></li>
             </ol>
           </section>
           <section class="an an-critique" id="e-wx-MzU4Mjg3MDAyMQ-2247638275-1-critique" data-spy>
@@ -2194,8 +2222,8 @@
           <section class="an an-facts" id="e-wx-MzkzMDkzMDg2NQ-2247491514-1-facts" data-spy>
             <h2>关键事实与数据</h2>
             <ol class="facts">
-              <li>课程由深蓝学院开设，宣传称主讲人为 UC Riverside 的滕瀚哲博士，文末写有「限时优惠 100 元」<span class="src">鱼香ROS 公众号原文，2026-10-29</span></li>
-              <li>Lynch 与 Park 合著的《Modern Robotics》（剑桥大学出版社，2017）作者官网提供免费 PDF 和配套视频，覆盖旋转表示、正逆运动学、动力学和运动规划<span class="src"><a href="https://hades.mech.northwestern.edu/index.php/Modern_Robotics" target="_blank" rel="noopener noreferrer">Northwestern University 作者主页</a>，2017</span></li>
+              <li>课程由深蓝学院开设，宣传称主讲人为 UC Riverside 的滕瀚哲博士，文末写有「限时优惠 100 元」<span class="src">鱼香ROS 公众号原文，2026-10-29<span class="xv xv-no" title="只有这一个来源，没有找到独立复核">单一来源</span></span></li>
+              <li>Lynch 与 Park 合著的《Modern Robotics》（剑桥大学出版社，2017）作者官网提供免费 PDF 和配套视频，覆盖旋转表示、正逆运动学、动力学和运动规划<span class="src"><a href="https://hades.mech.northwestern.edu/index.php/Modern_Robotics" target="_blank" rel="noopener noreferrer">Northwestern University 作者主页</a>，2017<span class="xv xv-yes" title="除原文外，已用一手来源或独立来源复核">已交叉验证</span></span></li>
             </ol>
           </section>
           <section class="an an-critique" id="e-wx-MzkzMDkzMDg2NQ-2247491514-1-critique" data-spy>
@@ -2276,9 +2304,9 @@
           <section class="an an-facts" id="e-wx-MzI2MjIyMTQxMw-2247489158-1-facts" data-spy>
             <h2>关键事实与数据</h2>
             <ol class="facts">
-              <li>37 颗 WS2812 分五区（身体 24、帽子 5、嘴 5、眼睛 2、鼻子 1），数据线 GPIO3；蜂鸣器 GPIO6；按键 GPIO4/5/7<span class="src">嵌入式杂谈原文，2026-10-29</span></li>
-              <li>仓库 ApolloAutomation/H-3，我查看时只有个位数星标<span class="src"><a href="https://github.com/ApolloAutomation/H-3" target="_blank" rel="noopener noreferrer">GitHub</a>，2026-11</span></li>
-              <li>原文提示：开启 BLE 代理会明显增加功耗，用 AA 电池时不适合常开<span class="src">嵌入式杂谈原文，2026-10-29</span></li>
+              <li>37 颗 WS2812 分五区（身体 24、帽子 5、嘴 5、眼睛 2、鼻子 1），数据线 GPIO3；蜂鸣器 GPIO6；按键 GPIO4/5/7<span class="src">嵌入式杂谈原文，2026-10-29<span class="xv xv-yes" title="除原文外，已用一手来源或独立来源复核">已交叉验证</span></span><span class="also">另见：<a href="https://github.com/ApolloAutomation/H-3/blob/main/Integrations/ESPHome/Core.yaml" target="_blank" rel="noopener noreferrer">仓库 ESPHome 配置 Core.yaml（LED GPIO3、蜂鸣器 GPIO6、按键 GPIO4/5/7）</a></span></li>
+              <li>仓库 ApolloAutomation/H-3，我查看时只有个位数星标<span class="src"><a href="https://github.com/ApolloAutomation/H-3" target="_blank" rel="noopener noreferrer">GitHub</a>，2026-11<span class="xv xv-yes" title="除原文外，已用一手来源或独立来源复核">已交叉验证</span></span></li>
+              <li>原文提示：开启 BLE 代理会明显增加功耗，用 AA 电池时不适合常开<span class="src">嵌入式杂谈原文，2026-10-29<span class="xv xv-no" title="只有这一个来源，没有找到独立复核">单一来源</span></span></li>
             </ol>
           </section>
           <section class="an an-critique" id="e-wx-MzI2MjIyMTQxMw-2247489158-1-critique" data-spy>
@@ -2359,16 +2387,16 @@
           <section class="an an-facts" id="e-wx-MzI2MjIyMTQxMw-2247489209-1-facts" data-spy>
             <h2>关键事实与数据</h2>
             <ol class="facts">
-              <li>主控为 Particle P2 模组（Realtek RTL8721，Cortex-M33，双频 Wi-Fi + BLE），36 颗 3535 反贴 RGB 灯珠<span class="src">嵌入式杂谈原文，2026-10-31</span></li>
-              <li>用 74AHC1G125 单路缓冲器把 3.3V 数据线转成 5V 电平驱动灯珠<span class="src">嵌入式杂谈原文，2026-10-31</span></li>
-              <li>关键词识别模型由 Edge Impulse 训练、TFLite Micro 在板上推理，不依赖云端<span class="src">嵌入式杂谈原文，2026-10-31</span></li>
-              <li>仓库 particle-iot/snowflake 采用 Apache-2.0，我查看时约十几星<span class="src"><a href="https://github.com/particle-iot/snowflake" target="_blank" rel="noopener noreferrer">GitHub</a>，2026-11</span></li>
+              <li>主控为 Particle P2 模组（Realtek RTL8721，Cortex-M33，双频 Wi-Fi + BLE），36 颗 3535 反贴 RGB 灯珠（仓库附带的是 SK6812MINI-E 数据手册）<span class="src">嵌入式杂谈原文，2026-10-31<span class="xv xv-yes" title="除原文外，已用一手来源或独立来源复核">已交叉验证</span></span><span class="also">另见：<a href="https://github.com/particle-iot/snowflake" target="_blank" rel="noopener noreferrer">仓库 README（P2、36 颗可寻址 RGB 灯）</a></span></li>
+              <li>用单路缓冲器把 3.3V 数据线转成 5V 电平驱动灯珠。<b>型号需修正：</b>原文写 74AHC1G125，但仓库附带的是 74HC1G125GV 的数据手册，以仓库为准<span class="src">嵌入式杂谈原文，2026-10-31<span class="xv xv-yes" title="除原文外，已用一手来源或独立来源复核">已交叉验证</span></span><span class="also">另见：<a href="https://github.com/particle-iot/snowflake/tree/main/hardware/datasheet" target="_blank" rel="noopener noreferrer">仓库 hardware/datasheet 目录</a></span></li>
+              <li>关键词识别模型由 Edge Impulse 训练、TFLite Micro 在板上推理，不依赖云端<span class="src">嵌入式杂谈原文，2026-10-31<span class="xv xv-yes" title="除原文外，已用一手来源或独立来源复核">已交叉验证</span></span><span class="also">另见：<a href="https://github.com/particle-iot/snowflake/tree/main/firmware/snowflake/src" target="_blank" rel="noopener noreferrer">仓库 firmware/snowflake/src/edge-impulse-sdk（含 TFLite Micro）</a></span></li>
+              <li>仓库 particle-iot/snowflake 采用 Apache-2.0，我查看时约十几星<span class="src"><a href="https://github.com/particle-iot/snowflake" target="_blank" rel="noopener noreferrer">GitHub</a>，2026-11<span class="xv xv-yes" title="除原文外，已用一手来源或独立来源复核">已交叉验证</span></span></li>
             </ol>
           </section>
           <section class="an an-critique" id="e-wx-MzI2MjIyMTQxMw-2247489209-1-critique" data-spy>
             <h2>批判性判断</h2>
             <p class="cred-line"><span class="badge cred cred-B">可信度 B</span><span>较高：来源可靠，但有局限或利益相关</span></p>
-            <p>器件清单具体，和厂商仓库一致；但这是厂商为推广 P2 模组做的展示品，原文的缺点总结也比较轻描淡写。</p>
+            <p>器件清单具体，和厂商仓库一致；但这是厂商为推广 P2 模组做的展示品，原文的缺点总结也比较轻描淡写；另外原文写的缓冲器型号和仓库附带的数据手册对不上（74AHC1G125 与 74HC1G125GV），说明转述时有笔误。</p>
             <ul class="crit">
               <li>限量版、P2 模组国内不好买，想复刻要改用 ESP32-S3 之类并重新训练模型</li>
               <li>只识别一个关键词，噪声环境下的误触发率原文没给</li>
@@ -2446,8 +2474,8 @@
           <section class="an an-facts" id="e-wx-MzE5OTI3MDk5Nw-2247682808-1-facts" data-spy>
             <h2>关键事实与数据</h2>
             <ol class="facts">
-              <li>平台自述 2019 年 11 月上线，收录 4 万多个开源项目，日访问约 3 万<span class="src">立创开源硬件平台公众号（自报数据），2026-11-02</span></li>
-              <li>文中 4 个项目只给了标题链接：行车仪、1 天 300 多人复刻的项目、45 元无人机、400 元复刻 3 万元的灯<span class="src">立创开源硬件平台公众号，2026-11-02</span></li>
+              <li>平台自述 2019 年 11 月上线，收录 4 万多个开源项目，日访问约 3 万<span class="src">立创开源硬件平台公众号（自报数据），2026-11-02<span class="xv xv-no" title="只有这一个来源，没有找到独立复核">单一来源</span></span></li>
+              <li>文中 4 个项目只给了标题链接：行车仪、1 天 300 多人复刻的项目、45 元无人机、400 元复刻 3 万元的灯<span class="src">立创开源硬件平台公众号，2026-11-02<span class="xv xv-no" title="只有这一个来源，没有找到独立复核">单一来源</span></span></li>
             </ol>
           </section>
           <section class="an an-critique" id="e-wx-MzE5OTI3MDk5Nw-2247682808-1-critique" data-spy>
@@ -2507,15 +2535,23 @@
   </div>
   <div class="wrap">
     <p class="stats">
-      <span><b>30</b> 条收藏</span><span class="sep" aria-hidden="true">/</span>
-      <span><b>8</b> 大板块</span><span class="sep" aria-hidden="true">/</span>
-      <span><b>10/05–11/03</b> 采集</span><span class="sep" aria-hidden="true">/</span>
+      <span class="m-hide"><b>30</b> 条收藏</span><span class="sep" aria-hidden="true">/</span>
+      <span class="m-hide"><b>8</b> 大板块</span><span class="sep" aria-hidden="true">/</span>
+      <span class="m-hide"><b>10/05–11/03</b> 采集</span><span class="sep" aria-hidden="true">/</span>
       <span><b>1</b> 篇专题</span><span class="sep" aria-hidden="true">/</span>
       <span><b>9</b> 条完整分析</span><span class="sep" aria-hidden="true">/</span>
-      <span><b>18</b> 篇含深入讲解</span><span class="sep" aria-hidden="true">/</span>
+      <span class="m-hide"><b>18</b> 篇含深入讲解</span><span class="sep" aria-hidden="true">/</span>
       <span class="hot" id="countdown"><b>--</b> 天距离 27 考研初试</span>
     </p>
-    <details class="howto"><summary>怎么读这个面板</summary><p>先读最上面的专题。卡片上的「观点」是一句话结论，「可信度」是我对来源的评级（A 最高，D 最低），「已读原文核实」和「仅按标题」说明分析的依据。点卡片看完整分析，手机上左右滑动翻卡片。较早的收藏只有摘要和要点，没有分析层。最近一批（11 月 3 日，1 条）：向阳乔木做了「黑客书架」：Hacker News 评论里被提及最多的书。另有 2 条正文抓取失败，只收录了标题：DeepSeek Harness 团队的文字分享、TRAE 官方训练营开启报名：手把手教你开发并上线产品。</p></details>
+    <details class="howto"><summary>怎么读这个面板</summary><p>先读最上面的专题。卡片上的「观点」是一句话结论，「可信度」是我对来源的评级，「已读原文核实」和「仅按标题」说明分析的依据；事实后面的「已交叉验证」表示除原文外还用一手来源（仓库、官方文档、数据手册、登记数据）或独立来源复核过，「单一来源」表示只有原文这一处。点卡片看完整分析，手机上左右滑动翻卡片。较早的收藏只有摘要和要点，没有分析层。最近一批（11 月 3 日，1 条）：向阳乔木做了「黑客书架」：Hacker News 评论里被提及最多的书。另有 2 条正文抓取失败，只收录了标题：DeepSeek Harness 团队的文字分享、TRAE 官方训练营开启报名：手把手教你开发并上线产品。</p>
+      <p><b>可信度怎么评：</b></p>
+      <dl class="cred-key">
+        <dt><span class="badge cred cred-A">A</span></dt><dd>一手材料（论文、官方数据、源码、标准文档、登记数据），关键数字能独立复核，作者没有明显的利益冲突</dd>
+        <dt><span class="badge cred cred-B">B</span></dt><dd>一手或可靠来源，关键事实能在仓库、文档里对上；但作者利益相关、实验是自己设计的，或缺第三方复现</dd>
+        <dt><span class="badge cred cred-C">C</span></dt><dd>营销稿、自荐、广告或平台自报数据；核心说法（好不好用、效果多大）无法独立验证</dd>
+        <dt><span class="badge cred cred-D">D</span></dt><dd>网传、匿名、来源不明，或与已核实的事实冲突</dd>
+      </dl>
+    </details>
   </div>
 </header>
 
@@ -2551,7 +2587,7 @@
       <li><a href="#s-2026-w45-agent-orchestration-s5">「产品能力更重要」：证据与反驳</a></li>
       <li><a href="#s-2026-w45-agent-orchestration-s6">对你的启示与行动</a></li>
     </ol>
-    <p class="feature-foot"><span>串起 9 篇收藏 · 21 个来源</span><a class="feature-cta" href="#s-2026-w45-agent-orchestration">读专题 <span aria-hidden="true">→</span></a></p>
+    <p class="feature-foot"><span>串起 9 篇收藏 · 25 个来源</span><a class="feature-cta" href="#s-2026-w45-agent-orchestration">读专题 <span aria-hidden="true">→</span></a></p>
   </div>
 </section>
   <div class="batch" data-batch="2026-11-03">
@@ -2563,7 +2599,7 @@
       <h3 id="e-url-21f283cd43976195ba7f-card-title">向阳乔木做了「黑客书架」：Hacker News 评论里被提及最多的书</h3>
       <span class="badges"><span class="badge v-original">已读原文核实</span><span class="badge cred cred-B" title="较高：来源可靠，但有局限或利益相关">可信度 B</span></span>
       <p class="excerpt thesis" id="e-url-21f283cd43976195ba7f-card-sum"><span class="thesis-label">观点</span>一份公开数据集 + AI 编程，一个人几天就能做出完整产品：HackerBooks 是「构建成本骤降」的现场例子，但它的核心资产是别人整理好的数据（hackerbooks.org），护城河很薄。</p>
-      <span class="card-foot"><span>分析 · 3 条事实 · 3 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
+      <span class="card-foot"><span>分析 · 3 条事实（2 条交叉验证） · 3 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
     </a>
     </div>
   </div>
@@ -2577,7 +2613,7 @@
       <h3 id="e-wx-MzE5OTI3MDk5Nw-2247682808-1-card-title">立创开源平台「今年热度最高的 4 个开源项目」：标题大于内容，主体是平台自我介绍和评论送券</h3>
       <span class="badges"><span class="badge v-original">已读原文核实</span><span class="badge cred cred-C" title="中：宣传、自荐或未经独立验证">可信度 C</span></span>
       <p class="excerpt thesis" id="e-wx-MzE5OTI3MDk5Nw-2247682808-1-card-sum"><span class="thesis-label">观点</span>这条的价值不在正文，而在于提醒你：<b>立创开源平台（OSHWHub）本身是一个好用的检索入口</b>，想找可复刻的国产开源硬件，直接去平台按热度看，比看这类推送高效。</p>
-      <span class="card-foot"><span>分析 · 2 条事实 · 3 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
+      <span class="card-foot"><span>分析 · 2 条事实（0 条交叉验证） · 3 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
     </a>
     </div>
   </div>
@@ -2591,7 +2627,7 @@
       <h3 id="e-wx-MzY4NzM3MTkxOQ-2247483844-1-card-title">DeepSeek Super-agent：常驻 Router 加并行 Worker，把 Agent 从「一个窗口」变成「一个后台系统」</h3>
       <span class="badges"><span class="badge v-original">已读原文核实</span><span class="badge cred cred-B" title="较高：来源可靠，但有局限或利益相关">可信度 B</span></span>
       <p class="excerpt thesis" id="e-wx-MzY4NzM3MTkxOQ-2247483844-1-card-sum"><span class="thesis-label">观点</span>把 Agent 从「人盯着的一个聊天窗口」改成「常驻后台、由事件驱动的调度系统」，是 2026 年智能体的主线方向；但这篇是<b>研究原型加合成实验</b>，证明了架构思路可行，没有证明在真实工作里更好用。</p>
-      <span class="card-foot"><span>分析 · 5 条事实 · 5 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
+      <span class="card-foot"><span>分析 · 5 条事实（1 条交叉验证） · 5 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
     </a>
 
     <a class="card has-analysis" href="#e-wx-MzkxMTY4NTAyNQ-2247521374-1" data-id="wx:MzkxMTY4NTAyNQ:2247521374:1" data-cat="ai" data-k="TRAE 宝 个人助理 跨项目记忆 子任务 并行 代码评审 小程序 微信 抖音 支付宝 云电脑 字节 周更" aria-labelledby="e-wx-MzkxMTY4NTAyNQ-2247521374-1-card-title" aria-describedby="e-wx-MzkxMTY4NTAyNQ-2247521374-1-card-sum">
@@ -2600,7 +2636,7 @@
       <h3 id="e-wx-MzkxMTY4NTAyNQ-2247521374-1-card-title">TRAE 一周更新：「TRAE 宝」上线，跨项目记忆 + 子任务并行 + 本地/云电脑接续</h3>
       <span class="badges"><span class="badge v-original">已读原文核实</span><span class="badge cred cred-C" title="中：宣传、自荐或未经独立验证">可信度 C</span></span>
       <p class="excerpt thesis" id="e-wx-MzkxMTY4NTAyNQ-2247521374-1-card-sum"><span class="thesis-label">观点</span>国内 AI 编程工具也在从「一个对话窗口」转向「常驻助理 + 并行子任务」，和 DeepSeek Super-agent 是同一方向的产品化版本；但这是一则官方公告，只有功能列表，没有效果数据。</p>
-      <span class="card-foot"><span>分析 · 3 条事实 · 3 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
+      <span class="card-foot"><span>分析 · 3 条事实（1 条交叉验证） · 3 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
     </a>
 
     <a class="card has-analysis" href="#e-url-39d90486b312a6c00c7a" data-id="url:39d90486b312a6c00c7a" data-cat="hw" data-k="HachimoDock 哈基米机 ESP32-P4 桌宠 Claude Code Codex Sunshine Moonlight 串流 Tendedero 截图 WeTypeX 微信输入法 Fcitx5 Linux geo-sleuth 照片定位 Agent Skill gpu-unlock 张量核心 RTX" aria-labelledby="e-url-39d90486b312a6c00c7a-card-title" aria-describedby="e-url-39d90486b312a6c00c7a-card-sum">
@@ -2609,7 +2645,7 @@
       <h3 id="e-url-39d90486b312a6c00c7a-card-title">一期视频里的 6 个开源项目：哈基米机、Foundation Sunshine、Tendedero、WeTypeX、geo-sleuth、gpu-unlock</h3>
       <span class="badges"><span class="badge v-original">已读原文核实</span><span class="badge cred cred-B" title="较高：来源可靠，但有局限或利益相关">可信度 B</span></span>
       <p class="excerpt thesis" id="e-url-39d90486b312a6c00c7a-card-sum"><span class="thesis-label">观点</span>同一张清单里，最值得你看的是 <b>HachimoDock</b>：它把「AI Agent 在干什么」做成一个 ESP32-P4 桌面小屏，是 Agent 时代的嵌入式新玩法；gpu-unlock 那类改底层的项目风险高、数字是作者自报。</p>
-      <span class="card-foot"><span>分析 · 3 条事实 · 3 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
+      <span class="card-foot"><span>分析 · 3 条事实（2 条交叉验证） · 3 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
     </a>
     </div>
   </div>
@@ -2623,7 +2659,7 @@
       <h3 id="e-wx-MzI2MjIyMTQxMw-2247489209-1-card-title">Particle 官方开源雪花灯：P2 模组 + 36 颗灯珠，说「sparkle」就闪，语音识别跑在板上</h3>
       <span class="badges"><span class="badge v-original">已读原文核实</span><span class="badge cred cred-B" title="较高：来源可靠，但有局限或利益相关">可信度 B</span></span>
       <p class="excerpt thesis" id="e-wx-MzI2MjIyMTQxMw-2247489209-1-card-sum"><span class="thesis-label">观点</span>「在 MCU 上跑一个小神经网络」已经是节日小玩具级别的技术了：这块板子是 TinyML（端侧机器学习）最直观的样板，从麦克风到推理到灯效一条链路都能看到。</p>
-      <span class="card-foot"><span>分析 · 4 条事实 · 3 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
+      <span class="card-foot"><span>分析 · 4 条事实（4 条交叉验证） · 3 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
     </a>
     </div>
   </div>
@@ -2637,7 +2673,7 @@
       <h3 id="e-wx-MzkzMDkzMDg2NQ-2247491514-1-card-title">「加州大学体系」《机器人学基础》中文课：一则深蓝学院的付费课程广告</h3>
       <span class="badges"><span class="badge v-original">已读原文核实</span><span class="badge cred cred-C" title="中：宣传、自荐或未经独立验证">可信度 C</span></span>
       <p class="excerpt thesis" id="e-wx-MzkzMDkzMDg2NQ-2247491514-1-card-sum"><span class="thesis-label">观点</span>这是一则广告，不是教程：「加州大学教学体系」是营销说法。对你真正有用的是它列出的知识点清单，这些都能用免费的经典教材学到。</p>
-      <span class="card-foot"><span>分析 · 2 条事实 · 3 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
+      <span class="card-foot"><span>分析 · 2 条事实（1 条交叉验证） · 3 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
     </a>
 
     <a class="card has-analysis" href="#e-wx-MzI2MjIyMTQxMw-2247489158-1" data-id="wx:MzI2MjIyMTQxMw:2247489158:1" data-cat="emb" data-k="Apollo Automation H-3 雪人 圣诞 挂饰 ESP32-C6 WS2812 RTTTL 蜂鸣器 ESPHome Home Assistant BLE 蓝牙代理 Improv 深度睡眠 AA 电池 开源硬件" aria-labelledby="e-wx-MzI2MjIyMTQxMw-2247489158-1-card-title" aria-describedby="e-wx-MzI2MjIyMTQxMw-2247489158-1-card-sum">
@@ -2646,7 +2682,7 @@
       <h3 id="e-wx-MzI2MjIyMTQxMw-2247489158-1-card-title">Apollo H-3 圣诞雪人挂饰：ESP32-C6 + 37 颗 WS2812，ESPHome 驱动的开源小板</h3>
       <span class="badges"><span class="badge v-original">已读原文核实</span><span class="badge cred cred-B" title="较高：来源可靠，但有局限或利益相关">可信度 B</span></span>
       <p class="excerpt thesis" id="e-wx-MzI2MjIyMTQxMw-2247489158-1-card-sum"><span class="thesis-label">观点</span>一块很好的「小而全」嵌入式样板：GPIO、LED 驱动、PWM 发声、低功耗和联网配网都在一张小板上，适合当入门项目的参考设计，但项目本身热度很低、更像节日周边。</p>
-      <span class="card-foot"><span>分析 · 3 条事实 · 2 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
+      <span class="card-foot"><span>分析 · 3 条事实（2 条交叉验证） · 2 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
     </a>
 
     <a class="card has-analysis" href="#e-wx-MzU4Mjg3MDAyMQ-2247638275-1" data-id="wx:MzU4Mjg3MDAyMQ:2247638275:1" data-cat="idea" data-k="少数派 Matrix 自荐 独立开发 江山时序 历史地图 疆域 DeanChen vibe coding Silverlinger 余阅 EPUB 阅读器 财悟 记账 钱物一体 AI 编程 分发" aria-labelledby="e-wx-MzU4Mjg3MDAyMQ-2247638275-1-card-title" aria-describedby="e-wx-MzU4Mjg3MDAyMQ-2247638275-1-card-sum">
@@ -2655,7 +2691,7 @@
       <h3 id="e-wx-MzU4Mjg3MDAyMQ-2247638275-1-card-title">少数派 Matrix 自荐 3 款 App：江山时序、余阅、财悟，都是「领域热爱 + AI 编程」做出来的</h3>
       <span class="badges"><span class="badge v-original">已读原文核实</span><span class="badge cred cred-C" title="中：宣传、自荐或未经独立验证">可信度 C</span></span>
       <p class="excerpt thesis" id="e-wx-MzU4Mjg3MDAyMQ-2247638275-1-card-sum"><span class="thesis-label">观点</span>AI 编程让「懂一个领域、但不是程序员」的人也能做出完整产品，难点随之从写代码转到<b>数据准确</b>和<b>分发</b>：江山时序最大的问题不是代码，而是史料核对和推广渠道。</p>
-      <span class="card-foot"><span>分析 · 3 条事实 · 3 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
+      <span class="card-foot"><span>分析 · 3 条事实（1 条交叉验证） · 3 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
     </a>
     </div>
   </div>
@@ -2721,7 +2757,7 @@
       <span class="card-kicker"><span class="numeral">伍</span><span>开发技术</span><span class="when">10-25</span></span>
       <h3 id="e-wx-MzI0NjM3NjI1NQ-2247623648-1-card-title">JetBrains 26 年来首次年度亏损：不是 IDE 没人用，是 AI 改了收费逻辑</h3>
       <p class="excerpt" id="e-wx-MzI0NjM3NjI1NQ-2247623648-1-card-sum">网传 JetBrains 全年营收约 <b>7.1 亿美元</b>创历史新高，但净亏损约 <b>1350 万美元</b>，是 2005 年有公开财务记录以来首次年度亏损；原文判断主因不是 IDE 需求萎缩，而是 <b>AI 研发投入半年涨近 10 倍</b>，加上 AI 从「卖许可证」变成「每次调用都有算力账单」。</p>
-      <span class="card-foot"><span>7 则要点 · 含讲解</span><span class="cue">阅读 <span aria-hidden="true">→</span></span></span>
+      <span class="card-foot"><span>8 则要点 · 含讲解</span><span class="cue">阅读 <span aria-hidden="true">→</span></span></span>
     </a>
 
     <a class="card" href="#e-wx-MjM5MDYxMDA0MQ-2751699618-1" data-id="wx:MjM5MDYxMDA0MQ:2751699618:1" data-cat="hw" data-k="REDMI Turbo 6 Max 小米 一加 Turbo 7 Pro iQOO Z12 Turbo 10000mAh 7英寸 2K 165Hz 天玑9500s SM8845 Pro 骁龙8 Gen5 2亿像素 主动散热 风扇 中端机 爆料 3000元" aria-labelledby="e-wx-MjM5MDYxMDA0MQ-2751699618-1-card-title" aria-describedby="e-wx-MjM5MDYxMDA0MQ-2751699618-1-card-sum">
@@ -2875,7 +2911,7 @@
   <div class="wrap foot-in">
     <b>关于本页</b>：由 <code>data/articles.json</code> 构建的调研与分析阅读面板，共 30 条收藏、1 篇专题，采集于 2026-10-05 至 2026-11-03。分析只写核实过的事实，查不到就写查不到；可信度是主观评级，细节以原文为准。不加载任何外部字体或 CDN，国内可直接打开，单文件 HTML 可离线阅读。
     <br>早期整页由 Mac 上的 didaMind / wxdigest 重写并推送。那条流水线已停用；现在只往数据文件追加条目，再构建这一页。
-    <br>归档时记下的后续事项：① 新版 VPN 第一阶段只开放 100 个账号，想用就赶在 11 月 15 日前申请，并在 12 月 30 日旧版停服前完成切换 ② 用 DeepSeek API 跑 Agent 的话，留意 11 月 1 日 Search/Fetch 开始计费 ③ 三岔湖红嘴鸥预计 11 月集体抵达，复习累了可以去湖边走走 ④ 中端新机均为爆料，等发布会再决定，别按爆料下单 ⑤ 「TRAE 训练营」与「Harness 团队的文字分享」仍只有标题，后者的后续长文 Super-agent 已收录并做了完整分析 ⑥ 本周专题和 9 条分析写于 11 月 3 日；分析里的星标数、价格等是当天查到的数字，会变
+    <br>归档时记下的后续事项：① 新版 VPN 第一阶段只开放 100 个账号，想用就赶在 11 月 15 日前申请，并在 12 月 30 日旧版停服前完成切换 ② 用 DeepSeek API 跑 Agent 的话，留意 11 月 1 日 Search/Fetch 开始计费 ③ 三岔湖红嘴鸥预计 11 月集体抵达，复习累了可以去湖边走走 ④ 中端新机均为爆料，等发布会再决定，别按爆料下单 ⑤ 「TRAE 训练营」与「Harness 团队的文字分享」仍只有标题，后者的后续长文 Super-agent 已收录并做了完整分析 ⑥ 本周专题和 9 条分析写于 11 月 3 日，当天又逐条复核了专题里的数字；星标数、价格等是当天查到的，会变
   </div>
 </footer>
 </div>

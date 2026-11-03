@@ -14,6 +14,12 @@ const CREDIBILITY = {
   C: '中：宣传、自荐或未经独立验证',
   D: '低：网传或存疑',
 };
+const CRED_CRITERIA = [
+  ['A', '一手材料（论文、官方数据、源码、标准文档、登记数据），关键数字能独立复核，作者没有明显的利益冲突'],
+  ['B', '一手或可靠来源，关键事实能在仓库、文档里对上；但作者利益相关、实验是自己设计的，或缺第三方复现'],
+  ['C', '营销稿、自荐、广告或平台自报数据；核心说法（好不好用、效果多大）无法独立验证'],
+  ['D', '网传、匿名、来源不明，或与已核实的事实冲突'],
+];
 const RELEVANCE = {
   robotics: '机器人工程 / 嵌入式',
   kaoyan: '考研 · 成大复试',
@@ -294,6 +300,21 @@ function validateAnalysis(analysis, where, err) {
       if (fact.url !== undefined && (typeof fact.url !== 'string' || !/^https?:\/\//.test(fact.url))) {
         err(`${where}.facts[${i}].url 必须是 http(s) 链接`);
       }
+      if (fact.corroborated !== undefined && typeof fact.corroborated !== 'boolean') {
+        err(`${where}.facts[${i}].corroborated 必须是 true 或 false`);
+      }
+      if (fact.also !== undefined) {
+        if (!Array.isArray(fact.also)) err(`${where}.facts[${i}].also 必须是数组`);
+        else {
+          if (fact.corroborated !== true) err(`${where}.facts[${i}] 有 also 时 corroborated 必须为 true`);
+          fact.also.forEach((ref, j) => {
+            if (!isObject(ref) || !isNonEmptyString(ref.source)) err(`${where}.facts[${i}].also[${j}] 需要 source`);
+            else if (ref.url !== undefined && (typeof ref.url !== 'string' || !/^https?:\/\//.test(ref.url))) {
+              err(`${where}.facts[${i}].also[${j}].url 必须是 http(s) 链接`);
+            }
+          });
+        }
+      }
     });
   }
   if (!isObject(analysis.critique)) {
@@ -393,7 +414,11 @@ function essayEyebrow(article, category) {
 
 function analysisMeta(analysis) {
   const bits = ['分析'];
-  if ((analysis.facts || []).length) bits.push(`${analysis.facts.length} 条事实`);
+  if ((analysis.facts || []).length) {
+    const checked = analysis.facts.filter((fact) => fact.corroborated === true).length;
+    const rated = analysis.facts.some((fact) => typeof fact.corroborated === 'boolean');
+    bits.push(rated ? `${analysis.facts.length} 条事实（${checked} 条交叉验证）` : `${analysis.facts.length} 条事实`);
+  }
   if ((analysis.critique.points_html || []).length) bits.push(`${analysis.critique.points_html.length} 则判断`);
   return bits.join(' · ');
 }
@@ -521,7 +546,16 @@ ${facts.map((fact) => {
       ? `<a href="${esc(fact.url)}" target="_blank" rel="noopener noreferrer">${esc(fact.source)}</a>`
       : esc(fact.source);
     const year = fact.year ? `，${esc(String(fact.year))}` : '';
-    return `              <li>${raw(fact.html)}<span class="src">${src}${year}</span></li>`;
+    const also = (fact.also || []).map((ref) => (ref.url
+      ? `<a href="${esc(ref.url)}" target="_blank" rel="noopener noreferrer">${esc(ref.source)}</a>`
+      : esc(ref.source))).join('；');
+    const xv = fact.corroborated === true
+      ? `<span class="xv xv-yes" title="除原文外，已用一手来源或独立来源复核">已交叉验证</span>`
+      : fact.corroborated === false
+        ? `<span class="xv xv-no" title="只有这一个来源，没有找到独立复核">单一来源</span>`
+        : '';
+    const alsoHtml = also ? `<span class="also">另见：${also}</span>` : '';
+    return `              <li>${raw(fact.html)}<span class="src">${src}${year}${xv}</span>${alsoHtml}</li>`;
   }).join('\n')}
             </ol>`);
   }
@@ -662,7 +696,7 @@ function renderPage(doc) {
   }
 
   const sub = `收藏只是入口，这里的重点是调研和分析：每周一篇专题把相关文章串成趋势，单篇卡片给出核心观点、核实过的事实、批判性判断、延伸背景，以及和你的专业、复试、兴趣有什么关系。共 ${articles.length} 条，其中 ${analysisCount} 条有完整分析，采集于 ${rangeProse(minDate, maxDate)}。`;
-  let howto = `先读最上面的专题。卡片上的「观点」是一句话结论，「可信度」是我对来源的评级（A 最高，D 最低），「已读原文核实」和「仅按标题」说明分析的依据。点卡片看完整分析，手机上左右滑动翻卡片。较早的收藏只有摘要和要点，没有分析层。最近一批（${esc(chineseDate(maxDate))}，${newest.length} 条）：${newestTitles}。`;
+  let howto = `先读最上面的专题。卡片上的「观点」是一句话结论，「可信度」是我对来源的评级，「已读原文核实」和「仅按标题」说明分析的依据；事实后面的「已交叉验证」表示除原文外还用一手来源（仓库、官方文档、数据手册、登记数据）或独立来源复核过，「单一来源」表示只有原文这一处。点卡片看完整分析，手机上左右滑动翻卡片。较早的收藏只有摘要和要点，没有分析层。最近一批（${esc(chineseDate(maxDate))}，${newest.length} 条）：${newestTitles}。`;
   if (failed.length) {
     howto += `另有 ${failed.length} 条正文抓取失败，只收录了标题：${failedTitles}。`;
   }
@@ -730,15 +764,20 @@ ${essays}
   </div>
   <div class="wrap">
     <p class="stats">
-      <span><b>${articles.length}</b> 条收藏</span><span class="sep" aria-hidden="true">/</span>
-      <span><b>${usedCategoryCount}</b> 大板块</span><span class="sep" aria-hidden="true">/</span>
-      <span><b>${rangeChip(minDate, maxDate)}</b> 采集</span><span class="sep" aria-hidden="true">/</span>
+      <span class="m-hide"><b>${articles.length}</b> 条收藏</span><span class="sep" aria-hidden="true">/</span>
+      <span class="m-hide"><b>${usedCategoryCount}</b> 大板块</span><span class="sep" aria-hidden="true">/</span>
+      <span class="m-hide"><b>${rangeChip(minDate, maxDate)}</b> 采集</span><span class="sep" aria-hidden="true">/</span>
       <span><b>${studies.length}</b> 篇专题</span><span class="sep" aria-hidden="true">/</span>
       <span><b>${analysisCount}</b> 条完整分析</span><span class="sep" aria-hidden="true">/</span>
-      <span><b>${detailCount}</b> 篇含深入讲解</span><span class="sep" aria-hidden="true">/</span>
+      <span class="m-hide"><b>${detailCount}</b> 篇含深入讲解</span><span class="sep" aria-hidden="true">/</span>
       <span class="hot" id="countdown"><b>--</b> 天距离 ${esc(site.exam.label)}</span>
     </p>
-    <details class="howto"><summary>怎么读这个面板</summary><p>${howto}</p></details>
+    <details class="howto"><summary>怎么读这个面板</summary><p>${howto}</p>
+      <p><b>可信度怎么评：</b></p>
+      <dl class="cred-key">
+${CRED_CRITERIA.map(([grade, text]) => `        <dt><span class="badge cred cred-${grade}">${grade}</span></dt><dd>${esc(text)}</dd>`).join('\n')}
+      </dl>
+    </details>
   </div>
 </header>
 
