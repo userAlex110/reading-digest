@@ -1,9 +1,9 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "site": {
     "title": "收藏即所学 · 微信采集学习站",
-    "kicker": "微信采集 × 滴答清单 · 个人学习中枢",
-    "headline_html": "收藏即所学<br>别让好文章 <em>睡</em> 在清单里",
+    "kicker": "微信采集 × 调研分析 · 个人学习面板",
+    "headline_html": "收藏即所学<br>不止读过，<br>要读<em>懂</em>",
     "seal": "上岸",
     "exam": {
       "date": "2026-12-19",
@@ -14,8 +14,9 @@
       "新版 VPN 第一阶段只开放 100 个账号，想用就赶在 11 月 15 日前申请，并在 12 月 30 日旧版停服前完成切换",
       "用 DeepSeek API 跑 Agent 的话，留意 11 月 1 日 Search/Fetch 开始计费",
       "三岔湖红嘴鸥预计 11 月集体抵达，复习累了可以去湖边走走",
-      "「TRAE 训练营」与「Harness 团队的文字分享」仍只有标题，留到微信客户端补读",
-      "中端新机均为爆料，等发布会再决定，别按爆料下单"
+      "中端新机均为爆料，等发布会再决定，别按爆料下单",
+      "「TRAE 训练营」与「Harness 团队的文字分享」仍只有标题，后者的后续长文 Super-agent 已收录并做了完整分析",
+      "本周专题和 9 条分析写于 11 月 3 日；分析里的星标数、价格等是当天查到的数字，会变"
     ]
   },
   "categories": [
@@ -808,7 +809,58 @@
         "和考研的关系：HachimoDock 的「PC ↔ USB 串口 ↔ MCU ↔ 屏」链路是一个现成的嵌入式复试素材，其他几个初试前收着即可"
       ],
       "keywords": "HachimoDock 哈基米机 ESP32-P4 桌宠 Claude Code Codex Sunshine Moonlight 串流 Tendedero 截图 WeTypeX 微信输入法 Fcitx5 Linux geo-sleuth 照片定位 Agent Skill gpu-unlock 张量核心 RTX",
-      "ticktick_task_id": "6ae628dae4b0f69bc58e0add"
+      "ticktick_task_id": "6ae628dae4b0f69bc58e0add",
+      "analysis": {
+        "verified": "original",
+        "verified_note": "逐个打开了 6 个 GitHub 仓库的说明；视频本身没看，项目没有实测",
+        "thesis_html": "同一张清单里，最值得你看的是 <b>HachimoDock</b>：它把「AI Agent 在干什么」做成一个 ESP32-P4 桌面小屏，是 Agent 时代的嵌入式新玩法；gpu-unlock 那类改底层的项目风险高、数字是作者自报。",
+        "facts": [
+          {
+            "html": "HachimoDock 用 ESP32-P4（RISC-V 双核 400MHz、32MB PSRAM）驱动 2.8 英寸 480×640 MIPI-DSI 屏，桌面端经 USB 串口下发 Agent 状态",
+            "source": "GitHub YizhengWw/HachimoDock",
+            "year": "2026-11",
+            "url": "https://github.com/YizhengWw/HachimoDock"
+          },
+          {
+            "html": "HachimoDock 许可是非商用的 source-available，不是 OSI 认可的开源许可",
+            "source": "GitHub YizhengWw/HachimoDock",
+            "year": "2026-11",
+            "url": "https://github.com/YizhengWw/HachimoDock"
+          },
+          {
+            "html": "gpu-unlock 作者称解除张量核心限速后 LLM prefill 快 25–55%，属于作者自报，没有第三方复测",
+            "source": "GitHub Zagitta/gpu-unlock",
+            "year": "2026-11",
+            "url": "https://github.com/Zagitta/gpu-unlock"
+          }
+        ],
+        "critique": {
+          "credibility": "B",
+          "credibility_note": "每一项都能对上 GitHub 仓库，信息是一手的；但星数和性能数字只说明关注度和作者说法，不代表成熟度。",
+          "points_html": [
+            "WeTypeX 从官方微信输入法包里提取核心运行，README 自己提示可能含官方遥测，许可上也存疑，不建议当日常主力",
+            "gpu-unlock 在驱动加载前改硬件行为，可能影响稳定性；出问题时厂商未必认保修",
+            "「非商用 source-available」意味着你可以学、可以自己做，但不能拿去卖"
+          ]
+        },
+        "context_html": [
+          "ESP32-P4 是乐鑫不带 Wi-Fi / 蓝牙的高性能 RISC-V 芯片，主打 MIPI 屏和摄像头接口，适合做带屏的人机交互设备",
+          "「Agent 桌面伴侣」是 Super-agent 那类常驻 Agent 的硬件延伸：Agent 在后台跑，人需要一个不占屏幕的状态指示"
+        ],
+        "relevance": [
+          {
+            "area": "robotics",
+            "html": "PC ↔ USB 串口 ↔ MCU ↔ 屏 是一条完整的上下位机通信链路，复试讲项目经历时是好例子"
+          },
+          {
+            "area": "agents",
+            "html": "Agent 常驻后台之后，「怎么让人知道它在干什么」成了新的产品问题，HachimoDock 用硬件给了一个答案"
+          }
+        ],
+        "next_html": [
+          "初试后如果做一个嵌入式小项目，可以参考 HachimoDock 的串口协议设计，把「微信采集 bot」的状态显示在一块小屏上"
+        ]
+      }
     },
     {
       "id": "url:21f283cd43976195ba7f",
@@ -830,7 +882,784 @@
         "<b>注意：</b>帖子说站内可直达 Z-Library 搜索下载，那是版权有争议的影子图书馆；正版可以走豆瓣、Goodreads 书评后再去图书馆或电子书店"
       ],
       "keywords": "Hacker News HN 书单 黑客书架 hackerbooks 向阳乔木 vista8 Hugging Face 数据集 Open Library 林迪 推荐 X 推文",
-      "ticktick_task_id": "6ae93b0ce4b0f69bc5bf2737"
+      "ticktick_task_id": "6ae93b0ce4b0f69bc5bf2737",
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了 X 帖子并打开了站点；站内数据量没有独立复核",
+        "thesis_html": "一份公开数据集 + AI 编程，一个人几天就能做出完整产品：HackerBooks 是「构建成本骤降」的现场例子，但它的核心资产是别人整理好的数据（hackerbooks.org），护城河很薄。",
+        "facts": [
+          {
+            "html": "站点收录 2007–2026 年 Hacker News 评论中提到的 1.5 万多本书，按提及的不同读者数排序",
+            "source": "hackerbooks.qiaomu.ai 站点",
+            "year": "2026-11",
+            "url": "https://hackerbooks.qiaomu.ai/"
+          },
+          {
+            "html": "页脚写明数据整理自 hackerbooks.org（roansh 的作品），书籍元数据与封面来自 Open Library",
+            "source": "hackerbooks.qiaomu.ai 站点",
+            "year": "2026-11",
+            "url": "https://hackerbooks.qiaomu.ai/"
+          },
+          {
+            "html": "作者帖子称起因是发现 Hugging Face 上有约 12G 的 HN 数据集，开发「消耗了大量 Token」",
+            "source": "X @vista8",
+            "year": "2026-11-03",
+            "url": "https://x.com/vista8/status/2117290723255226820"
+          }
+        ],
+        "critique": {
+          "credibility": "B",
+          "credibility_note": "站点可以直接打开验证；但书籍抽取和去重是 AI 做的，准确率没有公开。",
+          "points_html": [
+            "核心数据和创意来自 hackerbooks.org，这是一次「重做」而不是原创，差异化主要在中文界面和榜单设计",
+            "站内提供 Z-Library 搜索直达，Z-Library 是版权有争议的影子图书馆，这一点让项目有合规风险",
+            "HN 读者以英语圈程序员为主，榜单反映的是这个群体的口味，不是通用书单"
+          ]
+        },
+        "context_html": [
+          "「林迪效应」榜单的意思是：一本书被持续推荐的时间越长，未来继续被推荐的可能越大",
+          "Hugging Face 上有大量公开数据集，「找一份数据 + 做一个好用的界面」是 AI 编程时代最快的独立开发路径之一"
+        ],
+        "relevance": [
+          {
+            "area": "agents",
+            "html": "和本周专题「产品能力更重要吗」直接相关：做得快不等于守得住，数据是别人的，界面谁都能做"
+          },
+          {
+            "area": "aicoding",
+            "html": "可以学他的拆解方式：先确定数据源，再设计 8 个榜单视图，最后让 AI 批量实现"
+          }
+        ],
+        "next_html": [
+          "初试后可以从「历史总榜」挑一两本和系统设计相关的书，走图书馆或正版渠道借阅"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzY4NzM3MTkxOQ:2247483844:1",
+      "title": "DeepSeek Super-agent：常驻 Router 加并行 Worker，把 Agent 从「一个窗口」变成「一个后台系统」",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzY4NzM3MTkxOQ==&mid=2247483844&idx=1&sn=1e93a1f1dc5ae0996f9c45794b896495&chksm=f20b85d42b88f5828d3f1d0a6e0b2cc0dcdb04345b94d46440fb2728a1a8b5a4cffffae1614f&mpshare=1&scene=1&srcid=1031rDgAvODtBdueblJVTi8I&sharer_shareinfo=5c72a8097e62357bb0b7aeb5c152fc7d&sharer_shareinfo_first=5c72a8097e62357bb0b7aeb5c152fc7d#rd",
+      "category": "ai",
+      "source": {
+        "account": "DeepSeek Harness 团队",
+        "published": "2026-10-31"
+      },
+      "added": "2026-11-01",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "DeepSeek Harness 团队公开了一套多任务 Agent 架构草图并开源原型：常驻的 <b>Router</b> 统一对人说话、分派任务，多个上下文隔离的 <b>Worker</b> 并行干活，由群聊、PR、CI 等<b>环境事件</b>驱动，外加一个 <b>Watchdog</b> 巡检进度。",
+      "points_html": [
+        "<b>问题定义：</b>单任务上限取决于模型，多任务上限取决于人的注意力，一个人通常只能同时盯 3 到 5 个活跃 Session",
+        "<b>双层结构：</b>Router 常驻、不干具体活，可以用轻模型；Worker 用最强模型，上下文相互隔离",
+        "<b>两级过滤：</b>程序规则先筛掉无关事件（Fast Path），剩下的再交给 LLM 判断（Slow Path）",
+        "<b>订阅直通：</b>同一个 PR、话题或邮件串算一个 Thread，后续事件直接发给已订阅的 Worker，不再经过 Router",
+        "<b>上下文：</b>近期信息内联（Inline），长内容溢出到窗口外（Spill），按 ID 引用图链式召回",
+        "<b>投机执行与异步 ReAct：</b>讨论还在进行时就后台复现、修复，失败就保持沉默；<code>run()</code> 拆成 <code>start()/stop()</code>，前台随时可插话",
+        "<b>存算分离：</b>Loop 在云端无状态运行，状态进数据库，执行环境以 daemon 形式留在用户自己的机器上"
+      ],
+      "notes_html": [
+        "同一公众号 10 月 17 日那篇「文字分享」当时抓取失败，这篇是它之后的第一篇长文"
+      ],
+      "keywords": "DeepSeek Harness Super-agent Router Worker 多智能体 编排 事件驱动 Trigger Thread 订阅 发布订阅 Watchdog 看门狗 投机执行 异步 ReAct 存算分离 dsh-superagent-prototype p95 token",
+      "wechat": {
+        "biz": "MzY4NzM3MTkxOQ==",
+        "mid": "2247483844",
+        "idx": "1",
+        "sn": "1e93a1f1dc5ae0996f9c45794b896495"
+      },
+      "ticktick_task_id": "6ae7026ee4b0efba696718ae",
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了公众号全文，并对照了 GitHub 仓库 README 与 MarkTechPost 的报道",
+        "thesis_html": "把 Agent 从「人盯着的一个聊天窗口」改成「常驻后台、由事件驱动的调度系统」，是 2026 年智能体的主线方向；但这篇是<b>研究原型加合成实验</b>，证明了架构思路可行，没有证明在真实工作里更好用。",
+        "facts": [
+          {
+            "html": "实验负载约 300 条消息，其中约 20 条是工作请求，编码动作用「耗时占位工具」代替，每种方案跑 5 次",
+            "source": "DeepSeek Harness 团队原文",
+            "year": "2026-10-31",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzY4NzM3MTkxOQ==&mid=2247483844&idx=1&sn=1e93a1f1dc5ae0996f9c45794b896495"
+          },
+          {
+            "html": "Super-agent 完成时间 p50 12.4 分钟、p95 15.7 分钟；对照组「单 Session + Subagent（中性提示）」p95 为 29.5 分钟",
+            "source": "DeepSeek Harness 团队原文",
+            "year": "2026-10-31",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzY4NzM3MTkxOQ==&mid=2247483844&idx=1&sn=1e93a1f1dc5ae0996f9c45794b896495"
+          },
+          {
+            "html": "去掉 Thread 订阅直通后，Router 决策数约多 30%，token 从 2323 万涨到 3177 万（约 +37%）",
+            "source": "DeepSeek Harness 团队原文",
+            "year": "2026-10-31",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzY4NzM3MTkxOQ==&mid=2247483844&idx=1&sn=1e93a1f1dc5ae0996f9c45794b896495"
+          },
+          {
+            "html": "Trigger 频率从每分钟约 1 条升到 40 条时，Router 平均每批处理 1.0→2.8 条，单个决策分摊耗时 6.4 秒→1.6 秒",
+            "source": "DeepSeek Harness 团队原文",
+            "year": "2026-10-31",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzY4NzM3MTkxOQ==&mid=2247483844&idx=1&sn=1e93a1f1dc5ae0996f9c45794b896495"
+          },
+          {
+            "html": "开源仓库 dsh-superagent-prototype 采用 MIT 许可，README 写明不是官方产品、不是生产级；我查看时约 1.36 万星",
+            "source": "GitHub deepseek-ai",
+            "year": "2026-11",
+            "url": "https://github.com/deepseek-ai/dsh-superagent-prototype"
+          }
+        ],
+        "critique": {
+          "credibility": "B",
+          "credibility_note": "一手技术文章，数字具体、可复核，作者也主动列了局限；但它出自厂商自家团队，实验是自己设计的合成负载，没有第三方复现。",
+          "points_html": [
+            "<b>合成负载 ≠ 真实工作：</b>编码动作被替换成耗时占位工具，只测了调度和完成时间，没测代码质量和返工率。MarkTechPost 的报道也指出了这一点",
+            "<b>对照组可能偏弱：</b>对比的是「单 Session + Subagent」，没有和 Anthropic 那类 Lead + Subagent 的成熟多智能体方案正面比",
+            "<b>token 更贵：</b>多会话意味着读缓存 token 更多。「更快」是拿钱换的，文中没有给出每完成一个任务的总成本",
+            "<b>安全没解决：</b>常驻、主动、能在你机器上执行命令的 Agent，提示词注入和凭据泄露的风险都会放大，作者自己也把它列为开放问题",
+            "<b>原型覆盖面窄：</b>开源版只接单个 GitHub 仓库加可选的飞书，文中一部分设计（例如异步 ReAct）已实现但默认关闭"
+          ]
+        },
+        "context_html": [
+          "Router / Worker 本质是操作系统里的<b>调度器</b>和<b>进程</b>：Router 像内核的调度循环，Worker 像隔离地址空间的进程，Thread 订阅像 ROS 的 topic 或消息队列的订阅",
+          "Fast Path / Slow Path 是网络设备和数据库里的老套路：便宜的规则处理 90% 的常见情况，昂贵的路径只处理剩下的",
+          "同一时期的对照方案：Anthropic 的多智能体研究系统用 Lead 拆任务、3–5 个 Subagent 并行，内部评测比单 Opus 4 高 90.2%，但约耗 15 倍 token；Cognition 2025 年发文主张「别做多智能体」，强调单线程加上下文压缩更稳"
+        ],
+        "relevance": [
+          {
+            "area": "kaoyan",
+            "html": "复试被问到操作系统或嵌入式时，这是一个能讲清楚的现代案例：发布订阅、批处理摊销、看门狗、存算分离，都能对应到课本概念"
+          },
+          {
+            "area": "robotics",
+            "html": "Watchdog 的思路和 STM32 的独立看门狗（IWDG）一样：外部回路定期检查「有没有实质进展」，不靠被监控者自己汇报"
+          },
+          {
+            "area": "agents",
+            "html": "它把「交互界面」和「Agent 内核」解耦，文中原话是向用户暴露怎样的交互「成为一个独立的产品问题」，这正是产品能力的用武之地"
+          }
+        ],
+        "next_html": [
+          "初试前不动手。复试准备阶段花 20 分钟，把「Router / Worker / Watchdog」画成一张图，配上 ROS 和 IWDG 的对应关系",
+          "初试后可以做一个小实验：给自己的「微信采集」做一个事件驱动的小 bot，规则过滤 + LLM 判断 + 每周归纳，完整走一遍三个概念"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzkxMTY4NTAyNQ:2247521374:1",
+      "title": "TRAE 一周更新：「TRAE 宝」上线，跨项目记忆 + 子任务并行 + 本地/云电脑接续",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzkxMTY4NTAyNQ==&mid=2247521374&idx=1&sn=295ca57af5c4fa872d5cd259ca44daff&chksm=c0e6a65b64df103b50ff946f3bb1faacf5e42b20c056bc6ac810209fa11170c14e9ea400145b&mpshare=1&scene=1&srcid=1101NvfG5mk7Wqn9ZvsqvPCM&sharer_shareinfo=1eb34ee319357893df163eb7161b5257&sharer_shareinfo_first=1eb34ee319357893df163eb7161b5257#rd",
+      "category": "ai",
+      "source": {
+        "account": "TRAE.ai",
+        "published": "2026-11-01"
+      },
+      "added": "2026-11-01",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "TRAE 官方周更：推出开发者个人助理 <b>TRAE 宝</b>，分全局助理（跨项目记忆）和项目助理（拆任务、并行跑子任务）两种；另有交互式代码评审报告、小程序开发插件，以及本地和云电脑之间接续任务。",
+      "points_html": [
+        "<b>TRAE 宝 · 全局助理：</b>跨项目保留记忆，像一个一直在的助手，而不是每个项目重新开一个窗口",
+        "<b>TRAE 宝 · 项目助理：</b>把需求拆成子任务并行执行",
+        "<b>插件：</b>交互式代码评审报告；面向微信、抖音、支付宝的小程序开发插件",
+        "<b>本地 ↔ 云电脑：</b>任务可以在本地和云端电脑之间接续",
+        "<b>周边：</b>TRAE 宝桌宠形象"
+      ],
+      "keywords": "TRAE 宝 个人助理 跨项目记忆 子任务 并行 代码评审 小程序 微信 抖音 支付宝 云电脑 字节 周更",
+      "wechat": {
+        "biz": "MzkxMTY4NTAyNQ==",
+        "mid": "2247521374",
+        "idx": "1",
+        "sn": "295ca57af5c4fa872d5cd259ca44daff"
+      },
+      "ticktick_task_id": "6ae70440e4b0f69bc597f62f",
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了官方周更原文；功能效果没有实测",
+        "thesis_html": "国内 AI 编程工具也在从「一个对话窗口」转向「常驻助理 + 并行子任务」，和 DeepSeek Super-agent 是同一方向的产品化版本；但这是一则官方公告，只有功能列表，没有效果数据。",
+        "facts": [
+          {
+            "html": "TRAE 宝分「全局助理」（跨项目记忆）与「项目助理」（拆分并行子任务）两种形态",
+            "source": "TRAE.ai 公众号《一周更新》",
+            "year": "2026-11-01"
+          },
+          {
+            "html": "同期上线交互式代码评审报告，以及覆盖微信、抖音、支付宝的小程序开发插件",
+            "source": "TRAE.ai 公众号《一周更新》",
+            "year": "2026-11-01"
+          },
+          {
+            "html": "支持任务在本地电脑和云电脑之间接续",
+            "source": "TRAE.ai 公众号《一周更新》",
+            "year": "2026-11-01"
+          }
+        ],
+        "critique": {
+          "credibility": "C",
+          "credibility_note": "官方营销口径：功能是真的（可以自己打开验证），但「好不好用」原文一个数字都没给。",
+          "points_html": [
+            "没有任何成功率、耗时或成本数据，无法判断「并行子任务」是真提速还是多烧 token",
+            "「跨项目记忆」意味着代码和对话会在更多地方留存，原文没提隐私边界和数据保留期限",
+            "小程序插件把「从想法到上线」的门槛又降了一截，但门槛低对所有人都成立，做出来容易、做出差异难"
+          ]
+        },
+        "context_html": [
+          "「常驻、带记忆、能并行」的个人助理，是 2026 年下半年大厂集中上线的产品形态：ChatGPT Work、Meta Muse、Claude Duet 都在这个方向（见本周专题）",
+          "本地 ↔ 云电脑接续，对应的就是 Super-agent 里的「存算分离」：状态放云端，执行环境可以换"
+        ],
+        "relevance": [
+          {
+            "area": "aicoding",
+            "html": "你常用的编程工具正在变成「派活然后去干别的」的形态，学会写清楚任务说明和验收标准，比学某个按钮更保值"
+          },
+          {
+            "area": "agents",
+            "html": "和 Super-agent 对照读：一个是架构论文，一个是商业产品，能看出研究想法落地时砍掉了什么"
+          }
+        ],
+        "next_html": [
+          "初试前不追周更。初试后如果要做小程序或个人项目，再试一次项目助理的并行子任务，记录实际耗时和 token"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzU4Mjg3MDAyMQ:2247638275:1",
+      "title": "少数派 Matrix 自荐 3 款 App：江山时序、余阅、财悟，都是「领域热爱 + AI 编程」做出来的",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzU4Mjg3MDAyMQ==&mid=2247638275&idx=1&sn=03014a285c9aea55b372190cd4554eae&chksm=fc31f896882251afa2ec0ad7159b3fc4d80697d72433f7f7410c3c8d93cef823e2980c0031e9&mpshare=1&scene=1&srcid=1029ELTheV2CrGu51z3z67QZ&sharer_shareinfo=3349bd4714db48a6894e280b227a8b08&sharer_shareinfo_first=3349bd4714db48a6894e280b227a8b08#rd",
+      "category": "idea",
+      "source": {
+        "account": "少数派",
+        "published": "2026-10-29"
+      },
+      "added": "2026-10-29",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "少数派 Matrix 栏目里三位开发者自荐作品：历史疆域地图 <b>江山时序</b>、macOS EPUB 阅读器 <b>Silverlinger 余阅</b>、iOS 记账 App <b>财悟</b>。三款都大量借助 AI 编程完成，作者本身就是利益相关方。",
+      "points_html": [
+        "<b>江山时序：</b>DeanChen 用 vibe coding 做的中国历代疆域时间轴地图，网页版可直接打开；开发中 2.5 周提交 200 多次，附带一个 AI Skill；在小红书、知乎推广受阻，后来被 X 上的转发带火",
+        "<b>Silverlinger 余阅：</b>文档优先的 macOS EPUB 阅读器，尽量保留书内特殊字体与排版，文中版本 v1.3.3",
+        "<b>财悟：</b>数据分析师用 AI 编程做的 iOS 记账 App，主打「钱物一体」，把买来的东西也当资产记录"
+      ],
+      "keywords": "少数派 Matrix 自荐 独立开发 江山时序 历史地图 疆域 DeanChen vibe coding Silverlinger 余阅 EPUB 阅读器 财悟 记账 钱物一体 AI 编程 分发",
+      "wechat": {
+        "biz": "MzU4Mjg3MDAyMQ==",
+        "mid": "2247638275",
+        "idx": "1",
+        "sn": "03014a285c9aea55b372190cd4554eae"
+      },
+      "ticktick_task_id": "6ae32026e4b031ea82a9a4f5",
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了原文；另查了江山时序的 GitHub 仓库，其余两款未实测",
+        "thesis_html": "AI 编程让「懂一个领域、但不是程序员」的人也能做出完整产品，难点随之从写代码转到<b>数据准确</b>和<b>分发</b>：江山时序最大的问题不是代码，而是史料核对和推广渠道。",
+        "facts": [
+          {
+            "html": "江山时序网页版地址为 deanchen.me/jiangshan-map，源码仓库 DeanChensj/jiangshan-map，GPL-3.0 许可；我查看时约 3.5k 星，仓库创建于 2026 年 7 月",
+            "source": "GitHub",
+            "year": "2026-11",
+            "url": "https://github.com/DeanChensj/jiangshan-map"
+          },
+          {
+            "html": "作者自述开发期约 2.5 周提交 200 多次；自己发小红书被限流，X 上被转发后几天内多了一千多个 star，文中写到涨到 1400",
+            "source": "少数派 Matrix 原文（作者自述）",
+            "year": "2026-10-29"
+          },
+          {
+            "html": "Silverlinger 余阅文中版本为 v1.3.3，仅 macOS",
+            "source": "少数派 Matrix 原文（作者自述）",
+            "year": "2026-10-29"
+          }
+        ],
+        "critique": {
+          "credibility": "C",
+          "credibility_note": "自荐栏目，作者写自己的产品，好处说得多，缺点基本不提；可验证的只有江山时序的开源仓库。",
+          "points_html": [
+            "历史地图对准确性要求极高：作者自己提到，辽国都城上京一度被画在辽国疆域之外，只能对照《资治通鉴》和正史逐条纠错。个人 + AI 整理的疆域数据，引用前要和权威地图集对照",
+            "记账、阅读器都是红海品类，「钱物一体」是个好切入点，但能不能留住用户原文没有数据",
+            "GitHub 星数代表关注度，不代表使用量或收入"
+          ]
+        },
+        "context_html": [
+          "少数派 Matrix 是用户投稿社区，「自荐」栏目由开发者自己写介绍，编辑会做筛选，但性质接近软文",
+          "国内平台对外链、引流管得严，独立开发者常常要靠 X、V2EX、少数派这类社区冷启动，江山时序是一个典型样本"
+        ],
+        "relevance": [
+          {
+            "area": "agents",
+            "html": "「产品能力更重要」的正面例子：选题（自己热爱的历史）+ 数据清洗 + 分发策略，代码反而是最容易的部分"
+          },
+          {
+            "area": "aicoding",
+            "html": "2.5 周 200 多次提交说明 vibe coding 的节奏是「小步快跑、频繁提交」，这一点值得你以后做项目时学"
+          }
+        ],
+        "next_html": [
+          "不需要现在下载。以后做个人项目时，先写一句「谁的什么问题」和「怎么让第一批人看到」，再写代码"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzkzMDkzMDg2NQ:2247491514:1",
+      "title": "「加州大学体系」《机器人学基础》中文课：一则深蓝学院的付费课程广告",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzkzMDkzMDg2NQ==&mid=2247491514&idx=1&sn=64772830e7173538e91aa4d5c86355c4&chksm=c38a4ba20d14affce00d83679f48456b328757d1cd3f4106eb638ae9521c4c723de6d412e2a4&mpshare=1&scene=1&srcid=1029L41gRfea3FKkdb2jYc2B&sharer_shareinfo=20b59b6744a9c849180651623e044563&sharer_shareinfo_first=20b59b6744a9c849180651623e044563#rd",
+      "category": "emb",
+      "source": {
+        "account": "鱼香ROS",
+        "published": "2026-10-29"
+      },
+      "added": "2026-10-29",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "鱼香ROS 公众号转发深蓝学院的付费课程推广：主讲人为 UC Riverside 的滕瀚哲博士，内容覆盖刚体旋转的多种表示、机械臂经典理论、运动规划，以及 Turtlebot 迷宫导航大作业，文末有「限时优惠 100 元」。",
+      "points_html": [
+        "<b>课程内容（按广告描述）：</b>旋转的六种表示方法、机械臂正逆运动学与动力学等经典内容、运动规划",
+        "<b>实践：</b>Turtlebot 迷宫导航项目",
+        "<b>性质：</b>付费课程推广，正文主要是课程大纲和优惠信息，没有可以直接学的知识内容"
+      ],
+      "keywords": "机器人学基础 深蓝学院 鱼香ROS 滕瀚哲 UC Riverside 加州大学 旋转表示 四元数 欧拉角 机械臂 运动学 运动规划 Turtlebot 付费课程 广告",
+      "wechat": {
+        "biz": "MzkzMDkzMDg2NQ==",
+        "mid": "2247491514",
+        "idx": "1",
+        "sn": "64772830e7173538e91aa4d5c86355c4"
+      },
+      "ticktick_task_id": "6ae320f4e4b0f69bc560f05e",
+      "analysis": {
+        "verified": "original",
+        "verified_note": "原文只有约 600 字，几乎全是课程宣传；主讲人履历与课程质量都没有核实",
+        "thesis_html": "这是一则广告，不是教程：「加州大学教学体系」是营销说法。对你真正有用的是它列出的知识点清单，这些都能用免费的经典教材学到。",
+        "facts": [
+          {
+            "html": "课程由深蓝学院开设，宣传称主讲人为 UC Riverside 的滕瀚哲博士，文末写有「限时优惠 100 元」",
+            "source": "鱼香ROS 公众号原文",
+            "year": "2026-10-29"
+          },
+          {
+            "html": "Lynch 与 Park 合著的《Modern Robotics》（剑桥大学出版社，2017）作者官网提供免费 PDF 和配套视频，覆盖旋转表示、正逆运动学、动力学和运动规划",
+            "source": "Northwestern University 作者主页",
+            "year": "2017",
+            "url": "https://hades.mech.northwestern.edu/index.php/Modern_Robotics"
+          }
+        ],
+        "critique": {
+          "credibility": "C",
+          "credibility_note": "纯商业推广，标题借「加州大学」背书；主讲人履历和课程口碑我都没有核实。",
+          "points_html": [
+            "「美国加州大学教学体系」不等于 UC 官方课程，原文没有说明和 UC Riverside 有任何合作",
+            "列出的知识点都是本科机器人学的标准内容，没有看出它比免费教材多了什么",
+            "价格、课时、证书等关键信息没写清，只有「限时优惠」制造紧迫感"
+          ]
+        },
+        "context_html": [
+          "「旋转的六种表示」一般指旋转矩阵、欧拉角、RPY 角、轴角（含旋转向量 / 指数坐标）、四元数等；四元数没有万向锁，是机器人和飞控里最常用的姿态表示",
+          "鱼香ROS 是国内 ROS 入门社区，常转发合作课程，读它的推送要区分「教程」和「广告」"
+        ],
+        "relevance": [
+          {
+            "area": "kaoyan",
+            "html": "机器人工程复试常问「四元数相比欧拉角的好处」「正逆运动学区别」，这份大纲可以当成复试自查清单用"
+          },
+          {
+            "area": "robotics",
+            "html": "Turtlebot 迷宫导航对应你的机器人导航课，SLAM + 路径规划是同一套东西"
+          }
+        ],
+        "next_html": [
+          "不建议现在买课。复试阶段用《Modern Robotics》第 3、4 章（刚体运动、正运动学）自查，各写一页提纲",
+          "把「欧拉角万向锁」用一句话讲清楚，作为复试口答素材"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzI2MjIyMTQxMw:2247489158:1",
+      "title": "Apollo H-3 圣诞雪人挂饰：ESP32-C6 + 37 颗 WS2812，ESPHome 驱动的开源小板",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzI2MjIyMTQxMw==&mid=2247489158&idx=1&sn=0641ad2a74f148b539203c9dce70cd90&chksm=eb7a9c994d753283901c1bfbd8beb460fc1e7801c45650ec6789280afae0120f143a3dd22ef9&mpshare=1&scene=1&srcid=1029QkWDXZQx5iCE6zHl0Dwg&sharer_shareinfo=452d8c579a6e462d7b77dbd81c06db83&sharer_shareinfo_first=452d8c579a6e462d7b77dbd81c06db83#rd",
+      "category": "emb",
+      "source": {
+        "account": "嵌入式杂谈",
+        "published": "2026-10-29"
+      },
+      "added": "2026-10-29",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "Apollo Automation 开源的雪人造型 PCB 挂饰：<b>ESP32-C6</b> 驱动 37 颗 WS2812 灯珠分五个区域，蜂鸣器播放 RTTTL 铃声，三个按键，固件基于 <b>ESPHome</b>，可接入 Home Assistant，也能当蓝牙代理用。",
+      "points_html": [
+        "<b>主控与外设：</b>ESP32-C6；WS2812 数据线接 GPIO3，蜂鸣器 GPIO6（RTTTL 铃声），按键 GPIO4/5/7",
+        "<b>灯区：</b>37 颗灯分五区：身体 24、帽子 5、嘴 5、眼睛 2、鼻子 1",
+        "<b>固件：</b>ESPHome YAML，分 Basic 与 Smart 两版；支持 Improv 配网、Home Assistant、BLE 代理与追踪",
+        "<b>供电：</b>USB-C 或 2 节 AA 碱性电池，支持深度睡眠",
+        "<b>公益：</b>利润捐给 CASA of Lexington 与 Open Home Foundation"
+      ],
+      "keywords": "Apollo Automation H-3 雪人 圣诞 挂饰 ESP32-C6 WS2812 RTTTL 蜂鸣器 ESPHome Home Assistant BLE 蓝牙代理 Improv 深度睡眠 AA 电池 开源硬件",
+      "wechat": {
+        "biz": "MzI2MjIyMTQxMw==",
+        "mid": "2247489158",
+        "idx": "1",
+        "sn": "0641ad2a74f148b539203c9dce70cd90"
+      },
+      "ticktick_task_id": "6ae32150e4b0f69bc560f5fb",
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了原文并看了 GitHub 仓库说明；没有实物",
+        "thesis_html": "一块很好的「小而全」嵌入式样板：GPIO、LED 驱动、PWM 发声、低功耗和联网配网都在一张小板上，适合当入门项目的参考设计，但项目本身热度很低、更像节日周边。",
+        "facts": [
+          {
+            "html": "37 颗 WS2812 分五区（身体 24、帽子 5、嘴 5、眼睛 2、鼻子 1），数据线 GPIO3；蜂鸣器 GPIO6；按键 GPIO4/5/7",
+            "source": "嵌入式杂谈原文",
+            "year": "2026-10-29"
+          },
+          {
+            "html": "仓库 ApolloAutomation/H-3，我查看时只有个位数星标",
+            "source": "GitHub",
+            "year": "2026-11",
+            "url": "https://github.com/ApolloAutomation/H-3"
+          },
+          {
+            "html": "原文提示：开启 BLE 代理会明显增加功耗，用 AA 电池时不适合常开",
+            "source": "嵌入式杂谈原文",
+            "year": "2026-10-29"
+          }
+        ],
+        "critique": {
+          "credibility": "B",
+          "credibility_note": "硬件参数具体，能在仓库里对上；公众号是转介绍，没有实测数据。",
+          "points_html": [
+            "37 颗 WS2812 全亮时每颗最大约 60mA，2 节 AA 根本带不动全亮，实际只能低亮度或短时间点亮，原文没算这笔账",
+            "星标很少，社区和后续维护都难说；当参考设计可以，当长期项目依赖不行"
+          ]
+        },
+        "context_html": [
+          "ESP32-C6 是乐鑫的 RISC-V 芯片，除 Wi-Fi 6 和蓝牙 LE 外还支持 802.15.4（Thread / Zigbee），这是它常被用在智能家居里的原因",
+          "RTTTL 是诺基亚时代的单音铃声文本格式，一行字符串描述音符和节拍，用 PWM 驱动无源蜂鸣器就能播",
+          "ESPHome 用 YAML 描述硬件和逻辑、自动生成固件，适合不想写 C 的场景；Home Assistant 的「蓝牙代理」让 ESP32 替 HA 收附近的 BLE 设备广播"
+        ],
+        "relevance": [
+          {
+            "area": "robotics",
+            "html": "和 STM32 课程对照：GPIO 输入、PWM 发声、单线时序驱动 LED、深度睡眠唤醒，正好是一门嵌入式课的作业清单"
+          }
+        ],
+        "next_html": [
+          "收藏即可。初试后若想做一个 ESP32 小项目，可以照着它的引脚分配和 ESPHome YAML 起步"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzI2MjIyMTQxMw:2247489209:1",
+      "title": "Particle 官方开源雪花灯：P2 模组 + 36 颗灯珠，说「sparkle」就闪，语音识别跑在板上",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzI2MjIyMTQxMw==&mid=2247489209&idx=1&sn=e17a2d52eedc9170fe1bb0aaae673af2&chksm=ebcff966e46cbcbdb77104963ea812340b17f69b0e98b82361a87cd0160b2ede6cb313d81fd1&mpshare=1&scene=1&srcid=1031jjAaGnw1hHT4hrUWepfa&sharer_shareinfo=03b04f31ba32f3fe1bf72eea2cd15228&sharer_shareinfo_first=03b04f31ba32f3fe1bf72eea2cd15228#rd",
+      "category": "emb",
+      "source": {
+        "account": "嵌入式杂谈",
+        "published": "2026-10-31"
+      },
+      "added": "2026-10-31",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "Particle 开源的雪花造型 PCB：<b>P2 模组</b>（Realtek RTL8721，Cortex-M33，双频 Wi-Fi + BLE）驱动 36 颗反贴 RGB 灯珠，板载 PDM 麦克风和 D 类功放，用 <b>Edge Impulse + TFLite Micro</b> 在本地识别关键词「sparkle」。",
+      "points_html": [
+        "<b>主控：</b>Particle P2（Realtek RTL8721，Arm Cortex-M33，双频 Wi-Fi + BLE）",
+        "<b>灯：</b>36 颗 WS2812B / SK6812E（3535 反贴），74AHC1G125 把 3.3V 数据电平抬到 5V",
+        "<b>声音：</b>MP34DT05 PDM 数字麦克风；TPA6211A1 3.1W D 类功放",
+        "<b>其他：</b>TTP223 / PT2041A 触摸、XC6228 LDO、APX803L 复位芯片、NTC 测温",
+        "<b>端侧 AI：</b>Edge Impulse 训练、TFLite Micro 部署的关键词识别模型",
+        "<b>许可：</b>Apache-2.0，仓库 particle-iot/snowflake"
+      ],
+      "keywords": "Particle 雪花灯 P2 RTL8721 Cortex-M33 WS2812B SK6812 电平转换 74AHC1G125 PDM 麦克风 MP34DT05 D类功放 TPA6211 Edge Impulse TFLite Micro 关键词识别 端侧 AI TinyML 开源硬件",
+      "wechat": {
+        "biz": "MzI2MjIyMTQxMw==",
+        "mid": "2247489209",
+        "idx": "1",
+        "sn": "e17a2d52eedc9170fe1bb0aaae673af2"
+      },
+      "ticktick_task_id": "6ae56fc4e4b0e9cb68f1a550",
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了原文与仓库说明；未实测识别准确率",
+        "thesis_html": "「在 MCU 上跑一个小神经网络」已经是节日小玩具级别的技术了：这块板子是 TinyML（端侧机器学习）最直观的样板，从麦克风到推理到灯效一条链路都能看到。",
+        "facts": [
+          {
+            "html": "主控为 Particle P2 模组（Realtek RTL8721，Cortex-M33，双频 Wi-Fi + BLE），36 颗 3535 反贴 RGB 灯珠",
+            "source": "嵌入式杂谈原文",
+            "year": "2026-10-31"
+          },
+          {
+            "html": "用 74AHC1G125 单路缓冲器把 3.3V 数据线转成 5V 电平驱动灯珠",
+            "source": "嵌入式杂谈原文",
+            "year": "2026-10-31"
+          },
+          {
+            "html": "关键词识别模型由 Edge Impulse 训练、TFLite Micro 在板上推理，不依赖云端",
+            "source": "嵌入式杂谈原文",
+            "year": "2026-10-31"
+          },
+          {
+            "html": "仓库 particle-iot/snowflake 采用 Apache-2.0，我查看时约十几星",
+            "source": "GitHub",
+            "year": "2026-11",
+            "url": "https://github.com/particle-iot/snowflake"
+          }
+        ],
+        "critique": {
+          "credibility": "B",
+          "credibility_note": "器件清单具体，和厂商仓库一致；但这是厂商为推广 P2 模组做的展示品，原文的缺点总结也比较轻描淡写。",
+          "points_html": [
+            "限量版、P2 模组国内不好买，想复刻要改用 ESP32-S3 之类并重新训练模型",
+            "只识别一个关键词，噪声环境下的误触发率原文没给",
+            "触摸区小、喇叭音质一般（原文自己也提到）"
+          ]
+        },
+        "context_html": [
+          "为什么要电平转换：WS2812B 数据手册要求高电平至少 0.7×VDD，5V 供电时就是 3.5V，MCU 输出的 3.3V 处在临界边缘，有时能用有时乱码，加一颗缓冲器最稳",
+          "PDM 麦克风输出的是 1-bit 高速比特流，需要 MCU 做抽取滤波（PDM→PCM）才能得到音频样本，这是数字信号处理课里的「过采样 + 抽取」",
+          "APX803L 是电压监控复位芯片：电压掉到阈值以下就把 MCU 按在复位状态，避免欠压时程序跑飞，和看门狗是一对互补的可靠性手段"
+        ],
+        "relevance": [
+          {
+            "area": "robotics",
+            "html": "电平匹配、PDM 采样、复位电路，都是机器人工程硬件课的基础知识点，这块板子把它们放在一张原理图里"
+          },
+          {
+            "area": "kaoyan",
+            "html": "复试如果问到「端侧 AI」或「嵌入式里的神经网络」，可以用这块板子举例：模型几十 KB，跑在 Cortex-M33 上"
+          }
+        ],
+        "next_html": [
+          "收藏原理图即可。复试前花 10 分钟看一下它的电平转换和复位电路部分，能讲出「为什么要加这两颗芯片」就够了"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzE5OTI3MDk5Nw:2247682808:1",
+      "title": "立创开源平台「今年热度最高的 4 个开源项目」：标题大于内容，主体是平台自我介绍和评论送券",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzE5OTI3MDk5Nw==&mid=2247682808&idx=1&sn=410c432be0df069ec93d9f3720adc2e7&chksm=97b9b0a23d501ac6f01ab34f0a4e282c38bbfc59ffffe0cd7eae7fc978d07c01261bc3a2bbfe&mpshare=1&scene=1&srcid=1102Kx5b3xHvTLB4hsjW3EYk&sharer_shareinfo=9af619edf2a06a70f8bdafadcb980081&sharer_shareinfo_first=9af619edf2a06a70f8bdafadcb980081#rd",
+      "category": "emb",
+      "source": {
+        "account": "立创开源硬件平台",
+        "published": "2026-11-02"
+      },
+      "added": "2026-11-02",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "立创开源硬件平台的推送，标题说盘点 4 个热门项目，正文大部分是平台介绍（2019 年 11 月上线、4 万多个项目、日访问约 3 万）和「评论送彩色丝印优惠券」活动，4 个项目只以文字链接出现。",
+      "points_html": [
+        "<b>4 个项目（只有标题链接）：</b>一个「很简单的行车仪」、发布 1 天就有 300 多人复刻的项目、45 元做的无人机、400 元复刻 3 万元的灯",
+        "<b>平台数据（自报）：</b>2019 年 11 月上线，4 万多个开源项目，日访问约 3 万",
+        "<b>活动：</b>评论区留言抽 30 元彩色丝印优惠券"
+      ],
+      "keywords": "立创开源硬件平台 OSHWHub 嘉立创 开源项目 行车仪 无人机 复刻 台灯 彩色丝印 优惠券 平台推广",
+      "wechat": {
+        "biz": "MzE5OTI3MDk5Nw==",
+        "mid": "2247682808",
+        "idx": "1",
+        "sn": "410c432be0df069ec93d9f3720adc2e7"
+      },
+      "ticktick_task_id": "6ae8a270e4b0f69bc5b88e91",
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了原文；4 个项目的详情页没有逐个打开核实",
+        "thesis_html": "这条的价值不在正文，而在于提醒你：<b>立创开源平台（OSHWHub）本身是一个好用的检索入口</b>，想找可复刻的国产开源硬件，直接去平台按热度看，比看这类推送高效。",
+        "facts": [
+          {
+            "html": "平台自述 2019 年 11 月上线，收录 4 万多个开源项目，日访问约 3 万",
+            "source": "立创开源硬件平台公众号（自报数据）",
+            "year": "2026-11-02"
+          },
+          {
+            "html": "文中 4 个项目只给了标题链接：行车仪、1 天 300 多人复刻的项目、45 元无人机、400 元复刻 3 万元的灯",
+            "source": "立创开源硬件平台公众号",
+            "year": "2026-11-02"
+          }
+        ],
+        "critique": {
+          "credibility": "C",
+          "credibility_note": "平台给自己做宣传，数字都是自报；标题承诺「盘点 4 个项目」，正文几乎没有项目内容。",
+          "points_html": [
+            "标题党：读完并不知道这 4 个项目用了什么方案、难点在哪",
+            "「400 元复刻 3 万元的灯」这类说法通常只复刻了外观，光学和做工差距不会写在标题里",
+            "评论送券是拉互动，不代表项目质量"
+          ]
+        },
+        "context_html": [
+          "OSHWHub 背后是嘉立创（PCB 打样和元器件商城），平台上的项目大多直接给出立创 EDA 工程和 BOM，复刻门槛低，这也是它能做大的原因",
+          "你收藏过的 HachimoDock、滚纸写字机的 PCB 也都在这个平台上"
+        ],
+        "relevance": [
+          {
+            "area": "robotics",
+            "html": "45 元无人机这类项目适合作为毕业设计或复试项目经历的参考：成本低、链路完整（飞控、电机驱动、通信）"
+          }
+        ],
+        "next_html": [
+          "不用细读这条。初试后如果要找一个硬件项目练手，直接上 OSHWHub 按「热门」和「已复刻数」筛"
+        ]
+      }
+    }
+  ],
+  "studies": [
+    {
+      "id": "2026-w45-agent-orchestration",
+      "kicker": "专题研究 · 第 45 周",
+      "title": "智能体编排、bot 回归与「产品能力更重要」：从 DeepSeek Super-agent 读 2026 年下半年的 AI 走向",
+      "published": "2026-11-03",
+      "dek_html": "以 DeepSeek Harness 团队的 Super-agent 为主线，把这周收藏里的 TRAE 宝、HachimoDock、HackerBooks、江山时序串起来，回答三个问题：智能体编排到底是什么？bot 为什么又回来了？「模型趋同之后，产品能力更重要」这个判断站得住吗？",
+      "article_ids": [
+        "wx:MzY4NzM3MTkxOQ:2247483844:1",
+        "wx:MzkxMTY4NTAyNQ:2247521374:1",
+        "url:39d90486b312a6c00c7a",
+        "url:21f283cd43976195ba7f",
+        "wx:MzU4Mjg3MDAyMQ:2247638275:1",
+        "wx:MzA5Nzk3MDQ4OQ:2649736365:1",
+        "wx:Mzk0OTYwNzc3NQ:2247485876:1",
+        "url:fba76d45b13e6e19fb02",
+        "wx:MzI0NjM3NjI1NQ:2247623648:1"
+      ],
+      "sections": [
+        {
+          "heading": "结论先说",
+          "body_html": "<p>这周的收藏看似零散，其实指向同一件事：AI 正在从「你打开一个窗口问问题」变成「一个常驻后台、替你盯着多件事的系统」。DeepSeek 的 Super-agent 给出了这套系统的架构草图，TRAE 宝是它的商业产品版，HachimoDock 甚至给它做了一块硬件状态屏。</p>\n<ol>\n<li><b>智能体编排</b>，指的是一个常驻 Router 负责对人交互和分派，多个上下文隔离的 Worker 并行干活，由环境事件驱动，外面再挂一个 Watchdog。它目前只是研究原型。</li>\n<li><b>bot 的回归</b>不是走回头路：2016 年的 bot 失败是因为办不成事，2026 年的 bot 能执行任务，所以入口又回到了 IM。新的瓶颈变成了<b>人的注意力</b>和<b>安全</b>。</li>\n<li><b>「产品能力更重要」只对了一半</b>：头部模型确实在趋同，但薄薄一层的产品最容易被模型厂商吃掉。真正难复制的是「选对问题 + 系统工程 + 场景或数据」的组合。</li>\n<li><b>对你：</b>初试前只收藏、不深挖；Super-agent 里的缓存、批处理、发布订阅、看门狗，正好是复试能讲的操作系统和嵌入式素材。</li>\n</ol>"
+        },
+        {
+          "heading": "Super-agent 到底是什么",
+          "body_html": "<p>出处是 DeepSeek Harness 团队 2026 年 10 月 31 日 20:29（北京时间）发的《Super-agent 设计探索》，同时开源了 dsh-superagent-prototype。文章开头就声明：这是架构思路，不是现有产品功能的介绍。</p>\n<blockquote>单任务的上限取决于模型能力，多任务的上限取决于人的注意力。……一个人通常只能同时跟进 3 到 5 个活跃 Session。<br>—— DeepSeek Harness 团队</blockquote>\n<p>整条链路是：<b>环境事件</b>（群聊、邮件、PR 评论、CI）→ <b>两级过滤</b>（程序规则先筛，LLM 再判）→ <b>Router</b>（常驻、分派）→ <b>Worker</b>（并行执行）→ 你机器上的 <b>daemon</b>（真正跑命令），旁边的 <b>Watchdog</b> 定期巡检。</p>\n<table><thead><tr><th>模块</th><th>做法</th><th>对应的经典思想</th></tr></thead><tbody>\n<tr><td>双层架构</td><td>Router 不干具体活、统一对外说话；Worker 隔离上下文并发</td><td>调度器与进程</td></tr>\n<tr><td>事件过滤</td><td>程序白名单先过滤，剩下的交给 LLM</td><td>Fast Path / Slow Path</td></tr>\n<tr><td>订阅直通</td><td>同一 PR 或话题算一个 Thread，后续事件直接发给已订阅的 Worker</td><td>发布订阅（ROS topic）</td></tr>\n<tr><td>上下文组织</td><td>近期内联，长内容溢出到窗口外，按 ID 链式召回</td><td>缓存与局部性</td></tr>\n<tr><td>投机执行</td><td>讨论还在进行就后台复现、修复，失败就沉默</td><td>Speculative Execution</td></tr>\n<tr><td>异步 ReAct</td><td><code>run()</code> 拆成 <code>start()/stop()</code>，前台随时插话（已实现，默认关）</td><td>全双工、异步 I/O</td></tr>\n<tr><td>存算分离</td><td>Loop 云端无状态，状态进数据库，执行环境留本地</td><td>Compute-Storage Separation</td></tr>\n<tr><td>Watchdog</td><td>独立会话检查 Worker 有没有实质进展</td><td>看门狗（STM32 IWDG）</td></tr>\n</tbody></table>"
+        },
+        {
+          "heading": "实验数字，以及要打的折扣",
+          "body_html": "<p>原文的实验设计：约 300 条消息，其中约 20 条是工作请求；编码动作用「耗时占位工具」代替；每种方案跑 5 次。</p>\n<ul>\n<li><b>完成时间：</b>Super-agent p50 12.4 分钟、p95 15.7 分钟；「单 Session + Subagent（中性提示）」p95 29.5 分钟。</li>\n<li><b>直通的价值：</b>去掉 Thread 订阅直通后，Router 决策数约 +30%，token 从 2323 万涨到 3177 万（+37%）。</li>\n<li><b>批处理摊销：</b>Trigger 从每分钟约 1 条升到 40 条时，每批 1.0→2.8 条，单个决策分摊耗时 6.4 秒→1.6 秒。</li>\n</ul>\n<p class=\"caveat\">要打的折扣：负载是合成的，没有测真实代码质量（MarkTechPost 的报道也指出了这一点）；对照组不是业界最强的多智能体方案；多会话让读缓存 token 变多，「更快」是拿钱换的；开源原型只覆盖单个 GitHub 仓库加可选的飞书，README 写明「不是官方产品、不是生产级」；提示词注入、凭据泄露被作者自己列为未解决问题。</p>\n<h3>和同类方案比</h3>\n<table><thead><tr><th>方案</th><th>编排方式</th><th>长处</th><th>短板</th></tr></thead><tbody>\n<tr><td>DeepSeek Super-agent（2026）</td><td>常驻 Router + 隔离 Worker，事件驱动</td><td>多任务并发、持续在线、主动</td><td>原型；token 更贵；安全没解决</td></tr>\n<tr><td>Anthropic 多智能体研究系统（2025）</td><td>Lead 拆任务，3–5 个 Subagent 并行</td><td>内部评测比单 Opus 4 高 90.2%</td><td>约 15 倍 token；只适合可拆的广度任务</td></tr>\n<tr><td>Cognition「别做多智能体」（2025）</td><td>单线程 + 上下文压缩</td><td>决策一致、少冲突</td><td>并发弱</td></tr>\n<tr><td>Anthropic Managed Agents</td><td>模型与 harness、沙箱、会话日志三者分离</td><td>可恢复、可替换</td><td>面向托管沙箱</td></tr>\n<tr><td>OpenClaw（2026）</td><td>自托管网关接 20 多个聊天渠道 + 技能市场</td><td>渠道最广、生态大</td><td>大量 CVE 与恶意技能</td></tr>\n</tbody></table>"
+        },
+        {
+          "heading": "bot 的「否定之否定」",
+          "body_html": "<table><thead><tr><th>阶段</th><th>形态</th><th>结果</th></tr></thead><tbody>\n<tr><td>2016</td><td>Messenger Bots，「对话即平台」</td><td>入口在 IM。2017 年 2 月报道约 70% 的请求需要人工接手，Facebook 收缩</td></tr>\n<tr><td>2022–2024</td><td>ChatGPT 式聊天窗口</td><td>不再进 IM，用户自己打开窗口提问</td></tr>\n<tr><td>2025</td><td>Claude Code、Codex、Cursor 等编程智能体</td><td>能干活了，但要一个个 Session 盯着</td></tr>\n<tr><td>2026.1</td><td>OpenClaw 爆火，约 60 天破 25 万星</td><td>bot 回到 IM，这次能执行</td></tr>\n<tr><td>2026.7–10</td><td>ChatGPT Work、Meta Muse、OpenAI dots、Claude Duet</td><td>大厂常驻个人智能体集中上线</td></tr>\n<tr><td>2026.10–11</td><td>TRAE 宝、DeepSeek Super-agent</td><td>国内跟进，编排架构公开</td></tr>\n</tbody></table>\n<ul>\n<li><b>驱动一：</b>模型能独立完成单个任务了。AI Index 2026 说智能体仍有约三分之一的尝试会失败，但已经够让人放手。</li>\n<li><b>驱动二：</b>瓶颈从模型转到人。DeepSeek 说一个人只能盯 3 到 5 个 Session，你收藏过的 Tibo（Codex 负责人）也说「我自己才是最大的天花板」，两边独立得出了同一个结论。</li>\n<li><b>驱动三：</b>Session 被重新看作实现细节，交互回到 GitHub、IM 这类原本就在用的界面。</li>\n<li><b>新问题是安全：</b>OpenClaw 官方已发布 722 个修复（其中 39 个有 CVE），CertiK 统计到约 13.5 万个暴露在公网的实例。</li>\n</ul>\n<p>所以更准确的说法是「螺旋上升」：入口回到了 IM，内核换成了能执行的智能体，难点也从「听不懂」变成了「权限和注意力怎么分配」。</p>"
+        },
+        {
+          "heading": "「产品能力更重要」：证据与反驳",
+          "body_html": "<h3>支持的证据</h3>\n<ul>\n<li>AI Index 2026：头部 4 家模型在 Arena 上的分差小于 25 Elo（一年前约 97），报告认为能力不再是明显的差异点，竞争转向成本、可靠性和实用性。</li>\n<li>DeepSeek 原文：把 Session 从底层解耦之后，「向用户暴露怎样的交互，成为一个独立的产品问题」。</li>\n<li>同一个模型，换一种编排，p95 从 29.5 分钟降到 15.7 分钟，差别全在系统设计。</li>\n<li>构建成本骤降：vista8 几天做出 HackerBooks；江山时序 2.5 周 200 多次提交；鱼皮实测同一道题从 102 分钟降到 61 分钟。</li>\n</ul>\n<h3>反驳与限制</h3>\n<ul>\n<li><b>模型厂商会吞掉功能：</b>Jasper 被 ChatGPT 原生写作冲击，营收约从 1.2 亿美元掉到 5500 万美元；TechRadar 2026 年 10 月的文章称，2025 年美国关停的 AI 创业公司中 81% 是套壳和应用。</li>\n<li><b>模型和产品在协同设计：</b>DeepSeek V4.1 Flash 1017 专门针对自家 Harness 优化，护城河是「产品 + 数据 + 训练闭环」，不是纯产品。</li>\n<li><b>门槛降低对所有人都成立：</b>你能几天做出来，别人也能。HackerBooks 的数据来自 hackerbooks.org，界面谁都能重做。</li>\n<li><b>AI 有边际成本：</b>JetBrains 被传营收新高却亏损（网传，未核实），产品必须算得清 token 账。</li>\n<li><b>效率不一定兑现：</b>METR 2025 年的随机对照试验里，资深开源开发者用 AI 后实际慢了 19%，自己却以为快了 20%。</li>\n</ul>\n<p class=\"caveat\">修正后的判断：模型能力越接近，决定成败的越是「选对问题 + 把系统工程做扎实 + 拥有场景或数据」。产品判断是必要条件，但不充分。Super-agent 本身就是例子：价值一半来自产品洞察（注意力是瓶颈），一半来自扎实的系统设计。</p>"
+        },
+        {
+          "heading": "对你的启示与行动",
+          "body_html": "<ol>\n<li><b>现在到初试（12 月 19 日）：只收藏，不深挖。</b>AI 类每周最多 15 分钟，集中扫一次这个面板就够；训练营这类耗时活动先搁置。</li>\n<li><b>把 Super-agent 当成复试素材。</b>发布订阅对应 ROS topic，Watchdog 对应 STM32 的 IWDG，批处理和缓存对应计算机系统课；能用 2 分钟讲清楚，就是加分项。</li>\n<li><b>初试后做一个小项目。</b>给「微信采集」做一个事件驱动的小 bot：规则先过滤，LLM 再判断，每周归纳一次，状态可以显示在一块 HachimoDock 那样的小屏上。规模小，却完整覆盖 Router、过滤、Watchdog 三个概念。</li>\n<li><b>练产品判断，别只练提示词。</b>动手之前先写一句「谁的什么问题」和「第一批用户从哪来」，做完记下 token 成本。</li>\n<li><b>避开灰色玩法。</b>批量注册账号、共享会员中转、绕过版权这几类收藏有封号和法律风险，不建议实践。</li>\n</ol>"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Super-agent 设计探索：迈向更自主的 Agent 系统",
+          "site": "DeepSeek Harness 团队公众号",
+          "date": "2026-10-31",
+          "url": "https://mp.weixin.qq.com/s?__biz=MzY4NzM3MTkxOQ==&mid=2247483844&idx=1&sn=1e93a1f1dc5ae0996f9c45794b896495"
+        },
+        {
+          "title": "dsh-superagent-prototype",
+          "site": "GitHub deepseek-ai",
+          "date": "2026-10-31",
+          "url": "https://github.com/deepseek-ai/dsh-superagent-prototype"
+        },
+        {
+          "title": "DeepSeek Open-Sources dsh-superagent",
+          "site": "MarkTechPost",
+          "date": "2026-11-01",
+          "url": "https://www.marktechpost.com/2026/11/01/deepseek-dsh-superagent-router-worker-coding-agent/"
+        },
+        {
+          "title": "一周更新：开发者个人助理上线等",
+          "site": "TRAE.ai",
+          "date": "2026-11-01",
+          "url": "https://mp.weixin.qq.com/s?__biz=MzkxMTY4NTAyNQ==&mid=2247521374&idx=1&sn=295ca57af5c4fa872d5cd259ca44daff"
+        },
+        {
+          "title": "DeepSeek V4.1 Flash 1017：许愿式编程",
+          "site": "DeepSeek 公众号",
+          "date": "2026-10-17",
+          "url": "https://mp.weixin.qq.com/s?__biz=Mzk0OTYwNzc3NQ==&mid=2247485876&idx=1&sn=2606d3fa9ac085f94290ddd1d94649cc"
+        },
+        {
+          "title": "DeepSeek 全新模型发布，性价比最高的一集",
+          "site": "程序员鱼皮",
+          "date": "2026-10-19",
+          "url": "https://mp.weixin.qq.com/s?__biz=MzI1NDczNTAwMA==&mid=2247593625&idx=1&sn=e31a04aa869b24d525b97144e3ca01db"
+        },
+        {
+          "title": "看一下不缺 Token 的 Tibo 怎么工作",
+          "site": "EARS",
+          "date": "2026-09-19",
+          "url": "https://mp.weixin.qq.com/s?__biz=MzA5Nzk3MDQ4OQ==&mid=2649736365&idx=1&sn=28c07d18532e207247ba00b0b7a972d0"
+        },
+        {
+          "title": "JetBrains 被爆亏损！传统 IDE 的黄金时代结束了？",
+          "site": "黑马程序员",
+          "date": "2026-10-25",
+          "url": "https://mp.weixin.qq.com/s?__biz=MzI0NjM3NjI1NQ==&mid=2247623648&idx=1&sn=1e6aa4260f6d8ec3581a82fa09aaf6c3"
+        },
+        {
+          "title": "HackerBooks 帖子",
+          "site": "X @vista8",
+          "date": "2026-11-03",
+          "url": "https://x.com/vista8/status/2117290723255226820"
+        },
+        {
+          "title": "Scaling Managed Agents: Decoupling the brain from the hands",
+          "site": "Anthropic",
+          "url": "https://www.anthropic.com/engineering/managed-agents"
+        },
+        {
+          "title": "Don't Build Multi-Agents",
+          "site": "Cognition",
+          "date": "2025-06",
+          "url": "https://cognition.com/blog/dont-build-multi-agents"
+        },
+        {
+          "title": "Anthropic 多智能体研究系统解读（90.2%、15 倍 token）",
+          "site": "The AI Engineer",
+          "url": "https://theaiengineer.substack.com/p/how-anthropic-built-multi-agent-deep"
+        },
+        {
+          "title": "The 2026 AI Index Report: Technical Performance",
+          "site": "Stanford HAI",
+          "date": "2026",
+          "url": "https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance"
+        },
+        {
+          "title": "OpenClaw went viral. Meet the maintainers",
+          "site": "GitHub Blog",
+          "date": "2026",
+          "url": "https://github.blog/open-source/maintainers/openclaw-went-viral-meet-the-maintainers-building-and-securing-it/"
+        },
+        {
+          "title": "OpenClaw Security",
+          "site": "openclaw.ai",
+          "url": "https://openclaw.ai/security"
+        },
+        {
+          "title": "OpenClaw Security Report",
+          "site": "CertiK",
+          "date": "2026",
+          "url": "https://www.certik.com/zh-CN/blog/openclaw-security-report"
+        },
+        {
+          "title": "开源 AI 助手框架 OpenClaw 火了，这只「龙虾」养了也要防",
+          "site": "国家科技创新中心网",
+          "date": "2026-03",
+          "url": "https://www.ncsti.gov.cn/kjdt/kjrd/202603/t20260310_240399.html"
+        },
+        {
+          "title": "Anthropic previews Claude Duet",
+          "site": "The Next Web",
+          "date": "2026-10",
+          "url": "https://thenextweb.com/news/anthropic-claude-duet-ai-agent"
+        },
+        {
+          "title": "Facebook scales back AI flagship after chatbots hit 70% failure rate",
+          "site": "The Register",
+          "date": "2017-02-22",
+          "url": "https://www.theregister.com/2017/02/22/facebook_ai_fail"
+        },
+        {
+          "title": "When the model takes away the moat",
+          "site": "TechRadar",
+          "date": "2026-10-20",
+          "url": "https://www.techradar.com/pro/when-the-model-takes-away-the-moat"
+        },
+        {
+          "title": "Measuring the Impact of Early-2025 AI on Experienced OS Developers",
+          "site": "METR",
+          "date": "2025-07-10",
+          "url": "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/"
+        }
+      ]
     }
   ]
 }
