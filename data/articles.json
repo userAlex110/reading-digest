@@ -783,6 +783,54 @@
         "idx": "1",
         "sn": "cf74507f2b328c331c08e05891ab47d1"
       }
+    },
+    {
+      "id": "url:39d90486b312a6c00c7a",
+      "title": "一期视频里的 6 个开源项目：哈基米机、Foundation Sunshine、Tendedero、WeTypeX、geo-sleuth、gpu-unlock",
+      "url": "https://github.com/YizhengWw/HachimoDock",
+      "category": "hw",
+      "source": {
+        "account": "视频简介里的项目清单（视频本身未收录）"
+      },
+      "added": "2026-11-01",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "收藏的是一期视频简介里的项目清单，不是视频本身。逐个核对了 GitHub 仓库说明：最贴近嵌入式的是 <b>哈基米机 HachimoDock</b>，用 <b>ESP32-P4</b> 小屏把 Claude / Codex 的 Agent 工作状态做成桌面宠物；最有争议的是 <b>gpu-unlock</b>，声称解除 GeForce 张量核心 FP16/BF16/TF32 的半速限制。",
+      "points_html": [
+        "<b>HachimoDock（哈基米机）：</b>桌面端（Tauri + React）读取 Agent Session，经 USB 串口下发给 ESP32-P4（RISC-V 双核 400MHz、32MB PSRAM、2.8 英寸 480×640 MIPI-DSI 屏）显示动画和气泡；按键、摇杆、麦克风可反向操作 Agent。PCB/BOM 在立创开源平台 OSHWHub。许可是<b>非商用 source-available</b>，不是 OSI 开源",
+        "<b><a href=\"https://github.com/AlkaidLab/foundation-sunshine\">Foundation Sunshine</a>：</b>Sunshine 的增强分支，自建游戏串流主机，配 Moonlight 客户端用；主打 Windows、HDR10/HDR Vivid、虚拟显示器。GPL-3.0，约 7.7k 星",
+        "<b><a href=\"https://github.com/alejandrobujan/tendedero\">Tendedero</a>：</b>macOS 14+ 小工具，把每张截图像晾衣服一样挂在菜单栏下的一根线上，Swift 原生",
+        "<b><a href=\"https://github.com/panxuc/fcitx5-wetypex\">WeTypeX</a>：</b>在 Linux 的 Fcitx5 里跑 macOS 版微信输入法：从官方包提取输入核心和词典，用一个小型 Mach-O ABI 兼容宿主提供它需要的 Darwin 接口，宿主跑在 Bubblewrap 沙箱里。非官方、早期阶段，README 自己提示可能含官方遥测",
+        "<b><a href=\"https://github.com/Oldcircle/geo-sleuth\">geo-sleuth</a>：</b>一个 Agent Skill（<code>SKILL.md</code>），用 OpenStreetMap 几何、高程天际线、卫星图和街景推断照片拍摄地，并展示推理过程；支持 Claude Code、Codex、Cursor 等。MIT",
+        "<b><a href=\"https://github.com/Zagitta/gpu-unlock\">gpu-unlock</a> / <a href=\"https://github.com/impacifist/Windows-GPU-UNLOCK\">Windows-GPU-UNLOCK</a>：</b>前者仅 Linux，在开机时、官方驱动加载前解除 RTX 20/30/40 的张量核心限速，作者称 LLM prefill 快 25–55%；后者是社区做的实验性 UEFI 移植，让 Windows 也能用，目前以兼容性收集为主。两者都属于改底层的实验项目，数字是作者自报"
+      ],
+      "notes_html": [
+        "和考研的关系：HachimoDock 的「PC ↔ USB 串口 ↔ MCU ↔ 屏」链路是一个现成的嵌入式复试素材，其他几个初试前收着即可"
+      ],
+      "keywords": "HachimoDock 哈基米机 ESP32-P4 桌宠 Claude Code Codex Sunshine Moonlight 串流 Tendedero 截图 WeTypeX 微信输入法 Fcitx5 Linux geo-sleuth 照片定位 Agent Skill gpu-unlock 张量核心 RTX",
+      "ticktick_task_id": "6ae628dae4b0f69bc58e0add"
+    },
+    {
+      "id": "url:21f283cd43976195ba7f",
+      "title": "向阳乔木做了「黑客书架」：Hacker News 评论里被提及最多的书",
+      "url": "https://x.com/vista8/status/2117290723255226820",
+      "category": "idea",
+      "source": {
+        "account": "向阳乔木 (@vista8) · X",
+        "published": "2026-11-03"
+      },
+      "added": "2026-11-03",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "向阳乔木用 Hacker News 公开评论数据做了一个书籍推荐站 <a href=\"https://hackerbooks.qiaomu.ai/\">hackerbooks.qiaomu.ai</a>：收录 2007–2026 年 HN 评论里提到的 <b>1.5 万多本书</b>，按<b>多少位不同读者</b>提及排序。他在被引用的上一条帖子里说，起因是发现 Hugging Face 上能直接下到约 <b>12G 的 HN 数据集</b>。",
+      "points_html": [
+        "<b>站点功能：</b>今日书架、值得读精选、历史总榜、最多推荐、林迪榜、争议与劝退、上升最快、书籍星图，每本书可点回 HN 原帖",
+        "<b>数据来源：</b>站点页脚写明数据整理自 hackerbooks.org（roansh 的作品），书籍元数据与封面来自 Open Library；作者帖子称开发「消耗了大量 Token」",
+        "<b>值得学的点：</b>一份公开数据集 + AI 编程，几天就能做出一个功能完整的产品；作者说有了这份 HN 数据「可以玩的东西很多」",
+        "<b>注意：</b>帖子说站内可直达 Z-Library 搜索下载，那是版权有争议的影子图书馆；正版可以走豆瓣、Goodreads 书评后再去图书馆或电子书店"
+      ],
+      "keywords": "Hacker News HN 书单 黑客书架 hackerbooks 向阳乔木 vista8 Hugging Face 数据集 Open Library 林迪 推荐 X 推文",
+      "ticktick_task_id": "6ae93b0ce4b0f69bc5bf2737"
     }
   ]
 }
