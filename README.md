@@ -82,9 +82,18 @@
 | `verified` | 是 | `original`（读过原文核实）或 `title_only`（仅按标题） |
 | `verified_note` | 否 | 依据说明，例如「读了全文并对照 GitHub 仓库」 |
 | `thesis_html` | 是 | 一句话核心观点：这篇真正说明了什么、该怎么看 |
-| `facts` | 否 | `[{ html, source, year?, url? }]`。只写核实过的事实；`year` 可写 `YYYY`、`YYYY-MM` 或 `YYYY-MM-DD` |
-| `critique.credibility` | 是 | `A` 一手可复核 / `B` 可靠但有局限或利益相关 / `C` 宣传、自荐或未独立验证 / `D` 网传或存疑 |
+| `facts` | 否 | `[{ html, source, year?, url?, corroborated?, also? }]`。只写核实过的事实；`year` 可写 `YYYY`、`YYYY-MM` 或 `YYYY-MM-DD` |
+| `facts[].corroborated` | 否（建议每条都写） | `true`：除原文外，已用一手来源（仓库、官方文档、数据手册、登记数据）或第二个独立来源复核，页面显示「已交叉验证」；`false`：只有一个来源，页面显示「单一来源」。转述同一份材料的报道不算独立来源 |
+| `facts[].also` | 否 | `[{ source, url? }]`，复核用到的其他来源，页面显示为「另见」。有 `also` 时 `corroborated` 必须是 `true` |
+| `critique.credibility` | 是 | `A` / `B` / `C` / `D`，按下面的标准评，标准也写在页面的「怎么读这个面板」里 |
 | `critique.credibility_note` | 是 | 为什么给这个评级 |
+
+可信度标准（和 `scripts/build.js` 里的 `CRED_CRITERIA` 一致，改一处要同步另一处）：
+
+- **A**：一手材料（论文、官方数据、源码、标准文档、登记数据），关键数字能独立复核，作者没有明显的利益冲突。
+- **B**：一手或可靠来源，关键事实能在仓库、文档里对上；但作者利益相关、实验是自己设计的，或缺第三方复现。
+- **C**：营销稿、自荐、广告或平台自报数据；核心说法（好不好用、效果多大）无法独立验证。
+- **D**：网传、匿名、来源不明，或与已核实的事实冲突。
 | `critique.points_html` | 否 | 弱点、反例、夸大之处 |
 | `context_html` | 否 | 读者可能不知道的延伸背景 |
 | `relevance` | 否 | `[{ area, html }]`，`area` 是 `robotics`（机器人工程 / 嵌入式）、`kaoyan`（考研 · 成大复试）、`agents`（智能体与产品能力）、`aicoding`（AI 编程工具） |
@@ -95,7 +104,7 @@
   "verified": "original",
   "verified_note": "读了全文",
   "thesis_html": "一句话观点，可含 <b>强调</b>",
-  "facts": [{ "html": "具体数字或事实", "source": "来源名", "year": "2026-10-31", "url": "https://..." }],
+  "facts": [{ "html": "具体数字或事实", "source": "来源名", "year": "2026-10-31", "url": "https://...", "corroborated": true, "also": [{ "source": "独立来源", "url": "https://..." }] }],
   "critique": { "credibility": "B", "credibility_note": "评级理由", "points_html": ["弱点一"] },
   "context_html": ["背景一"],
   "relevance": [{ "area": "kaoyan", "html": "和复试的关系" }],
@@ -192,6 +201,7 @@ node -e "const c=require('crypto');console.log('url:'+c.createHash('sha256').upd
 - `detail` 缺 `summary` 或 `body_html`
 - 填了 `wechat`，但 `id` 与 `biz` + `mid` + `idx` 对不上
 - `analysis` 缺 `verified`、`thesis_html`、`critique`，或枚举值不对
+- `facts[].corroborated` 不是布尔值，或写了 `also` 却没把 `corroborated` 设为 `true`
 - `studies` 的 `id` 格式不对或重复，`article_ids` 引用了不存在的文章
 - `articles` 为空
 
@@ -216,7 +226,7 @@ npm run check
 python3 -m http.server
 ```
 
-首页最上面是最新专题，下面按**采集日期从新到旧**分批，同一天里再按分类（壹到捌）排成卡片。桌面端平铺，手机端每批是一行，左右滑动一次一张。有分析层的卡片默认显示「观点」、核实标记和可信度，点开进入完整分析；旧条目照旧显示摘要。阅读视图（地址栏带 `#`）有目录，滚动时高亮当前小节，页顶有阅读进度，首段首字下沉。不要再做卡片内的上下展开。分类筛选、搜索、距 27 考研初试的倒计时都还在。倒计时的日期是 `site.exam`。
+首页最上面是最新专题，下面按**采集日期从新到旧**分批，同一天里再按分类（壹到捌）排成卡片。桌面端平铺，手机端每批是一行，左右滑动一次一张。有分析层的卡片默认显示「观点」、核实标记和可信度，点开进入完整分析；旧条目照旧显示摘要。手机端（≤860px）首屏压缩了刊头：隐藏副标题、印章和次要统计，只留专题数、分析数和倒计时，筛选栏改成单行横滑，专题块不显示小节目录，保证 390×844 下专题标题、导语和「读专题」按钮不用滚动就能看到。阅读视图（地址栏带 `#`）有目录，滚动时高亮当前小节，页顶有阅读进度，首段首字下沉。不要再做卡片内的上下展开。分类筛选、搜索、距 27 考研初试的倒计时都还在。倒计时的日期是 `site.exam`。
 
 取舍和参照写在 [`design/README.md`](design/README.md)。对照用的三套原型留在 [PR #2](https://github.com/userAlex110/reading-digest/pull/2)。线上页是「专题 + 卡片目录 + 阅读视图」，不是原型里在格子内展开讲解的那一版。
 
