@@ -6,6 +6,20 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const CIRCLED = '①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳';
+const SCHEMA_VERSION = 2;
+const VERIFIED = { original: '已读原文核实', title_only: '仅按标题' };
+const CREDIBILITY = {
+  A: '高：一手材料，可复核',
+  B: '较高：来源可靠，但有局限或利益相关',
+  C: '中：宣传、自荐或未经独立验证',
+  D: '低：网传或存疑',
+};
+const RELEVANCE = {
+  robotics: '机器人工程 / 嵌入式',
+  kaoyan: '考研 · 成大复试',
+  agents: '智能体与产品能力',
+  aicoding: 'AI 编程工具',
+};
 
 function usage() {
   console.log(`用法: node scripts/build.js [--data 文件] [--out 文件] [--check]
@@ -62,8 +76,8 @@ function validate(doc) {
   if (!isObject(doc)) {
     return ['根节点必须是对象'];
   }
-  if (doc.schema_version !== 1) {
-    err(`schema_version 必须是 1，实际是 ${JSON.stringify(doc.schema_version)}`);
+  if (doc.schema_version !== SCHEMA_VERSION) {
+    err(`schema_version 必须是 ${SCHEMA_VERSION}，实际是 ${JSON.stringify(doc.schema_version)}`);
   }
   if (!isObject(doc.site)) {
     err('缺少 site 对象');
@@ -196,9 +210,114 @@ function validate(doc) {
     if (article.ticktick_task_id !== undefined && !isNonEmptyString(article.ticktick_task_id)) {
       err(`${where}.ticktick_task_id 要填就填非空字符串，没有就省略这个字段`);
     }
+    if (article.analysis !== undefined) validateAnalysis(article.analysis, `${where}.analysis`, err);
   });
 
+  if (doc.studies !== undefined) {
+    if (!Array.isArray(doc.studies)) err('studies 必须是数组');
+    const seenStudies = new Set();
+    (Array.isArray(doc.studies) ? doc.studies : []).forEach((study, index) => {
+      const where = `studies[${index}]`;
+      if (!isObject(study)) {
+        err(`${where} 必须是对象`);
+        return;
+      }
+      if (typeof study.id !== 'string' || !/^[a-z0-9][a-z0-9-]{0,63}$/.test(study.id)) {
+        err(`${where}.id 必须是小写字母、数字和连字符组成的短标识`);
+      } else if (seenStudies.has(study.id)) {
+        err(`重复的专题 id：${study.id}`);
+      } else {
+        seenStudies.add(study.id);
+      }
+      for (const key of ['title', 'dek_html']) {
+        if (!isNonEmptyString(study[key])) err(`${where}.${key} 必须是非空字符串`);
+      }
+      if (!isIsoDate(study.published)) err(`${where}.published 必须是 YYYY-MM-DD`);
+      if (study.kicker !== undefined && !isNonEmptyString(study.kicker)) err(`${where}.kicker 必须是非空字符串`);
+      if (!Array.isArray(study.sections) || study.sections.length === 0) {
+        err(`${where}.sections 必须是非空数组`);
+      } else {
+        study.sections.forEach((section, i) => {
+          if (!isObject(section) || !isNonEmptyString(section.heading) || !isNonEmptyString(section.body_html)) {
+            err(`${where}.sections[${i}] 需要 heading 与 body_html`);
+          }
+        });
+      }
+      if (study.article_ids !== undefined) {
+        if (!Array.isArray(study.article_ids)) err(`${where}.article_ids 必须是数组`);
+        else study.article_ids.forEach((id) => {
+          if (!seenIds.has(id)) err(`${where}.article_ids 引用了不存在的文章：${id}`);
+        });
+      }
+      if (study.sources !== undefined) {
+        if (!Array.isArray(study.sources)) err(`${where}.sources 必须是数组`);
+        else study.sources.forEach((source, i) => {
+          if (!isObject(source) || !isNonEmptyString(source.title) || typeof source.url !== 'string' || !/^https?:\/\//.test(source.url)) {
+            err(`${where}.sources[${i}] 需要 title 与 http(s) url`);
+          } else if (source.date !== undefined && !isNonEmptyString(source.date)) {
+            err(`${where}.sources[${i}].date 必须是非空字符串`);
+          }
+        });
+      }
+    });
+  }
+
   return errors;
+}
+
+function isHtmlList(value) {
+  return Array.isArray(value) && value.every((item) => isNonEmptyString(item));
+}
+
+function validateAnalysis(analysis, where, err) {
+  if (!isObject(analysis)) {
+    err(`${where} 必须是对象`);
+    return;
+  }
+  if (!Object.prototype.hasOwnProperty.call(VERIFIED, analysis.verified)) {
+    err(`${where}.verified 必须是 ${Object.keys(VERIFIED).join(' / ')}`);
+  }
+  if (analysis.verified_note !== undefined && !isNonEmptyString(analysis.verified_note)) {
+    err(`${where}.verified_note 必须是非空字符串`);
+  }
+  if (!isNonEmptyString(analysis.thesis_html)) err(`${where}.thesis_html 必须是非空字符串`);
+  if (analysis.facts !== undefined) {
+    if (!Array.isArray(analysis.facts)) err(`${where}.facts 必须是数组`);
+    else analysis.facts.forEach((fact, i) => {
+      if (!isObject(fact) || !isNonEmptyString(fact.html) || !isNonEmptyString(fact.source)) {
+        err(`${where}.facts[${i}] 需要 html 与 source`);
+        return;
+      }
+      if (fact.year !== undefined && !/^\d{4}(-\d{2}){0,2}$/.test(String(fact.year))) {
+        err(`${where}.facts[${i}].year 必须是 YYYY、YYYY-MM 或 YYYY-MM-DD`);
+      }
+      if (fact.url !== undefined && (typeof fact.url !== 'string' || !/^https?:\/\//.test(fact.url))) {
+        err(`${where}.facts[${i}].url 必须是 http(s) 链接`);
+      }
+    });
+  }
+  if (!isObject(analysis.critique)) {
+    err(`${where}.critique 必须是对象`);
+  } else {
+    if (!Object.prototype.hasOwnProperty.call(CREDIBILITY, analysis.critique.credibility)) {
+      err(`${where}.critique.credibility 必须是 ${Object.keys(CREDIBILITY).join(' / ')}`);
+    }
+    if (!isNonEmptyString(analysis.critique.credibility_note)) err(`${where}.critique.credibility_note 必须是非空字符串`);
+    if (analysis.critique.points_html !== undefined && !isHtmlList(analysis.critique.points_html)) {
+      err(`${where}.critique.points_html 必须是非空字符串数组`);
+    }
+  }
+  for (const key of ['context_html', 'next_html']) {
+    if (analysis[key] !== undefined && !isHtmlList(analysis[key])) err(`${where}.${key} 必须是非空字符串数组`);
+  }
+  if (analysis.relevance !== undefined) {
+    if (!Array.isArray(analysis.relevance)) err(`${where}.relevance 必须是数组`);
+    else analysis.relevance.forEach((item, i) => {
+      if (!isObject(item) || !Object.prototype.hasOwnProperty.call(RELEVANCE, item.area) || !isNonEmptyString(item.html)) {
+        err(`${where}.relevance[${i}] 需要 area（${Object.keys(RELEVANCE).join(' / ')}）与 html`);
+      }
+    });
+  }
 }
 
 function esc(value) {
@@ -272,8 +391,26 @@ function essayEyebrow(article, category) {
   return parts.join(' · ');
 }
 
+function analysisMeta(analysis) {
+  const bits = ['分析'];
+  if ((analysis.facts || []).length) bits.push(`${analysis.facts.length} 条事实`);
+  if ((analysis.critique.points_html || []).length) bits.push(`${analysis.critique.points_html.length} 则判断`);
+  return bits.join(' · ');
+}
+
 function renderCard(article, category) {
   const id = domId(article.id);
+  const a = article.analysis;
+  if (a) {
+    return `    <a class="card has-analysis" href="#${esc(id)}" data-id="${esc(article.id)}" data-cat="${esc(category.id)}" data-k="${esc(article.keywords || '')}" aria-labelledby="${esc(id)}-card-title" aria-describedby="${esc(id)}-card-sum">
+      <span class="card-rule" aria-hidden="true"></span>
+      <span class="card-kicker"><span class="numeral">${esc(category.numeral)}</span><span>${esc(category.badge)}</span><span class="when">${esc(article.added.slice(5))}</span></span>
+      <h3 id="${esc(id)}-card-title">${esc(article.title)}</h3>
+      <span class="badges"><span class="badge v-${esc(a.verified)}">${esc(VERIFIED[a.verified])}</span><span class="badge cred cred-${esc(a.critique.credibility)}" title="${esc(CREDIBILITY[a.critique.credibility])}">可信度 ${esc(a.critique.credibility)}</span></span>
+      <p class="excerpt thesis" id="${esc(id)}-card-sum"><span class="thesis-label">观点</span>${raw(a.thesis_html)}</p>
+      <span class="card-foot"><span>${esc(analysisMeta(a))}</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
+    </a>`;
+  }
   return `    <a class="card" href="#${esc(id)}" data-id="${esc(article.id)}" data-cat="${esc(category.id)}" data-k="${esc(article.keywords || '')}" aria-labelledby="${esc(id)}-card-title" aria-describedby="${esc(id)}-card-sum">
       <span class="card-rule" aria-hidden="true"></span>
       <span class="card-kicker"><span class="numeral">${esc(category.numeral)}</span><span>${esc(category.badge)}</span><span class="when">${esc(article.added.slice(5))}</span></span>
@@ -290,8 +427,10 @@ function renderEssay(article, category) {
   const linkText = article.status === 'fetch_failed' ? '尝试打开原文' : '直达原文';
   const taskAttr = article.ticktick_task_id ? ` data-task="${esc(article.ticktick_task_id)}"` : '';
   const leadDrop = !article.detail && stripTags(article.summary_html).length >= 70 ? ' drop' : '';
-  const toc = [{ id: `${id}-lead`, text: '提要' }];
-  if (points.length) toc.push({ id: `${id}-points`, text: '要点' });
+  const toc = [];
+  const analysisHtml = article.analysis ? renderAnalysis(article, id, toc) : '';
+  if (!article.analysis) toc.push({ id: `${id}-lead`, text: '提要' });
+  if (points.length) toc.push({ id: `${id}-points`, text: article.analysis ? '原文要点' : '要点' });
   if (notes.length) toc.push({ id: `${id}-notes`, text: '批注' });
 
   let deepHtml = '';
@@ -313,7 +452,7 @@ ${raw(headed.html)}
   const pointsHtml = points.length
     ? `
         <section class="points" id="${esc(id)}-points" data-spy>
-          <h2>要点</h2>
+          <h2>${article.analysis ? '原文要点' : '要点'}</h2>
           <ol>
 ${points.map((point) => `            <li>${raw(point)}</li>`).join('\n')}
           </ol>
@@ -344,7 +483,7 @@ ${tocHtml}
         <div class="essay-main">
           <p class="eyebrow">${esc(essayEyebrow(article, category))}</p>
           <h1>${esc(article.title)}</h1>
-          <p class="lede${leadDrop}" id="${esc(id)}-lead" data-spy><b>${esc(article.summary_label)}：</b>${raw(article.summary_html)}</p>${pointsHtml}${notesHtml}${deepHtml}
+${article.analysis ? analysisHtml : `          <p class="lede${leadDrop}" id="${esc(id)}-lead" data-spy><b>${esc(article.summary_label)}：</b>${raw(article.summary_html)}</p>`}${pointsHtml}${notesHtml}${deepHtml}
           <p class="essay-actions"><a class="textlink" href="${esc(article.url)}" target="_blank" rel="noopener noreferrer">${linkText} <span aria-hidden="true">↗</span></a></p>
         </div>
       </div>
@@ -352,8 +491,158 @@ ${tocHtml}
   </article>`;
 }
 
+function renderAnalysis(article, id, toc) {
+  const a = article.analysis;
+  const parts = [];
+  const sec = (key, title, inner) => {
+    toc.push({ id: `${id}-${key}`, text: title });
+    parts.push(`
+          <section class="an an-${key}" id="${esc(id)}-${key}" data-spy>
+            <h2>${esc(title)}</h2>
+${inner}
+          </section>`);
+  };
+  const list = (items, cls) => `            <ul class="${cls}">
+${items.map((item) => `              <li>${raw(item)}</li>`).join('\n')}
+            </ul>`;
+
+  toc.push({ id: `${id}-thesis`, text: '核心观点' });
+  parts.push(`
+          <p class="verify v-${esc(a.verified)}"><b>${esc(VERIFIED[a.verified])}</b>${a.verified_note ? `<span>${esc(a.verified_note)}</span>` : ''}</p>
+          <p class="lede drop thesis-lede" id="${esc(id)}-thesis" data-spy>${raw(a.thesis_html)}</p>`);
+
+  sec('lead', '原文在说什么', `            <p><b>${esc(article.summary_label)}：</b>${raw(article.summary_html)}</p>`);
+
+  const facts = a.facts || [];
+  if (facts.length) {
+    sec('facts', '关键事实与数据', `            <ol class="facts">
+${facts.map((fact) => {
+    const src = fact.url
+      ? `<a href="${esc(fact.url)}" target="_blank" rel="noopener noreferrer">${esc(fact.source)}</a>`
+      : esc(fact.source);
+    const year = fact.year ? `，${esc(String(fact.year))}` : '';
+    return `              <li>${raw(fact.html)}<span class="src">${src}${year}</span></li>`;
+  }).join('\n')}
+            </ol>`);
+  }
+
+  const c = a.critique;
+  sec('critique', '批判性判断', `            <p class="cred-line"><span class="badge cred cred-${esc(c.credibility)}">可信度 ${esc(c.credibility)}</span><span>${esc(CREDIBILITY[c.credibility])}</span></p>
+            <p>${raw(c.credibility_note)}</p>${(c.points_html || []).length ? '\n' + list(c.points_html, 'crit') : ''}`);
+
+  if ((a.context_html || []).length) sec('context', '延伸背景', list(a.context_html, 'ctx'));
+
+  if ((a.relevance || []).length) {
+    sec('relevance', '与你的关联', `            <dl class="rel">
+${a.relevance.map((item) => `              <dt>${esc(RELEVANCE[item.area])}</dt><dd>${raw(item.html)}</dd>`).join('\n')}
+            </dl>`);
+  }
+
+  if ((a.next_html || []).length) sec('next', '可以做的下一步', list(a.next_html, 'next'));
+
+  return parts.join('');
+}
+
+function studyDomId(study) {
+  return `s-${study.id}`;
+}
+
+function renderStudy(study, articleById) {
+  const id = studyDomId(study);
+  const toc = [];
+  const sections = study.sections.map((section, index) => {
+    const sid = `${id}-s${index + 1}`;
+    toc.push({ id: sid, text: section.heading });
+    const body = String(section.body_html).replace(/<table[\s\S]*?<\/table>/gi, (table) => `<div class="table-scroll">${table}</div>`);
+    return `
+          <section class="study-sec" id="${esc(sid)}" data-spy>
+            <h2>${esc(section.heading)}</h2>
+            <div class="study-body">
+${raw(body)}
+            </div>
+          </section>`;
+  }).join('');
+
+  const related = (study.article_ids || []).map((aid) => articleById.get(aid)).filter(Boolean);
+  let relatedHtml = '';
+  if (related.length) {
+    toc.push({ id: `${id}-related`, text: '串起的收藏' });
+    relatedHtml = `
+          <section class="study-related" id="${esc(id)}-related" data-spy>
+            <h2>串起的收藏</h2>
+            <ul>
+${related.map((article) => `              <li><a href="#${esc(domId(article.id))}">${esc(article.title)}</a>${article.analysis ? `<span class="badge cred cred-${esc(article.analysis.critique.credibility)}">可信度 ${esc(article.analysis.critique.credibility)}</span>` : ''}</li>`).join('\n')}
+            </ul>
+          </section>`;
+  }
+  const sources = study.sources || [];
+  let sourcesHtml = '';
+  if (sources.length) {
+    toc.push({ id: `${id}-sources`, text: '来源' });
+    sourcesHtml = `
+          <section class="study-sources" id="${esc(id)}-sources" data-spy>
+            <h2>来源</h2>
+            <ol>
+${sources.map((source) => `              <li><a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.title)}</a>${source.site || source.date ? `<span class="src">${esc([source.site, source.date].filter(Boolean).join('，'))}</span>` : ''}</li>`).join('\n')}
+            </ol>
+          </section>`;
+  }
+  const tocHtml = toc.map((item) => `            <li><a href="#${esc(item.id)}">${esc(item.text)}</a></li>`).join('\n');
+  return `  <article class="essay study" id="${esc(id)}" data-id="${esc(id)}" tabindex="-1">
+    <div class="readbar">
+      <a class="back" href="#top">← 返回面板</a>
+      <span class="readbar-kicker">专题研究</span>
+    </div>
+    <div class="essay-sheet">
+      <div class="essay-layout">
+        <nav class="toc" aria-label="本专题目录">
+          <p class="toc-label">目录</p>
+          <ol>
+${tocHtml}
+          </ol>
+        </nav>
+        <div class="essay-main">
+          <p class="eyebrow">${esc(study.kicker || '专题研究')} · ${esc(study.published)}</p>
+          <h1>${esc(study.title)}</h1>
+          <p class="dek">${raw(study.dek_html)}</p>${sections}${relatedHtml}${sourcesHtml}
+        </div>
+      </div>
+    </div>
+  </article>`;
+}
+
+function renderFeature(studies) {
+  if (!studies.length) return '';
+  const [latest, ...older] = studies;
+  const id = studyDomId(latest);
+  const olderHtml = older.length
+    ? `
+    <div class="feature-older">
+      <p class="feature-older-label">往期专题</p>
+      <ul>
+${older.map((study) => `        <li><a href="#${esc(studyDomId(study))}">${esc(study.title)}</a><span>${esc(study.published)}</span></li>`).join('\n')}
+      </ul>
+    </div>`
+    : '';
+  return `<section class="feature" aria-labelledby="feature-title">
+  <div class="feature-in">
+    <p class="feature-kicker">最新专题 · ${esc(latest.published)}</p>
+    <h2 id="feature-title"><a href="#${esc(id)}">${esc(latest.title)}</a></h2>
+    <p class="feature-dek">${raw(latest.dek_html)}</p>
+    <ol class="feature-toc">
+${latest.sections.map((section, index) => `      <li><a href="#${esc(id)}-s${index + 1}">${esc(section.heading)}</a></li>`).join('\n')}
+    </ol>
+    <p class="feature-foot"><span>串起 ${(latest.article_ids || []).length} 篇收藏 · ${(latest.sources || []).length} 个来源</span><a class="feature-cta" href="#${esc(id)}">读专题 <span aria-hidden="true">→</span></a></p>
+  </div>${olderHtml}
+</section>
+`;
+}
+
 function renderPage(doc) {
   const { site, categories, articles } = doc;
+  const studies = (doc.studies || []).slice().sort((x, y) => (x.published < y.published ? 1 : x.published > y.published ? -1 : 0));
+  const articleById = new Map(articles.map((article) => [article.id, article]));
+  const analysisCount = articles.filter((article) => article.analysis).length;
   const byId = new Map(categories.map((category) => [category.id, category]));
   const dates = [...new Set(articles.map((article) => article.added))].sort().reverse();
   const minDate = dates[dates.length - 1];
@@ -372,8 +661,8 @@ function renderPage(doc) {
     seenDomIds.add(id);
   }
 
-  const sub = `这里是完整阅读归档，共 ${articles.length} 条，采集于 ${rangeProse(minDate, maxDate)}，按日期分成 ${dates.length} 批。每条都提炼了摘要与要点，硬核文章附深入讲解。点卡片进入阅读页，想读原文一键直达。`;
-  let howto = `<b>用法：</b>目录是一排小卡片，点进去读全文，左上角可返回篇目。按采集日期从新到旧排列，也可以用分类或搜索缩小范围。标着「含讲解」的，正文里另有深入讲解。最近一批（${esc(chineseDate(maxDate))}，${newest.length} 条）：${newestTitles}。`;
+  const sub = `收藏只是入口，这里的重点是调研和分析：每周一篇专题把相关文章串成趋势，单篇卡片给出核心观点、核实过的事实、批判性判断、延伸背景，以及和你的专业、复试、兴趣有什么关系。共 ${articles.length} 条，其中 ${analysisCount} 条有完整分析，采集于 ${rangeProse(minDate, maxDate)}。`;
+  let howto = `先读最上面的专题。卡片上的「观点」是一句话结论，「可信度」是我对来源的评级（A 最高，D 最低），「已读原文核实」和「仅按标题」说明分析的依据。点卡片看完整分析，手机上左右滑动翻卡片。较早的收藏只有摘要和要点，没有分析层。最近一批（${esc(chineseDate(maxDate))}，${newest.length} 条）：${newestTitles}。`;
   if (failed.length) {
     howto += `另有 ${failed.length} 条正文抓取失败，只收录了标题：${failedTitles}。`;
   }
@@ -389,7 +678,10 @@ ${cards.map((article) => renderCard(article, byId.get(article.category))).join('
     </div>
   </div>`;
   }).join('\n\n');
-  const essays = articles.map((article) => renderEssay(article, byId.get(article.category))).join('\n\n');
+  const essays = studies.map((study) => renderStudy(study, articleById))
+    .concat(articles.map((article) => renderEssay(article, byId.get(article.category))))
+    .join('\n\n');
+  const feature = renderFeature(studies);
 
   const notes = Array.isArray(site.archive_notes) ? site.archive_notes : [];
   const notesHtml = notes.length
@@ -412,9 +704,6 @@ ${cards.map((article) => renderCard(article, byId.get(article.category))).join('
 <meta name="robots" content="${esc(site.robots)}">
 <meta name="referrer" content="no-referrer">
 <title>${esc(site.title)}</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 ${css}
 :root{${colorVars}}
@@ -444,10 +733,12 @@ ${essays}
       <span><b>${articles.length}</b> 条收藏</span><span class="sep" aria-hidden="true">/</span>
       <span><b>${usedCategoryCount}</b> 大板块</span><span class="sep" aria-hidden="true">/</span>
       <span><b>${rangeChip(minDate, maxDate)}</b> 采集</span><span class="sep" aria-hidden="true">/</span>
+      <span><b>${studies.length}</b> 篇专题</span><span class="sep" aria-hidden="true">/</span>
+      <span><b>${analysisCount}</b> 条完整分析</span><span class="sep" aria-hidden="true">/</span>
       <span><b>${detailCount}</b> 篇含深入讲解</span><span class="sep" aria-hidden="true">/</span>
       <span class="hot" id="countdown"><b>--</b> 天距离 ${esc(site.exam.label)}</span>
     </p>
-    <p class="howto">${howto}</p>
+    <details class="howto"><summary>怎么读这个面板</summary><p>${howto}</p></details>
   </div>
 </header>
 
@@ -463,14 +754,14 @@ ${filters}
 </nav>
 
 <main class="catalog wrap" id="catalog">
-${batches}
+${feature}${batches}
 
 <p class="empty" id="empty" hidden role="status">没有匹配的内容，换个关键词试试～</p>
 </main>
 
 <footer class="foot">
   <div class="wrap foot-in">
-    <b>关于本页</b>：由 <code>data/articles.json</code> 构建的个人阅读归档，共 ${articles.length} 条，采集于 ${esc(minDate)} 至 ${esc(maxDate)}。摘要与讲解依据原文整理，观点与细节以原文为准。单文件 HTML，可离线打开。
+    <b>关于本页</b>：由 <code>data/articles.json</code> 构建的调研与分析阅读面板，共 ${articles.length} 条收藏、${studies.length} 篇专题，采集于 ${esc(minDate)} 至 ${esc(maxDate)}。分析只写核实过的事实，查不到就写查不到；可信度是主观评级，细节以原文为准。不加载任何外部字体或 CDN，国内可直接打开，单文件 HTML 可离线阅读。
     <br>早期整页由 Mac 上的 didaMind / wxdigest 重写并推送。那条流水线已停用；现在只往数据文件追加条目，再构建这一页。${notesHtml}
   </div>
 </footer>
@@ -528,7 +819,8 @@ function main() {
   const html = renderPage(doc);
   const detailCount = doc.articles.filter((article) => article.detail).length;
   const failedCount = doc.articles.filter((article) => article.status === 'fetch_failed').length;
-  const summary = `${doc.articles.length} 条，${detailCount} 条含深入讲解，${failedCount} 条抓取失败`;
+  const analysisCount = doc.articles.filter((article) => article.analysis).length;
+  const summary = `${doc.articles.length} 条，${analysisCount} 条含分析，${(doc.studies || []).length} 篇专题，${detailCount} 条含深入讲解，${failedCount} 条抓取失败`;
 
   if (opts.check) {
     const target = path.join(ROOT, 'index.html');

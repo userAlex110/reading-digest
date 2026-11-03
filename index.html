@@ -6,9 +6,6 @@
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta name="referrer" content="no-referrer">
 <title>收藏即所学 · 微信采集学习站</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
     --paper:#f3ecdf;
@@ -95,6 +92,8 @@
     border-left:2px solid var(--seal);color:var(--muted);font-size:13.5px;line-height:1.75;
   }
   .howto b{color:var(--ink);font-weight:600}
+  .howto summary{cursor:pointer;color:var(--ink);font-weight:600;letter-spacing:.06em}
+  .howto p{margin:.5em 0 0}
 
   .bar{
     position:sticky;top:0;z-index:40;
@@ -248,6 +247,93 @@
   .essay-actions{margin:2.4rem 0 0}
   .textlink{font-family:var(--sans);font-size:14.5px;letter-spacing:.06em;text-underline-offset:.22em}
 
+  /* 分析层：卡片 */
+  .badges{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px}
+  .badge{
+    display:inline-block;font-family:var(--sans);font-size:11.5px;line-height:1.5;letter-spacing:.06em;
+    padding:0 .5em;border:1px solid var(--line-strong);color:var(--muted);background:transparent;white-space:nowrap;
+  }
+  .badge.v-original{border-color:#3f6b4a;color:#2f5a3a}
+  .badge.v-title_only{border-style:dashed}
+  .badge.cred-A{background:#2f5a3a;border-color:#2f5a3a;color:#fbf7f0}
+  .badge.cred-B{border-color:#2f5a3a;color:#2f5a3a}
+  .badge.cred-C{border-color:#9a6a1f;color:#7a5214}
+  .badge.cred-D{background:var(--seal);border-color:var(--seal);color:#fbf7f0}
+  .card.has-analysis{border-top:2px solid var(--seal)}
+  .card.has-analysis .card-rule{display:none}
+  .excerpt.thesis{color:var(--ink);-webkit-line-clamp:5}
+  .thesis-label{
+    font-family:var(--sans);font-size:11px;letter-spacing:.2em;color:var(--seal);margin-right:.5em;
+  }
+
+  /* 分析层：阅读页 */
+  .verify{
+    display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;
+    margin:1rem 0 0;font-family:var(--sans);font-size:13px;color:var(--muted);
+  }
+  .verify b{font-weight:600;color:#2f5a3a;letter-spacing:.08em}
+  .verify.v-title_only b{color:#7a5214}
+  .thesis-lede{font-size:1.24rem;line-height:1.8;font-weight:600}
+  .an p{margin:.7em 0}
+  .facts{margin:0;padding-left:1.4em}
+  .facts li{margin:.75em 0;padding-left:.2em}
+  .facts li::marker{color:var(--seal);font-size:.85em}
+  .src{display:block;font-family:var(--sans);font-size:12.5px;color:var(--muted);letter-spacing:.02em;margin-top:.15em}
+  .src a{color:var(--muted)}
+  .cred-line{display:flex;gap:10px;align-items:baseline;font-family:var(--sans);font-size:14px;color:var(--muted)}
+  .crit,.ctx,.next{margin:.6em 0;padding-left:1.2em}
+  .crit li,.ctx li,.next li{margin:.55em 0}
+  .crit li::marker{content:"✕  ";color:var(--seal);font-size:.8em}
+  .next li::marker{content:"→  ";color:var(--seal)}
+  .rel{margin:.4em 0;display:grid;grid-template-columns:9.5em minmax(0,1fr);gap:.55em 1em}
+  .rel dt{font-family:var(--sans);font-size:13px;letter-spacing:.06em;color:var(--seal);padding-top:.3em}
+  .rel dd{margin:0}
+  .an-critique{background:rgba(138,46,36,.045);padding:.2rem 1.1rem .6rem;border-left:2px solid var(--seal)}
+  .an-critique h2{margin-top:1.1rem}
+
+  /* 专题 */
+  .feature{
+    margin:26px 0 8px;display:grid;grid-template-columns:minmax(0,1fr) 17rem;gap:28px;
+    padding:26px 28px 22px;background:var(--card);border:1px solid var(--line);border-top:3px solid var(--seal);
+  }
+  .feature-kicker{margin:0;font-size:12px;letter-spacing:.22em;color:var(--seal)}
+  .feature h2{margin:.5rem 0 .6rem;font-family:var(--serif);font-weight:700;font-size:clamp(1.45rem,2.6vw,2.05rem);line-height:1.38;letter-spacing:.03em;text-wrap:balance}
+  .feature h2 a{color:var(--ink);text-decoration:none}
+  .feature h2 a:hover{color:var(--seal)}
+  .feature-dek{margin:0;font-family:var(--serif);font-size:1.02rem;line-height:1.85;color:var(--muted)}
+  .feature-toc{margin:14px 0 0;padding:0;list-style:none;counter-reset:ft;columns:2;column-gap:24px;font-size:13.5px}
+  .feature-toc li{counter-increment:ft;break-inside:avoid;padding:.18em 0}
+  .feature-toc li::before{content:counter(ft,decimal-leading-zero) "  ";color:var(--seal);font-size:.82em}
+  .feature-toc a{color:var(--ink);text-decoration:none}
+  .feature-toc a:hover{color:var(--seal)}
+  .feature-foot{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:16px 0 0;padding-top:12px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+  .feature-cta{color:var(--seal);letter-spacing:.14em;text-decoration:none;font-size:14px}
+  .feature-older{border-left:1px solid var(--line);padding-left:20px}
+  .feature-older-label{margin:0 0 8px;font-family:var(--serif);font-size:13px;letter-spacing:.28em;color:var(--seal)}
+  .feature-older ul{list-style:none;margin:0;padding:0;font-size:13.5px}
+  .feature-older li{padding:.35em 0;border-bottom:1px solid var(--line)}
+  .feature-older li span{display:block;font-size:12px;color:var(--muted)}
+  .feature-older a{color:var(--ink);text-decoration:none}
+  .feature:not(:has(.feature-older)){grid-template-columns:minmax(0,1fr)}
+  .dek{margin:.8rem 0 0;font-size:1.12rem;line-height:1.85;color:var(--muted)}
+  .study-body{display:grid;gap:.9rem}
+  .study-body > *{min-width:0;margin:0}
+  .study-sec:first-of-type .study-body > p:first-child::first-letter{
+    font-weight:700;float:left;font-size:3.2em;line-height:.82;padding:.08em .1em 0 0;color:var(--seal);
+  }
+  .study-body h3{margin:.8rem 0 0;font-family:var(--serif);font-weight:600;font-size:1.15rem;letter-spacing:.03em}
+  .study-body ul,.study-body ol{margin:0;padding-left:1.3em}
+  .study-body li{margin:.4em 0}
+  .study-body blockquote{margin:0;padding:.1em 0 .1em .9em;border-left:2px solid var(--seal);color:var(--muted)}
+  .study-body table{width:100%;border-collapse:collapse;font-size:.9rem;line-height:1.6}
+  .study-body th,.study-body td{border-bottom:1px solid var(--line);padding:.5em .6em;text-align:left;vertical-align:top}
+  .study-body th{font-weight:600;border-bottom-color:var(--ink);white-space:nowrap}
+  .study-body .caveat{font-family:var(--sans);font-size:13.5px;color:var(--muted);background:rgba(28,22,18,.04);padding:.6em .9em}
+  .study-related ul{list-style:none;margin:0;padding:0}
+  .study-related li{display:flex;gap:10px;align-items:baseline;justify-content:space-between;padding:.45em 0;border-bottom:1px solid var(--line)}
+  .study-sources ol{margin:0;padding-left:1.5em;font-size:.95rem}
+  .study-sources li{margin:.45em 0}
+
   @media (max-width:1040px){
     .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   }
@@ -271,6 +357,19 @@
     .toc a.on{border-left:none;border-bottom:2px solid var(--seal);padding-left:0}
     .batch-head{flex-wrap:wrap}
     .batch-head .cnt{margin-left:0}
+    /* 手机：一次一张，左右滑 */
+    .grid{
+      display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;
+      margin:0 -18px;padding:2px 18px 12px;scroll-padding:0 18px;scrollbar-width:none;
+    }
+    .grid::-webkit-scrollbar{display:none}
+    .grid > .card{flex:0 0 86%;scroll-snap-align:start;min-height:300px}
+    .grid > .card:only-child{flex-basis:100%}
+    .feature{grid-template-columns:minmax(0,1fr);padding:20px 18px 18px;gap:16px}
+    .feature-toc{columns:1}
+    .feature-older{border-left:none;padding-left:0;border-top:1px solid var(--line);padding-top:12px}
+    .rel{grid-template-columns:minmax(0,1fr);gap:.1em}
+    .rel dd{margin-bottom:.6em}
   }
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
@@ -288,6 +387,178 @@
 <!-- Generated from data/articles.json by scripts/build.js. Edit the data, then rebuild. -->
 
 <div class="library">
+  <article class="essay study" id="s-2026-w45-agent-orchestration" data-id="s-2026-w45-agent-orchestration" tabindex="-1">
+    <div class="readbar">
+      <a class="back" href="#top">← 返回面板</a>
+      <span class="readbar-kicker">专题研究</span>
+    </div>
+    <div class="essay-sheet">
+      <div class="essay-layout">
+        <nav class="toc" aria-label="本专题目录">
+          <p class="toc-label">目录</p>
+          <ol>
+            <li><a href="#s-2026-w45-agent-orchestration-s1">结论先说</a></li>
+            <li><a href="#s-2026-w45-agent-orchestration-s2">Super-agent 到底是什么</a></li>
+            <li><a href="#s-2026-w45-agent-orchestration-s3">实验数字，以及要打的折扣</a></li>
+            <li><a href="#s-2026-w45-agent-orchestration-s4">bot 的「否定之否定」</a></li>
+            <li><a href="#s-2026-w45-agent-orchestration-s5">「产品能力更重要」：证据与反驳</a></li>
+            <li><a href="#s-2026-w45-agent-orchestration-s6">对你的启示与行动</a></li>
+            <li><a href="#s-2026-w45-agent-orchestration-related">串起的收藏</a></li>
+            <li><a href="#s-2026-w45-agent-orchestration-sources">来源</a></li>
+          </ol>
+        </nav>
+        <div class="essay-main">
+          <p class="eyebrow">专题研究 · 第 45 周 · 2026-11-03</p>
+          <h1>智能体编排、bot 回归与「产品能力更重要」：从 DeepSeek Super-agent 读 2026 年下半年的 AI 走向</h1>
+          <p class="dek">以 DeepSeek Harness 团队的 Super-agent 为主线，把这周收藏里的 TRAE 宝、HachimoDock、HackerBooks、江山时序串起来，回答三个问题：智能体编排到底是什么？bot 为什么又回来了？「模型趋同之后，产品能力更重要」这个判断站得住吗？</p>
+          <section class="study-sec" id="s-2026-w45-agent-orchestration-s1" data-spy>
+            <h2>结论先说</h2>
+            <div class="study-body">
+<p>这周的收藏看似零散，其实指向同一件事：AI 正在从「你打开一个窗口问问题」变成「一个常驻后台、替你盯着多件事的系统」。DeepSeek 的 Super-agent 给出了这套系统的架构草图，TRAE 宝是它的商业产品版，HachimoDock 甚至给它做了一块硬件状态屏。</p>
+<ol>
+<li><b>智能体编排</b>，指的是一个常驻 Router 负责对人交互和分派，多个上下文隔离的 Worker 并行干活，由环境事件驱动，外面再挂一个 Watchdog。它目前只是研究原型。</li>
+<li><b>bot 的回归</b>不是走回头路：2016 年的 bot 失败是因为办不成事，2026 年的 bot 能执行任务，所以入口又回到了 IM。新的瓶颈变成了<b>人的注意力</b>和<b>安全</b>。</li>
+<li><b>「产品能力更重要」只对了一半</b>：头部模型确实在趋同，但薄薄一层的产品最容易被模型厂商吃掉。真正难复制的是「选对问题 + 系统工程 + 场景或数据」的组合。</li>
+<li><b>对你：</b>初试前只收藏、不深挖；Super-agent 里的缓存、批处理、发布订阅、看门狗，正好是复试能讲的操作系统和嵌入式素材。</li>
+</ol>
+            </div>
+          </section>
+          <section class="study-sec" id="s-2026-w45-agent-orchestration-s2" data-spy>
+            <h2>Super-agent 到底是什么</h2>
+            <div class="study-body">
+<p>出处是 DeepSeek Harness 团队 2026 年 10 月 31 日 20:29（北京时间）发的《Super-agent 设计探索》，同时开源了 dsh-superagent-prototype。文章开头就声明：这是架构思路，不是现有产品功能的介绍。</p>
+<blockquote>单任务的上限取决于模型能力，多任务的上限取决于人的注意力。……一个人通常只能同时跟进 3 到 5 个活跃 Session。<br>—— DeepSeek Harness 团队</blockquote>
+<p>整条链路是：<b>环境事件</b>（群聊、邮件、PR 评论、CI）→ <b>两级过滤</b>（程序规则先筛，LLM 再判）→ <b>Router</b>（常驻、分派）→ <b>Worker</b>（并行执行）→ 你机器上的 <b>daemon</b>（真正跑命令），旁边的 <b>Watchdog</b> 定期巡检。</p>
+<div class="table-scroll"><table><thead><tr><th>模块</th><th>做法</th><th>对应的经典思想</th></tr></thead><tbody>
+<tr><td>双层架构</td><td>Router 不干具体活、统一对外说话；Worker 隔离上下文并发</td><td>调度器与进程</td></tr>
+<tr><td>事件过滤</td><td>程序白名单先过滤，剩下的交给 LLM</td><td>Fast Path / Slow Path</td></tr>
+<tr><td>订阅直通</td><td>同一 PR 或话题算一个 Thread，后续事件直接发给已订阅的 Worker</td><td>发布订阅（ROS topic）</td></tr>
+<tr><td>上下文组织</td><td>近期内联，长内容溢出到窗口外，按 ID 链式召回</td><td>缓存与局部性</td></tr>
+<tr><td>投机执行</td><td>讨论还在进行就后台复现、修复，失败就沉默</td><td>Speculative Execution</td></tr>
+<tr><td>异步 ReAct</td><td><code>run()</code> 拆成 <code>start()/stop()</code>，前台随时插话（已实现，默认关）</td><td>全双工、异步 I/O</td></tr>
+<tr><td>存算分离</td><td>Loop 云端无状态，状态进数据库，执行环境留本地</td><td>Compute-Storage Separation</td></tr>
+<tr><td>Watchdog</td><td>独立会话检查 Worker 有没有实质进展</td><td>看门狗（STM32 IWDG）</td></tr>
+</tbody></table></div>
+            </div>
+          </section>
+          <section class="study-sec" id="s-2026-w45-agent-orchestration-s3" data-spy>
+            <h2>实验数字，以及要打的折扣</h2>
+            <div class="study-body">
+<p>原文的实验设计：约 300 条消息，其中约 20 条是工作请求；编码动作用「耗时占位工具」代替；每种方案跑 5 次。</p>
+<ul>
+<li><b>完成时间：</b>Super-agent p50 12.4 分钟、p95 15.7 分钟；「单 Session + Subagent（中性提示）」p95 29.5 分钟。</li>
+<li><b>直通的价值：</b>去掉 Thread 订阅直通后，Router 决策数约 +30%，token 从 2323 万涨到 3177 万（+37%）。</li>
+<li><b>批处理摊销：</b>Trigger 从每分钟约 1 条升到 40 条时，每批 1.0→2.8 条，单个决策分摊耗时 6.4 秒→1.6 秒。</li>
+</ul>
+<p class="caveat">要打的折扣：负载是合成的，没有测真实代码质量（MarkTechPost 的报道也指出了这一点）；对照组不是业界最强的多智能体方案；多会话让读缓存 token 变多，「更快」是拿钱换的；开源原型只覆盖单个 GitHub 仓库加可选的飞书，README 写明「不是官方产品、不是生产级」；提示词注入、凭据泄露被作者自己列为未解决问题。</p>
+<h3>和同类方案比</h3>
+<div class="table-scroll"><table><thead><tr><th>方案</th><th>编排方式</th><th>长处</th><th>短板</th></tr></thead><tbody>
+<tr><td>DeepSeek Super-agent（2026）</td><td>常驻 Router + 隔离 Worker，事件驱动</td><td>多任务并发、持续在线、主动</td><td>原型；token 更贵；安全没解决</td></tr>
+<tr><td>Anthropic 多智能体研究系统（2025）</td><td>Lead 拆任务，3–5 个 Subagent 并行</td><td>内部评测比单 Opus 4 高 90.2%</td><td>约 15 倍 token；只适合可拆的广度任务</td></tr>
+<tr><td>Cognition「别做多智能体」（2025）</td><td>单线程 + 上下文压缩</td><td>决策一致、少冲突</td><td>并发弱</td></tr>
+<tr><td>Anthropic Managed Agents</td><td>模型与 harness、沙箱、会话日志三者分离</td><td>可恢复、可替换</td><td>面向托管沙箱</td></tr>
+<tr><td>OpenClaw（2026）</td><td>自托管网关接 20 多个聊天渠道 + 技能市场</td><td>渠道最广、生态大</td><td>大量 CVE 与恶意技能</td></tr>
+</tbody></table></div>
+            </div>
+          </section>
+          <section class="study-sec" id="s-2026-w45-agent-orchestration-s4" data-spy>
+            <h2>bot 的「否定之否定」</h2>
+            <div class="study-body">
+<div class="table-scroll"><table><thead><tr><th>阶段</th><th>形态</th><th>结果</th></tr></thead><tbody>
+<tr><td>2016</td><td>Messenger Bots，「对话即平台」</td><td>入口在 IM。2017 年 2 月报道约 70% 的请求需要人工接手，Facebook 收缩</td></tr>
+<tr><td>2022–2024</td><td>ChatGPT 式聊天窗口</td><td>不再进 IM，用户自己打开窗口提问</td></tr>
+<tr><td>2025</td><td>Claude Code、Codex、Cursor 等编程智能体</td><td>能干活了，但要一个个 Session 盯着</td></tr>
+<tr><td>2026.1</td><td>OpenClaw 爆火，约 60 天破 25 万星</td><td>bot 回到 IM，这次能执行</td></tr>
+<tr><td>2026.7–10</td><td>ChatGPT Work、Meta Muse、OpenAI dots、Claude Duet</td><td>大厂常驻个人智能体集中上线</td></tr>
+<tr><td>2026.10–11</td><td>TRAE 宝、DeepSeek Super-agent</td><td>国内跟进，编排架构公开</td></tr>
+</tbody></table></div>
+<ul>
+<li><b>驱动一：</b>模型能独立完成单个任务了。AI Index 2026 说智能体仍有约三分之一的尝试会失败，但已经够让人放手。</li>
+<li><b>驱动二：</b>瓶颈从模型转到人。DeepSeek 说一个人只能盯 3 到 5 个 Session，你收藏过的 Tibo（Codex 负责人）也说「我自己才是最大的天花板」，两边独立得出了同一个结论。</li>
+<li><b>驱动三：</b>Session 被重新看作实现细节，交互回到 GitHub、IM 这类原本就在用的界面。</li>
+<li><b>新问题是安全：</b>OpenClaw 官方已发布 722 个修复（其中 39 个有 CVE），CertiK 统计到约 13.5 万个暴露在公网的实例。</li>
+</ul>
+<p>所以更准确的说法是「螺旋上升」：入口回到了 IM，内核换成了能执行的智能体，难点也从「听不懂」变成了「权限和注意力怎么分配」。</p>
+            </div>
+          </section>
+          <section class="study-sec" id="s-2026-w45-agent-orchestration-s5" data-spy>
+            <h2>「产品能力更重要」：证据与反驳</h2>
+            <div class="study-body">
+<h3>支持的证据</h3>
+<ul>
+<li>AI Index 2026：头部 4 家模型在 Arena 上的分差小于 25 Elo（一年前约 97），报告认为能力不再是明显的差异点，竞争转向成本、可靠性和实用性。</li>
+<li>DeepSeek 原文：把 Session 从底层解耦之后，「向用户暴露怎样的交互，成为一个独立的产品问题」。</li>
+<li>同一个模型，换一种编排，p95 从 29.5 分钟降到 15.7 分钟，差别全在系统设计。</li>
+<li>构建成本骤降：vista8 几天做出 HackerBooks；江山时序 2.5 周 200 多次提交；鱼皮实测同一道题从 102 分钟降到 61 分钟。</li>
+</ul>
+<h3>反驳与限制</h3>
+<ul>
+<li><b>模型厂商会吞掉功能：</b>Jasper 被 ChatGPT 原生写作冲击，营收约从 1.2 亿美元掉到 5500 万美元；TechRadar 2026 年 10 月的文章称，2025 年美国关停的 AI 创业公司中 81% 是套壳和应用。</li>
+<li><b>模型和产品在协同设计：</b>DeepSeek V4.1 Flash 1017 专门针对自家 Harness 优化，护城河是「产品 + 数据 + 训练闭环」，不是纯产品。</li>
+<li><b>门槛降低对所有人都成立：</b>你能几天做出来，别人也能。HackerBooks 的数据来自 hackerbooks.org，界面谁都能重做。</li>
+<li><b>AI 有边际成本：</b>JetBrains 被传营收新高却亏损（网传，未核实），产品必须算得清 token 账。</li>
+<li><b>效率不一定兑现：</b>METR 2025 年的随机对照试验里，资深开源开发者用 AI 后实际慢了 19%，自己却以为快了 20%。</li>
+</ul>
+<p class="caveat">修正后的判断：模型能力越接近，决定成败的越是「选对问题 + 把系统工程做扎实 + 拥有场景或数据」。产品判断是必要条件，但不充分。Super-agent 本身就是例子：价值一半来自产品洞察（注意力是瓶颈），一半来自扎实的系统设计。</p>
+            </div>
+          </section>
+          <section class="study-sec" id="s-2026-w45-agent-orchestration-s6" data-spy>
+            <h2>对你的启示与行动</h2>
+            <div class="study-body">
+<ol>
+<li><b>现在到初试（12 月 19 日）：只收藏，不深挖。</b>AI 类每周最多 15 分钟，集中扫一次这个面板就够；训练营这类耗时活动先搁置。</li>
+<li><b>把 Super-agent 当成复试素材。</b>发布订阅对应 ROS topic，Watchdog 对应 STM32 的 IWDG，批处理和缓存对应计算机系统课；能用 2 分钟讲清楚，就是加分项。</li>
+<li><b>初试后做一个小项目。</b>给「微信采集」做一个事件驱动的小 bot：规则先过滤，LLM 再判断，每周归纳一次，状态可以显示在一块 HachimoDock 那样的小屏上。规模小，却完整覆盖 Router、过滤、Watchdog 三个概念。</li>
+<li><b>练产品判断，别只练提示词。</b>动手之前先写一句「谁的什么问题」和「第一批用户从哪来」，做完记下 token 成本。</li>
+<li><b>避开灰色玩法。</b>批量注册账号、共享会员中转、绕过版权这几类收藏有封号和法律风险，不建议实践。</li>
+</ol>
+            </div>
+          </section>
+          <section class="study-related" id="s-2026-w45-agent-orchestration-related" data-spy>
+            <h2>串起的收藏</h2>
+            <ul>
+              <li><a href="#e-wx-MzY4NzM3MTkxOQ-2247483844-1">DeepSeek Super-agent：常驻 Router 加并行 Worker，把 Agent 从「一个窗口」变成「一个后台系统」</a><span class="badge cred cred-B">可信度 B</span></li>
+              <li><a href="#e-wx-MzkxMTY4NTAyNQ-2247521374-1">TRAE 一周更新：「TRAE 宝」上线，跨项目记忆 + 子任务并行 + 本地/云电脑接续</a><span class="badge cred cred-C">可信度 C</span></li>
+              <li><a href="#e-url-39d90486b312a6c00c7a">一期视频里的 6 个开源项目：哈基米机、Foundation Sunshine、Tendedero、WeTypeX、geo-sleuth、gpu-unlock</a><span class="badge cred cred-B">可信度 B</span></li>
+              <li><a href="#e-url-21f283cd43976195ba7f">向阳乔木做了「黑客书架」：Hacker News 评论里被提及最多的书</a><span class="badge cred cred-B">可信度 B</span></li>
+              <li><a href="#e-wx-MzU4Mjg3MDAyMQ-2247638275-1">少数派 Matrix 自荐 3 款 App：江山时序、余阅、财悟，都是「领域热爱 + AI 编程」做出来的</a><span class="badge cred cred-C">可信度 C</span></li>
+              <li><a href="#e-wx-MzA5Nzk3MDQ4OQ-2649736365-1">不缺 Token 的 Tibo 怎么工作：把「人」从流程里拿出来</a></li>
+              <li><a href="#e-wx-Mzk0OTYwNzc3NQ-2247485876-1">DeepSeek V4.1 Flash 更新：更便宜更快，还能「许愿式」写完整项目</a></li>
+              <li><a href="#e-url-fba76d45b13e6e19fb02">MiniMax Code MiniApps：把 Agent 当 OS，插件就是应用</a></li>
+              <li><a href="#e-wx-MzI0NjM3NjI1NQ-2247623648-1">JetBrains 26 年来首次年度亏损：不是 IDE 没人用，是 AI 改了收费逻辑</a></li>
+            </ul>
+          </section>
+          <section class="study-sources" id="s-2026-w45-agent-orchestration-sources" data-spy>
+            <h2>来源</h2>
+            <ol>
+              <li><a href="https://mp.weixin.qq.com/s?__biz=MzY4NzM3MTkxOQ==&amp;mid=2247483844&amp;idx=1&amp;sn=1e93a1f1dc5ae0996f9c45794b896495" target="_blank" rel="noopener noreferrer">Super-agent 设计探索：迈向更自主的 Agent 系统</a><span class="src">DeepSeek Harness 团队公众号，2026-10-31</span></li>
+              <li><a href="https://github.com/deepseek-ai/dsh-superagent-prototype" target="_blank" rel="noopener noreferrer">dsh-superagent-prototype</a><span class="src">GitHub deepseek-ai，2026-10-31</span></li>
+              <li><a href="https://www.marktechpost.com/2026/11/01/deepseek-dsh-superagent-router-worker-coding-agent/" target="_blank" rel="noopener noreferrer">DeepSeek Open-Sources dsh-superagent</a><span class="src">MarkTechPost，2026-11-01</span></li>
+              <li><a href="https://mp.weixin.qq.com/s?__biz=MzkxMTY4NTAyNQ==&amp;mid=2247521374&amp;idx=1&amp;sn=295ca57af5c4fa872d5cd259ca44daff" target="_blank" rel="noopener noreferrer">一周更新：开发者个人助理上线等</a><span class="src">TRAE.ai，2026-11-01</span></li>
+              <li><a href="https://mp.weixin.qq.com/s?__biz=Mzk0OTYwNzc3NQ==&amp;mid=2247485876&amp;idx=1&amp;sn=2606d3fa9ac085f94290ddd1d94649cc" target="_blank" rel="noopener noreferrer">DeepSeek V4.1 Flash 1017：许愿式编程</a><span class="src">DeepSeek 公众号，2026-10-17</span></li>
+              <li><a href="https://mp.weixin.qq.com/s?__biz=MzI1NDczNTAwMA==&amp;mid=2247593625&amp;idx=1&amp;sn=e31a04aa869b24d525b97144e3ca01db" target="_blank" rel="noopener noreferrer">DeepSeek 全新模型发布，性价比最高的一集</a><span class="src">程序员鱼皮，2026-10-19</span></li>
+              <li><a href="https://mp.weixin.qq.com/s?__biz=MzA5Nzk3MDQ4OQ==&amp;mid=2649736365&amp;idx=1&amp;sn=28c07d18532e207247ba00b0b7a972d0" target="_blank" rel="noopener noreferrer">看一下不缺 Token 的 Tibo 怎么工作</a><span class="src">EARS，2026-09-19</span></li>
+              <li><a href="https://mp.weixin.qq.com/s?__biz=MzI0NjM3NjI1NQ==&amp;mid=2247623648&amp;idx=1&amp;sn=1e6aa4260f6d8ec3581a82fa09aaf6c3" target="_blank" rel="noopener noreferrer">JetBrains 被爆亏损！传统 IDE 的黄金时代结束了？</a><span class="src">黑马程序员，2026-10-25</span></li>
+              <li><a href="https://x.com/vista8/status/2117290723255226820" target="_blank" rel="noopener noreferrer">HackerBooks 帖子</a><span class="src">X @vista8，2026-11-03</span></li>
+              <li><a href="https://www.anthropic.com/engineering/managed-agents" target="_blank" rel="noopener noreferrer">Scaling Managed Agents: Decoupling the brain from the hands</a><span class="src">Anthropic</span></li>
+              <li><a href="https://cognition.com/blog/dont-build-multi-agents" target="_blank" rel="noopener noreferrer">Don't Build Multi-Agents</a><span class="src">Cognition，2025-06</span></li>
+              <li><a href="https://theaiengineer.substack.com/p/how-anthropic-built-multi-agent-deep" target="_blank" rel="noopener noreferrer">Anthropic 多智能体研究系统解读（90.2%、15 倍 token）</a><span class="src">The AI Engineer</span></li>
+              <li><a href="https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance" target="_blank" rel="noopener noreferrer">The 2026 AI Index Report: Technical Performance</a><span class="src">Stanford HAI，2026</span></li>
+              <li><a href="https://github.blog/open-source/maintainers/openclaw-went-viral-meet-the-maintainers-building-and-securing-it/" target="_blank" rel="noopener noreferrer">OpenClaw went viral. Meet the maintainers</a><span class="src">GitHub Blog，2026</span></li>
+              <li><a href="https://openclaw.ai/security" target="_blank" rel="noopener noreferrer">OpenClaw Security</a><span class="src">openclaw.ai</span></li>
+              <li><a href="https://www.certik.com/zh-CN/blog/openclaw-security-report" target="_blank" rel="noopener noreferrer">OpenClaw Security Report</a><span class="src">CertiK，2026</span></li>
+              <li><a href="https://www.ncsti.gov.cn/kjdt/kjrd/202603/t20260310_240399.html" target="_blank" rel="noopener noreferrer">开源 AI 助手框架 OpenClaw 火了，这只「龙虾」养了也要防</a><span class="src">国家科技创新中心网，2026-03</span></li>
+              <li><a href="https://thenextweb.com/news/anthropic-claude-duet-ai-agent" target="_blank" rel="noopener noreferrer">Anthropic previews Claude Duet</a><span class="src">The Next Web，2026-10</span></li>
+              <li><a href="https://www.theregister.com/2017/02/22/facebook_ai_fail" target="_blank" rel="noopener noreferrer">Facebook scales back AI flagship after chatbots hit 70% failure rate</a><span class="src">The Register，2017-02-22</span></li>
+              <li><a href="https://www.techradar.com/pro/when-the-model-takes-away-the-moat" target="_blank" rel="noopener noreferrer">When the model takes away the moat</a><span class="src">TechRadar，2026-10-20</span></li>
+              <li><a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" target="_blank" rel="noopener noreferrer">Measuring the Impact of Early-2025 AI on Experienced OS Developers</a><span class="src">METR，2025-07-10</span></li>
+            </ol>
+          </section>
+        </div>
+      </div>
+    </div>
+  </article>
+
   <article class="essay" id="e-wx-MzA5Nzk3MDQ4OQ-2649736365-1" data-id="wx:MzA5Nzk3MDQ4OQ:2649736365:1" data-cat="ai" tabindex="-1">
     <div class="readbar">
       <a class="back" href="#top">← 返回篇目</a>
@@ -1463,17 +1734,67 @@
         <nav class="toc" aria-label="本篇目录">
           <p class="toc-label">目录</p>
           <ol>
-            <li><a href="#e-url-39d90486b312a6c00c7a-lead">提要</a></li>
-            <li><a href="#e-url-39d90486b312a6c00c7a-points">要点</a></li>
+            <li><a href="#e-url-39d90486b312a6c00c7a-thesis">核心观点</a></li>
+            <li><a href="#e-url-39d90486b312a6c00c7a-lead">原文在说什么</a></li>
+            <li><a href="#e-url-39d90486b312a6c00c7a-facts">关键事实与数据</a></li>
+            <li><a href="#e-url-39d90486b312a6c00c7a-critique">批判性判断</a></li>
+            <li><a href="#e-url-39d90486b312a6c00c7a-context">延伸背景</a></li>
+            <li><a href="#e-url-39d90486b312a6c00c7a-relevance">与你的关联</a></li>
+            <li><a href="#e-url-39d90486b312a6c00c7a-next">可以做的下一步</a></li>
+            <li><a href="#e-url-39d90486b312a6c00c7a-points">原文要点</a></li>
             <li><a href="#e-url-39d90486b312a6c00c7a-notes">批注</a></li>
           </ol>
         </nav>
         <div class="essay-main">
           <p class="eyebrow">柒 数码科技 · 视频简介里的项目清单（视频本身未收录） · 采集 11-01</p>
           <h1>一期视频里的 6 个开源项目：哈基米机、Foundation Sunshine、Tendedero、WeTypeX、geo-sleuth、gpu-unlock</h1>
-          <p class="lede drop" id="e-url-39d90486b312a6c00c7a-lead" data-spy><b>一句话：</b>收藏的是一期视频简介里的项目清单，不是视频本身。逐个核对了 GitHub 仓库说明：最贴近嵌入式的是 <b>哈基米机 HachimoDock</b>，用 <b>ESP32-P4</b> 小屏把 Claude / Codex 的 Agent 工作状态做成桌面宠物；最有争议的是 <b>gpu-unlock</b>，声称解除 GeForce 张量核心 FP16/BF16/TF32 的半速限制。</p>
+
+          <p class="verify v-original"><b>已读原文核实</b><span>逐个打开了 6 个 GitHub 仓库的说明；视频本身没看，项目没有实测</span></p>
+          <p class="lede drop thesis-lede" id="e-url-39d90486b312a6c00c7a-thesis" data-spy>同一张清单里，最值得你看的是 <b>HachimoDock</b>：它把「AI Agent 在干什么」做成一个 ESP32-P4 桌面小屏，是 Agent 时代的嵌入式新玩法；gpu-unlock 那类改底层的项目风险高、数字是作者自报。</p>
+          <section class="an an-lead" id="e-url-39d90486b312a6c00c7a-lead" data-spy>
+            <h2>原文在说什么</h2>
+            <p><b>一句话：</b>收藏的是一期视频简介里的项目清单，不是视频本身。逐个核对了 GitHub 仓库说明：最贴近嵌入式的是 <b>哈基米机 HachimoDock</b>，用 <b>ESP32-P4</b> 小屏把 Claude / Codex 的 Agent 工作状态做成桌面宠物；最有争议的是 <b>gpu-unlock</b>，声称解除 GeForce 张量核心 FP16/BF16/TF32 的半速限制。</p>
+          </section>
+          <section class="an an-facts" id="e-url-39d90486b312a6c00c7a-facts" data-spy>
+            <h2>关键事实与数据</h2>
+            <ol class="facts">
+              <li>HachimoDock 用 ESP32-P4（RISC-V 双核 400MHz、32MB PSRAM）驱动 2.8 英寸 480×640 MIPI-DSI 屏，桌面端经 USB 串口下发 Agent 状态<span class="src"><a href="https://github.com/YizhengWw/HachimoDock" target="_blank" rel="noopener noreferrer">GitHub YizhengWw/HachimoDock</a>，2026-11</span></li>
+              <li>HachimoDock 许可是非商用的 source-available，不是 OSI 认可的开源许可<span class="src"><a href="https://github.com/YizhengWw/HachimoDock" target="_blank" rel="noopener noreferrer">GitHub YizhengWw/HachimoDock</a>，2026-11</span></li>
+              <li>gpu-unlock 作者称解除张量核心限速后 LLM prefill 快 25–55%，属于作者自报，没有第三方复测<span class="src"><a href="https://github.com/Zagitta/gpu-unlock" target="_blank" rel="noopener noreferrer">GitHub Zagitta/gpu-unlock</a>，2026-11</span></li>
+            </ol>
+          </section>
+          <section class="an an-critique" id="e-url-39d90486b312a6c00c7a-critique" data-spy>
+            <h2>批判性判断</h2>
+            <p class="cred-line"><span class="badge cred cred-B">可信度 B</span><span>较高：来源可靠，但有局限或利益相关</span></p>
+            <p>每一项都能对上 GitHub 仓库，信息是一手的；但星数和性能数字只说明关注度和作者说法，不代表成熟度。</p>
+            <ul class="crit">
+              <li>WeTypeX 从官方微信输入法包里提取核心运行，README 自己提示可能含官方遥测，许可上也存疑，不建议当日常主力</li>
+              <li>gpu-unlock 在驱动加载前改硬件行为，可能影响稳定性；出问题时厂商未必认保修</li>
+              <li>「非商用 source-available」意味着你可以学、可以自己做，但不能拿去卖</li>
+            </ul>
+          </section>
+          <section class="an an-context" id="e-url-39d90486b312a6c00c7a-context" data-spy>
+            <h2>延伸背景</h2>
+            <ul class="ctx">
+              <li>ESP32-P4 是乐鑫不带 Wi-Fi / 蓝牙的高性能 RISC-V 芯片，主打 MIPI 屏和摄像头接口，适合做带屏的人机交互设备</li>
+              <li>「Agent 桌面伴侣」是 Super-agent 那类常驻 Agent 的硬件延伸：Agent 在后台跑，人需要一个不占屏幕的状态指示</li>
+            </ul>
+          </section>
+          <section class="an an-relevance" id="e-url-39d90486b312a6c00c7a-relevance" data-spy>
+            <h2>与你的关联</h2>
+            <dl class="rel">
+              <dt>机器人工程 / 嵌入式</dt><dd>PC ↔ USB 串口 ↔ MCU ↔ 屏 是一条完整的上下位机通信链路，复试讲项目经历时是好例子</dd>
+              <dt>智能体与产品能力</dt><dd>Agent 常驻后台之后，「怎么让人知道它在干什么」成了新的产品问题，HachimoDock 用硬件给了一个答案</dd>
+            </dl>
+          </section>
+          <section class="an an-next" id="e-url-39d90486b312a6c00c7a-next" data-spy>
+            <h2>可以做的下一步</h2>
+            <ul class="next">
+              <li>初试后如果做一个嵌入式小项目，可以参考 HachimoDock 的串口协议设计，把「微信采集 bot」的状态显示在一块小屏上</li>
+            </ul>
+          </section>
         <section class="points" id="e-url-39d90486b312a6c00c7a-points" data-spy>
-          <h2>要点</h2>
+          <h2>原文要点</h2>
           <ol>
             <li><b>HachimoDock（哈基米机）：</b>桌面端（Tauri + React）读取 Agent Session，经 USB 串口下发给 ESP32-P4（RISC-V 双核 400MHz、32MB PSRAM、2.8 英寸 480×640 MIPI-DSI 屏）显示动画和气泡；按键、摇杆、麦克风可反向操作 Agent。PCB/BOM 在立创开源平台 OSHWHub。许可是<b>非商用 source-available</b>，不是 OSI 开源</li>
             <li><b><a href="https://github.com/AlkaidLab/foundation-sunshine">Foundation Sunshine</a>：</b>Sunshine 的增强分支，自建游戏串流主机，配 Moonlight 客户端用；主打 Windows、HDR10/HDR Vivid、虚拟显示器。GPL-3.0，约 7.7k 星</li>
@@ -1503,16 +1824,66 @@
         <nav class="toc" aria-label="本篇目录">
           <p class="toc-label">目录</p>
           <ol>
-            <li><a href="#e-url-21f283cd43976195ba7f-lead">提要</a></li>
-            <li><a href="#e-url-21f283cd43976195ba7f-points">要点</a></li>
+            <li><a href="#e-url-21f283cd43976195ba7f-thesis">核心观点</a></li>
+            <li><a href="#e-url-21f283cd43976195ba7f-lead">原文在说什么</a></li>
+            <li><a href="#e-url-21f283cd43976195ba7f-facts">关键事实与数据</a></li>
+            <li><a href="#e-url-21f283cd43976195ba7f-critique">批判性判断</a></li>
+            <li><a href="#e-url-21f283cd43976195ba7f-context">延伸背景</a></li>
+            <li><a href="#e-url-21f283cd43976195ba7f-relevance">与你的关联</a></li>
+            <li><a href="#e-url-21f283cd43976195ba7f-next">可以做的下一步</a></li>
+            <li><a href="#e-url-21f283cd43976195ba7f-points">原文要点</a></li>
           </ol>
         </nav>
         <div class="essay-main">
           <p class="eyebrow">陆 项目灵感 · 向阳乔木 (@vista8) · X · 原文 11-03 · 采集 11-03</p>
           <h1>向阳乔木做了「黑客书架」：Hacker News 评论里被提及最多的书</h1>
-          <p class="lede drop" id="e-url-21f283cd43976195ba7f-lead" data-spy><b>一句话：</b>向阳乔木用 Hacker News 公开评论数据做了一个书籍推荐站 <a href="https://hackerbooks.qiaomu.ai/">hackerbooks.qiaomu.ai</a>：收录 2007–2026 年 HN 评论里提到的 <b>1.5 万多本书</b>，按<b>多少位不同读者</b>提及排序。他在被引用的上一条帖子里说，起因是发现 Hugging Face 上能直接下到约 <b>12G 的 HN 数据集</b>。</p>
+
+          <p class="verify v-original"><b>已读原文核实</b><span>读了 X 帖子并打开了站点；站内数据量没有独立复核</span></p>
+          <p class="lede drop thesis-lede" id="e-url-21f283cd43976195ba7f-thesis" data-spy>一份公开数据集 + AI 编程，一个人几天就能做出完整产品：HackerBooks 是「构建成本骤降」的现场例子，但它的核心资产是别人整理好的数据（hackerbooks.org），护城河很薄。</p>
+          <section class="an an-lead" id="e-url-21f283cd43976195ba7f-lead" data-spy>
+            <h2>原文在说什么</h2>
+            <p><b>一句话：</b>向阳乔木用 Hacker News 公开评论数据做了一个书籍推荐站 <a href="https://hackerbooks.qiaomu.ai/">hackerbooks.qiaomu.ai</a>：收录 2007–2026 年 HN 评论里提到的 <b>1.5 万多本书</b>，按<b>多少位不同读者</b>提及排序。他在被引用的上一条帖子里说，起因是发现 Hugging Face 上能直接下到约 <b>12G 的 HN 数据集</b>。</p>
+          </section>
+          <section class="an an-facts" id="e-url-21f283cd43976195ba7f-facts" data-spy>
+            <h2>关键事实与数据</h2>
+            <ol class="facts">
+              <li>站点收录 2007–2026 年 Hacker News 评论中提到的 1.5 万多本书，按提及的不同读者数排序<span class="src"><a href="https://hackerbooks.qiaomu.ai/" target="_blank" rel="noopener noreferrer">hackerbooks.qiaomu.ai 站点</a>，2026-11</span></li>
+              <li>页脚写明数据整理自 hackerbooks.org（roansh 的作品），书籍元数据与封面来自 Open Library<span class="src"><a href="https://hackerbooks.qiaomu.ai/" target="_blank" rel="noopener noreferrer">hackerbooks.qiaomu.ai 站点</a>，2026-11</span></li>
+              <li>作者帖子称起因是发现 Hugging Face 上有约 12G 的 HN 数据集，开发「消耗了大量 Token」<span class="src"><a href="https://x.com/vista8/status/2117290723255226820" target="_blank" rel="noopener noreferrer">X @vista8</a>，2026-11-03</span></li>
+            </ol>
+          </section>
+          <section class="an an-critique" id="e-url-21f283cd43976195ba7f-critique" data-spy>
+            <h2>批判性判断</h2>
+            <p class="cred-line"><span class="badge cred cred-B">可信度 B</span><span>较高：来源可靠，但有局限或利益相关</span></p>
+            <p>站点可以直接打开验证；但书籍抽取和去重是 AI 做的，准确率没有公开。</p>
+            <ul class="crit">
+              <li>核心数据和创意来自 hackerbooks.org，这是一次「重做」而不是原创，差异化主要在中文界面和榜单设计</li>
+              <li>站内提供 Z-Library 搜索直达，Z-Library 是版权有争议的影子图书馆，这一点让项目有合规风险</li>
+              <li>HN 读者以英语圈程序员为主，榜单反映的是这个群体的口味，不是通用书单</li>
+            </ul>
+          </section>
+          <section class="an an-context" id="e-url-21f283cd43976195ba7f-context" data-spy>
+            <h2>延伸背景</h2>
+            <ul class="ctx">
+              <li>「林迪效应」榜单的意思是：一本书被持续推荐的时间越长，未来继续被推荐的可能越大</li>
+              <li>Hugging Face 上有大量公开数据集，「找一份数据 + 做一个好用的界面」是 AI 编程时代最快的独立开发路径之一</li>
+            </ul>
+          </section>
+          <section class="an an-relevance" id="e-url-21f283cd43976195ba7f-relevance" data-spy>
+            <h2>与你的关联</h2>
+            <dl class="rel">
+              <dt>智能体与产品能力</dt><dd>和本周专题「产品能力更重要吗」直接相关：做得快不等于守得住，数据是别人的，界面谁都能做</dd>
+              <dt>AI 编程工具</dt><dd>可以学他的拆解方式：先确定数据源，再设计 8 个榜单视图，最后让 AI 批量实现</dd>
+            </dl>
+          </section>
+          <section class="an an-next" id="e-url-21f283cd43976195ba7f-next" data-spy>
+            <h2>可以做的下一步</h2>
+            <ul class="next">
+              <li>初试后可以从「历史总榜」挑一两本和系统设计相关的书，走图书馆或正版渠道借阅</li>
+            </ul>
+          </section>
         <section class="points" id="e-url-21f283cd43976195ba7f-points" data-spy>
-          <h2>要点</h2>
+          <h2>原文要点</h2>
           <ol>
             <li><b>站点功能：</b>今日书架、值得读精选、历史总榜、最多推荐、林迪榜、争议与劝退、上升最快、书籍星图，每本书可点回 HN 原帖</li>
             <li><b>数据来源：</b>站点页脚写明数据整理自 hackerbooks.org（roansh 的作品），书籍元数据与封面来自 Open Library；作者帖子称开发「消耗了大量 Token」</li>
@@ -1525,6 +1896,602 @@
       </div>
     </div>
   </article>
+
+  <article class="essay" id="e-wx-MzY4NzM3MTkxOQ-2247483844-1" data-id="wx:MzY4NzM3MTkxOQ:2247483844:1" data-cat="ai" tabindex="-1" data-task="6ae7026ee4b0efba696718ae">
+    <div class="readbar">
+      <a class="back" href="#top">← 返回篇目</a>
+      <span class="readbar-kicker">AI 工具</span>
+    </div>
+    <div class="essay-sheet">
+      <div class="essay-layout">
+        <nav class="toc" aria-label="本篇目录">
+          <p class="toc-label">目录</p>
+          <ol>
+            <li><a href="#e-wx-MzY4NzM3MTkxOQ-2247483844-1-thesis">核心观点</a></li>
+            <li><a href="#e-wx-MzY4NzM3MTkxOQ-2247483844-1-lead">原文在说什么</a></li>
+            <li><a href="#e-wx-MzY4NzM3MTkxOQ-2247483844-1-facts">关键事实与数据</a></li>
+            <li><a href="#e-wx-MzY4NzM3MTkxOQ-2247483844-1-critique">批判性判断</a></li>
+            <li><a href="#e-wx-MzY4NzM3MTkxOQ-2247483844-1-context">延伸背景</a></li>
+            <li><a href="#e-wx-MzY4NzM3MTkxOQ-2247483844-1-relevance">与你的关联</a></li>
+            <li><a href="#e-wx-MzY4NzM3MTkxOQ-2247483844-1-next">可以做的下一步</a></li>
+            <li><a href="#e-wx-MzY4NzM3MTkxOQ-2247483844-1-points">原文要点</a></li>
+            <li><a href="#e-wx-MzY4NzM3MTkxOQ-2247483844-1-notes">批注</a></li>
+          </ol>
+        </nav>
+        <div class="essay-main">
+          <p class="eyebrow">壹 AI 工具前沿 · DeepSeek Harness 团队 · 原文 10-31 · 采集 11-01</p>
+          <h1>DeepSeek Super-agent：常驻 Router 加并行 Worker，把 Agent 从「一个窗口」变成「一个后台系统」</h1>
+
+          <p class="verify v-original"><b>已读原文核实</b><span>读了公众号全文，并对照了 GitHub 仓库 README 与 MarkTechPost 的报道</span></p>
+          <p class="lede drop thesis-lede" id="e-wx-MzY4NzM3MTkxOQ-2247483844-1-thesis" data-spy>把 Agent 从「人盯着的一个聊天窗口」改成「常驻后台、由事件驱动的调度系统」，是 2026 年智能体的主线方向；但这篇是<b>研究原型加合成实验</b>，证明了架构思路可行，没有证明在真实工作里更好用。</p>
+          <section class="an an-lead" id="e-wx-MzY4NzM3MTkxOQ-2247483844-1-lead" data-spy>
+            <h2>原文在说什么</h2>
+            <p><b>一句话：</b>DeepSeek Harness 团队公开了一套多任务 Agent 架构草图并开源原型：常驻的 <b>Router</b> 统一对人说话、分派任务，多个上下文隔离的 <b>Worker</b> 并行干活，由群聊、PR、CI 等<b>环境事件</b>驱动，外加一个 <b>Watchdog</b> 巡检进度。</p>
+          </section>
+          <section class="an an-facts" id="e-wx-MzY4NzM3MTkxOQ-2247483844-1-facts" data-spy>
+            <h2>关键事实与数据</h2>
+            <ol class="facts">
+              <li>实验负载约 300 条消息，其中约 20 条是工作请求，编码动作用「耗时占位工具」代替，每种方案跑 5 次<span class="src"><a href="https://mp.weixin.qq.com/s?__biz=MzY4NzM3MTkxOQ==&amp;mid=2247483844&amp;idx=1&amp;sn=1e93a1f1dc5ae0996f9c45794b896495" target="_blank" rel="noopener noreferrer">DeepSeek Harness 团队原文</a>，2026-10-31</span></li>
+              <li>Super-agent 完成时间 p50 12.4 分钟、p95 15.7 分钟；对照组「单 Session + Subagent（中性提示）」p95 为 29.5 分钟<span class="src"><a href="https://mp.weixin.qq.com/s?__biz=MzY4NzM3MTkxOQ==&amp;mid=2247483844&amp;idx=1&amp;sn=1e93a1f1dc5ae0996f9c45794b896495" target="_blank" rel="noopener noreferrer">DeepSeek Harness 团队原文</a>，2026-10-31</span></li>
+              <li>去掉 Thread 订阅直通后，Router 决策数约多 30%，token 从 2323 万涨到 3177 万（约 +37%）<span class="src"><a href="https://mp.weixin.qq.com/s?__biz=MzY4NzM3MTkxOQ==&amp;mid=2247483844&amp;idx=1&amp;sn=1e93a1f1dc5ae0996f9c45794b896495" target="_blank" rel="noopener noreferrer">DeepSeek Harness 团队原文</a>，2026-10-31</span></li>
+              <li>Trigger 频率从每分钟约 1 条升到 40 条时，Router 平均每批处理 1.0→2.8 条，单个决策分摊耗时 6.4 秒→1.6 秒<span class="src"><a href="https://mp.weixin.qq.com/s?__biz=MzY4NzM3MTkxOQ==&amp;mid=2247483844&amp;idx=1&amp;sn=1e93a1f1dc5ae0996f9c45794b896495" target="_blank" rel="noopener noreferrer">DeepSeek Harness 团队原文</a>，2026-10-31</span></li>
+              <li>开源仓库 dsh-superagent-prototype 采用 MIT 许可，README 写明不是官方产品、不是生产级；我查看时约 1.36 万星<span class="src"><a href="https://github.com/deepseek-ai/dsh-superagent-prototype" target="_blank" rel="noopener noreferrer">GitHub deepseek-ai</a>，2026-11</span></li>
+            </ol>
+          </section>
+          <section class="an an-critique" id="e-wx-MzY4NzM3MTkxOQ-2247483844-1-critique" data-spy>
+            <h2>批判性判断</h2>
+            <p class="cred-line"><span class="badge cred cred-B">可信度 B</span><span>较高：来源可靠，但有局限或利益相关</span></p>
+            <p>一手技术文章，数字具体、可复核，作者也主动列了局限；但它出自厂商自家团队，实验是自己设计的合成负载，没有第三方复现。</p>
+            <ul class="crit">
+              <li><b>合成负载 ≠ 真实工作：</b>编码动作被替换成耗时占位工具，只测了调度和完成时间，没测代码质量和返工率。MarkTechPost 的报道也指出了这一点</li>
+              <li><b>对照组可能偏弱：</b>对比的是「单 Session + Subagent」，没有和 Anthropic 那类 Lead + Subagent 的成熟多智能体方案正面比</li>
+              <li><b>token 更贵：</b>多会话意味着读缓存 token 更多。「更快」是拿钱换的，文中没有给出每完成一个任务的总成本</li>
+              <li><b>安全没解决：</b>常驻、主动、能在你机器上执行命令的 Agent，提示词注入和凭据泄露的风险都会放大，作者自己也把它列为开放问题</li>
+              <li><b>原型覆盖面窄：</b>开源版只接单个 GitHub 仓库加可选的飞书，文中一部分设计（例如异步 ReAct）已实现但默认关闭</li>
+            </ul>
+          </section>
+          <section class="an an-context" id="e-wx-MzY4NzM3MTkxOQ-2247483844-1-context" data-spy>
+            <h2>延伸背景</h2>
+            <ul class="ctx">
+              <li>Router / Worker 本质是操作系统里的<b>调度器</b>和<b>进程</b>：Router 像内核的调度循环，Worker 像隔离地址空间的进程，Thread 订阅像 ROS 的 topic 或消息队列的订阅</li>
+              <li>Fast Path / Slow Path 是网络设备和数据库里的老套路：便宜的规则处理 90% 的常见情况，昂贵的路径只处理剩下的</li>
+              <li>同一时期的对照方案：Anthropic 的多智能体研究系统用 Lead 拆任务、3–5 个 Subagent 并行，内部评测比单 Opus 4 高 90.2%，但约耗 15 倍 token；Cognition 2025 年发文主张「别做多智能体」，强调单线程加上下文压缩更稳</li>
+            </ul>
+          </section>
+          <section class="an an-relevance" id="e-wx-MzY4NzM3MTkxOQ-2247483844-1-relevance" data-spy>
+            <h2>与你的关联</h2>
+            <dl class="rel">
+              <dt>考研 · 成大复试</dt><dd>复试被问到操作系统或嵌入式时，这是一个能讲清楚的现代案例：发布订阅、批处理摊销、看门狗、存算分离，都能对应到课本概念</dd>
+              <dt>机器人工程 / 嵌入式</dt><dd>Watchdog 的思路和 STM32 的独立看门狗（IWDG）一样：外部回路定期检查「有没有实质进展」，不靠被监控者自己汇报</dd>
+              <dt>智能体与产品能力</dt><dd>它把「交互界面」和「Agent 内核」解耦，文中原话是向用户暴露怎样的交互「成为一个独立的产品问题」，这正是产品能力的用武之地</dd>
+            </dl>
+          </section>
+          <section class="an an-next" id="e-wx-MzY4NzM3MTkxOQ-2247483844-1-next" data-spy>
+            <h2>可以做的下一步</h2>
+            <ul class="next">
+              <li>初试前不动手。复试准备阶段花 20 分钟，把「Router / Worker / Watchdog」画成一张图，配上 ROS 和 IWDG 的对应关系</li>
+              <li>初试后可以做一个小实验：给自己的「微信采集」做一个事件驱动的小 bot，规则过滤 + LLM 判断 + 每周归纳，完整走一遍三个概念</li>
+            </ul>
+          </section>
+        <section class="points" id="e-wx-MzY4NzM3MTkxOQ-2247483844-1-points" data-spy>
+          <h2>原文要点</h2>
+          <ol>
+            <li><b>问题定义：</b>单任务上限取决于模型，多任务上限取决于人的注意力，一个人通常只能同时盯 3 到 5 个活跃 Session</li>
+            <li><b>双层结构：</b>Router 常驻、不干具体活，可以用轻模型；Worker 用最强模型，上下文相互隔离</li>
+            <li><b>两级过滤：</b>程序规则先筛掉无关事件（Fast Path），剩下的再交给 LLM 判断（Slow Path）</li>
+            <li><b>订阅直通：</b>同一个 PR、话题或邮件串算一个 Thread，后续事件直接发给已订阅的 Worker，不再经过 Router</li>
+            <li><b>上下文：</b>近期信息内联（Inline），长内容溢出到窗口外（Spill），按 ID 引用图链式召回</li>
+            <li><b>投机执行与异步 ReAct：</b>讨论还在进行时就后台复现、修复，失败就保持沉默；<code>run()</code> 拆成 <code>start()/stop()</code>，前台随时可插话</li>
+            <li><b>存算分离：</b>Loop 在云端无状态运行，状态进数据库，执行环境以 daemon 形式留在用户自己的机器上</li>
+          </ol>
+        </section>
+        <section class="notes" id="e-wx-MzY4NzM3MTkxOQ-2247483844-1-notes" data-spy>
+          <h2>批注</h2>
+          <p>同一公众号 10 月 17 日那篇「文字分享」当时抓取失败，这篇是它之后的第一篇长文</p>
+        </section>
+          <p class="essay-actions"><a class="textlink" href="https://mp.weixin.qq.com/s?__biz=MzY4NzM3MTkxOQ==&amp;mid=2247483844&amp;idx=1&amp;sn=1e93a1f1dc5ae0996f9c45794b896495&amp;chksm=f20b85d42b88f5828d3f1d0a6e0b2cc0dcdb04345b94d46440fb2728a1a8b5a4cffffae1614f&amp;mpshare=1&amp;scene=1&amp;srcid=1031rDgAvODtBdueblJVTi8I&amp;sharer_shareinfo=5c72a8097e62357bb0b7aeb5c152fc7d&amp;sharer_shareinfo_first=5c72a8097e62357bb0b7aeb5c152fc7d#rd" target="_blank" rel="noopener noreferrer">直达原文 <span aria-hidden="true">↗</span></a></p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="essay" id="e-wx-MzkxMTY4NTAyNQ-2247521374-1" data-id="wx:MzkxMTY4NTAyNQ:2247521374:1" data-cat="ai" tabindex="-1" data-task="6ae70440e4b0f69bc597f62f">
+    <div class="readbar">
+      <a class="back" href="#top">← 返回篇目</a>
+      <span class="readbar-kicker">AI 工具</span>
+    </div>
+    <div class="essay-sheet">
+      <div class="essay-layout">
+        <nav class="toc" aria-label="本篇目录">
+          <p class="toc-label">目录</p>
+          <ol>
+            <li><a href="#e-wx-MzkxMTY4NTAyNQ-2247521374-1-thesis">核心观点</a></li>
+            <li><a href="#e-wx-MzkxMTY4NTAyNQ-2247521374-1-lead">原文在说什么</a></li>
+            <li><a href="#e-wx-MzkxMTY4NTAyNQ-2247521374-1-facts">关键事实与数据</a></li>
+            <li><a href="#e-wx-MzkxMTY4NTAyNQ-2247521374-1-critique">批判性判断</a></li>
+            <li><a href="#e-wx-MzkxMTY4NTAyNQ-2247521374-1-context">延伸背景</a></li>
+            <li><a href="#e-wx-MzkxMTY4NTAyNQ-2247521374-1-relevance">与你的关联</a></li>
+            <li><a href="#e-wx-MzkxMTY4NTAyNQ-2247521374-1-next">可以做的下一步</a></li>
+            <li><a href="#e-wx-MzkxMTY4NTAyNQ-2247521374-1-points">原文要点</a></li>
+          </ol>
+        </nav>
+        <div class="essay-main">
+          <p class="eyebrow">壹 AI 工具前沿 · TRAE.ai · 原文 11-01 · 采集 11-01</p>
+          <h1>TRAE 一周更新：「TRAE 宝」上线，跨项目记忆 + 子任务并行 + 本地/云电脑接续</h1>
+
+          <p class="verify v-original"><b>已读原文核实</b><span>读了官方周更原文；功能效果没有实测</span></p>
+          <p class="lede drop thesis-lede" id="e-wx-MzkxMTY4NTAyNQ-2247521374-1-thesis" data-spy>国内 AI 编程工具也在从「一个对话窗口」转向「常驻助理 + 并行子任务」，和 DeepSeek Super-agent 是同一方向的产品化版本；但这是一则官方公告，只有功能列表，没有效果数据。</p>
+          <section class="an an-lead" id="e-wx-MzkxMTY4NTAyNQ-2247521374-1-lead" data-spy>
+            <h2>原文在说什么</h2>
+            <p><b>一句话：</b>TRAE 官方周更：推出开发者个人助理 <b>TRAE 宝</b>，分全局助理（跨项目记忆）和项目助理（拆任务、并行跑子任务）两种；另有交互式代码评审报告、小程序开发插件，以及本地和云电脑之间接续任务。</p>
+          </section>
+          <section class="an an-facts" id="e-wx-MzkxMTY4NTAyNQ-2247521374-1-facts" data-spy>
+            <h2>关键事实与数据</h2>
+            <ol class="facts">
+              <li>TRAE 宝分「全局助理」（跨项目记忆）与「项目助理」（拆分并行子任务）两种形态<span class="src">TRAE.ai 公众号《一周更新》，2026-11-01</span></li>
+              <li>同期上线交互式代码评审报告，以及覆盖微信、抖音、支付宝的小程序开发插件<span class="src">TRAE.ai 公众号《一周更新》，2026-11-01</span></li>
+              <li>支持任务在本地电脑和云电脑之间接续<span class="src">TRAE.ai 公众号《一周更新》，2026-11-01</span></li>
+            </ol>
+          </section>
+          <section class="an an-critique" id="e-wx-MzkxMTY4NTAyNQ-2247521374-1-critique" data-spy>
+            <h2>批判性判断</h2>
+            <p class="cred-line"><span class="badge cred cred-C">可信度 C</span><span>中：宣传、自荐或未经独立验证</span></p>
+            <p>官方营销口径：功能是真的（可以自己打开验证），但「好不好用」原文一个数字都没给。</p>
+            <ul class="crit">
+              <li>没有任何成功率、耗时或成本数据，无法判断「并行子任务」是真提速还是多烧 token</li>
+              <li>「跨项目记忆」意味着代码和对话会在更多地方留存，原文没提隐私边界和数据保留期限</li>
+              <li>小程序插件把「从想法到上线」的门槛又降了一截，但门槛低对所有人都成立，做出来容易、做出差异难</li>
+            </ul>
+          </section>
+          <section class="an an-context" id="e-wx-MzkxMTY4NTAyNQ-2247521374-1-context" data-spy>
+            <h2>延伸背景</h2>
+            <ul class="ctx">
+              <li>「常驻、带记忆、能并行」的个人助理，是 2026 年下半年大厂集中上线的产品形态：ChatGPT Work、Meta Muse、Claude Duet 都在这个方向（见本周专题）</li>
+              <li>本地 ↔ 云电脑接续，对应的就是 Super-agent 里的「存算分离」：状态放云端，执行环境可以换</li>
+            </ul>
+          </section>
+          <section class="an an-relevance" id="e-wx-MzkxMTY4NTAyNQ-2247521374-1-relevance" data-spy>
+            <h2>与你的关联</h2>
+            <dl class="rel">
+              <dt>AI 编程工具</dt><dd>你常用的编程工具正在变成「派活然后去干别的」的形态，学会写清楚任务说明和验收标准，比学某个按钮更保值</dd>
+              <dt>智能体与产品能力</dt><dd>和 Super-agent 对照读：一个是架构论文，一个是商业产品，能看出研究想法落地时砍掉了什么</dd>
+            </dl>
+          </section>
+          <section class="an an-next" id="e-wx-MzkxMTY4NTAyNQ-2247521374-1-next" data-spy>
+            <h2>可以做的下一步</h2>
+            <ul class="next">
+              <li>初试前不追周更。初试后如果要做小程序或个人项目，再试一次项目助理的并行子任务，记录实际耗时和 token</li>
+            </ul>
+          </section>
+        <section class="points" id="e-wx-MzkxMTY4NTAyNQ-2247521374-1-points" data-spy>
+          <h2>原文要点</h2>
+          <ol>
+            <li><b>TRAE 宝 · 全局助理：</b>跨项目保留记忆，像一个一直在的助手，而不是每个项目重新开一个窗口</li>
+            <li><b>TRAE 宝 · 项目助理：</b>把需求拆成子任务并行执行</li>
+            <li><b>插件：</b>交互式代码评审报告；面向微信、抖音、支付宝的小程序开发插件</li>
+            <li><b>本地 ↔ 云电脑：</b>任务可以在本地和云端电脑之间接续</li>
+            <li><b>周边：</b>TRAE 宝桌宠形象</li>
+          </ol>
+        </section>
+          <p class="essay-actions"><a class="textlink" href="https://mp.weixin.qq.com/s?__biz=MzkxMTY4NTAyNQ==&amp;mid=2247521374&amp;idx=1&amp;sn=295ca57af5c4fa872d5cd259ca44daff&amp;chksm=c0e6a65b64df103b50ff946f3bb1faacf5e42b20c056bc6ac810209fa11170c14e9ea400145b&amp;mpshare=1&amp;scene=1&amp;srcid=1101NvfG5mk7Wqn9ZvsqvPCM&amp;sharer_shareinfo=1eb34ee319357893df163eb7161b5257&amp;sharer_shareinfo_first=1eb34ee319357893df163eb7161b5257#rd" target="_blank" rel="noopener noreferrer">直达原文 <span aria-hidden="true">↗</span></a></p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="essay" id="e-wx-MzU4Mjg3MDAyMQ-2247638275-1" data-id="wx:MzU4Mjg3MDAyMQ:2247638275:1" data-cat="idea" tabindex="-1" data-task="6ae32026e4b031ea82a9a4f5">
+    <div class="readbar">
+      <a class="back" href="#top">← 返回篇目</a>
+      <span class="readbar-kicker">项目灵感</span>
+    </div>
+    <div class="essay-sheet">
+      <div class="essay-layout">
+        <nav class="toc" aria-label="本篇目录">
+          <p class="toc-label">目录</p>
+          <ol>
+            <li><a href="#e-wx-MzU4Mjg3MDAyMQ-2247638275-1-thesis">核心观点</a></li>
+            <li><a href="#e-wx-MzU4Mjg3MDAyMQ-2247638275-1-lead">原文在说什么</a></li>
+            <li><a href="#e-wx-MzU4Mjg3MDAyMQ-2247638275-1-facts">关键事实与数据</a></li>
+            <li><a href="#e-wx-MzU4Mjg3MDAyMQ-2247638275-1-critique">批判性判断</a></li>
+            <li><a href="#e-wx-MzU4Mjg3MDAyMQ-2247638275-1-context">延伸背景</a></li>
+            <li><a href="#e-wx-MzU4Mjg3MDAyMQ-2247638275-1-relevance">与你的关联</a></li>
+            <li><a href="#e-wx-MzU4Mjg3MDAyMQ-2247638275-1-next">可以做的下一步</a></li>
+            <li><a href="#e-wx-MzU4Mjg3MDAyMQ-2247638275-1-points">原文要点</a></li>
+          </ol>
+        </nav>
+        <div class="essay-main">
+          <p class="eyebrow">陆 项目灵感 · 少数派 · 原文 10-29 · 采集 10-29</p>
+          <h1>少数派 Matrix 自荐 3 款 App：江山时序、余阅、财悟，都是「领域热爱 + AI 编程」做出来的</h1>
+
+          <p class="verify v-original"><b>已读原文核实</b><span>读了原文；另查了江山时序的 GitHub 仓库，其余两款未实测</span></p>
+          <p class="lede drop thesis-lede" id="e-wx-MzU4Mjg3MDAyMQ-2247638275-1-thesis" data-spy>AI 编程让「懂一个领域、但不是程序员」的人也能做出完整产品，难点随之从写代码转到<b>数据准确</b>和<b>分发</b>：江山时序最大的问题不是代码，而是史料核对和推广渠道。</p>
+          <section class="an an-lead" id="e-wx-MzU4Mjg3MDAyMQ-2247638275-1-lead" data-spy>
+            <h2>原文在说什么</h2>
+            <p><b>一句话：</b>少数派 Matrix 栏目里三位开发者自荐作品：历史疆域地图 <b>江山时序</b>、macOS EPUB 阅读器 <b>Silverlinger 余阅</b>、iOS 记账 App <b>财悟</b>。三款都大量借助 AI 编程完成，作者本身就是利益相关方。</p>
+          </section>
+          <section class="an an-facts" id="e-wx-MzU4Mjg3MDAyMQ-2247638275-1-facts" data-spy>
+            <h2>关键事实与数据</h2>
+            <ol class="facts">
+              <li>江山时序网页版地址为 deanchen.me/jiangshan-map，源码仓库 DeanChensj/jiangshan-map，GPL-3.0 许可；我查看时约 3.5k 星，仓库创建于 2026 年 7 月<span class="src"><a href="https://github.com/DeanChensj/jiangshan-map" target="_blank" rel="noopener noreferrer">GitHub</a>，2026-11</span></li>
+              <li>作者自述开发期约 2.5 周提交 200 多次；自己发小红书被限流，X 上被转发后几天内多了一千多个 star，文中写到涨到 1400<span class="src">少数派 Matrix 原文（作者自述），2026-10-29</span></li>
+              <li>Silverlinger 余阅文中版本为 v1.3.3，仅 macOS<span class="src">少数派 Matrix 原文（作者自述），2026-10-29</span></li>
+            </ol>
+          </section>
+          <section class="an an-critique" id="e-wx-MzU4Mjg3MDAyMQ-2247638275-1-critique" data-spy>
+            <h2>批判性判断</h2>
+            <p class="cred-line"><span class="badge cred cred-C">可信度 C</span><span>中：宣传、自荐或未经独立验证</span></p>
+            <p>自荐栏目，作者写自己的产品，好处说得多，缺点基本不提；可验证的只有江山时序的开源仓库。</p>
+            <ul class="crit">
+              <li>历史地图对准确性要求极高：作者自己提到，辽国都城上京一度被画在辽国疆域之外，只能对照《资治通鉴》和正史逐条纠错。个人 + AI 整理的疆域数据，引用前要和权威地图集对照</li>
+              <li>记账、阅读器都是红海品类，「钱物一体」是个好切入点，但能不能留住用户原文没有数据</li>
+              <li>GitHub 星数代表关注度，不代表使用量或收入</li>
+            </ul>
+          </section>
+          <section class="an an-context" id="e-wx-MzU4Mjg3MDAyMQ-2247638275-1-context" data-spy>
+            <h2>延伸背景</h2>
+            <ul class="ctx">
+              <li>少数派 Matrix 是用户投稿社区，「自荐」栏目由开发者自己写介绍，编辑会做筛选，但性质接近软文</li>
+              <li>国内平台对外链、引流管得严，独立开发者常常要靠 X、V2EX、少数派这类社区冷启动，江山时序是一个典型样本</li>
+            </ul>
+          </section>
+          <section class="an an-relevance" id="e-wx-MzU4Mjg3MDAyMQ-2247638275-1-relevance" data-spy>
+            <h2>与你的关联</h2>
+            <dl class="rel">
+              <dt>智能体与产品能力</dt><dd>「产品能力更重要」的正面例子：选题（自己热爱的历史）+ 数据清洗 + 分发策略，代码反而是最容易的部分</dd>
+              <dt>AI 编程工具</dt><dd>2.5 周 200 多次提交说明 vibe coding 的节奏是「小步快跑、频繁提交」，这一点值得你以后做项目时学</dd>
+            </dl>
+          </section>
+          <section class="an an-next" id="e-wx-MzU4Mjg3MDAyMQ-2247638275-1-next" data-spy>
+            <h2>可以做的下一步</h2>
+            <ul class="next">
+              <li>不需要现在下载。以后做个人项目时，先写一句「谁的什么问题」和「怎么让第一批人看到」，再写代码</li>
+            </ul>
+          </section>
+        <section class="points" id="e-wx-MzU4Mjg3MDAyMQ-2247638275-1-points" data-spy>
+          <h2>原文要点</h2>
+          <ol>
+            <li><b>江山时序：</b>DeanChen 用 vibe coding 做的中国历代疆域时间轴地图，网页版可直接打开；开发中 2.5 周提交 200 多次，附带一个 AI Skill；在小红书、知乎推广受阻，后来被 X 上的转发带火</li>
+            <li><b>Silverlinger 余阅：</b>文档优先的 macOS EPUB 阅读器，尽量保留书内特殊字体与排版，文中版本 v1.3.3</li>
+            <li><b>财悟：</b>数据分析师用 AI 编程做的 iOS 记账 App，主打「钱物一体」，把买来的东西也当资产记录</li>
+          </ol>
+        </section>
+          <p class="essay-actions"><a class="textlink" href="https://mp.weixin.qq.com/s?__biz=MzU4Mjg3MDAyMQ==&amp;mid=2247638275&amp;idx=1&amp;sn=03014a285c9aea55b372190cd4554eae&amp;chksm=fc31f896882251afa2ec0ad7159b3fc4d80697d72433f7f7410c3c8d93cef823e2980c0031e9&amp;mpshare=1&amp;scene=1&amp;srcid=1029ELTheV2CrGu51z3z67QZ&amp;sharer_shareinfo=3349bd4714db48a6894e280b227a8b08&amp;sharer_shareinfo_first=3349bd4714db48a6894e280b227a8b08#rd" target="_blank" rel="noopener noreferrer">直达原文 <span aria-hidden="true">↗</span></a></p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="essay" id="e-wx-MzkzMDkzMDg2NQ-2247491514-1" data-id="wx:MzkzMDkzMDg2NQ:2247491514:1" data-cat="emb" tabindex="-1" data-task="6ae320f4e4b0f69bc560f05e">
+    <div class="readbar">
+      <a class="back" href="#top">← 返回篇目</a>
+      <span class="readbar-kicker">嵌入式</span>
+    </div>
+    <div class="essay-sheet">
+      <div class="essay-layout">
+        <nav class="toc" aria-label="本篇目录">
+          <p class="toc-label">目录</p>
+          <ol>
+            <li><a href="#e-wx-MzkzMDkzMDg2NQ-2247491514-1-thesis">核心观点</a></li>
+            <li><a href="#e-wx-MzkzMDkzMDg2NQ-2247491514-1-lead">原文在说什么</a></li>
+            <li><a href="#e-wx-MzkzMDkzMDg2NQ-2247491514-1-facts">关键事实与数据</a></li>
+            <li><a href="#e-wx-MzkzMDkzMDg2NQ-2247491514-1-critique">批判性判断</a></li>
+            <li><a href="#e-wx-MzkzMDkzMDg2NQ-2247491514-1-context">延伸背景</a></li>
+            <li><a href="#e-wx-MzkzMDkzMDg2NQ-2247491514-1-relevance">与你的关联</a></li>
+            <li><a href="#e-wx-MzkzMDkzMDg2NQ-2247491514-1-next">可以做的下一步</a></li>
+            <li><a href="#e-wx-MzkzMDkzMDg2NQ-2247491514-1-points">原文要点</a></li>
+          </ol>
+        </nav>
+        <div class="essay-main">
+          <p class="eyebrow">贰 嵌入式硬核 · 鱼香ROS · 原文 10-29 · 采集 10-29</p>
+          <h1>「加州大学体系」《机器人学基础》中文课：一则深蓝学院的付费课程广告</h1>
+
+          <p class="verify v-original"><b>已读原文核实</b><span>原文只有约 600 字，几乎全是课程宣传；主讲人履历与课程质量都没有核实</span></p>
+          <p class="lede drop thesis-lede" id="e-wx-MzkzMDkzMDg2NQ-2247491514-1-thesis" data-spy>这是一则广告，不是教程：「加州大学教学体系」是营销说法。对你真正有用的是它列出的知识点清单，这些都能用免费的经典教材学到。</p>
+          <section class="an an-lead" id="e-wx-MzkzMDkzMDg2NQ-2247491514-1-lead" data-spy>
+            <h2>原文在说什么</h2>
+            <p><b>一句话：</b>鱼香ROS 公众号转发深蓝学院的付费课程推广：主讲人为 UC Riverside 的滕瀚哲博士，内容覆盖刚体旋转的多种表示、机械臂经典理论、运动规划，以及 Turtlebot 迷宫导航大作业，文末有「限时优惠 100 元」。</p>
+          </section>
+          <section class="an an-facts" id="e-wx-MzkzMDkzMDg2NQ-2247491514-1-facts" data-spy>
+            <h2>关键事实与数据</h2>
+            <ol class="facts">
+              <li>课程由深蓝学院开设，宣传称主讲人为 UC Riverside 的滕瀚哲博士，文末写有「限时优惠 100 元」<span class="src">鱼香ROS 公众号原文，2026-10-29</span></li>
+              <li>Lynch 与 Park 合著的《Modern Robotics》（剑桥大学出版社，2017）作者官网提供免费 PDF 和配套视频，覆盖旋转表示、正逆运动学、动力学和运动规划<span class="src"><a href="https://hades.mech.northwestern.edu/index.php/Modern_Robotics" target="_blank" rel="noopener noreferrer">Northwestern University 作者主页</a>，2017</span></li>
+            </ol>
+          </section>
+          <section class="an an-critique" id="e-wx-MzkzMDkzMDg2NQ-2247491514-1-critique" data-spy>
+            <h2>批判性判断</h2>
+            <p class="cred-line"><span class="badge cred cred-C">可信度 C</span><span>中：宣传、自荐或未经独立验证</span></p>
+            <p>纯商业推广，标题借「加州大学」背书；主讲人履历和课程口碑我都没有核实。</p>
+            <ul class="crit">
+              <li>「美国加州大学教学体系」不等于 UC 官方课程，原文没有说明和 UC Riverside 有任何合作</li>
+              <li>列出的知识点都是本科机器人学的标准内容，没有看出它比免费教材多了什么</li>
+              <li>价格、课时、证书等关键信息没写清，只有「限时优惠」制造紧迫感</li>
+            </ul>
+          </section>
+          <section class="an an-context" id="e-wx-MzkzMDkzMDg2NQ-2247491514-1-context" data-spy>
+            <h2>延伸背景</h2>
+            <ul class="ctx">
+              <li>「旋转的六种表示」一般指旋转矩阵、欧拉角、RPY 角、轴角（含旋转向量 / 指数坐标）、四元数等；四元数没有万向锁，是机器人和飞控里最常用的姿态表示</li>
+              <li>鱼香ROS 是国内 ROS 入门社区，常转发合作课程，读它的推送要区分「教程」和「广告」</li>
+            </ul>
+          </section>
+          <section class="an an-relevance" id="e-wx-MzkzMDkzMDg2NQ-2247491514-1-relevance" data-spy>
+            <h2>与你的关联</h2>
+            <dl class="rel">
+              <dt>考研 · 成大复试</dt><dd>机器人工程复试常问「四元数相比欧拉角的好处」「正逆运动学区别」，这份大纲可以当成复试自查清单用</dd>
+              <dt>机器人工程 / 嵌入式</dt><dd>Turtlebot 迷宫导航对应你的机器人导航课，SLAM + 路径规划是同一套东西</dd>
+            </dl>
+          </section>
+          <section class="an an-next" id="e-wx-MzkzMDkzMDg2NQ-2247491514-1-next" data-spy>
+            <h2>可以做的下一步</h2>
+            <ul class="next">
+              <li>不建议现在买课。复试阶段用《Modern Robotics》第 3、4 章（刚体运动、正运动学）自查，各写一页提纲</li>
+              <li>把「欧拉角万向锁」用一句话讲清楚，作为复试口答素材</li>
+            </ul>
+          </section>
+        <section class="points" id="e-wx-MzkzMDkzMDg2NQ-2247491514-1-points" data-spy>
+          <h2>原文要点</h2>
+          <ol>
+            <li><b>课程内容（按广告描述）：</b>旋转的六种表示方法、机械臂正逆运动学与动力学等经典内容、运动规划</li>
+            <li><b>实践：</b>Turtlebot 迷宫导航项目</li>
+            <li><b>性质：</b>付费课程推广，正文主要是课程大纲和优惠信息，没有可以直接学的知识内容</li>
+          </ol>
+        </section>
+          <p class="essay-actions"><a class="textlink" href="https://mp.weixin.qq.com/s?__biz=MzkzMDkzMDg2NQ==&amp;mid=2247491514&amp;idx=1&amp;sn=64772830e7173538e91aa4d5c86355c4&amp;chksm=c38a4ba20d14affce00d83679f48456b328757d1cd3f4106eb638ae9521c4c723de6d412e2a4&amp;mpshare=1&amp;scene=1&amp;srcid=1029L41gRfea3FKkdb2jYc2B&amp;sharer_shareinfo=20b59b6744a9c849180651623e044563&amp;sharer_shareinfo_first=20b59b6744a9c849180651623e044563#rd" target="_blank" rel="noopener noreferrer">直达原文 <span aria-hidden="true">↗</span></a></p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="essay" id="e-wx-MzI2MjIyMTQxMw-2247489158-1" data-id="wx:MzI2MjIyMTQxMw:2247489158:1" data-cat="emb" tabindex="-1" data-task="6ae32150e4b0f69bc560f5fb">
+    <div class="readbar">
+      <a class="back" href="#top">← 返回篇目</a>
+      <span class="readbar-kicker">嵌入式</span>
+    </div>
+    <div class="essay-sheet">
+      <div class="essay-layout">
+        <nav class="toc" aria-label="本篇目录">
+          <p class="toc-label">目录</p>
+          <ol>
+            <li><a href="#e-wx-MzI2MjIyMTQxMw-2247489158-1-thesis">核心观点</a></li>
+            <li><a href="#e-wx-MzI2MjIyMTQxMw-2247489158-1-lead">原文在说什么</a></li>
+            <li><a href="#e-wx-MzI2MjIyMTQxMw-2247489158-1-facts">关键事实与数据</a></li>
+            <li><a href="#e-wx-MzI2MjIyMTQxMw-2247489158-1-critique">批判性判断</a></li>
+            <li><a href="#e-wx-MzI2MjIyMTQxMw-2247489158-1-context">延伸背景</a></li>
+            <li><a href="#e-wx-MzI2MjIyMTQxMw-2247489158-1-relevance">与你的关联</a></li>
+            <li><a href="#e-wx-MzI2MjIyMTQxMw-2247489158-1-next">可以做的下一步</a></li>
+            <li><a href="#e-wx-MzI2MjIyMTQxMw-2247489158-1-points">原文要点</a></li>
+          </ol>
+        </nav>
+        <div class="essay-main">
+          <p class="eyebrow">贰 嵌入式硬核 · 嵌入式杂谈 · 原文 10-29 · 采集 10-29</p>
+          <h1>Apollo H-3 圣诞雪人挂饰：ESP32-C6 + 37 颗 WS2812，ESPHome 驱动的开源小板</h1>
+
+          <p class="verify v-original"><b>已读原文核实</b><span>读了原文并看了 GitHub 仓库说明；没有实物</span></p>
+          <p class="lede drop thesis-lede" id="e-wx-MzI2MjIyMTQxMw-2247489158-1-thesis" data-spy>一块很好的「小而全」嵌入式样板：GPIO、LED 驱动、PWM 发声、低功耗和联网配网都在一张小板上，适合当入门项目的参考设计，但项目本身热度很低、更像节日周边。</p>
+          <section class="an an-lead" id="e-wx-MzI2MjIyMTQxMw-2247489158-1-lead" data-spy>
+            <h2>原文在说什么</h2>
+            <p><b>一句话：</b>Apollo Automation 开源的雪人造型 PCB 挂饰：<b>ESP32-C6</b> 驱动 37 颗 WS2812 灯珠分五个区域，蜂鸣器播放 RTTTL 铃声，三个按键，固件基于 <b>ESPHome</b>，可接入 Home Assistant，也能当蓝牙代理用。</p>
+          </section>
+          <section class="an an-facts" id="e-wx-MzI2MjIyMTQxMw-2247489158-1-facts" data-spy>
+            <h2>关键事实与数据</h2>
+            <ol class="facts">
+              <li>37 颗 WS2812 分五区（身体 24、帽子 5、嘴 5、眼睛 2、鼻子 1），数据线 GPIO3；蜂鸣器 GPIO6；按键 GPIO4/5/7<span class="src">嵌入式杂谈原文，2026-10-29</span></li>
+              <li>仓库 ApolloAutomation/H-3，我查看时只有个位数星标<span class="src"><a href="https://github.com/ApolloAutomation/H-3" target="_blank" rel="noopener noreferrer">GitHub</a>，2026-11</span></li>
+              <li>原文提示：开启 BLE 代理会明显增加功耗，用 AA 电池时不适合常开<span class="src">嵌入式杂谈原文，2026-10-29</span></li>
+            </ol>
+          </section>
+          <section class="an an-critique" id="e-wx-MzI2MjIyMTQxMw-2247489158-1-critique" data-spy>
+            <h2>批判性判断</h2>
+            <p class="cred-line"><span class="badge cred cred-B">可信度 B</span><span>较高：来源可靠，但有局限或利益相关</span></p>
+            <p>硬件参数具体，能在仓库里对上；公众号是转介绍，没有实测数据。</p>
+            <ul class="crit">
+              <li>37 颗 WS2812 全亮时每颗最大约 60mA，2 节 AA 根本带不动全亮，实际只能低亮度或短时间点亮，原文没算这笔账</li>
+              <li>星标很少，社区和后续维护都难说；当参考设计可以，当长期项目依赖不行</li>
+            </ul>
+          </section>
+          <section class="an an-context" id="e-wx-MzI2MjIyMTQxMw-2247489158-1-context" data-spy>
+            <h2>延伸背景</h2>
+            <ul class="ctx">
+              <li>ESP32-C6 是乐鑫的 RISC-V 芯片，除 Wi-Fi 6 和蓝牙 LE 外还支持 802.15.4（Thread / Zigbee），这是它常被用在智能家居里的原因</li>
+              <li>RTTTL 是诺基亚时代的单音铃声文本格式，一行字符串描述音符和节拍，用 PWM 驱动无源蜂鸣器就能播</li>
+              <li>ESPHome 用 YAML 描述硬件和逻辑、自动生成固件，适合不想写 C 的场景；Home Assistant 的「蓝牙代理」让 ESP32 替 HA 收附近的 BLE 设备广播</li>
+            </ul>
+          </section>
+          <section class="an an-relevance" id="e-wx-MzI2MjIyMTQxMw-2247489158-1-relevance" data-spy>
+            <h2>与你的关联</h2>
+            <dl class="rel">
+              <dt>机器人工程 / 嵌入式</dt><dd>和 STM32 课程对照：GPIO 输入、PWM 发声、单线时序驱动 LED、深度睡眠唤醒，正好是一门嵌入式课的作业清单</dd>
+            </dl>
+          </section>
+          <section class="an an-next" id="e-wx-MzI2MjIyMTQxMw-2247489158-1-next" data-spy>
+            <h2>可以做的下一步</h2>
+            <ul class="next">
+              <li>收藏即可。初试后若想做一个 ESP32 小项目，可以照着它的引脚分配和 ESPHome YAML 起步</li>
+            </ul>
+          </section>
+        <section class="points" id="e-wx-MzI2MjIyMTQxMw-2247489158-1-points" data-spy>
+          <h2>原文要点</h2>
+          <ol>
+            <li><b>主控与外设：</b>ESP32-C6；WS2812 数据线接 GPIO3，蜂鸣器 GPIO6（RTTTL 铃声），按键 GPIO4/5/7</li>
+            <li><b>灯区：</b>37 颗灯分五区：身体 24、帽子 5、嘴 5、眼睛 2、鼻子 1</li>
+            <li><b>固件：</b>ESPHome YAML，分 Basic 与 Smart 两版；支持 Improv 配网、Home Assistant、BLE 代理与追踪</li>
+            <li><b>供电：</b>USB-C 或 2 节 AA 碱性电池，支持深度睡眠</li>
+            <li><b>公益：</b>利润捐给 CASA of Lexington 与 Open Home Foundation</li>
+          </ol>
+        </section>
+          <p class="essay-actions"><a class="textlink" href="https://mp.weixin.qq.com/s?__biz=MzI2MjIyMTQxMw==&amp;mid=2247489158&amp;idx=1&amp;sn=0641ad2a74f148b539203c9dce70cd90&amp;chksm=eb7a9c994d753283901c1bfbd8beb460fc1e7801c45650ec6789280afae0120f143a3dd22ef9&amp;mpshare=1&amp;scene=1&amp;srcid=1029QkWDXZQx5iCE6zHl0Dwg&amp;sharer_shareinfo=452d8c579a6e462d7b77dbd81c06db83&amp;sharer_shareinfo_first=452d8c579a6e462d7b77dbd81c06db83#rd" target="_blank" rel="noopener noreferrer">直达原文 <span aria-hidden="true">↗</span></a></p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="essay" id="e-wx-MzI2MjIyMTQxMw-2247489209-1" data-id="wx:MzI2MjIyMTQxMw:2247489209:1" data-cat="emb" tabindex="-1" data-task="6ae56fc4e4b0e9cb68f1a550">
+    <div class="readbar">
+      <a class="back" href="#top">← 返回篇目</a>
+      <span class="readbar-kicker">嵌入式</span>
+    </div>
+    <div class="essay-sheet">
+      <div class="essay-layout">
+        <nav class="toc" aria-label="本篇目录">
+          <p class="toc-label">目录</p>
+          <ol>
+            <li><a href="#e-wx-MzI2MjIyMTQxMw-2247489209-1-thesis">核心观点</a></li>
+            <li><a href="#e-wx-MzI2MjIyMTQxMw-2247489209-1-lead">原文在说什么</a></li>
+            <li><a href="#e-wx-MzI2MjIyMTQxMw-2247489209-1-facts">关键事实与数据</a></li>
+            <li><a href="#e-wx-MzI2MjIyMTQxMw-2247489209-1-critique">批判性判断</a></li>
+            <li><a href="#e-wx-MzI2MjIyMTQxMw-2247489209-1-context">延伸背景</a></li>
+            <li><a href="#e-wx-MzI2MjIyMTQxMw-2247489209-1-relevance">与你的关联</a></li>
+            <li><a href="#e-wx-MzI2MjIyMTQxMw-2247489209-1-next">可以做的下一步</a></li>
+            <li><a href="#e-wx-MzI2MjIyMTQxMw-2247489209-1-points">原文要点</a></li>
+          </ol>
+        </nav>
+        <div class="essay-main">
+          <p class="eyebrow">贰 嵌入式硬核 · 嵌入式杂谈 · 原文 10-31 · 采集 10-31</p>
+          <h1>Particle 官方开源雪花灯：P2 模组 + 36 颗灯珠，说「sparkle」就闪，语音识别跑在板上</h1>
+
+          <p class="verify v-original"><b>已读原文核实</b><span>读了原文与仓库说明；未实测识别准确率</span></p>
+          <p class="lede drop thesis-lede" id="e-wx-MzI2MjIyMTQxMw-2247489209-1-thesis" data-spy>「在 MCU 上跑一个小神经网络」已经是节日小玩具级别的技术了：这块板子是 TinyML（端侧机器学习）最直观的样板，从麦克风到推理到灯效一条链路都能看到。</p>
+          <section class="an an-lead" id="e-wx-MzI2MjIyMTQxMw-2247489209-1-lead" data-spy>
+            <h2>原文在说什么</h2>
+            <p><b>一句话：</b>Particle 开源的雪花造型 PCB：<b>P2 模组</b>（Realtek RTL8721，Cortex-M33，双频 Wi-Fi + BLE）驱动 36 颗反贴 RGB 灯珠，板载 PDM 麦克风和 D 类功放，用 <b>Edge Impulse + TFLite Micro</b> 在本地识别关键词「sparkle」。</p>
+          </section>
+          <section class="an an-facts" id="e-wx-MzI2MjIyMTQxMw-2247489209-1-facts" data-spy>
+            <h2>关键事实与数据</h2>
+            <ol class="facts">
+              <li>主控为 Particle P2 模组（Realtek RTL8721，Cortex-M33，双频 Wi-Fi + BLE），36 颗 3535 反贴 RGB 灯珠<span class="src">嵌入式杂谈原文，2026-10-31</span></li>
+              <li>用 74AHC1G125 单路缓冲器把 3.3V 数据线转成 5V 电平驱动灯珠<span class="src">嵌入式杂谈原文，2026-10-31</span></li>
+              <li>关键词识别模型由 Edge Impulse 训练、TFLite Micro 在板上推理，不依赖云端<span class="src">嵌入式杂谈原文，2026-10-31</span></li>
+              <li>仓库 particle-iot/snowflake 采用 Apache-2.0，我查看时约十几星<span class="src"><a href="https://github.com/particle-iot/snowflake" target="_blank" rel="noopener noreferrer">GitHub</a>，2026-11</span></li>
+            </ol>
+          </section>
+          <section class="an an-critique" id="e-wx-MzI2MjIyMTQxMw-2247489209-1-critique" data-spy>
+            <h2>批判性判断</h2>
+            <p class="cred-line"><span class="badge cred cred-B">可信度 B</span><span>较高：来源可靠，但有局限或利益相关</span></p>
+            <p>器件清单具体，和厂商仓库一致；但这是厂商为推广 P2 模组做的展示品，原文的缺点总结也比较轻描淡写。</p>
+            <ul class="crit">
+              <li>限量版、P2 模组国内不好买，想复刻要改用 ESP32-S3 之类并重新训练模型</li>
+              <li>只识别一个关键词，噪声环境下的误触发率原文没给</li>
+              <li>触摸区小、喇叭音质一般（原文自己也提到）</li>
+            </ul>
+          </section>
+          <section class="an an-context" id="e-wx-MzI2MjIyMTQxMw-2247489209-1-context" data-spy>
+            <h2>延伸背景</h2>
+            <ul class="ctx">
+              <li>为什么要电平转换：WS2812B 数据手册要求高电平至少 0.7×VDD，5V 供电时就是 3.5V，MCU 输出的 3.3V 处在临界边缘，有时能用有时乱码，加一颗缓冲器最稳</li>
+              <li>PDM 麦克风输出的是 1-bit 高速比特流，需要 MCU 做抽取滤波（PDM→PCM）才能得到音频样本，这是数字信号处理课里的「过采样 + 抽取」</li>
+              <li>APX803L 是电压监控复位芯片：电压掉到阈值以下就把 MCU 按在复位状态，避免欠压时程序跑飞，和看门狗是一对互补的可靠性手段</li>
+            </ul>
+          </section>
+          <section class="an an-relevance" id="e-wx-MzI2MjIyMTQxMw-2247489209-1-relevance" data-spy>
+            <h2>与你的关联</h2>
+            <dl class="rel">
+              <dt>机器人工程 / 嵌入式</dt><dd>电平匹配、PDM 采样、复位电路，都是机器人工程硬件课的基础知识点，这块板子把它们放在一张原理图里</dd>
+              <dt>考研 · 成大复试</dt><dd>复试如果问到「端侧 AI」或「嵌入式里的神经网络」，可以用这块板子举例：模型几十 KB，跑在 Cortex-M33 上</dd>
+            </dl>
+          </section>
+          <section class="an an-next" id="e-wx-MzI2MjIyMTQxMw-2247489209-1-next" data-spy>
+            <h2>可以做的下一步</h2>
+            <ul class="next">
+              <li>收藏原理图即可。复试前花 10 分钟看一下它的电平转换和复位电路部分，能讲出「为什么要加这两颗芯片」就够了</li>
+            </ul>
+          </section>
+        <section class="points" id="e-wx-MzI2MjIyMTQxMw-2247489209-1-points" data-spy>
+          <h2>原文要点</h2>
+          <ol>
+            <li><b>主控：</b>Particle P2（Realtek RTL8721，Arm Cortex-M33，双频 Wi-Fi + BLE）</li>
+            <li><b>灯：</b>36 颗 WS2812B / SK6812E（3535 反贴），74AHC1G125 把 3.3V 数据电平抬到 5V</li>
+            <li><b>声音：</b>MP34DT05 PDM 数字麦克风；TPA6211A1 3.1W D 类功放</li>
+            <li><b>其他：</b>TTP223 / PT2041A 触摸、XC6228 LDO、APX803L 复位芯片、NTC 测温</li>
+            <li><b>端侧 AI：</b>Edge Impulse 训练、TFLite Micro 部署的关键词识别模型</li>
+            <li><b>许可：</b>Apache-2.0，仓库 particle-iot/snowflake</li>
+          </ol>
+        </section>
+          <p class="essay-actions"><a class="textlink" href="https://mp.weixin.qq.com/s?__biz=MzI2MjIyMTQxMw==&amp;mid=2247489209&amp;idx=1&amp;sn=e17a2d52eedc9170fe1bb0aaae673af2&amp;chksm=ebcff966e46cbcbdb77104963ea812340b17f69b0e98b82361a87cd0160b2ede6cb313d81fd1&amp;mpshare=1&amp;scene=1&amp;srcid=1031jjAaGnw1hHT4hrUWepfa&amp;sharer_shareinfo=03b04f31ba32f3fe1bf72eea2cd15228&amp;sharer_shareinfo_first=03b04f31ba32f3fe1bf72eea2cd15228#rd" target="_blank" rel="noopener noreferrer">直达原文 <span aria-hidden="true">↗</span></a></p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="essay" id="e-wx-MzE5OTI3MDk5Nw-2247682808-1" data-id="wx:MzE5OTI3MDk5Nw:2247682808:1" data-cat="emb" tabindex="-1" data-task="6ae8a270e4b0f69bc5b88e91">
+    <div class="readbar">
+      <a class="back" href="#top">← 返回篇目</a>
+      <span class="readbar-kicker">嵌入式</span>
+    </div>
+    <div class="essay-sheet">
+      <div class="essay-layout">
+        <nav class="toc" aria-label="本篇目录">
+          <p class="toc-label">目录</p>
+          <ol>
+            <li><a href="#e-wx-MzE5OTI3MDk5Nw-2247682808-1-thesis">核心观点</a></li>
+            <li><a href="#e-wx-MzE5OTI3MDk5Nw-2247682808-1-lead">原文在说什么</a></li>
+            <li><a href="#e-wx-MzE5OTI3MDk5Nw-2247682808-1-facts">关键事实与数据</a></li>
+            <li><a href="#e-wx-MzE5OTI3MDk5Nw-2247682808-1-critique">批判性判断</a></li>
+            <li><a href="#e-wx-MzE5OTI3MDk5Nw-2247682808-1-context">延伸背景</a></li>
+            <li><a href="#e-wx-MzE5OTI3MDk5Nw-2247682808-1-relevance">与你的关联</a></li>
+            <li><a href="#e-wx-MzE5OTI3MDk5Nw-2247682808-1-next">可以做的下一步</a></li>
+            <li><a href="#e-wx-MzE5OTI3MDk5Nw-2247682808-1-points">原文要点</a></li>
+          </ol>
+        </nav>
+        <div class="essay-main">
+          <p class="eyebrow">贰 嵌入式硬核 · 立创开源硬件平台 · 原文 11-02 · 采集 11-02</p>
+          <h1>立创开源平台「今年热度最高的 4 个开源项目」：标题大于内容，主体是平台自我介绍和评论送券</h1>
+
+          <p class="verify v-original"><b>已读原文核实</b><span>读了原文；4 个项目的详情页没有逐个打开核实</span></p>
+          <p class="lede drop thesis-lede" id="e-wx-MzE5OTI3MDk5Nw-2247682808-1-thesis" data-spy>这条的价值不在正文，而在于提醒你：<b>立创开源平台（OSHWHub）本身是一个好用的检索入口</b>，想找可复刻的国产开源硬件，直接去平台按热度看，比看这类推送高效。</p>
+          <section class="an an-lead" id="e-wx-MzE5OTI3MDk5Nw-2247682808-1-lead" data-spy>
+            <h2>原文在说什么</h2>
+            <p><b>一句话：</b>立创开源硬件平台的推送，标题说盘点 4 个热门项目，正文大部分是平台介绍（2019 年 11 月上线、4 万多个项目、日访问约 3 万）和「评论送彩色丝印优惠券」活动，4 个项目只以文字链接出现。</p>
+          </section>
+          <section class="an an-facts" id="e-wx-MzE5OTI3MDk5Nw-2247682808-1-facts" data-spy>
+            <h2>关键事实与数据</h2>
+            <ol class="facts">
+              <li>平台自述 2019 年 11 月上线，收录 4 万多个开源项目，日访问约 3 万<span class="src">立创开源硬件平台公众号（自报数据），2026-11-02</span></li>
+              <li>文中 4 个项目只给了标题链接：行车仪、1 天 300 多人复刻的项目、45 元无人机、400 元复刻 3 万元的灯<span class="src">立创开源硬件平台公众号，2026-11-02</span></li>
+            </ol>
+          </section>
+          <section class="an an-critique" id="e-wx-MzE5OTI3MDk5Nw-2247682808-1-critique" data-spy>
+            <h2>批判性判断</h2>
+            <p class="cred-line"><span class="badge cred cred-C">可信度 C</span><span>中：宣传、自荐或未经独立验证</span></p>
+            <p>平台给自己做宣传，数字都是自报；标题承诺「盘点 4 个项目」，正文几乎没有项目内容。</p>
+            <ul class="crit">
+              <li>标题党：读完并不知道这 4 个项目用了什么方案、难点在哪</li>
+              <li>「400 元复刻 3 万元的灯」这类说法通常只复刻了外观，光学和做工差距不会写在标题里</li>
+              <li>评论送券是拉互动，不代表项目质量</li>
+            </ul>
+          </section>
+          <section class="an an-context" id="e-wx-MzE5OTI3MDk5Nw-2247682808-1-context" data-spy>
+            <h2>延伸背景</h2>
+            <ul class="ctx">
+              <li>OSHWHub 背后是嘉立创（PCB 打样和元器件商城），平台上的项目大多直接给出立创 EDA 工程和 BOM，复刻门槛低，这也是它能做大的原因</li>
+              <li>你收藏过的 HachimoDock、滚纸写字机的 PCB 也都在这个平台上</li>
+            </ul>
+          </section>
+          <section class="an an-relevance" id="e-wx-MzE5OTI3MDk5Nw-2247682808-1-relevance" data-spy>
+            <h2>与你的关联</h2>
+            <dl class="rel">
+              <dt>机器人工程 / 嵌入式</dt><dd>45 元无人机这类项目适合作为毕业设计或复试项目经历的参考：成本低、链路完整（飞控、电机驱动、通信）</dd>
+            </dl>
+          </section>
+          <section class="an an-next" id="e-wx-MzE5OTI3MDk5Nw-2247682808-1-next" data-spy>
+            <h2>可以做的下一步</h2>
+            <ul class="next">
+              <li>不用细读这条。初试后如果要找一个硬件项目练手，直接上 OSHWHub 按「热门」和「已复刻数」筛</li>
+            </ul>
+          </section>
+        <section class="points" id="e-wx-MzE5OTI3MDk5Nw-2247682808-1-points" data-spy>
+          <h2>原文要点</h2>
+          <ol>
+            <li><b>4 个项目（只有标题链接）：</b>一个「很简单的行车仪」、发布 1 天就有 300 多人复刻的项目、45 元做的无人机、400 元复刻 3 万元的灯</li>
+            <li><b>平台数据（自报）：</b>2019 年 11 月上线，4 万多个开源项目，日访问约 3 万</li>
+            <li><b>活动：</b>评论区留言抽 30 元彩色丝印优惠券</li>
+          </ol>
+        </section>
+          <p class="essay-actions"><a class="textlink" href="https://mp.weixin.qq.com/s?__biz=MzE5OTI3MDk5Nw==&amp;mid=2247682808&amp;idx=1&amp;sn=410c432be0df069ec93d9f3720adc2e7&amp;chksm=97b9b0a23d501ac6f01ab34f0a4e282c38bbfc59ffffe0cd7eae7fc978d07c01261bc3a2bbfe&amp;mpshare=1&amp;scene=1&amp;srcid=1102Kx5b3xHvTLB4hsjW3EYk&amp;sharer_shareinfo=9af619edf2a06a70f8bdafadcb980081&amp;sharer_shareinfo_first=9af619edf2a06a70f8bdafadcb980081#rd" target="_blank" rel="noopener noreferrer">直达原文 <span aria-hidden="true">↗</span></a></p>
+        </div>
+      </div>
+    </div>
+  </article>
 </div>
 
 <div class="browse" id="top">
@@ -1532,21 +2499,23 @@
 <header class="mast">
   <div class="wrap mast-top">
     <div>
-      <p class="kicker">微信采集 × 滴答清单 · 个人学习中枢</p>
-      <h1>收藏即所学<br>别让好文章 <em>睡</em> 在清单里</h1>
-      <p class="sub">这里是完整阅读归档，共 23 条，采集于 10 月 5 日至 11 月 3 日，按日期分成 10 批。每条都提炼了摘要与要点，硬核文章附深入讲解。点卡片进入阅读页，想读原文一键直达。</p>
+      <p class="kicker">微信采集 × 调研分析 · 个人学习面板</p>
+      <h1>收藏即所学<br>不止读过，<br>要读<em>懂</em></h1>
+      <p class="sub">收藏只是入口，这里的重点是调研和分析：每周一篇专题把相关文章串成趋势，单篇卡片给出核心观点、核实过的事实、批判性判断、延伸背景，以及和你的专业、复试、兴趣有什么关系。共 30 条，其中 9 条有完整分析，采集于 10 月 5 日至 11 月 3 日。</p>
     </div>
     <div class="seal" aria-hidden="true">上岸</div>
   </div>
   <div class="wrap">
     <p class="stats">
-      <span><b>23</b> 条收藏</span><span class="sep" aria-hidden="true">/</span>
+      <span><b>30</b> 条收藏</span><span class="sep" aria-hidden="true">/</span>
       <span><b>8</b> 大板块</span><span class="sep" aria-hidden="true">/</span>
       <span><b>10/05–11/03</b> 采集</span><span class="sep" aria-hidden="true">/</span>
+      <span><b>1</b> 篇专题</span><span class="sep" aria-hidden="true">/</span>
+      <span><b>9</b> 条完整分析</span><span class="sep" aria-hidden="true">/</span>
       <span><b>18</b> 篇含深入讲解</span><span class="sep" aria-hidden="true">/</span>
       <span class="hot" id="countdown"><b>--</b> 天距离 27 考研初试</span>
     </p>
-    <p class="howto"><b>用法：</b>目录是一排小卡片，点进去读全文，左上角可返回篇目。按采集日期从新到旧排列，也可以用分类或搜索缩小范围。标着「含讲解」的，正文里另有深入讲解。最近一批（11 月 3 日，1 条）：向阳乔木做了「黑客书架」：Hacker News 评论里被提及最多的书。另有 2 条正文抓取失败，只收录了标题：DeepSeek Harness 团队的文字分享、TRAE 官方训练营开启报名：手把手教你开发并上线产品。</p>
+    <details class="howto"><summary>怎么读这个面板</summary><p>先读最上面的专题。卡片上的「观点」是一句话结论，「可信度」是我对来源的评级（A 最高，D 最低），「已读原文核实」和「仅按标题」说明分析的依据。点卡片看完整分析，手机上左右滑动翻卡片。较早的收藏只有摘要和要点，没有分析层。最近一批（11 月 3 日，1 条）：向阳乔木做了「黑客书架」：Hacker News 评论里被提及最多的书。另有 2 条正文抓取失败，只收录了标题：DeepSeek Harness 团队的文字分享、TRAE 官方训练营开启报名：手把手教你开发并上线产品。</p></details>
   </div>
 </header>
 
@@ -1569,28 +2538,124 @@
 </nav>
 
 <main class="catalog wrap" id="catalog">
+<section class="feature" aria-labelledby="feature-title">
+  <div class="feature-in">
+    <p class="feature-kicker">最新专题 · 2026-11-03</p>
+    <h2 id="feature-title"><a href="#s-2026-w45-agent-orchestration">智能体编排、bot 回归与「产品能力更重要」：从 DeepSeek Super-agent 读 2026 年下半年的 AI 走向</a></h2>
+    <p class="feature-dek">以 DeepSeek Harness 团队的 Super-agent 为主线，把这周收藏里的 TRAE 宝、HachimoDock、HackerBooks、江山时序串起来，回答三个问题：智能体编排到底是什么？bot 为什么又回来了？「模型趋同之后，产品能力更重要」这个判断站得住吗？</p>
+    <ol class="feature-toc">
+      <li><a href="#s-2026-w45-agent-orchestration-s1">结论先说</a></li>
+      <li><a href="#s-2026-w45-agent-orchestration-s2">Super-agent 到底是什么</a></li>
+      <li><a href="#s-2026-w45-agent-orchestration-s3">实验数字，以及要打的折扣</a></li>
+      <li><a href="#s-2026-w45-agent-orchestration-s4">bot 的「否定之否定」</a></li>
+      <li><a href="#s-2026-w45-agent-orchestration-s5">「产品能力更重要」：证据与反驳</a></li>
+      <li><a href="#s-2026-w45-agent-orchestration-s6">对你的启示与行动</a></li>
+    </ol>
+    <p class="feature-foot"><span>串起 9 篇收藏 · 21 个来源</span><a class="feature-cta" href="#s-2026-w45-agent-orchestration">读专题 <span aria-hidden="true">→</span></a></p>
+  </div>
+</section>
   <div class="batch" data-batch="2026-11-03">
     <div class="batch-head"><h2>11 月 3 日</h2><span class="year">2026</span><span class="cnt">1 条</span></div>
     <div class="grid">
-    <a class="card" href="#e-url-21f283cd43976195ba7f" data-id="url:21f283cd43976195ba7f" data-cat="idea" data-k="Hacker News HN 书单 黑客书架 hackerbooks 向阳乔木 vista8 Hugging Face 数据集 Open Library 林迪 推荐 X 推文" aria-labelledby="e-url-21f283cd43976195ba7f-card-title" aria-describedby="e-url-21f283cd43976195ba7f-card-sum">
+    <a class="card has-analysis" href="#e-url-21f283cd43976195ba7f" data-id="url:21f283cd43976195ba7f" data-cat="idea" data-k="Hacker News HN 书单 黑客书架 hackerbooks 向阳乔木 vista8 Hugging Face 数据集 Open Library 林迪 推荐 X 推文" aria-labelledby="e-url-21f283cd43976195ba7f-card-title" aria-describedby="e-url-21f283cd43976195ba7f-card-sum">
       <span class="card-rule" aria-hidden="true"></span>
       <span class="card-kicker"><span class="numeral">陆</span><span>项目灵感</span><span class="when">11-03</span></span>
       <h3 id="e-url-21f283cd43976195ba7f-card-title">向阳乔木做了「黑客书架」：Hacker News 评论里被提及最多的书</h3>
-      <p class="excerpt" id="e-url-21f283cd43976195ba7f-card-sum">向阳乔木用 Hacker News 公开评论数据做了一个书籍推荐站 <a href="https://hackerbooks.qiaomu.ai/">hackerbooks.qiaomu.ai</a>：收录 2007–2026 年 HN 评论里提到的 <b>1.5 万多本书</b>，按<b>多少位不同读者</b>提及排序。他在被引用的上一条帖子里说，起因是发现 Hugging Face 上能直接下到约 <b>12G 的 HN 数据集</b>。</p>
-      <span class="card-foot"><span>4 则要点</span><span class="cue">阅读 <span aria-hidden="true">→</span></span></span>
+      <span class="badges"><span class="badge v-original">已读原文核实</span><span class="badge cred cred-B" title="较高：来源可靠，但有局限或利益相关">可信度 B</span></span>
+      <p class="excerpt thesis" id="e-url-21f283cd43976195ba7f-card-sum"><span class="thesis-label">观点</span>一份公开数据集 + AI 编程，一个人几天就能做出完整产品：HackerBooks 是「构建成本骤降」的现场例子，但它的核心资产是别人整理好的数据（hackerbooks.org），护城河很薄。</p>
+      <span class="card-foot"><span>分析 · 3 条事实 · 3 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
+    </a>
+    </div>
+  </div>
+
+  <div class="batch" data-batch="2026-11-02">
+    <div class="batch-head"><h2>11 月 2 日</h2><span class="year">2026</span><span class="cnt">1 条</span></div>
+    <div class="grid">
+    <a class="card has-analysis" href="#e-wx-MzE5OTI3MDk5Nw-2247682808-1" data-id="wx:MzE5OTI3MDk5Nw:2247682808:1" data-cat="emb" data-k="立创开源硬件平台 OSHWHub 嘉立创 开源项目 行车仪 无人机 复刻 台灯 彩色丝印 优惠券 平台推广" aria-labelledby="e-wx-MzE5OTI3MDk5Nw-2247682808-1-card-title" aria-describedby="e-wx-MzE5OTI3MDk5Nw-2247682808-1-card-sum">
+      <span class="card-rule" aria-hidden="true"></span>
+      <span class="card-kicker"><span class="numeral">贰</span><span>嵌入式</span><span class="when">11-02</span></span>
+      <h3 id="e-wx-MzE5OTI3MDk5Nw-2247682808-1-card-title">立创开源平台「今年热度最高的 4 个开源项目」：标题大于内容，主体是平台自我介绍和评论送券</h3>
+      <span class="badges"><span class="badge v-original">已读原文核实</span><span class="badge cred cred-C" title="中：宣传、自荐或未经独立验证">可信度 C</span></span>
+      <p class="excerpt thesis" id="e-wx-MzE5OTI3MDk5Nw-2247682808-1-card-sum"><span class="thesis-label">观点</span>这条的价值不在正文，而在于提醒你：<b>立创开源平台（OSHWHub）本身是一个好用的检索入口</b>，想找可复刻的国产开源硬件，直接去平台按热度看，比看这类推送高效。</p>
+      <span class="card-foot"><span>分析 · 2 条事实 · 3 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
     </a>
     </div>
   </div>
 
   <div class="batch" data-batch="2026-11-01">
-    <div class="batch-head"><h2>11 月 1 日</h2><span class="year">2026</span><span class="cnt">1 条</span></div>
+    <div class="batch-head"><h2>11 月 1 日</h2><span class="year">2026</span><span class="cnt">3 条</span></div>
     <div class="grid">
-    <a class="card" href="#e-url-39d90486b312a6c00c7a" data-id="url:39d90486b312a6c00c7a" data-cat="hw" data-k="HachimoDock 哈基米机 ESP32-P4 桌宠 Claude Code Codex Sunshine Moonlight 串流 Tendedero 截图 WeTypeX 微信输入法 Fcitx5 Linux geo-sleuth 照片定位 Agent Skill gpu-unlock 张量核心 RTX" aria-labelledby="e-url-39d90486b312a6c00c7a-card-title" aria-describedby="e-url-39d90486b312a6c00c7a-card-sum">
+    <a class="card has-analysis" href="#e-wx-MzY4NzM3MTkxOQ-2247483844-1" data-id="wx:MzY4NzM3MTkxOQ:2247483844:1" data-cat="ai" data-k="DeepSeek Harness Super-agent Router Worker 多智能体 编排 事件驱动 Trigger Thread 订阅 发布订阅 Watchdog 看门狗 投机执行 异步 ReAct 存算分离 dsh-superagent-prototype p95 token" aria-labelledby="e-wx-MzY4NzM3MTkxOQ-2247483844-1-card-title" aria-describedby="e-wx-MzY4NzM3MTkxOQ-2247483844-1-card-sum">
+      <span class="card-rule" aria-hidden="true"></span>
+      <span class="card-kicker"><span class="numeral">壹</span><span>AI 工具</span><span class="when">11-01</span></span>
+      <h3 id="e-wx-MzY4NzM3MTkxOQ-2247483844-1-card-title">DeepSeek Super-agent：常驻 Router 加并行 Worker，把 Agent 从「一个窗口」变成「一个后台系统」</h3>
+      <span class="badges"><span class="badge v-original">已读原文核实</span><span class="badge cred cred-B" title="较高：来源可靠，但有局限或利益相关">可信度 B</span></span>
+      <p class="excerpt thesis" id="e-wx-MzY4NzM3MTkxOQ-2247483844-1-card-sum"><span class="thesis-label">观点</span>把 Agent 从「人盯着的一个聊天窗口」改成「常驻后台、由事件驱动的调度系统」，是 2026 年智能体的主线方向；但这篇是<b>研究原型加合成实验</b>，证明了架构思路可行，没有证明在真实工作里更好用。</p>
+      <span class="card-foot"><span>分析 · 5 条事实 · 5 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
+    </a>
+
+    <a class="card has-analysis" href="#e-wx-MzkxMTY4NTAyNQ-2247521374-1" data-id="wx:MzkxMTY4NTAyNQ:2247521374:1" data-cat="ai" data-k="TRAE 宝 个人助理 跨项目记忆 子任务 并行 代码评审 小程序 微信 抖音 支付宝 云电脑 字节 周更" aria-labelledby="e-wx-MzkxMTY4NTAyNQ-2247521374-1-card-title" aria-describedby="e-wx-MzkxMTY4NTAyNQ-2247521374-1-card-sum">
+      <span class="card-rule" aria-hidden="true"></span>
+      <span class="card-kicker"><span class="numeral">壹</span><span>AI 工具</span><span class="when">11-01</span></span>
+      <h3 id="e-wx-MzkxMTY4NTAyNQ-2247521374-1-card-title">TRAE 一周更新：「TRAE 宝」上线，跨项目记忆 + 子任务并行 + 本地/云电脑接续</h3>
+      <span class="badges"><span class="badge v-original">已读原文核实</span><span class="badge cred cred-C" title="中：宣传、自荐或未经独立验证">可信度 C</span></span>
+      <p class="excerpt thesis" id="e-wx-MzkxMTY4NTAyNQ-2247521374-1-card-sum"><span class="thesis-label">观点</span>国内 AI 编程工具也在从「一个对话窗口」转向「常驻助理 + 并行子任务」，和 DeepSeek Super-agent 是同一方向的产品化版本；但这是一则官方公告，只有功能列表，没有效果数据。</p>
+      <span class="card-foot"><span>分析 · 3 条事实 · 3 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
+    </a>
+
+    <a class="card has-analysis" href="#e-url-39d90486b312a6c00c7a" data-id="url:39d90486b312a6c00c7a" data-cat="hw" data-k="HachimoDock 哈基米机 ESP32-P4 桌宠 Claude Code Codex Sunshine Moonlight 串流 Tendedero 截图 WeTypeX 微信输入法 Fcitx5 Linux geo-sleuth 照片定位 Agent Skill gpu-unlock 张量核心 RTX" aria-labelledby="e-url-39d90486b312a6c00c7a-card-title" aria-describedby="e-url-39d90486b312a6c00c7a-card-sum">
       <span class="card-rule" aria-hidden="true"></span>
       <span class="card-kicker"><span class="numeral">柒</span><span>数码</span><span class="when">11-01</span></span>
       <h3 id="e-url-39d90486b312a6c00c7a-card-title">一期视频里的 6 个开源项目：哈基米机、Foundation Sunshine、Tendedero、WeTypeX、geo-sleuth、gpu-unlock</h3>
-      <p class="excerpt" id="e-url-39d90486b312a6c00c7a-card-sum">收藏的是一期视频简介里的项目清单，不是视频本身。逐个核对了 GitHub 仓库说明：最贴近嵌入式的是 <b>哈基米机 HachimoDock</b>，用 <b>ESP32-P4</b> 小屏把 Claude / Codex 的 Agent 工作状态做成桌面宠物；最有争议的是 <b>gpu-unlock</b>，声称解除 GeForce 张量核心 FP16/BF16/TF32 的半速限制。</p>
-      <span class="card-foot"><span>6 则要点</span><span class="cue">阅读 <span aria-hidden="true">→</span></span></span>
+      <span class="badges"><span class="badge v-original">已读原文核实</span><span class="badge cred cred-B" title="较高：来源可靠，但有局限或利益相关">可信度 B</span></span>
+      <p class="excerpt thesis" id="e-url-39d90486b312a6c00c7a-card-sum"><span class="thesis-label">观点</span>同一张清单里，最值得你看的是 <b>HachimoDock</b>：它把「AI Agent 在干什么」做成一个 ESP32-P4 桌面小屏，是 Agent 时代的嵌入式新玩法；gpu-unlock 那类改底层的项目风险高、数字是作者自报。</p>
+      <span class="card-foot"><span>分析 · 3 条事实 · 3 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
+    </a>
+    </div>
+  </div>
+
+  <div class="batch" data-batch="2026-10-31">
+    <div class="batch-head"><h2>10 月 31 日</h2><span class="year">2026</span><span class="cnt">1 条</span></div>
+    <div class="grid">
+    <a class="card has-analysis" href="#e-wx-MzI2MjIyMTQxMw-2247489209-1" data-id="wx:MzI2MjIyMTQxMw:2247489209:1" data-cat="emb" data-k="Particle 雪花灯 P2 RTL8721 Cortex-M33 WS2812B SK6812 电平转换 74AHC1G125 PDM 麦克风 MP34DT05 D类功放 TPA6211 Edge Impulse TFLite Micro 关键词识别 端侧 AI TinyML 开源硬件" aria-labelledby="e-wx-MzI2MjIyMTQxMw-2247489209-1-card-title" aria-describedby="e-wx-MzI2MjIyMTQxMw-2247489209-1-card-sum">
+      <span class="card-rule" aria-hidden="true"></span>
+      <span class="card-kicker"><span class="numeral">贰</span><span>嵌入式</span><span class="when">10-31</span></span>
+      <h3 id="e-wx-MzI2MjIyMTQxMw-2247489209-1-card-title">Particle 官方开源雪花灯：P2 模组 + 36 颗灯珠，说「sparkle」就闪，语音识别跑在板上</h3>
+      <span class="badges"><span class="badge v-original">已读原文核实</span><span class="badge cred cred-B" title="较高：来源可靠，但有局限或利益相关">可信度 B</span></span>
+      <p class="excerpt thesis" id="e-wx-MzI2MjIyMTQxMw-2247489209-1-card-sum"><span class="thesis-label">观点</span>「在 MCU 上跑一个小神经网络」已经是节日小玩具级别的技术了：这块板子是 TinyML（端侧机器学习）最直观的样板，从麦克风到推理到灯效一条链路都能看到。</p>
+      <span class="card-foot"><span>分析 · 4 条事实 · 3 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
+    </a>
+    </div>
+  </div>
+
+  <div class="batch" data-batch="2026-10-29">
+    <div class="batch-head"><h2>10 月 29 日</h2><span class="year">2026</span><span class="cnt">3 条</span></div>
+    <div class="grid">
+    <a class="card has-analysis" href="#e-wx-MzkzMDkzMDg2NQ-2247491514-1" data-id="wx:MzkzMDkzMDg2NQ:2247491514:1" data-cat="emb" data-k="机器人学基础 深蓝学院 鱼香ROS 滕瀚哲 UC Riverside 加州大学 旋转表示 四元数 欧拉角 机械臂 运动学 运动规划 Turtlebot 付费课程 广告" aria-labelledby="e-wx-MzkzMDkzMDg2NQ-2247491514-1-card-title" aria-describedby="e-wx-MzkzMDkzMDg2NQ-2247491514-1-card-sum">
+      <span class="card-rule" aria-hidden="true"></span>
+      <span class="card-kicker"><span class="numeral">贰</span><span>嵌入式</span><span class="when">10-29</span></span>
+      <h3 id="e-wx-MzkzMDkzMDg2NQ-2247491514-1-card-title">「加州大学体系」《机器人学基础》中文课：一则深蓝学院的付费课程广告</h3>
+      <span class="badges"><span class="badge v-original">已读原文核实</span><span class="badge cred cred-C" title="中：宣传、自荐或未经独立验证">可信度 C</span></span>
+      <p class="excerpt thesis" id="e-wx-MzkzMDkzMDg2NQ-2247491514-1-card-sum"><span class="thesis-label">观点</span>这是一则广告，不是教程：「加州大学教学体系」是营销说法。对你真正有用的是它列出的知识点清单，这些都能用免费的经典教材学到。</p>
+      <span class="card-foot"><span>分析 · 2 条事实 · 3 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
+    </a>
+
+    <a class="card has-analysis" href="#e-wx-MzI2MjIyMTQxMw-2247489158-1" data-id="wx:MzI2MjIyMTQxMw:2247489158:1" data-cat="emb" data-k="Apollo Automation H-3 雪人 圣诞 挂饰 ESP32-C6 WS2812 RTTTL 蜂鸣器 ESPHome Home Assistant BLE 蓝牙代理 Improv 深度睡眠 AA 电池 开源硬件" aria-labelledby="e-wx-MzI2MjIyMTQxMw-2247489158-1-card-title" aria-describedby="e-wx-MzI2MjIyMTQxMw-2247489158-1-card-sum">
+      <span class="card-rule" aria-hidden="true"></span>
+      <span class="card-kicker"><span class="numeral">贰</span><span>嵌入式</span><span class="when">10-29</span></span>
+      <h3 id="e-wx-MzI2MjIyMTQxMw-2247489158-1-card-title">Apollo H-3 圣诞雪人挂饰：ESP32-C6 + 37 颗 WS2812，ESPHome 驱动的开源小板</h3>
+      <span class="badges"><span class="badge v-original">已读原文核实</span><span class="badge cred cred-B" title="较高：来源可靠，但有局限或利益相关">可信度 B</span></span>
+      <p class="excerpt thesis" id="e-wx-MzI2MjIyMTQxMw-2247489158-1-card-sum"><span class="thesis-label">观点</span>一块很好的「小而全」嵌入式样板：GPIO、LED 驱动、PWM 发声、低功耗和联网配网都在一张小板上，适合当入门项目的参考设计，但项目本身热度很低、更像节日周边。</p>
+      <span class="card-foot"><span>分析 · 3 条事实 · 2 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
+    </a>
+
+    <a class="card has-analysis" href="#e-wx-MzU4Mjg3MDAyMQ-2247638275-1" data-id="wx:MzU4Mjg3MDAyMQ:2247638275:1" data-cat="idea" data-k="少数派 Matrix 自荐 独立开发 江山时序 历史地图 疆域 DeanChen vibe coding Silverlinger 余阅 EPUB 阅读器 财悟 记账 钱物一体 AI 编程 分发" aria-labelledby="e-wx-MzU4Mjg3MDAyMQ-2247638275-1-card-title" aria-describedby="e-wx-MzU4Mjg3MDAyMQ-2247638275-1-card-sum">
+      <span class="card-rule" aria-hidden="true"></span>
+      <span class="card-kicker"><span class="numeral">陆</span><span>项目灵感</span><span class="when">10-29</span></span>
+      <h3 id="e-wx-MzU4Mjg3MDAyMQ-2247638275-1-card-title">少数派 Matrix 自荐 3 款 App：江山时序、余阅、财悟，都是「领域热爱 + AI 编程」做出来的</h3>
+      <span class="badges"><span class="badge v-original">已读原文核实</span><span class="badge cred cred-C" title="中：宣传、自荐或未经独立验证">可信度 C</span></span>
+      <p class="excerpt thesis" id="e-wx-MzU4Mjg3MDAyMQ-2247638275-1-card-sum"><span class="thesis-label">观点</span>AI 编程让「懂一个领域、但不是程序员」的人也能做出完整产品，难点随之从写代码转到<b>数据准确</b>和<b>分发</b>：江山时序最大的问题不是代码，而是史料核对和推广渠道。</p>
+      <span class="card-foot"><span>分析 · 3 条事实 · 3 则判断</span><span class="cue">完整分析 <span aria-hidden="true">→</span></span></span>
     </a>
     </div>
   </div>
@@ -1808,9 +2873,9 @@
 
 <footer class="foot">
   <div class="wrap foot-in">
-    <b>关于本页</b>：由 <code>data/articles.json</code> 构建的个人阅读归档，共 23 条，采集于 2026-10-05 至 2026-11-03。摘要与讲解依据原文整理，观点与细节以原文为准。单文件 HTML，可离线打开。
+    <b>关于本页</b>：由 <code>data/articles.json</code> 构建的调研与分析阅读面板，共 30 条收藏、1 篇专题，采集于 2026-10-05 至 2026-11-03。分析只写核实过的事实，查不到就写查不到；可信度是主观评级，细节以原文为准。不加载任何外部字体或 CDN，国内可直接打开，单文件 HTML 可离线阅读。
     <br>早期整页由 Mac 上的 didaMind / wxdigest 重写并推送。那条流水线已停用；现在只往数据文件追加条目，再构建这一页。
-    <br>归档时记下的后续事项：① 新版 VPN 第一阶段只开放 100 个账号，想用就赶在 11 月 15 日前申请，并在 12 月 30 日旧版停服前完成切换 ② 用 DeepSeek API 跑 Agent 的话，留意 11 月 1 日 Search/Fetch 开始计费 ③ 三岔湖红嘴鸥预计 11 月集体抵达，复习累了可以去湖边走走 ④ 「TRAE 训练营」与「Harness 团队的文字分享」仍只有标题，留到微信客户端补读 ⑤ 中端新机均为爆料，等发布会再决定，别按爆料下单
+    <br>归档时记下的后续事项：① 新版 VPN 第一阶段只开放 100 个账号，想用就赶在 11 月 15 日前申请，并在 12 月 30 日旧版停服前完成切换 ② 用 DeepSeek API 跑 Agent 的话，留意 11 月 1 日 Search/Fetch 开始计费 ③ 三岔湖红嘴鸥预计 11 月集体抵达，复习累了可以去湖边走走 ④ 中端新机均为爆料，等发布会再决定，别按爆料下单 ⑤ 「TRAE 训练营」与「Harness 团队的文字分享」仍只有标题，后者的后续长文 Super-agent 已收录并做了完整分析 ⑥ 本周专题和 9 条分析写于 11 月 3 日；分析里的星标数、价格等是当天查到的数字，会变
   </div>
 </footer>
 </div>
