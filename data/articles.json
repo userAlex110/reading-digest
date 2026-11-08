@@ -16,7 +16,8 @@
       "三岔湖红嘴鸥预计 11 月集体抵达，复习累了可以去湖边走走",
       "中端新机均为爆料，等发布会再决定，别按爆料下单",
       "「TRAE 训练营」与「Harness 团队的文字分享」仍只有标题，后者的后续长文 Super-agent 已收录并做了完整分析",
-      "本周专题和 9 条分析写于 11 月 3 日，当天又逐条复核了专题里的数字；星标数、价格等是当天查到的，会变"
+      "11 月 8 日新增 2 条分析：立创开发板双十一促销、JackCui 的 DSH 入门教程。两条主题不同，本周没有另写专题",
+      "立创开发板双十一活动写到 11 月 15 日结束，券后价以活动页和下单页为准，会变"
     ]
   },
   "categories": [
@@ -1562,6 +1563,266 @@
         ],
         "next_html": [
           "不用细读这条。初试后如果要找一个硬件项目练手，直接上 OSHWHub 按「热门」和「已复刻数」筛"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzE5OTI3MDk5Nw:2247682926:1",
+      "title": "立创开发板双十一：「10款+打骨折」，分享活动才能领券",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzE5OTI3MDk5Nw==&mid=2247682926&idx=1&sn=62c8e5bfc541601456cdcf6361cfa7e2",
+      "category": "emb",
+      "source": {
+        "account": "立创开源硬件平台",
+        "published": "2026-11-06"
+      },
+      "added": "2026-11-06",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "立创开源硬件平台的双十一促销稿：<b>11 月 6 日到 15 日</b>卖 10+ 款开发板和模组，要分享活动到朋友圈或技术群才能领券；文中把庐山派 Lite-K230D、ColorEasyPico2、GD32VW553 标成「最扎眼」的三个价。",
+      "points_html": [
+        "<b>时间：</b>正文写 11 月 6 日周五开卖、11 月 15 日结束",
+        "<b>领券：</b>进会场选板 → 分享图片或文案到朋友圈或 200 人以上技术群 → 上传截图领券 → 结算时用券；一板一券、每单限一张、券与券不叠加，券有效期 7 天",
+        "<b>正文标出的价格：</b>庐山派 Lite-K230D 147 元（原价 188）；ColorEasyPico2 19 元（原价 39）；GD32VW553 9.9 元（原价 19.9）；另有 ColorEasyDuino 幸运色 29.9 元、实战派 ESP32-C3 98 元、开源 SF32LB52 模组 19.9 元、梁山派 GD32F470 88 元、地猛星 MSPM0G3507 19.9 元、地奇星 RA6E2 9.9 元、衡山派 D133EBS 58 元、天空星·筑基学习板标准版 278 元",
+        "<b>入口：</b>文中指向 <code>https://wiki.lckfb.com/zh-hans/products/activity.html</code>，并写明「价格与券规则以活动页、下单页为准」",
+        "<b>口号：</b>「立创开发板不靠卖板赚钱，以培养中国工程师为己任」"
+      ],
+      "keywords": "立创 开发板 双十一 打骨折 嘉立创 K230D Pico2 GD32VW553 MSPM0 领券 oshwhub lckfb",
+      "ticktick_task_id": "6aed8806e4b03a16e4eea652",
+      "wechat": {
+        "biz": "MzE5OTI3MDk5Nw==",
+        "mid": "2247682926",
+        "idx": "1",
+        "sn": "62c8e5bfc541601456cdcf6361cfa7e2"
+      },
+      "detail": {
+        "summary": "深入讲解 · 这是促销，不是选型指南",
+        "body_html": "<h4>正文在卖什么</h4><div>标题写「10款+」「打骨折」「入门到进阶都有」，结构很清楚：先用三个低价抓住视线（视觉板、Pico2、无线入门），再按「第一次点亮 / 联网 / 认真做点东西」分组，最后用分享领券的步骤收住。文末把评论区互动（认识立创的故事、晒板照片）也写进去了。它没有讲原理图、外设差异或学习路径，也不比较你手里已有的波特律动 F103 套件。</div><h4>和官网页对得上的部分</h4><div>立创开发板官网同一活动的时间是 2026-11-06 00:00:00 到 2026-11-15 00:00:00；文档中心会场页的描述是「13 块开发板单板独立活动，按活动页提示逐个参与领券」。官网页同一活动下还能看到模组、DAPLINK 和电压电流表等条目，比正文标价的 11 款更多。所以「10+」是宣传口径，精确清单以会场页为准。</div><h4>你不一定要买</h4><div>活动在 11 月 15 日结束，赶不上初试后再下手。你已经有树莓派 5 和波特律动 STM32F103 学习套件，规划中的分层差速小车并不缺一块入门板。除非你很清楚自己缺某一颗芯片（例如想提前摸 MSPM0，或以后给小车加板端视觉），否则没必要为了「打骨折」在冲刺期下单。</div>"
+      },
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了公众号全文，并对照立创开发板官网首页的活动数据和文档中心会场页说明",
+        "thesis_html": "这是一篇<b>官方店铺的双十一软文</b>：信息量主要是活动时间和领券步骤，不是开发板评测；标题里的「打骨折」要到结算页才能核实。",
+        "facts": [
+          {
+            "html": "立创开发板官网把「立创开发板双十一限时优惠活动」的时间写成 2026-11-06 00:00:00 至 2026-11-15 00:00:00，与正文「11 月 6 日周五开卖、11 月 15 日结束」一致",
+            "source": "立创开发板官网 lckfb.com",
+            "year": "2026-11-08",
+            "url": "https://lckfb.com/",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "立创开源硬件平台公众号",
+                "url": "https://mp.weixin.qq.com/s?__biz=MzE5OTI3MDk5Nw==&mid=2247682926&idx=1&sn=62c8e5bfc541601456cdcf6361cfa7e2"
+              }
+            ]
+          },
+          {
+            "html": "文档中心会场页的说明写的是「13 块开发板单板独立活动，按活动页提示逐个参与领券」",
+            "source": "立创开发板技术文档中心",
+            "year": "2026-11-08",
+            "url": "https://wiki.lckfb.com/zh-hans/products/activity.html",
+            "corroborated": false
+          },
+          {
+            "html": "我在官网首页同一活动下读到 16 个条目，包括庐山派 Lite-K230D-CanMV、ColorEasyPico2、GD32VW553、地猛星 MSPM0G3507、梁山派 GD32F470ZGT6、衡山派 D133EBS、地奇星 RA6E2、ColorEasyDuino 幸运色、实战派 ESP32-C3、开源 SF32LB52 模组、天空星·筑基学习板标准版、天空星 HC32F4A0 / GD32F407 青春版、DAPLINK，以及地文星、地奇星电压电流表",
+            "source": "立创开发板官网 lckfb.com",
+            "year": "2026-11-08",
+            "url": "https://lckfb.com/",
+            "corroborated": false
+          },
+          {
+            "html": "正文把三个「最扎眼」的价格写成：庐山派 Lite-K230D 147 元（原价 188）、ColorEasyPico2 19 元（原价 39）、GD32VW553 9.9 元（原价 19.9）；其余标价见要点。这些是券后宣传价，我没有在结算页逐个核对",
+            "source": "立创开源硬件平台公众号",
+            "year": "2026-11-06",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzE5OTI3MDk5Nw==&mid=2247682926&idx=1&sn=62c8e5bfc541601456cdcf6361cfa7e2",
+            "corroborated": false
+          },
+          {
+            "html": "领券规则：分享活动图片或文案到朋友圈，或分享到除立创以外的 200 人以上技术群并上传截图；一板一券、每单限用一张、券不叠加，券有效期 7 天；文中自己写了「价格与券规则以活动页、下单页为准」",
+            "source": "立创开源硬件平台公众号",
+            "year": "2026-11-06",
+            "corroborated": false
+          }
+        ],
+        "critique": {
+          "credibility": "C",
+          "credibility_note": "平台给自己做促销，核心卖点是折扣好不好、好不好上手，这些无法独立验证；活动规则还要求你帮它转发。",
+          "points_html": [
+            "「打骨折」是销售话术。正文自己把最终解释权留给活动页和下单页，说明推送里的数字可能和结算价不一致，运费、库存、是否必须分享截图都会影响真实成本",
+            "「不靠卖板赚钱，以培养中国工程师为己任」是品牌口号。嘉立创的主业是 PCB 打样和元器件商城，开发板可以看作获客入口，这句话不能当成成本核算",
+            "分享到朋友圈或 200 人以上技术群才能领券，本质是用社交传播换折扣，不是技术内容",
+            "标题承诺「入门到进阶都有」，正文几乎不谈芯片外设、资料质量和你已有套件的重复度，不能当选型文章读",
+            "官网页上的活动条目比正文标价的 11 款更多，文档中心又写成 13 块开发板。宣传口径和清单对不齐，下单前要打开会场页看你要的那一块"
+          ]
+        },
+        "context_html": [
+          "立创开发板属于嘉立创体系，板子通常能在立创商城下单，资料多半挂在文档中心和开源硬件平台（OSHWHub）上",
+          "你已经收过同一公众号 11 月 2 日那篇「今年热度最高的 4 个开源项目」，当时的判断也是标题大于内容、主体是平台自我介绍",
+          "地阔星是立创自己的 STM32F103C8T6 板，和你手里的波特律动 F103 学习套件是同一类入门片；这次正文标价清单里没有单独突出它"
+        ],
+        "relevance": [
+          {
+            "area": "robotics",
+            "html": "规划中的分层差速小车用的是树莓派 5 + 现有 STM32F103 套件，并不缺一块入门板。如果以后想在板端做视觉，庐山派 Lite-K230D 才和这个方向有关；MSPM0 地猛星更偏电赛和 TI 生态，和当前小车主路径不是同一件事"
+          },
+          {
+            "area": "kaoyan",
+            "html": "初试在 12 月 19 日，活动 11 月 15 日就结束。现在下单会占复习时间，也用不上「初试后再买」的窗口。除非你非常确定缺某一颗芯片，否则把卡片当备忘就行"
+          }
+        ],
+        "next_html": [
+          "默认动作是不买，先用现有套件把闭环和小车协议想清楚",
+          "如果确认就缺某一款（例如 K230D 或 MSPM0），打开文档中心会场页，看清领券步骤和结算价再决定，不要只凭这篇推送里的数字下单",
+          "活动结束后，价格以立创商城日常页为准，不必为了赶上 15 日去转发朋友圈"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzIxODg1OTk1MA:2247553610:1",
+      "title": "JackCui 的 DeepSeek Harness 入门教程：桌面端、四种模式和社区插件，「大肥鱼」主要是人设",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzIxODg1OTk1MA==&mid=2247553610&idx=1&sn=b141e6d77529d563ba1c28ae44cab313",
+      "category": "ai",
+      "source": {
+        "account": "JackCui",
+        "published": "2026-11-07"
+      },
+      "added": "2026-11-07",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "博主 JackCui 对着官方文档写的 DSH 新手教程：装桌面端或用 <code>npx @deepseek-ai/dsh web</code>、接模型、分清标准 / PTC / 极简 / 创造四种模式，再谈到官方插件、社区皮肤和桌宠。标题里的「大肥鱼」主要是人设和桌宠，不是官方产品名。",
+      "points_html": [
+        "<b>作者的定位：</b>DSH 是 DeepSeek 官方开源的 Agent 工作台，特点是「一切皆插件」；8 月刚上线时还要在终端里起网页端，现在有了官方桌面端",
+        "<b>安装：</b>官网下载桌面端，产品页列出 macOS（Apple 芯片）和 Windows（64 位）；Linux 和 Intel Mac 文中说暂时走命令行，先装 Node.js（文中写 22.19 及以上），再运行 <code>npx @deepseek-ai/dsh web</code>，终端窗口不能关",
+        "<b>接模型：</b>软件本身免费。一种是登录 DeepSeek 账号充值（和免费网页聊天记录不互通），一种是在设置里添加 Kimi / GLM / Claude / GPT 等 API，或自定义兼容接口",
+        "<b>四种模式：</b>标准（新手默认，含文件、命令、搜索、计划、子智能体）；PTC（先写一段 TypeScript 把多步工具调用打包执行）；极简（只留终端和文件编辑，官方用来跑分）；创造（用来给 DSH 写插件）。模式不能中途切换",
+        "<b>权限：</b>建议先建测试文件夹，选「工作区内修改」，不要一上来把整个磁盘或桌面交给它，也不要开完全权限",
+        "<b>后半部分：</b>社区插件市场、皮肤和「大肥鱼」桌宠、用 <code>dsh-soul-md</code> 加载人设卡、第三方安卓应用 dsh-Go，以及查用量、余额预警和省 token 插件"
+      ],
+      "keywords": "DeepSeek Harness DSH 大肥鱼 JackCui 桌面端 PTC 创造模式 插件 dsh-Go Cordis Agent",
+      "ticktick_task_id": "6aeee346e4b03a16e517c9d6",
+      "wechat": {
+        "biz": "MzIxODg1OTk1MA==",
+        "mid": "2247553610",
+        "idx": "1",
+        "sn": "b141e6d77529d563ba1c28ae44cab313"
+      },
+      "detail": {
+        "summary": "深入讲解 · 教程对得上官网，标题里的「大肥鱼」容易让人走偏",
+        "body_html": "<h4>这篇到底在讲什么</h4><div>标题用了最近很火的「大肥鱼」，正文主体却是一份 DSH 操作手册：安装、接模型、工作区权限、四种出厂模式、官方插件怎么调，最后才到皮肤、桌宠和一份「蓝色大肥鱼」人设卡。如果你是冲着「把鱼接进 QQ / 微信，让它自己去刷短视频」来的，这篇只会给你人设和桌宠，不会教协议端和网关。</div><h4>和官网对得上的部分</h4><div>「一切皆插件」、<code>npx @deepseek-ai/dsh web</code>、四种模式的分工，都能在 DeepSeek 官方介绍页对上：标准模式是完整的编码 Agent；PTC 用一段程序组合多步工具；极简模式只留 shell 和文件编辑，用于最小化基准测试；创造模式用来检查运行时、试验插件并组合新预设。产品页列出的桌面端下载也是 macOS（Apple silicon）和 Windows（64-bit）。仓库 README 写明这是 developer preview，会有破坏性变更，运行前要看安全说明。</div><h4>需要打折看的部分</h4><div>文中写命令行需要 Node.js 22.19 及以上；我查到的官方仓库根目录 <code>package.json</code> 写的是 <code>engines.node: &gt;=24.9.0</code>。两者可能对应不同发行通道，安装前以当前文档为准。文末推荐的 dsh-Go 是社区 APK，还要走知乎账号登录，不是官方客户端。社区皮肤、桌宠和「破甲 / 免费无限用模型」类插件，作者自己也提醒来路不明的别装。</div><h4>和上周 Super-agent 那篇的关系</h4><div>上周收录的是 DeepSeek Harness 团队的 Super-agent 研究原型：常驻 Router 加并行 Worker，开源仓库也写明不是官方产品。这篇讲的是面向开发者的 DSH 工作台本身。一个是调度架构实验，一个是你怎么把这套工作台装起来用。不要把桌宠人设和 Super-agent 混成同一个东西。</div>"
+      },
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了公众号全文，并对照 DeepSeek Harness 中英文介绍页、GitHub 仓库 README / package.json，以及官方 API 价目页",
+        "thesis_html": "这是一份<b>基本能对照官网核对的第三方入门教程</b>；标题里的「大肥鱼」是社区人设和桌宠，不是 DeepSeek 的官方产品名，也不等于把 Agent 接进 QQ 的那套玩法。",
+        "facts": [
+          {
+            "html": "官方仓库 deepseek-ai/deepseek-harness 的说明是 “Everything is a Plugin.”，许可证为 MIT，创建于 2026-08-13；我查看时约 27.6 万星、约 3.4 万次 fork。仓库 README 写明处于 developer preview，会有破坏性变更",
+            "source": "GitHub deepseek-ai/deepseek-harness",
+            "year": "2026-11-08",
+            "url": "https://github.com/deepseek-ai/deepseek-harness",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "DeepSeek Harness 中文介绍页",
+                "url": "https://www.deepseek.com/harness/zh/"
+              }
+            ]
+          },
+          {
+            "html": "官方推荐的命令行启动方式是安装 Node.js 后运行 <code>npx @deepseek-ai/dsh web</code>，默认在本地打开 Web UI",
+            "source": "GitHub README",
+            "year": "2026-11-08",
+            "url": "https://github.com/deepseek-ai/deepseek-harness",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "DeepSeek Harness 中文介绍页",
+                "url": "https://www.deepseek.com/harness/zh/"
+              }
+            ]
+          },
+          {
+            "html": "我打开的英文产品页提供桌面端下载，列出的是 macOS（Apple silicon）和 Windows（64-bit），与原文一致",
+            "source": "DeepSeek Harness 英文介绍页",
+            "year": "2026-11-08",
+            "url": "https://www.deepseek.com/en/harness/",
+            "corroborated": false
+          },
+          {
+            "html": "官方中文页对四种模式的说明与原文一致：标准模式是功能完整的编码 Agent；PTC 模式用一段 TypeScript 程序组合多步操作；极简模式只提供持久 bash 与文件编辑工具，用于最小化环境下的模型基准测试；创造模式用于检查运行时、试验插件并创作新的预设",
+            "source": "DeepSeek Harness 中文介绍页",
+            "year": "2026-11-08",
+            "url": "https://www.deepseek.com/harness/zh/",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "JackCui 公众号原文",
+                "url": "https://mp.weixin.qq.com/s?__biz=MzIxODg1OTk1MA==&mid=2247553610&idx=1&sn=b141e6d77529d563ba1c28ae44cab313"
+              }
+            ]
+          },
+          {
+            "html": "官方中文价目页（以百万 tokens 计）：V4.1 Flash 输入缓存命中 0.02/0.04 元、未命中 1/2 元、输出 4/8 元（空闲/高峰）；V4 Pro 为 0.15/0.30、4.5/9、13.5/27 元。V4.1 Flash 支持图像理解，V4 Pro 不支持。高峰时段为北京时间周一到周五 9:00–12:00、14:00–18:00，法定节假日除外。Search 和 Fetch 按成功请求计费，各 5 元 / 千次。这些数字与原文表格一致",
+            "source": "DeepSeek API 官方价目页",
+            "year": "2026-11-08",
+            "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "JackCui 公众号原文",
+                "url": "https://mp.weixin.qq.com/s?__biz=MzIxODg1OTk1MA==&mid=2247553610&idx=1&sn=b141e6d77529d563ba1c28ae44cab313"
+              }
+            ]
+          },
+          {
+            "html": "文中写命令行安装需要 Node.js 22.19 及以上；我查到的官方仓库根目录 <code>package.json</code> 写的是 <code>engines.node: &gt;=24.9.0</code>，版本号 <code>0.2.2-rc.1</code>",
+            "source": "GitHub deepseek-ai/deepseek-harness package.json",
+            "year": "2026-11-08",
+            "url": "https://github.com/deepseek-ai/deepseek-harness/blob/master/package.json",
+            "corroborated": false
+          },
+          {
+            "html": "原文后半部分推荐用社区应用 dsh-Go 把任务派到安卓手机，安装包指向 <code>https://github.com/ccch1mneyyy/dsh-Go/releases/latest</code>，并写着用知乎账号登录。这不是官方客户端，我没有下载或验证这个 APK",
+            "source": "JackCui 公众号原文",
+            "year": "2026-11-07",
+            "corroborated": false
+          }
+        ],
+        "critique": {
+          "credibility": "B",
+          "credibility_note": "主体步骤能在官网和仓库里对上，价目表也和官方中文价目页一致；但它是个人教程，夹带主观评价、社区插件和第三方 APK，作者与这些推荐有内容创作者的利益相关。",
+          "points_html": [
+            "标题借用「大肥鱼」热度。正文里的大肥鱼是桌宠加一份 Markdown 人设卡，不是官方产品，也不教怎么把它接进 QQ 或短视频平台",
+            "「贵 3 倍多」只是粗算。按官方空闲时段输出价，V4 Pro（13.5 元）大约是 V4.1 Flash（4 元）的 3.4 倍；缓存命中价则是 0.15 对 0.02，差距更大。不能理解成所有档位都刚好三倍",
+            "Node 版本和仓库根目录的 <code>engines</code> 对不上。文中写 22.19 及以上，仓库写的是 &gt;=24.9.0。以当前文档和你实际安装的发行通道为准",
+            "官方 README 明确这是开发者预览版，兼容性可能被打破。高星不能当成「已经稳定能当主力工作台」",
+            "社区插件市场、皮肤包和 dsh-Go 都是第三方。作者提醒远离「免费无限用模型」和「破甲」，但仍然示范了不少来自市场的包名；装之前要当成不信任代码，尤其不要把 API Key 交给来路不明的安装包",
+            "「智能体团队」「Ralph 循环」等在官方英文页上标成实验性能力。适合拿来理解概念，不适合在没设预算的情况下长时间挂机"
+          ]
+        },
+        "context_html": [
+          "DeepSeek Harness 的内核是 Cordis 插件系统：模型、工具、技能、会话、沙箱、存储、循环、调度和 UI 都由插件提供，开发者可以在配置层替换，不必改官方源码",
+          "你已经收过 DeepSeek Harness 团队 10 月 31 日的 Super-agent 长文，也有 10 月 17 日那条还没抓到正文的「文字分享」。Super-agent 是研究原型，开源说明里写了不是官方产品；这篇教程讲的是 DSH 工作台怎么上手",
+          "社区里另有一套「养鱼」玩法：在 QQ 或手机上挂一个 24 小时在线的角色。那和这篇的桌宠、人设卡不是同一条技术路径，安全边界也更松"
+        ],
+        "relevance": [
+          {
+            "area": "agents",
+            "html": "四种模式其实是四套预设：标准模式对应日常干活，PTC 对应「先写成程序再一次性执行」，极简模式用来排除环境和插件的干扰，创造模式让 Agent 改自己的工具箱。这比只记住「大肥鱼」这个名字更有用"
+          },
+          {
+            "area": "aicoding",
+            "html": "DSH 和你已经在用的 Cursor / Grok Bot 是同一类「模型外面再套一层工作台」的东西。现在不必换主力工具；值得看的是它把主循环、权限和插件都做成了可替换件，以及「先限制工作区写入」这条安全习惯"
+          },
+          {
+            "area": "kaoyan",
+            "html": "初试前足够把这篇当索引收藏，不要在复习期装桌宠、皮肤市场或第三方 APK。想对照概念，可以回去看上周的 Super-agent 分析"
+          }
+        ],
+        "next_html": [
+          "初试前不用上手。如果只想建立一个正确印象：DSH 是官方开源工作台，大肥鱼是社区人设，Super-agent 是另一篇研究原型",
+          "初试之后如果要试：从 <code>https://www.deepseek.com/harness/</code> 下官方桌面端，或运行 <code>npx @deepseek-ai/dsh web</code>；选标准模式，权限只用「工作区内修改」，先建一个空的测试文件夹",
+          "社区插件、皮肤、桌宠和 dsh-Go 先当参考。没有核对来源、权限和更新渠道之前，不要把 API Key 填进去"
         ]
       }
     }
