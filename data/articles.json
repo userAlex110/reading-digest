@@ -88,6 +88,2521 @@
   ],
   "articles": [
     {
+      "id": "wx:MzkwNDE0MzQ0Nw:2247525563:2",
+      "title": "华为官方介绍轻量级穿戴支付方案：这是给开发者的技术方案，不是家人手表的使用指南",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzkwNDE0MzQ0Nw==&mid=2247525563&idx=2&sn=06c4c7c6cf3d2e2fb75c6d19fd159c8a",
+      "category": "emb",
+      "source": {
+        "account": "HarmonyOS开发者技术",
+        "published": "2026-11-10"
+      },
+      "added": "2026-11-15",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "华为开发者公众号的官方技术方案介绍：为轻量级穿戴整理了<b>分布式 HCE</b>和<b>通用二维码</b>两套支付接入路径，面向银行/钱包开发者。文中给出了架构角色和安全分层，并链到开发者文档；这不是消费者「手表怎么付款」教程，也不自动对应某一款家人手表。",
+      "points_html": [
+        "<b>为什么要单独做方案：</b>正文称轻量级智能穿戴无法实时联网，也不支持开放 TEE，传统手机 HCE 不能直接部署到这类设备上",
+        "<b>分布式 HCE：</b>把中间件和支付 App 分开。手机侧 TRA SDK 代理手表 token 的申请和刷新，经 Wear Engine Kit 传到手表侧 SDK，手表再通过 NFC 把 token 交给 POS。文中称支持 iOS、Android 和 HarmonyOS 手机",
+        "<b>用户流程（官方描述）：</b>手机开卡并激活手表；支付可通过设默认、手动打开应用，或 POS 碰一碰进入三方应用",
+        "<b>安全章节：</b>应用上架与签名校验、不可逆 Secure Boot、JS runtime 隔离、HUKS 三层密钥、Wear Engine 通道加密，以及建议开启锁屏密码、离腕锁屏和小额限额",
+        "<b>通用二维码：</b>用标准资源包和 SDK 接口，由华为标准二维码支付 App 动态加载支付商资源。文末给出开发指导书链接 <code>https://developer.huawei.com/consumer/cn/doc/lite-wearable-guides/lite-wearable-code-pay-guide</code>"
+      ],
+      "keywords": "HarmonyOS 轻量级穿戴 HCE 二维码支付 Wear Engine Kit HUKS TRA NFC 华为手表",
+      "ticktick_task_id": "6af942dce4b0dc3df8c0ebc6",
+      "wechat": {
+        "biz": "MzkwNDE0MzQ0Nw==",
+        "mid": "2247525563",
+        "idx": "2",
+        "sn": "06c4c7c6cf3d2e2fb75c6d19fd159c8a"
+      },
+      "detail": {
+        "summary": "深入讲解 · 官方入口说明，细节要以开发者文档为准，也别对号入座到家里那块表",
+        "body_html": "<h4>这篇在讲什么</h4><div>账号是「HarmonyOS开发者技术」，对象是要在轻量级穿戴上接支付的开发者，不是普通用户。文章分两块：分布式 HCE（手表模拟卡、走 NFC）和通用二维码（手表亮码、收银终端来扫）。开头的「轻轻一抬手腕」是场景包装，后面才是架构角色和安全分层。</div><h4>我核对到什么、核对不到什么</h4><div>文末那条「通用二维码支付场景开发指导书」链接是华为开发者网站上的真实文档路径，我请求时服务器返回 HTTP 200，但页面是前端渲染的文档中心，这次没有提取到正文，因此不能把指导书里的接口、步骤或限制复述成我已经核对过的内容。分布式 HCE 的 TRA、token 传递和「支持 iOS / Android / HarmonyOS 手机」等表述，目前主要来自这篇官方推送本身，我没有另外打开可摘录的 HCE 专题页与之逐条对照。HUKS、Wear Engine Kit、安全启动和 JS 隔离是华为开发者体系里常见的组件与概念，但本文里的具体支付安全流程仍是厂商自述。</div><h4>和家人手表的关系</h4><div>这篇没有点名某一款消费级手表，也没有给出「某型号已经开通腕上支付、支持哪些钱包」的产品清单。家里若有华为手表，能不能付款取决于具体型号、地区、钱包和开通状态，不能从这篇开发者方案直接推断。不要把它读成选表或开通教程。</div>"
+      },
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了公众号全文，并请求了文中给出的华为开发者文档链接（HTTP 200，但为前端渲染页，未能提取指导书正文）；未找到可摘录的分布式 HCE 对照页，故架构细节仍按官方推送记录，不强行写成已交叉验证",
+        "thesis_html": "这是华为面向开发者的<b>官方方案介绍</b>，能用来理解轻量级穿戴支付为什么要拆成「手机开卡、手表持 token / 亮码」；它不是产品评测，也不能证明某款手表现在就能付款，更不要自动对到家人的手表。",
+        "facts": [
+          {
+            "html": "「HarmonyOS开发者技术」在 2026-11-10 发布这篇推送，介绍两套面向轻量级智能穿戴（文中也称同时适用于智能穿戴设备）的支付场景方案：分布式 HCE，以及通用二维码支付。推送开头把腕上支付写成「无需携带钱包或手机、抬腕即可完成」，这是场景描述，不是对某一款已上市产品的实测",
+            "source": "HarmonyOS开发者技术公众号原文",
+            "year": "2026-11-10",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzkwNDE0MzQ0Nw==&mid=2247525563&idx=2&sn=06c4c7c6cf3d2e2fb75c6d19fd159c8a",
+            "corroborated": false
+          },
+          {
+            "html": "关于分布式 HCE，原文的架构描述是：发卡行服务器和卡组织服务器仍负责账户与清算；支付应用在手机侧完成开卡；集成商（TRA）手机侧 SDK 代理手表 token 的申请与刷新，经 Wear Engine Kit 传给手表侧 SDK；手表侧 SDK 保存 token，并通过 NFC 传给 POS。原文还称该方案支持 iOS、Android 和 HarmonyOS 手机。这些角色划分目前只在这篇官方推送中核对到，我没有打开另一份可摘录的 HCE 文档做交叉验证",
+            "source": "HarmonyOS开发者技术公众号原文",
+            "year": "2026-11-10",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzkwNDE0MzQ0Nw==&mid=2247525563&idx=2&sn=06c4c7c6cf3d2e2fb75c6d19fd159c8a",
+            "corroborated": false
+          },
+          {
+            "html": "原文把支付安全写成多层：应用经华为运动健康 / AGC 签名校验后安装；Secure Boot 以不可逆 Efuse 开关开启，启动代码用 SHA256+RSA 校验下一阶段镜像，失败则复位；三方应用走 JS runtime 隔离；密钥由 HUKS 按「根密钥→主密钥→业务密钥」三层管理；手机与手表传输走 Wear Engine Kit 加密通道；并建议设置锁屏密码、开启离腕锁屏，以及在手表侧设置小额支付限制。以上为厂商方案自述",
+            "source": "HarmonyOS开发者技术公众号原文",
+            "year": "2026-11-10",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzkwNDE0MzQ0Nw==&mid=2247525563&idx=2&sn=06c4c7c6cf3d2e2fb75c6d19fd159c8a",
+            "corroborated": false
+          },
+          {
+            "html": "文末给出的「通用二维码支付场景开发指导书」链接为 <code>https://developer.huawei.com/consumer/cn/doc/lite-wearable-guides/lite-wearable-code-pay-guide</code>。我在 2026-11-15 请求该地址得到 HTTP 200，页面标题区域为华为「文档中心」，但正文由前端应用渲染，这次没有提取到指导书正文，因此不能转述其中的接口或步骤，也不能据此独立核对「All in one、支持全球支付厂商、支持所有穿戴系列」等宣传句",
+            "source": "华为开发者文档中心（页面可访问，正文未提取）",
+            "year": "2026-11-15",
+            "url": "https://developer.huawei.com/consumer/cn/doc/lite-wearable-guides/lite-wearable-code-pay-guide",
+            "corroborated": false
+          }
+        ],
+        "critique": {
+          "credibility": "B",
+          "credibility_note": "这是华为官方开发者账号介绍自己的接入方案，来源一级，但带产品包装，关键能力（支持哪些手机与钱包、实际开通范围、安全措施是否按描述落地）缺少可独立复核的文档摘录和第三方验证。",
+          "points_html": [
+            "「大幅提升支付便捷性和效率」「生活中不可或缺的智能伙伴」是宣传句，没有给出交易量、故障率或对比数据",
+            "「支持 iOS、Android 和 HarmonyOS 手机」「支持全球支付厂商、支持所有穿戴系列」是方案宣称，我没有看到对应的已上线钱包清单或机型清单",
+            "安全启动、JS 隔离和 HUKS 三层密钥是架构说明，不是渗透测试或认证报告。文中「系统 API 无存在风险」这类判断不能从字面当成已经证明无漏洞",
+            "轻量级穿戴「不支持 TEE 生态开放」是厂商对自身平台约束的陈述，用来解释为什么要做分布式方案，并不自动适用于所有品牌的手表",
+            "这篇没有点名具体消费级型号，不能用来判断家人手表能不能付款，也不应被读成开通教程"
+          ]
+        },
+        "context_html": [
+          "HCE 是主机卡模拟：由设备上的应用来模拟银行卡，而不是依赖安全元件里预置的卡。原文的重点是轻量级穿戴自身条件不够，于是把 token 申请放在手机，手表只保存并在 NFC 或亮码时使用",
+          "Wear Engine 和 HUKS 是华为开发者文档里常见的穿戴通信与密钥管理组件。知道名字有助于读原文架构图，但不等于这篇已经把接口讲全",
+          "你家人选表时关注过华为手表，和这篇没有直接对应：那是消费产品与使用体验，这篇是给支付/钱包开发者的接入说明"
+        ],
+        "relevance": [
+          {
+            "area": "robotics",
+            "html": "如果你以后做带安全存储或离线交互的穿戴/嵌入式外设，值得记住的是职责切分：开卡、风控和 token 生命周期放在有网络和更完整安全环境的一侧，端侧只保存有限凭证并做近场交互。不要从这篇推出「自己做一个支付手表」的课设"
+          },
+          {
+            "area": "kaoyan",
+            "html": "初试前不必深读。若只记一句：这是华为给开发者看的支付接入方案，不是某款手表已经能付款的证明"
+          }
+        ],
+        "next_html": [
+          "若以后真要做 HarmonyOS 轻量级穿戴支付，以开发者文档当前页面为准，不要只凭这篇推送里的架构图开工",
+          "不要根据这篇去给家人开通或推荐腕上支付，也不要把方案宣传理解成已验证的产品能力",
+          "初试前无需跟进"
+        ]
+      }
+    },
+    {
+      "id": "wx:Mzk2NDU3MDczMQ:2247487155:1",
+      "title": "苦瓜学长答肖八和报名人数：选择题可先试一套；报名人数已有官方数字，但不必据此改计划",
+      "url": "https://mp.weixin.qq.com/s?__biz=Mzk2NDU3MDczMQ==&mid=2247487155&idx=1&sn=6206a64ecfd2be170b742fc0b55c6f71",
+      "category": "kaoyan",
+      "source": {
+        "account": "苦瓜学长",
+        "published": "2026-11-15"
+      },
+      "added": "2026-11-15",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "苦瓜学长回答肖八常见问题：纸质或小程序均可、支持正版；大题不用做；选择可先做一套，不适合就停；肖八分数低也正常，因为多数人要到肖四才接近应试状态。文末只说报名人数「上升」、看这个没有意义。官方已公布 2027 年报名人数为 347 万，比 2026 年的 343 万多 4 万。",
+      "points_html": [
+        "<b>介质：</b>纸质版或小程序都可以，作者支持买正版",
+        "<b>视频：</b>看不看「大牙」老师视频讲解，争议较大；作者当时看了、觉得有收获，也承认有人不适合，建议先实践再决定",
+        "<b>大题：</b>明确写「一点不用看」",
+        "<b>值不值得做：</b>「就八套选择而已」，与其每天争论，不如做完；建议先做一套选择，不适合就后续不做。作者认为做肖八的人很多，所以网上批评很正常",
+        "<b>分数：</b>「大部分同学政治的选择应试实力一般要到肖四到手才能趋于巅峰状态」，所以肖八分数很低也没什么关系",
+        "<b>报名人数：</b>正文只说「考研报名人数上升」，没有给出数字，并认为看这个几乎没有意义，报名已经结束无法修改，该怎么学还是怎么学"
+      ],
+      "keywords": "苦瓜学长 肖八 肖四 考研政治 大牙 报名人数 347万 343万 27考研 选择题",
+      "ticktick_task_id": "6af9160ce4b0095d76c33eac",
+      "wechat": {
+        "biz": "Mzk2NDU3MDczMQ==",
+        "mid": "2247487155",
+        "idx": "1",
+        "sn": "6206a64ecfd2be170b742fc0b55c6f71"
+      },
+      "detail": {
+        "summary": "深入讲解 · 肖八当一次试手，报名人数用官方数字，不要用传闻",
+        "body_html": "<h4>关于肖八，正文其实只说了很有限的几句</h4><div>作者没有论证肖八「命中率」或「必须做完八套」，而是把决策收成可执行的小步骤：正版纸质或小程序都行；大题不用看；选择先做一套，不适合就停；分数低不必解读成水平崩了，因为他认为多数人要到肖四才进入较好状态。这和 11 月 9 日那篇「12 月前模拟卷不必看分数、大题等肖四」是同一条逻辑。它仍然是个人经验，不是考试规则，也没有数据证明「大部分同学到肖四才巅峰」。</div><h4>报名人数：官方数字已经有了</h4><div>正文只写「上升」，没有写人数。教育部 2026 年 11 月 13 日发布的考试安全工作报道写明：「据统计，2027年全国硕士研究生招生考试报名人数为347万。」新华社、中新社同一天也引述教育部，报的是同一数字。上一年同一口径的报道写的是：2026 年报名人数为 343 万（教育部 2025 年 11 月 24 日网站稿）。347 万比 343 万多 4 万，方向上确是「上升」，但幅度很小，不能理解成竞争突然加剧。报名已经结束，这个数字也改变不了你现在该做的题。</div><div>在找到上述教育部网站稿之前，这类人数只应写成「未核实」。不要使用没有一手来源的微信转图或培训号口头数字。</div>"
+      },
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了公众号全文；2027 年和 2026 年报名人数分别对照教育部 2026-11-13、2025-11-24 的网站报道，以及新华社、中新社对 347 万的引述。肖八效果和「到肖四才巅峰」没有独立数据可核",
+        "thesis_html": "肖八选择题可以先做一套试试，大题不必做，低分不必过度解读；<b>报名人数的官方数字是 347 万，只比上年多 4 万</b>，不构成现在改计划的理由。",
+        "facts": [
+          {
+            "html": "作者对肖八的建议是：纸质或小程序均可，支持正版；大题「一点不用看」；选择建议先做一套，不适合就后续不做；并认为多数人政治选择要到肖四到手才接近较好状态，因此肖八分数很低也没关系。看「大牙」讲解视频则「争议较大」，作者自己当时看了、觉得有收获，但承认有人不适合",
+            "source": "苦瓜学长公众号原文",
+            "year": "2026-11-15",
+            "url": "https://mp.weixin.qq.com/s?__biz=Mzk2NDU3MDczMQ==&mid=2247487155&idx=1&sn=6206a64ecfd2be170b742fc0b55c6f71",
+            "corroborated": false
+          },
+          {
+            "html": "教育部网站 2026 年 11 月 13 日《2027年全国硕士研究生招生考试安全工作视频会召开》一文写明：「据统计，2027年全国硕士研究生招生考试报名人数为347万。」初试时间为 2026 年 12 月 19 日至 20 日",
+            "source": "教育部政府门户网站",
+            "year": "2026-11-13",
+            "url": "http://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/moe_1485/202611/t20261113_1458104.html",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "新华社（新华网 2026-11-13 15:41）",
+                "url": "https://www.news.cn/20261113/3ea12851bcdc47b497022ddd58b6971f/c.html"
+              },
+              {
+                "source": "中国新闻社（中新网 2026-11-13 13:29）",
+                "url": "https://www.chinanews.com.cn/sh/2026/11-13/10731427.shtml"
+              }
+            ]
+          },
+          {
+            "html": "教育部网站 2025 年 11 月 24 日《教育部部署2026年全国硕士研究生招生考试安全工作》一文写明：「据统计，2026年全国硕士研究生招生考试报名人数为343万。」与 2027 年的 347 万相比，多 4 万。苦瓜正文只说「报名人数上升」、没有写数字，方向与这两份官方统计一致，但幅度需要用官方数字来看，不能自行脑补成大幅上涨",
+            "source": "教育部政府门户网站",
+            "year": "2025-11-24",
+            "url": "http://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/moe_1485/202511/t20251124_1421370.html",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "教育部 2027 年报名人数报道",
+                "url": "http://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/moe_1485/202611/t20261113_1458104.html"
+              }
+            ]
+          }
+        ],
+        "critique": {
+          "credibility": "B",
+          "credibility_note": "肖八部分是个人经验，建议具体但没有效果数据；报名人数「上升」与教育部公布的 347 万对得上，但作者没有给出数字，读者仍需自己核对一手来源，而不能停在培训号的口头判断。",
+          "points_html": [
+            "「大部分同学要到肖四才巅峰」是经验判断，没有抽样数据。它只能提醒你不要用肖八分数自我定性，不能证明肖四一定更高或更准",
+            "「做肖八的人非常庞大，所以网上批评很正常」是循环解释：用的人多，既不能证明值得做，也不能证明批评都是错的",
+            "正文对报名人数只说「上升」。这个方向现在可以被官方 347 万对上，但培训号转图里如果出现别的数字，仍应回到教育部网站核对，找不到就写「未核实」",
+            "347 万只比上年多 4 万，幅度很小。把它理解成「今年突然更卷」没有依据，更不应据此改学校或加时",
+            "作者同时维护内容账号，对正版肖八和小程序的态度偏支持，这不影响「先做一套再决定」，但也不等于中立评测"
+          ]
+        },
+        "context_html": [
+          "同一作者 11 月 9 日的政治规划已经把大题放到 12 月初的肖四。这篇是对「要不要做肖八」的补充，不是另一套计划",
+          "报名在 10 月已经结束。研招网报名页显示 2027 年统考网报已结束，现在既改不了志愿，人数也不会改变你试卷上的题",
+          "从今天到 12 月 19 日还有 34 天。把时间花在核对官方人数或争论肖八口碑上，机会成本很高"
+        ],
+        "relevance": [
+          {
+            "area": "kaoyan",
+            "html": "政治上，你可以按他的最小步骤处理肖八：先做一套选择，不适合就停，大题不做，分数不解读。数学二和专业课的时间不要让给「再辩论要不要买纸质版」。报名人数知道 347 万这个官方数字即可，不用展开焦虑"
+          }
+        ],
+        "next_html": [
+          "若已有肖八：只做一套选择题，按错因复盘后决定还要不要继续；大题直接跳过",
+          "若还没有：不必专门为这件事下单，用你正在用的真题选择和已有模拟卷也可以",
+          "报名人数以教育部 347 万（上年 343 万）为准，不要再转发没有一手来源的数字；知道后继续按原计划复习"
+        ]
+      }
+    },
+    {
+      "id": "url:c6533280d59bcde5ec12",
+      "title": "力扣 2023 年匿名面经《苹果公司嵌入式工程师》：不能当成 2026 年苹果招聘现状",
+      "url": "https://leetcode.cn/circle/discuss/HOZJEn/",
+      "category": "job",
+      "source": {
+        "account": "力扣讨论（匿名用户）",
+        "published": "2023-03-10"
+      },
+      "added": "2026-11-15",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "这是力扣讨论区一份<b>2023 年 3 月 10 日</b>的匿名面经，不是 2026 年的新帖，也不能代表苹果现在怎么招嵌入式工程师。帖子声称电话面和现场面问了 memcpy、汇编、volatile、大小端、链表反转、fork / 进程线程、中断调试，以及用 C 实现 FIFO。这些题目无法交叉验证，只能记成「帖子声称」。",
+      "points_html": [
+        "<b>必须先看日期：</b>帖内写明「匿名用户」「2023.03.10」「发布于未知归属地」。采集日期是 2026-11-15，中间隔了三年多。页面上其他「更新」「题库」信息属于站点套件，不要当成这篇面经是今年写的",
+        "<b>帖子声称的流程：</b>HR 电话先问教育和项目，并考察英语；随后三轮电话面，大约每轮间隔 3–4 天；春节后原计划去美国，后改在面试官来中国出差时到酒店现场面，并被通知不必穿得太正式",
+        "<b>电话面题目（帖子声称）：</b>在 collabedit 上写偏底层的 C：memcpy 及优化、写一点汇编、volatile 的意义和用途、判断大小端、反转链表。面试官被写成两名在美国的印度同事和一名国内同事，其中一名印度同事是「未来的上司」",
+        "<b>现场面题目（帖子声称）：</b>共 5 名面试官。第一轮优化一段分配 array of array 的 C 代码，并问 fork、进程与线程区别、中断概念和一段中断程序如何 debug，作者写自己「答不出更多」后这轮结束；后两轮本质是用 C 实现 FIFO（队列）",
+        "<b>无法核实：</b>发帖人匿名，没有职位编号、面试组或可核对的录用结果。上述流程和题目都只能作为「该帖如此陈述」"
+      ],
+      "keywords": "力扣 面经 苹果 嵌入式 memcpy volatile 大小端 FIFO 2023 匿名面试",
+      "ticktick_task_id": "6af956eae4b0711ec48312a3",
+      "detail": {
+        "summary": "深入讲解 · 先看年份，再决定要不要把题目当练习清单",
+        "body_html": "<h4>这不是今年的招聘新闻</h4><div>帖子标题是「面经｜苹果公司嵌入式工程师」，但正文第一行信息就是匿名用户和 <b>2023.03.10</b>。把它放进 2026 年 11 月的阅读列表，只说明你最近收藏了它，不说明苹果现在仍按这个流程招人，也不说明团队构成、是否还用 collabedit、是否还会让候选人去酒店面试。三年里招聘流程、题目风格和团队构成都可能已经改变。</div><h4>帖子里写了哪些题</h4><div>电话面集中在底层 C：手写 memcpy 和优化、汇编、volatile、大小端判断、链表反转。现场面第一轮是优化分配二维数组的代码，再问进程/线程和中断调试；后两轮收敛到用 C 实现 FIFO。这些题目本身是嵌入式常见的基本功，当作「有人在 2023 年声称被问过」的练习清单可以，当作「2026 年苹果嵌入式岗位必考题」不行。</div><h4>为什么不能升级成事实</h4><div>匿名、单源、事后回忆，没有第二个独立来源。帖里对面试官国籍和「未来上司」的描述无法核对，也不适合转述成公司画像。现场面「主要看你在他们眼前写程序是否自信」，只是帖子里面试官的说法，同样无法证实。</div>"
+      },
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了力扣讨论页抓取到的全文。帖内日期为 2023.03.10，发帖人为匿名用户；题目和流程没有可核对的官方或第二来源，故一律标为未经交叉验证",
+        "thesis_html": "这是一份<b>2023 年的匿名回忆</b>，不是 2026 年苹果嵌入式岗位的招聘说明。日期必须看清楚；里面的题目可以当「帖子声称被问过的基本功」，不能当成今年的考纲或公司现状。",
+        "facts": [
+          {
+            "html": "力扣讨论帖 <code>https://leetcode.cn/circle/discuss/HOZJEn/</code> 标题为「面经｜苹果公司嵌入式工程师」，发帖显示为「匿名用户」，帖内日期为 <b>2023.03.10</b>，并写「发布于 未知归属地」。该日期属于原帖，不是 2026 年新发布的面经",
+            "source": "力扣讨论原帖",
+            "year": "2023-03-10",
+            "url": "https://leetcode.cn/circle/discuss/HOZJEn/",
+            "corroborated": false
+          },
+          {
+            "html": "帖子声称：HR 电话先了解教育背景和项目经验，并考察英语水平；随后安排三轮电话面试，每段大约间隔 3–4 天；电话面在 collabedit 上写偏基础的底层 C。春节之后通知现场面试，最初考虑去美国，后因签证耗时改为面试官来中国出差时在酒店面试，并通知不必穿得太正式。以上仅为该匿名帖的陈述，未能交叉验证",
+            "source": "力扣讨论原帖（匿名用户陈述）",
+            "year": "2023-03-10",
+            "url": "https://leetcode.cn/circle/discuss/HOZJEn/",
+            "corroborated": false
+          },
+          {
+            "html": "帖子声称电话面题目包括：手写 memcpy 及优化；写一点 assembly，以及 volatile 关键字的意义和适用场合；写程序判断 big-endian / little-endian；reverse a linked list。现场面第一轮包括优化一段 alloc array of array 的 C 代码、fork、进程与线程的区别、中断概念，以及对一小段中断相关程序如何 debug；第二轮和第三轮「本质上是用 C 实现一个 FIFO（queue）」。这些题目均只能记为「帖子声称」，没有官方题库或第二来源可核对",
+            "source": "力扣讨论原帖（匿名用户陈述）",
+            "year": "2023-03-10",
+            "url": "https://leetcode.cn/circle/discuss/HOZJEn/",
+            "corroborated": false
+          }
+        ],
+        "critique": {
+          "credibility": "D",
+          "credibility_note": "匿名单源、事后回忆，且原帖写于 2023 年 3 月。无法证实面试是否发生、题目是否完整或准确，更不能用来描述 2026 年的苹果招聘。",
+          "points_html": [
+            "<b>年份是首要风险。</b>现在是 2026 年 11 月，用三年前的匿名面经推断「苹果嵌入式现在考什么」没有依据",
+            "发帖人匿名，没有可核对的团队、职级、HC 或结果。对面试官国籍和「未来上司」的描述尤其不应转述成事实",
+            "题目清单是回忆，可能有遗漏、记错或事后加工。memcpy、volatile、大小端、链表和 FIFO 都是常见基本功，出现在帖子里并不等于这就是苹果的标准考卷",
+            "站点页面上可能出现「刚刚更新」或题库推荐，那是力扣页面组件，不是这份面经在 2026 年被作者更新成新内容"
+          ]
+        },
+        "context_html": [
+          "嵌入式岗位面试里出现 C 标准库、易失性、字节序、中断和队列，本身并不稀奇。它们衡量的是对底层 C 和并发/中断模型的熟练程度，不必绑定到「苹果」这个名字才有练习价值",
+          "不要把这份帖子和本周其他开源硬件、官方方案放在一起读成「2026 年嵌入式行业动态」。它只是一篇旧讨论",
+          "考研初试的目标是 2026-12-19 的笔试，这份面经对初试没有直接帮助；即便以后准备校招，也需要找更新、可核对的信息，而不是单靠匿名旧帖"
+        ],
+        "relevance": [
+          {
+            "area": "kaoyan",
+            "html": "初试前不要在这份旧面经上花时间。若只记住一句：收藏日期是 2026-11-15，原帖日期是 2023-03-10，两件事不要混"
+          },
+          {
+            "area": "robotics",
+            "html": "memcpy 优化、volatile、大小端、中断和用 C 写 FIFO，可以作为以后嵌入式基本功的练习条目，但来源只能注明「2023 年匿名面经声称」，不要写成苹果官方大纲"
+          }
+        ],
+        "next_html": [
+          "把这份收藏的重点标在「2023-03-10，匿名，未核实」，不要写进「2026 年苹果招聘」这类笔记标题",
+          "初试前不必练习这些题目；若以后当作 C 基本功清单，需另找教材或自己写代码验证，不要假设帖中的问法仍然适用",
+          "不要根据这篇去推测苹果是否在招、在哪里面、面试官构成如何"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzAwODMzNjk3OA:2451699068:1",
+      "title": "我设计了一款免费商用的手写字体：莲生灵光体",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzAwODMzNjk3OA==&mid=2451699068&idx=1&sn=d0cc1346f4910eb2d3831def665c49fa",
+      "category": "idea",
+      "source": {
+        "account": "莲生的碎碎念",
+        "published": "2026-11-09"
+      },
+      "added": "2026-11-15",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "作者介绍自己做的手写风格开源字体<b>莲生灵光体</b>，官网可试字和下载，仓库里有母版和构建脚本。我打开了 <code>https://font.kimwing.cn/</code> 和 GitHub 仓库：字体包按 <b>Arphic Public License</b>（文鼎公众授权书）发布，下载链接有效；「免费商用」适用于使用字体排版，修改后再分发字体本身须遵守该许可证。",
+      "points_html": [
+        "<b>产品：</b>手写风格可变字体，原文写提供 400–650 字重。官网下载面板写有 6,915 个中文字形，并覆盖中英文、数字与常用符号",
+        "<b>官网：</b><code>https://font.kimwing.cn/</code> 可以试字、调字重，并打开下载面板。我请求 <code>LianshengLingguangti-2.2.11.zip</code> 时得到 HTTP 200 且 <code>Content-Type: application/zip</code>，下载入口可用。版本号 2.2.11 与站点样式和仓库说明一致",
+        "<b>仓库：</b><code>https://github.com/kim-wing/liansheng-lingguangti</code> 存在，描述为「免费商用手写风格可变字体，包含轮廓母版与构建脚本」。仓库根目录有 <code>LICENSE</code>（英文 Arphic Public License）和 <code>LICENSE-zh_CN.txt</code>（文鼎公众授权书），GitHub 创建时间为 2026-11-08",
+        "<b>授权：</b>官网写明「修改和再分发请遵循随附的 Arphic Public License」。另有一页「莲生灵光体开源许可证」，但该页明确：当前下载的字体包仍依随附的 Arphic Public License 分发，本页不变更该字体包的授权",
+        "<b>「免费商用」怎么理解：</b>用这款字体排海报、包装、字幕或交付设计成品，作者和官网都说不必另付授权费，这也符合 APL 允许使用和复制的方向。若你要修改字体文件并再分发，APL 要求保留许可证，并以同样条件公开修改版本，不能只记住「完全没有义务」"
+      ],
+      "keywords": "莲生灵光体 开源字体 Arphic Public License 文鼎 font.kimwing.cn 免费商用 可变字体",
+      "ticktick_task_id": "6af918cee4b010f4893bb764",
+      "wechat": {
+        "biz": "MzAwODMzNjk3OA==",
+        "mid": "2451699068",
+        "idx": "1",
+        "sn": "d0cc1346f4910eb2d3831def665c49fa"
+      },
+      "detail": {
+        "summary": "深入讲解 · 许可证和下载都能对上，但 APL 不是「毫无限制」",
+        "body_html": "<h4>作者在介绍什么</h4><div>这是字体作者的自荐短文，重点在设计想法：手写感主要靠结构和节奏，而不是把笔画做毛糙；可变字重用来看笔画变粗以后空隙和行的分量如何变化。文中也提醒，海报案例里可能含第三方元素，免费商用授权只覆盖字体本身。</div><h4>我实际打开后看到的</h4><div>官网可以试字和下载，GitHub 仓库里有许可证、构建脚本和版本记录，这些与正文承诺一致。英文 <code>LICENSE</code> 开头就是 “ARPHIC PUBLIC LICENSE”，中文对应「文鼎公众授权书」，版权页写的是 1999 年文鼎科技。也就是说，这款字体不是改挂了一张自制「完全免费」声明，而是明确采用已有的 APL 文本。</div><h4>使用时要注意的边界</h4><div>APL 允许复制、使用，并鼓励在相同条件下分享修改；它不是把字体的一切权利都放弃。对大多数「用这款字去排自己的海报、文档、视频」的人来说，官网和原文说的免费商用是成立的。如果你把改过的字体文件再分发出去，或把字体嵌入到需要随软件分发的产品里，应先通读随附的中英文许可，而不是只看「免费商用」四个字。官网另写的「莲生灵光体开源许可证」明确不替代字体包的 APL，两者不要混用。</div>"
+      },
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了公众号全文，并打开官网 font.kimwing.cn（含下载面板和中文授权页）、核对 zip 下载响应，以及 GitHub 仓库 kim-wing/liansheng-lingguangti 中的 LICENSE / LICENSE-zh_CN.txt",
+        "thesis_html": "官网和仓库都在，许可证确实是 <b>Arphic Public License</b>，字体包可以下载；「免费商用」说的是使用这款字去排版，不代表修改后再分发字体时没有任何条件。",
+        "facts": [
+          {
+            "html": "官网 <code>https://font.kimwing.cn/</code> 可以试字，并提供下载面板。面板写明 6,915 个中文字形、400–650 可变字重、免费商用；下载文件名为 <code>LianshengLingguangti-2.2.11.zip</code>。我向该地址发出请求，得到 HTTP 200 和 <code>Content-Type: application/zip</code>，下载入口可用",
+            "source": "莲生灵光体官网",
+            "year": "2026-11-15",
+            "url": "https://font.kimwing.cn/",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "字体包直接地址",
+                "url": "https://font.kimwing.cn/LianshengLingguangti-2.2.11.zip"
+              }
+            ]
+          },
+          {
+            "html": "开源仓库 <code>https://github.com/kim-wing/liansheng-lingguangti</code> 存在，描述与原文一致。GitHub 记录创建于 2026-11-08，仓库根目录含 <code>LICENSE</code> 与 <code>LICENSE-zh_CN.txt</code>。英文许可文本开头为 “ARPHIC PUBLIC LICENSE”，版权声明为 1999 Arphic Technology Co., Ltd.；中文对应「文鼎公众授权书」",
+            "source": "GitHub kim-wing/liansheng-lingguangti",
+            "year": "2026-11-15",
+            "url": "https://github.com/kim-wing/liansheng-lingguangti",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "仓库英文许可证原文",
+                "url": "https://raw.githubusercontent.com/kim-wing/liansheng-lingguangti/main/LICENSE"
+              },
+              {
+                "source": "莲生灵光体官网授权说明",
+                "url": "https://font.kimwing.cn/license-zh.html"
+              }
+            ]
+          },
+          {
+            "html": "官网授权说明写：当前下载的字体包仍依随附的 Arphic Public License 分发；「莲生灵光体开源许可证」适用于作者有权独立授权且明确按该许可证发布的原创内容，不变更该字体包的授权",
+            "source": "莲生灵光体开源许可证页",
+            "year": "2026-11-08",
+            "url": "https://font.kimwing.cn/license-zh.html",
+            "corroborated": false
+          },
+          {
+            "html": "原文称个人和商业项目都可免费使用，排海报、做包装、制作视频字幕或给付费客户交付设计成品，不必另付字体授权费。这与官网下载说明一致。APL 对修改字体后再分发另有保持许可、公开修改版本等要求，原文对此写得比较少",
+            "source": "莲生的碎碎念公众号原文",
+            "year": "2026-11-09",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzAwODMzNjk3OA==&mid=2451699068&idx=1&sn=d0cc1346f4910eb2d3831def665c49fa",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "莲生灵光体官网",
+                "url": "https://font.kimwing.cn/"
+              }
+            ]
+          }
+        ],
+        "critique": {
+          "credibility": "B",
+          "credibility_note": "这是作者自荐，但官网、许可证文本和下载包我都打开核对过，关键授权陈述不是口头承诺。仍需注意 APL 对再分发修改版的义务，以及案例海报里的第三方素材并不随字体授权。",
+          "points_html": [
+            "「免费商用」容易被听成「怎么用都行」。用这款字排自己的作品，和修改字体文件后再分发，义务并不一样",
+            "官网另有一份「莲生灵光体开源许可证」，但页面自己写了它不替代字体包的 APL。下载和使用字体时，应以随包的文鼎公众授权书 / APL 为准",
+            "作者提醒案例海报可能含第三方元素，权利仍归原权利人。不能把海报里的图片、品牌或版式一起当成可商用素材",
+            "我核对了下载响应和许可证文本，但没有在本机安装后逐一检查字库完整性和所有软件中的嵌入行为"
+          ]
+        },
+        "context_html": [
+          "Arphic Public License（文鼎公众授权书）是 1999 年发布的字体许可证，允许复制、使用并在相同条件下分发修改版，常被用来发布衍生中文字体",
+          "仓库创建于 2026-11-08，与字体「正式发布」时间接近，属于新项目。新字体的软件兼容性、缺字和后续修订，都还要看作者的更新"
+        ],
+        "relevance": [
+          {
+            "area": "aicoding",
+            "html": "若以后做演示页、海报或视频字幕，这是一套可以先试用的开源中文手写字体，不必先买商用授权。嵌入应用或二次分发字体文件前，先读 APL，不要只把字体文件塞进项目仓库了事"
+          },
+          {
+            "area": "kaoyan",
+            "html": "和初试没有直接关系。现在不必花时间研究字库或改构建脚本"
+          }
+        ],
+        "next_html": [
+          "如果只是偶尔排版：到 <code>https://font.kimwing.cn/</code> 试字，需要再用再下载 2.2.11 的 zip，并保留随包许可证",
+          "如果打算改字或把字体跟软件一起分发：先读仓库里的 <code>LICENSE</code> / <code>LICENSE-zh_CN.txt</code>，不要只看「免费商用」",
+          "初试前不必跟进这个项目"
+        ]
+      }
+    },
+    {
+      "id": "wx:MjM5MDY5Mjc1NQ:2649296405:1",
+      "title": "Kiro 与 Devin：从 AI coding 到 agentic engineering（仅标题）",
+      "url": "https://mp.weixin.qq.com/s?__biz=MjM5MDY5Mjc1NQ==&mid=2649296405&idx=1&sn=55fe585d922fb139bf9720b96a354c3f",
+      "category": "ai",
+      "added": "2026-11-14",
+      "status": "fetch_failed",
+      "summary_label": "仅标题收录",
+      "summary_html": "收藏标题大意是：Kiro 和 Devin 都是很强的编程 Agent，并引用 Kiro 官网一句 “Move beyond AI coding to agentic engineering”。原链是微信 <code>image_detail</code> 图片页，抓取时被验证码拦截，看不到配图和上下文，因此无法确认原文论点。下面关于两个产品的公开信息来自各自官网，<b>不是这条微信条目的原文</b>。",
+      "points_html": [
+        "目前只能保留标题里的产品名和这句英文引语，不能补写作者比较了哪些功能、给了什么结论",
+        "账号和发布日期在收藏信息里缺失，这里不强行补写",
+        "以后在微信里打开原图或原文，再判断它到底是摘录、推荐还是广告"
+      ],
+      "keywords": "Kiro Devin agentic engineering 编程 Agent 抓取失败 仅标题 微信验证",
+      "ticktick_task_id": "6af7f730e4b0095d76a902a1",
+      "wechat": {
+        "biz": "MjM5MDY5Mjc1NQ==",
+        "mid": "2649296405",
+        "idx": "1",
+        "sn": "55fe585d922fb139bf9720b96a354c3f"
+      },
+      "analysis": {
+        "verified": "title_only",
+        "verified_note": "原链为 image_detail，抓取时被微信验证码拦截，正文为空。Kiro、Devin 官网信息只作为背景，明确不是该微信条目的原文",
+        "thesis_html": "标题只表明有人把 Kiro 和 Devin 放在一起，并引用了一句「从 AI coding 走向 agentic engineering」；<b>作者自己的论点还没被读到</b>。",
+        "facts": [
+          {
+            "html": "（以下不是该微信条目的原文。）Kiro 官网 <code>https://kiro.dev/</code> 把产品写成一套可在本地或云端规划、构建、审查和验证工程工作的 agentic AI 系统，并提供 IDE、CLI、网页端等入口。我打开首页时，页面 HTML 中能看到 “agentic engineering” 字样，但没有直接看到标题所引的完整句子 “Move beyond AI coding to agentic engineering”",
+            "source": "Kiro 官网（非该微信原文）",
+            "year": "2026-11-15",
+            "url": "https://kiro.dev/",
+            "corroborated": false
+          },
+          {
+            "html": "（以下不是该微信条目的原文。）Devin 官网 <code>https://devin.ai/</code> 把产品写成 “your team's autonomous software engineer”，并介绍可在云端或本机运行、在独立环境里测试、直到准备好合并的 PR。这只能说明官网的自我定位，不能代表那条微信图片想说什么",
+            "source": "Devin 官网（非该微信原文）",
+            "year": "2026-11-15",
+            "url": "https://devin.ai/",
+            "corroborated": false
+          }
+        ],
+        "critique": {
+          "credibility": "D",
+          "credibility_note": "微信条目本身没有正文，无法评价作者判断是否公允。官网介绍只是产品方公开材料，不能用来给这条未读收藏加分。",
+          "points_html": [
+            "「都是很强的编程 Agent」只是标题里的评价，没有看到比较标准或实验",
+            "那句英文口号即使确实出自 Kiro 相关页面，也只是产品宣传语，不是对 Devin 或对二者关系的证明",
+            "不要把官网功能列表，写成「这张微信图片已经论证过的内容」"
+          ]
+        },
+        "context_html": [
+          "下面这些背景来自产品官网，再次强调：不是该微信条目的原文。Kiro 强调把意图写成可执行步骤并做检查，Devin 强调在独立环境里把任务做到可合并。二者都属于「模型外面再套一层工程 Agent」的产品，和你正在用的 Cursor / Grok Bot 是同一大类，但具体工作流、计价和数据边界都要以各自文档为准",
+          "编程 Agent 的宣传语最近经常从 “AI coding” 换成 “agentic engineering”，用来强调不只补全代码。这是行业话术，本身不证明某个工具已经可靠到可以代替你的审查"
+        ],
+        "relevance": [
+          {
+            "area": "aicoding",
+            "html": "你已经有 Cursor 和 Grok Bot 作为日常工具。即便以后打开了这张图，也不必仅仅因为标题里的比较就改换主力环境"
+          },
+          {
+            "area": "agents",
+            "html": "把「写代码」和「做工程」（规划、测试、审查、在云端继续跑）区分开，是这类产品共同的说法。真正有用的是看它如何限制权限、如何验收，而不是记住一句口号"
+          },
+          {
+            "area": "kaoyan",
+            "html": "初试前不必研究 Kiro 或 Devin 的接入。这条收藏等原文可见时再补即可"
+          }
+        ],
+        "next_html": [
+          "以后在微信里打开原图或原文，再看作者到底想比较什么",
+          "若只是想了解产品定位，可以直接读 <code>https://kiro.dev/</code> 和 <code>https://devin.ai/</code>，但那与这条微信收藏不是同一篇材料",
+          "初试前不要为此更换编程工具"
+        ]
+      }
+    },
+    {
+      "id": "wx:Mzk0OTYwNzc3NQ:2247485910:1",
+      "title": "DeepSeek 发布全家桶应用 API",
+      "url": "https://mp.weixin.qq.com/s?__biz=Mzk0OTYwNzc3NQ==&mid=2247485910&idx=1&sn=529f50ba3b37e39319dad1faf7a122cf",
+      "category": "ai",
+      "source": {
+        "account": "DeepSeek",
+        "published": "2026-11-13"
+      },
+      "added": "2026-11-14",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "DeepSeek 官方账号宣布开放<b>全家桶应用 API</b>：在原有接口里打开参数，即可使用联网搜索、深度思考搜索、文件输入和阅读链接；Search、Fetch、OCR、ASR、TTS 也提供独立调用。能力清单与官方文档一致；「1:1 复刻完整 App」是宣传口径。",
+      "points_html": [
+        "<b>谁在发：</b>这是 DeepSeek 官方公众号 2026-11-13 的公告，同一文本也挂在官方文档站 <code>https://api-docs.deepseek.com/zh-cn/news/news261113/</code>",
+        "<b>现在能开的能力：</b>目前 <code>deepseek-flash</code>（V4.1-Flash）在 Messages、Responses 与 Chat Completions 三个接口下，可打开 <code>deepseek_web_search</code>（非思考模式的联网搜索、思考模式的深度思考搜索）、文件输入（PDF、Office、图片等）、<code>deepseek_read_url</code>（阅读链接），以及安全校验参数",
+        "<b>独立工具接口：</b>Search、Fetch、OCR、ASR、TTS 可单独或组合调用。官方「构建 Chatbot」指南还列出会话标题、用户元信息、语音输入和朗读等配套能力",
+        "<b>演示：</b>官方提供前端 Demo <code>https://cdn.deepseek.com/chat-demo</code> 和开源仓库 <code>https://github.com/deepseek-ai/chat-demo</code>，说明可导入 DeepSeek 历史对话。文档写明这是演示客户端，API Key 和上传内容保存在浏览器本地",
+        "<b>价格（官方价目页，微信稿里的表未能完整抽出）：</b>工具费在 token 费之外另计。搜索（文字、图片）和网页抓取均为 5 元 / 千次；文件解析与 OCR 为 1.5 元 / 千页；TTS 刊例价 3 元 / 万字符，限时五折 1.5 元；ASR 刊例价 0.78 元 / 小时，限时五折 0.39 元。折扣截止日期价目页未写明。<code>deepseek-flash</code> 的 token 价仍按官方空闲/高峰档计费"
+      ],
+      "keywords": "DeepSeek 应用 API deepseek-flash 联网搜索 deepseek_web_search deepseek_read_url OCR ASR TTS chat-demo",
+      "ticktick_task_id": "6af7e2a0e4b010f4892e6aba",
+      "wechat": {
+        "biz": "Mzk0OTYwNzc3NQ==",
+        "mid": "2247485910",
+        "idx": "1",
+        "sn": "529f50ba3b37e39319dad1faf7a122cf"
+      },
+      "detail": {
+        "summary": "深入讲解 · 官方能力可以核对，「1:1 复刻」要打折看",
+        "body_html": "<h4>公告在开放什么</h4><div>此前如果你想在自己的应用里做出接近 DeepSeek App 的对话体验，往往要自己接搜索、解析文件、抓网页和语音。这次官方把这些能力收进原有 API：打开对应工具或参数后，工具调用和上下文拼接由服务端完成。文档站的「构建 Chatbot」指南与公众号公告一致，并补充了三个协议的入口：Messages 为 <code>POST https://api.deepseek.com/anthropic/v1/messages</code>，Responses 为 <code>/responses</code>，Chat Completions 为 <code>/chat/completions</code>，模型名使用 <code>deepseek-flash</code>。</div><h4>和文档对得上的细节</h4><div>联网搜索与深度思考搜索都是打开 <code>deepseek_web_search</code>，区别在于是否处于思考模式；阅读链接对应 <code>deepseek_read_url</code>；文件需先上传再引用。开启这些工具或把 <code>safety_check</code> 设为高、打开会话标题时，部分采样参数会被服务端忽略。官方同时提醒：若对外提供应用服务，应开启安全校验，并自行承担内容审核、大模型登记和 AI 标识等义务。价目方面，公众号里的表格在抓取文本中缺失，我改以 2026-11-15 打开的官方价目页为准：Search / Fetch 各 5 元每千次，文件解析和 OCR 1.5 元每千页，语音有刊例价和「限时五折」，但折扣何时结束页面没有写。</div><h4>「1:1 复刻」不必从字面理解</h4><div>公告写「甚至 1:1 复刻出完整的 DeepSeek App」；同一站点的指南更谨慎，写的是「实现与 DeepSeek App 基本一致的功能」，演示仓库也定位为轻量前端 Demo。账号体系、产品运营、内容安全和完整客户端体验，并不等于打开几个工具参数就会自动出现。对你而言，更有用的是：官方把 App 里那套搜索、读链接、读文件和语音，变成了可组合的 API，计费也分开算。</div>"
+      },
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了公众号全文，并对照官方文档站同期公告、构建 Chatbot 指南和官方价目页。公众号里的工具价目表在抓取文本中缺失，价格以价目页为准",
+        "thesis_html": "这是<b>官方产品公告</b>：应用功能已经以 API 形式开放，清单和价目能在文档站对上；「1:1 复刻完整 App」是宣传句，文档自己用的是「基本一致」。",
+        "facts": [
+          {
+            "html": "DeepSeek 于 2026-11-13 发布「全家桶应用 API」公告，公众号文本与官方文档站 <code>https://api-docs.deepseek.com/zh-cn/news/news261113/</code> 一致：在原有 API 中开启对应参数，即可使用深度思考搜索、文件输入等对话功能；语音及相关底层能力提供独立接口",
+            "source": "DeepSeek API 文档站公告",
+            "year": "2026-11-13",
+            "url": "https://api-docs.deepseek.com/zh-cn/news/news261113/",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "DeepSeek 公众号原文",
+                "url": "https://mp.weixin.qq.com/s?__biz=Mzk0OTYwNzc3NQ==&mid=2247485910&idx=1&sn=529f50ba3b37e39319dad1faf7a122cf"
+              }
+            ]
+          },
+          {
+            "html": "官方指南写明：请使用模型 <code>deepseek-flash</code>；联网搜索、深度思考搜索、文件输入、阅读链接和模型内容安全，已在 Messages、Responses 与 Chat Completions 上提供。工具名称为 <code>deepseek_web_search</code> 与 <code>deepseek_read_url</code>。文件格式举例包括 PDF、Word、PowerPoint 和图片",
+            "source": "DeepSeek 官方指南「构建 Chatbot」",
+            "year": "2026-11-15",
+            "url": "https://api-docs.deepseek.com/zh-cn/guides/build_a_chatbot/",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "DeepSeek API 文档站公告",
+                "url": "https://api-docs.deepseek.com/zh-cn/news/news261113/"
+              }
+            ]
+          },
+          {
+            "html": "官方提供演示客户端：体验入口 <code>https://cdn.deepseek.com/chat-demo</code>，源码仓库 <code>https://github.com/deepseek-ai/chat-demo</code>。指南写明：填写 API Key 即可使用，也可导入从 DeepSeek 网页端导出的历史对话；API Key、历史对话和上传图片只保存在浏览器本地，该客户端仅供演示",
+            "source": "DeepSeek 官方指南「构建 Chatbot」",
+            "year": "2026-11-15",
+            "url": "https://api-docs.deepseek.com/zh-cn/guides/build_a_chatbot/",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "GitHub deepseek-ai/chat-demo",
+                "url": "https://github.com/deepseek-ai/chat-demo"
+              }
+            ]
+          },
+          {
+            "html": "官方价目页（我于 2026-11-15 查阅）：搜索（文字、图片）和网页抓取均为 5 元 / 每 1,000 次，无论直接调用 Search / Fetch API，还是经联网工具使用，都按此计费。文件解析与 OCR API 为 1.5 元 / 每 1,000 页。TTS 刊例价 3 元 / 每 10,000 字符，限时五折 1.5 元；ASR 刊例价 0.78 元 / 每小时音频，限时五折 0.39 元。价目页未写明折扣结束日期",
+            "source": "DeepSeek API 官方价目页",
+            "year": "2026-11-15",
+            "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+            "corroborated": false
+          },
+          {
+            "html": "同一价目页上，<code>deepseek-flash</code>（DeepSeek-V4.1-Flash-1017）按百万 tokens 计：输入缓存命中 0.02 / 0.04 元、未命中 1 / 2 元，输出 4 / 8 元（空闲 / 高峰）。高峰时段为北京时间周一到周五 9:00–12:00、14:00–18:00，法定节假日除外。上下文长度写 1M，输出最长 384K，支持图像理解。这些是模型本身的 token 费，与工具调用费分开计算",
+            "source": "DeepSeek API 官方价目页",
+            "year": "2026-11-15",
+            "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+            "corroborated": false
+          }
+        ],
+        "critique": {
+          "credibility": "B",
+          "credibility_note": "这是官方一手公告，能力清单、接口和价目都能在文档站对上；但官方同时是产品方，「1:1 复刻完整 App」是推广口径，实际集成成本和合规义务要自己评估。",
+          "points_html": [
+            "公告写「1:1 复刻出完整的 DeepSeek App」，指南改口为「基本一致的功能」，Demo 只是轻量前端。不要把这句话理解成开箱即得到官方 App 的全部产品形态",
+            "工具费按次或按页另计。打开搜索、读链接和文件后，账单会在 token 费之外增加一截，尤其是深度思考搜索可能多步检索",
+            "语音「限时五折」没有在价目页上看到截止日期，不能当成长期单价",
+            "对外提供应用时，官方要求开启安全校验，并自行承担内容审核、大模型登记和 AI 标识等义务。这不是可选项口号",
+            "目前指南写这些对话能力走 <code>deepseek-flash</code>。不要默认 V4 Pro 或其他模型已经具备同一套应用工具"
+          ]
+        },
+        "context_html": [
+          "你上周已经收过 DeepSeek Harness / DSH 相关条目。这篇不是工作台或插件系统，而是把官方 App 里的搜索、文件、链接和语音做成可调用 API，二者不要混成一个产品",
+          "Messages 接口走 Anthropic 兼容路径，Responses 和 Chat Completions 是另一套协议。选哪一种取决于你现有的客户端，而不是功能更强",
+          "价目页保留了和此前一致的 Flash / Pro token 价格与高峰时段规则。新变化主要是应用工具和独立 Search / Fetch / OCR / 语音接口被正式放到「构建 Chatbot」这条路径上"
+        ],
+        "relevance": [
+          {
+            "area": "agents",
+            "html": "如果你以后要做带引用的对话或读文件机器人，这套服务端工具可以少接一些外部搜索和解析服务。它仍然是「模型 + 官方工具」，不是可以随便替换内核的 Agent 工作台"
+          },
+          {
+            "area": "aicoding",
+            "html": "和你正在用的 Cursor / Grok Bot 不是替代关系。Cursor 解决的是改代码；这套 API 解决的是把官方聊天能力嵌进自己的应用。初试前不必接入"
+          },
+          {
+            "area": "kaoyan",
+            "html": "距离初试还有 34 天。把这篇当能力清单收藏即可，不要在复习期去「1:1 复刻」一个聊天客户端"
+          }
+        ],
+        "next_html": [
+          "初试前不用动手接入。若只想建立正确印象：官方 App 的搜索、读链接、读文件和语音，已经作为 API 开放，费用分开算",
+          "以后若要试用，先读 <code>https://api-docs.deepseek.com/zh-cn/guides/build_a_chatbot/</code> 和价目页，再用官方 Demo 看返回内容块，不要只根据「1:1 复刻」这句话开工",
+          "对外提供服务前，先看清安全校验和合规义务；语音折扣以当时价目页为准"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzA4MTg1NzYyNQ:2653232593:1",
+      "title": "成都又添一家上市公司！“太空AI第一股”来了",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzA4MTg1NzYyNQ==&mid=2653232593&idx=1&sn=faa98953961caa825d0d357524318479",
+      "category": "job",
+      "source": {
+        "account": "成都发布",
+        "published": "2026-11-13"
+      },
+      "added": "2026-11-14",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "成都发布报道：<b>成都国星宇航科技股份有限公司（Adaspace，港交所代号 6935）</b>于 2026-11-13 在港交所主板挂牌。上市日、代码和「造卫星、管卫星、用卫星」等业务表述能与招股章程对上；「太空AI第一股」是宣传口径，不是招股书里的定义。",
+      "points_html": [
+        "<b>可核对的上市安排：</b>招股章程封面写明公司英文名为 Adaspace Technology Co., Ltd.，股份代号 6935，并预计上市日期为 2026-11-13（星期五）或前后。公司于 2018-05-03 在中国成立，2022-01-29 改制为股份有限公司",
+        "<b>业务表述：</b>招股章程把公司写成覆盖卫星研制、管理和利用的商业航天企业，优势条目中有「造卫星」到「管卫星」再到「用卫星」，与报道一致。战略中明确推进「星算计划」和 AI 智算卫星研发",
+        "<b>星座进展（招股章程）：</b>公司称 2025-05-14 发射了由 12 颗 AI 智算卫星组成的星座，并援引弗若斯特沙利文，称之为「全球首个」该等星座；2026-10-14 又发射由八颗 AI 智算卫星组成的第二个星座。报道里的「01 组 2025 年 5 月」「02 组 8 颗、2026 年 10 月」与这两次发射对应，但报道未写清 01 组是 12 颗",
+        "<b>报道里尚未在招股章程对上的部分：</b>「03 组算力卫星已于 2026-11-13 顺利下线，并计划于近期择机发射」。招股章程日期为 2026-11-05，其中只写到 2026 年第四季度仍有发射计划，我没有在该文件中看到「03 组当天下线」的表述，故未核实",
+        "<b>「太空AI第一股」：</b>这是报道标题和导语中的宣传说法。招股章程使用的是「AI 卫星先锋企业」以及咨询机构口径下的若干「第一」，并没有把「太空AI第一股」定义成可检验的市场分类"
+      ],
+      "keywords": "国星宇航 Adaspace 6935 港交所 星算 成都发布 太空AI 上市",
+      "ticktick_task_id": "6af80754e4b0095d76ab107c",
+      "wechat": {
+        "biz": "MzA4MTg1NzYyNQ==",
+        "mid": "2653232593",
+        "idx": "1",
+        "sn": "faa98953961caa825d0d357524318479"
+      },
+      "detail": {
+        "summary": "深入讲解 · 先记下代码和日期，把「第一股」留在引号里",
+        "body_html": "<h4>这篇是什么稿</h4><div>成都发布是成都市的政务发布账号，这篇是上市日前后的城市产业报道，篇幅短，语气偏祝贺。文末说明综合「成都高新」，并有记者署名。它的信息量主要是：哪家公司、什么代号、哪天挂牌、业务怎么概括，以及公司对记者说的展望。它不是招股章程摘要，也没有讨论发行价、募资额或首日行情。</div><h4>和招股章程对得上的部分</h4><div>公司全称、英文名、股份代号 6935、预计 2026-11-13 上市，以及 2018 年 5 月 3 日成立，都能在 2026-11-05 刊发的招股章程里对上。业务上，文件确实把能力写成覆盖造星、管星、用星，并多次出现「星算计划」。发射节点方面，文件写的是 2025-05-14 的 12 星星座和 2026-10-14 的 8 星星座，比报道更具体；「全球首个由 12 颗 AI 智算卫星组成的星座」在文件里是援引弗若斯特沙利文的表述，不是一个没有出处的口号，但仍是咨询机构口径。</div><h4>分开看的两句话</h4><div>「太空AI第一股」不是交易所或招股章程给出的法定称谓，也无法用一个公认的行业分类去证伪或证实，应视为宣传语。报道里 03 组「同日下线、近期择机发射」，时间在招股章程日期之后，目前只能当作公司对记者的转述，等待后续公司或监管公告。你在成都读机器人工程，可以把这家公司记成「本地商业航天 + 星上算力」的一个上市案例，但不必把这篇稿的修辞当成就业或赛道判断的充分依据。</div>"
+      },
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了公众号全文，并对照港交所披露易上 2026-11-05 刊发的《成都国星宇航科技股份有限公司》招股章程封面、预期时间表、公司定义、业务概要和近期发展段落",
+        "thesis_html": "上市主体、代号 6935 和预计 11 月 13 日挂牌，可以和招股章程核对；<b>「太空AI第一股」是宣传说法</b>，03 组「当天下线」则尚未在该份招股章程中看到。",
+        "facts": [
+          {
+            "html": "招股章程封面：成都国星宇航科技股份有限公司（Adaspace Technology Co., Ltd.），股份代号 6935，于中华人民共和国注册成立，在香港联合交易所主板进行全球发售。章程日期为 2026-11-05",
+            "source": "港交所披露易招股章程",
+            "year": "2026-11-05",
+            "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/1105/2026110500056_c.pdf",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "成都发布公众号原文",
+                "url": "https://mp.weixin.qq.com/s?__biz=MzA4MTg1NzYyNQ==&mid=2653232593&idx=1&sn=faa98953961caa825d0d357524318479"
+              }
+            ]
+          },
+          {
+            "html": "招股章程预期时间表写明：「预计上市日期为 2026 年 11 月 13 日（星期五）或前后。」公司定义条款写：本公司于 2018 年 5 月 3 日在中国成立为有限责任公司，并于 2022 年 1 月 29 日改制为股份有限公司",
+            "source": "港交所披露易招股章程",
+            "year": "2026-11-05",
+            "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/1105/2026110500056_c.pdf",
+            "corroborated": false
+          },
+          {
+            "html": "招股章程概要称，公司业务模式涵盖卫星研制、管理及利用；优势条目包括业务能力覆盖「造卫星」到「管卫星」再到「用卫星」。战略条目包括推进星算计划、加大 AI 智算卫星研发",
+            "source": "港交所披露易招股章程",
+            "year": "2026-11-05",
+            "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/1105/2026110500056_c.pdf",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "成都发布公众号原文",
+                "url": "https://mp.weixin.qq.com/s?__biz=MzA4MTg1NzYyNQ==&mid=2653232593&idx=1&sn=faa98953961caa825d0d357524318479"
+              }
+            ]
+          },
+          {
+            "html": "招股章程（并援引弗若斯特沙利文）写：公司于 2018 年 12 月发射了「中国第一颗 AI 应用卫星」，2024 年 9 月发射了「中国第一颗 AI 大模型智算卫星」；2025 年 5 月 14 日发射了「全球首个由 12 颗 AI 智算卫星组成的 AI 智算卫星星座」。近期发展段落写：2026 年 10 月 14 日成功发射由八颗 AI 智算卫星组成的第二个 AI 智算星座。这些「第一」是文件中的咨询机构 / 公司口径，不是我对全球市场的独立鉴定",
+            "source": "港交所披露易招股章程",
+            "year": "2026-11-05",
+            "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/1105/2026110500056_c.pdf",
+            "corroborated": false
+          },
+          {
+            "html": "报道写「03 组算力卫星已于 2026 年 11 月 13 日顺利下线，并计划于近期择机发射」。招股章程日期早于这一天，其中只提到 2026 年第四季度仍有发射计划并已与两家发射服务供应商订约，没有「03 组当日下线」的表述。该细节未核实",
+            "source": "成都发布公众号原文",
+            "year": "2026-11-13",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzA4MTg1NzYyNQ==&mid=2653232593&idx=1&sn=faa98953961caa825d0d357524318479",
+            "corroborated": false
+          }
+        ],
+        "critique": {
+          "credibility": "B",
+          "credibility_note": "关键上市要素能在招股章程对上，但稿件是城市宣传口吻，「第一股」和部分发射进展或来自公司转述，不能把整篇当成已审核的招股摘要。",
+          "points_html": [
+            "「太空AI第一股」不是港交所或招股章程给出的分类，无法按一个公认标准证实或证伪，应保留在引号里",
+            "报道写 01 组实现「太空计算星座零的突破」，招股章程的对应表述是咨询机构口径下「全球首个由 12 颗 AI 智算卫星组成的星座」，两者并不完全等同，也不等于对全球所有同类项目做了穷尽比较",
+            "03 组「上市当日下线」目前只有这篇报道的转述，尚不能当成已公告事实",
+            "稿件几乎不谈发行价、募资用途、风险因素和财务数据。要判断公司情况，应回招股章程，而不是只看这篇祝贺稿",
+            "「为人类走得更远贡献力量」是公司对记者的表态，不是可检验承诺"
+          ]
+        },
+        "context_html": [
+          "国星宇航总部位于成都，业务落在商业卫星和星上算力，和「AI 软件公司去港股上市」不是同一类故事。星算计划在文件里是尚未完成的星座部署，不是已经建成的全球算力网",
+          "招股章程也写了市场需求、客户订单和发射安排等风险，这篇报道几乎完全没有转述这些部分"
+        ],
+        "relevance": [
+          {
+            "area": "robotics",
+            "html": "对你学的机器人工程来说，更值得记住的是：成都有一家做卫星研制和星上智算的公司已经在港股挂牌，方向贴近「空间系统 + 算力」，而不是消费级聊天机器人。这不等于现在就要改志愿或投简历，只是本地产业版图上多了一个可查的名字 上市不等于马上扩招，也不等于技术岗位门槛变低。若以后关注这家公司，应直接看招股章程的业务、风险和招聘渠道，而不是这篇「第一股」稿。"
+          },
+          {
+            "area": "kaoyan",
+            "html": "这和 12 月的数学二初试没有直接关系。不必把「太空AI」写成需要立刻跟进的赛道焦虑"
+          }
+        ],
+        "next_html": [
+          "记住可核对的三件事：公司名、代号 6935、招股章程预计的 2026-11-13 上市日",
+          "把「太空AI第一股」只当宣传语；03 组下线与后续发射，等公司或港交所公告再记",
+          "若以后要认真了解，打开招股章程而不是转发这篇短讯：<code>https://www.hkexnews.hk/listedco/listconews/sehk/2026/1105/2026110500056_c.pdf</code>"
+        ]
+      }
+    },
+    {
+      "id": "wx:MjM5MjAxNDM4MA:2667045408:1",
+      "title": "同样是二十岁出头，爸妈怎么这么会谈恋爱啊！",
+      "url": "https://mp.weixin.qq.com/s?__biz=MjM5MjAxNDM4MA==&mid=2667045408&idx=1&sn=d9f195532498bceba687a92c5aa2dc24",
+      "category": "life",
+      "source": {
+        "account": "人民日报",
+        "published": "2026-11-14"
+      },
+      "added": "2026-11-14",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "人民日报转载<b>中国大学生在线</b>的生活稿，用若干未具名的「爸妈年轻时」故事，讲笨拙、具体、持续的表达，而不是把恋爱写成套路。这些情节和金额无法独立核实，适合当情感特写来读，不要当成调查报道。",
+      "points_html": [
+        "<b>来源：</b>文末写「来源：中国大学生在线」，编辑为胡程远、王若彤。这是人民日报公众号转载的汇编稿，不是记者逐一采访后署名的调查",
+        "<b>结构：</b>先讲追爱过程（留错号码后再遇、连续送花又改送炒粉、搬小板凳），再写信物（书信、藏头诗、折纸、自写小说），最后落到现在仍一起散步、叮嘱盖被子等日常",
+        "<b>文中出现的细节：</b>例如「全身上下只有 300 块，拿出 298 块买毛衣」这类数字，都没有具名当事人或可核对材料，只能视为故事里的情节",
+        "<b>收束句：</b>「真诚永远是爱情里最高级的配方。」稿件以评论区征集更多父母恋爱故事结尾"
+      ],
+      "keywords": "人民日报 中国大学生在线 父母恋爱 生活 情感 书信",
+      "ticktick_task_id": "6af8013ce4b0095d76aa39f1",
+      "wechat": {
+        "biz": "MjM5MjAxNDM4MA==",
+        "mid": "2667045408",
+        "idx": "1",
+        "sn": "d9f195532498bceba687a92c5aa2dc24"
+      },
+      "detail": {
+        "summary": "深入讲解 · 这是情感汇编，不是需要核对的新闻事实",
+        "body_html": "<h4>这篇在讲什么</h4><div>稿子从话题「爸妈年轻时的爱情」切入，把若干短故事串成一条线：年轻时的表达往往具体、甚至有点笨，但被认真做完了；老了以后，爱意更多落在叮嘱、陪伴和舍不得扔掉的物件上。它想说的不是某一对具体夫妇的考证，而是一种对照：现在有很多表达方式，但稿件把「真诚」和「日复一日的惦记」放在最高位置。</div><h4>不必过度引申</h4><div>人物大多没有完整姓名和可查出处，300 块买毛衣、两个月送花再送炒粉、藏头诗和折纸罐，都无法按新闻事实去核实。把它当一篇情绪对、细节生动的特写即可，不要用来讨论代际统计，也不要硬接到学业或技术话题上。</div>"
+      },
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了公众号全文。故事来源标注为中国大学生在线，情节与金额没有具名当事人或原始材料可核对",
+        "thesis_html": "这是一篇<b>情感汇编特写</b>，主题清楚，但其中的人物、对话和金额都无法核实；适合当生活阅读，不适合当事实来源。",
+        "facts": [
+          {
+            "html": "人民日报公众号 2026-11-14 发布此文，文末标注来源为「中国大学生在线」，本期编辑署名为胡程远、王若彤",
+            "source": "人民日报公众号原文",
+            "year": "2026-11-14",
+            "url": "https://mp.weixin.qq.com/s?__biz=MjM5MjAxNDM4MA==&mid=2667045408&idx=1&sn=d9f195532498bceba687a92c5aa2dc24",
+            "corroborated": false
+          }
+        ],
+        "critique": {
+          "credibility": "C",
+          "credibility_note": "平台权威不等于故事可证。文中情节来自汇编，没有具名来源或原始书信、物件的可核材料，核心「故事是不是真的发生过」无法独立验证。",
+          "points_html": [
+            "「追爱实录」写得像现场记录，实际是未具名故事的改写和串联，细节可能被整理、美化或拼凑",
+            "300 块、298 块这类数字是叙事道具，不能当成可引用的历史物价或个案证据",
+            "结尾的判断句是价值表态，不是被证明的结论",
+            "不要把这篇读成对某一代人恋爱方式的统计描述"
+          ]
+        },
+        "context_html": [
+          "中国大学生在线是面向高校的内容平台，此类稿件常见做法是征集或转写读者故事，再由媒体账号二次分发",
+          "人民日报在这里是分发平台，不等于对这些私人故事做了独立核实"
+        ],
+        "next_html": [
+          "当一篇生活阅读即可，不必深挖每个故事是不是真的",
+          "如果以后想了解自己家里的故事，直接问家人比在评论区找「更上头」的段子更可靠"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzIxODg1OTk1MA:2247553727:1",
+      "title": "百万播放的AI娘视频，我扒出了全套做法！【附教程】",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzIxODg1OTk1MA==&mid=2247553727&idx=1&sn=49dccf963bf7f9b5f8ebc1d63bc7bc89",
+      "category": "ai",
+      "source": {
+        "account": "JackCui",
+        "published": "2026-11-13"
+      },
+      "added": "2026-11-13",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "JackCui 分享自己用 <b>LibTV</b> 上的 <b>Seedance 2.5 Flash</b> 做「AI 娘」短视频的流程：先做角色设定图，再准备素材和音色，最后生成并剪辑。标题里的「百万播放」和文中单价、积分消耗都是作者自报，我没有独立核实。",
+      "points_html": [
+        "<b>作者在说什么现象：</b>他把 B 站上把大模型拟人化成角色、再拍短剧或群舞的内容称为「AI 娘化」，并说相关视频「播放量都是轻松破百万」。这是印象性表述，没有给出具体作品、账号或可查的播放数据",
+        "<b>自称用过的工具：</b>LibTV 的画布工作区和底层 Agent，生成模型是文中所说「刚在 LibTV 全球首发」的 Seedance 2.5 Flash。作者还提到复杂多人镜头会改用「满血版」Seedance 2.5 补段",
+        "<b>流程概要（不展开逐步操作）：</b>先根据已有形象生成白底多视图角色设定；再准备剧本、场景和音色参考，或处理已有视频片段；然后用生成模型出片，再用软件里的智能剪辑拼接。作者把工作流链接放在评论区，我没有打开评论区逐条核对",
+        "<b>作者给出的价格：</b>称 Flash 价格与 Seedance 2.0 标准版基本持平，为 0.2 元/秒；并写双十一限时五折、720P 低至 0.1 元/秒；还称一条 30 秒群舞的积分消耗约为满血版的三分之一。这些都是单一来源，我没有在 LibTV 或 Seedance 官方价目页核对",
+        "<b>需要警惕的做法：</b>文中讨论了为通过平台审核而对真人脸做遮挡、去掉热门歌曲音轨等处理。这类做法涉及版权、肖像和平台规则，不能当成可以照做的「技巧」"
+      ],
+      "keywords": "JackCui AI娘 LibTV Seedance 2.5 Flash 角色设定 短视频 播放量",
+      "ticktick_task_id": "6af6e97ae4b0dc3df8a6b3b4",
+      "wechat": {
+        "biz": "MzIxODg1OTk1MA==",
+        "mid": "2247553727",
+        "idx": "1",
+        "sn": "49dccf963bf7f9b5f8ebc1d63bc7bc89"
+      },
+      "detail": {
+        "summary": "深入讲解 · 只保留流程框架，不把可被滥用的步骤写细",
+        "body_html": "<h4>这篇实际是什么</h4><div>这是一份个人制作手记，夹带对 LibTV 和 Seedance 2.5 Flash 的推荐。标题里的「百万播放」并不是作者交出了某一条已验证过的播放数据，而是说他刷到的同类视频「都轻松破百万」。作者称自己做了女团舞蹈和第一人称互动两种成片，并把「全套做法」写成：角色设定、素材准备、生成、剪辑。工作流入口在评论区，不在正文里。</div><h4>流程只需记到这一层</h4><div>先固定角色的多视图设定，再准备场景、台词或参考片段和音色，然后用视频生成模型按段出片，最后拼接音画。作者强调人物一致性和分段长度（文中写单次生成有时长上限），也区分了「简单镜头用更快更便宜的 Flash、复杂多人镜头再用更高配模型补」。这些是制作思路，不是证明「按这个做就能百万播放」。</div><h4>哪些内容不宜照做</h4><div>文中有为通过审核而处理真人面孔、去掉可能涉及版权的音轨等表述。这类步骤既可能侵犯他人肖像或音乐版权，也可能只是在绕平台规则，不构成可以推荐的操作指南。下文不重复这些指令，也不转载文中的提示词。</div><h4>数字怎么看待</h4><div>0.2 元/秒、五折后 0.1 元/秒、积分只有满血版三分之一，都是作者对其使用平台的转述或实测感受。没有官方价目页交叉验证之前，只能当单一来源。即使单价属实，总成本还取决于重抽次数、分辨率和是否要换更高配模型补镜头。</div>"
+      },
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了公众号全文。未打开评论区中的工作流链接，也未在 LibTV 或 Seedance 官方价目页核对单价和「全球首发」表述；播放量没有可复核的作品链接",
+        "thesis_html": "这是一篇<b>带产品推荐的个人制作手记</b>：流程框架可以了解，「百万播放」和单价都未经独立核实；文中一些为通过审核而处理人脸和音轨的做法，不应当成教程来跟。",
+        "facts": [
+          {
+            "html": "原文把制作链路写在 LibTV 上，生成模型是作者所称刚在该平台「全球首发」的 Seedance 2.5 Flash，并说复杂多人镜头仍要用 Seedance 2.5「满血版」补段。我没有在官方发布页核对「全球首发」和时间",
+            "source": "JackCui 公众号原文",
+            "year": "2026-11-13",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzIxODg1OTk1MA==&mid=2247553727&idx=1&sn=49dccf963bf7f9b5f8ebc1d63bc7bc89",
+            "corroborated": false
+          },
+          {
+            "html": "作者给出的价格和消耗：Flash「基本和 Seedance 2.0 标准版持平，0.2 元/秒」；「双十一还有限时五折，720P 低至 0.1 元/秒」；「跑一条 30 秒群舞，Flash 的积分消耗只有满血版的三分之一」。这些是作者自报，未核实",
+            "source": "JackCui 公众号原文",
+            "year": "2026-11-13",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzIxODg1OTk1MA==&mid=2247553727&idx=1&sn=49dccf963bf7f9b5f8ebc1d63bc7bc89",
+            "corroborated": false
+          },
+          {
+            "html": "标题和导语中的「百万播放」没有对应到具体视频、账号或平台公开数据，只是作者对「相关视频播放量都轻松破百万」的印象性判断",
+            "source": "JackCui 公众号原文",
+            "year": "2026-11-13",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzIxODg1OTk1MA==&mid=2247553727&idx=1&sn=49dccf963bf7f9b5f8ebc1d63bc7bc89",
+            "corroborated": false
+          }
+        ],
+        "critique": {
+          "credibility": "C",
+          "credibility_note": "核心卖点是「全套做法」和性价比，效果、播放量和价格都来自作者自报或对平台活动的转述，无法独立验证；文中还夹带明显的工具推广。",
+          "points_html": [
+            "「百万播放」不是已核实的作品数据，不能推论「按这个做就能有同样播放」",
+            "单价、折扣和「积分三分之一」没有官方价目交叉验证，且未计入重抽和补镜头的成本",
+            "「全球首发」是对平台活动的转述，未核对",
+            "为通过审核而处理真人面孔、去掉可能受版权保护的音轨，不能当成正当或可复制的制作建议；下文也不提供更细的操作步骤",
+            "工作流放在评论区，正文无法单独复核完整链路是否仍然有效"
+          ]
+        },
+        "context_html": [
+          "把大模型拟人化成角色做二创短视频，是最近一段时间的内容现象，和把 DeepSeek Harness 做成「大肥鱼」桌宠、人设卡，不是同一条技术路径，只是共用了相近的人设",
+          "视频生成平台的审核规则、版权处理和肖像权边界经常变化，正文里的「这样就能过审」很快可能失效，也不能成为绕过规则的理由"
+        ],
+        "relevance": [
+          {
+            "area": "aicoding",
+            "html": "对你正在用的 Cursor / Grok Bot 几乎没有直接帮助。这是一条内容制作流水线，不是编程工作台评测"
+          },
+          {
+            "area": "kaoyan",
+            "html": "初试前不要把时间花在跟做这类视频上。如果只是想知道「现在有人用生成模型批量做角色短片」，看到这里就够了"
+          }
+        ],
+        "next_html": [
+          "不必跟做，也不要保存或传播文中那些为通过审核而处理人脸和音轨的步骤",
+          "如果以后只是对工具本身感兴趣，应直接查看 LibTV 或 Seedance 当时的官方说明和价目，不要只信这篇里的 0.2 元/秒和「百万播放」",
+          "初试前把这条当现象记录即可"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzU4Mjg3MDAyMQ:2247639981:1",
+      "title": "iOS、Android、PC 近期值得关注的 6 个 App",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzU4Mjg3MDAyMQ==&mid=2247639981&idx=1&sn=6846848b077cb943b05ed304b49a0e01",
+      "category": "idea",
+      "source": {
+        "account": "少数派",
+        "published": "2026-11-13"
+      },
+      "added": "2026-11-13",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "少数派《派评》介绍了 6 个跨平台应用：iOS / iPad 上的套壳儿、Affinity for iPad、melog，Windows 上的 NotchPeninsula，Android 上的 Grace，以及 macOS 上的 Screen Studio 4.1。「值得关注」是编辑判断，不是评测结论。",
+      "points_html": [
+        "<b>套壳儿（iOS / iPadOS）：</b>给截图套上设备外框，支持平面、3D 和动画模板。文中写 Pro 为 12 元/月、58 元/年，或 128 元买断。App Store 链接 id 为 6768907932",
+        "<b>Affinity for iPad（iPadOS）：</b>Canva 推出的 iPad 版设计工具，把绘画、矢量、像素和排版放在同一文件里，并针对 Apple Pencil 做了优化。文中称注册 Canva 账户即可免费使用，部分 AI 功能需付费订阅。App Store id 为 6751323445，与 Canva 新闻室页面一致",
+        "<b>melog（iOS）：</b>开发者 cbvivi 的影像日记工具，按 2 / 3 / 5 秒定时拍短片段，再排序、调色、合并导出。文中写 11 月 5 日正式发布；Premium 永久版 228 元，月订阅 18 元。App Store id 为 6801375634",
+        "<b>NotchPeninsula（Windows）：</b>把通知、媒体控制和插件放进屏幕顶部的「灵动岛」容器。文中指向 GitHub 仓库 GEORGEWWWU/NotchPeninsula，我打开了该仓库页面，项目说明与「Win 刘海 / 灵动岛」相符。作者提醒可能挡住 Chrome 标签栏",
+        "<b>Grace（Android）：</b>开源第三方桌面，文中认为它接近 Niagara Launcher 的体验，并指向 F-Droid 包名 <code>com.galaxyrio.gracelauncher</code>。该 F-Droid 页面存在",
+        "<b>Screen Studio 4.1（macOS）：</b>新版本强调自动隐藏邮箱、电话、API Key 等敏感信息，以及人脸模糊，并称识别在本地完成；另外还有 ProRes 导出和自研音频引擎。文中写月订阅 29 美元、年订阅 108 美元，指向 <code>https://screen.studio/</code>。这些价格我没有在结算页逐项复核"
+      ],
+      "keywords": "少数派 派评 套壳儿 Affinity iPad melog NotchPeninsula Grace Screen Studio 4.1",
+      "ticktick_task_id": "6af6cdfae4b0379c7ec9c6f7",
+      "wechat": {
+        "biz": "MzU4Mjg3MDAyMQ==",
+        "mid": "2247639981",
+        "idx": "1",
+        "sn": "6846848b077cb943b05ed304b49a0e01"
+      },
+      "detail": {
+        "summary": "深入讲解 · 先记准 6 个名字和平台，再决定要不要装",
+        "body_html": "<h4>这 6 个分别是什么</h4><div>标题写「iOS、Android、PC」，正文按平台摊开，并不是同一类工具的横评。套壳儿和 Affinity、melog 主要在苹果设备上；NotchPeninsula 是 Windows 美化/效率容器；Grace 是 Android 启动器；Screen Studio 是 macOS 录屏。文末还有 Raycast 2.11、CleanMyMac 和 Readwise Books 的速报，它们不算这 6 个里的正式条目。少数派站点上也有同一篇，地址是 <code>https://sspai.com/post/118833</code>。</div><h4>我对得上和没对上的</h4><div>Affinity 的 App Store id 6751323445 与 Canva 新闻室「Affinity for iPad」介绍页一致，可以把「Canva 把 Affinity 做到了 iPad、基础功能可免费使用」当成已有官方出处的产品信息。Grace 的 F-Droid 包名和 NotchPeninsula 的 GitHub 地址，我都打开过对应页面，仓库或软件包确实存在。套壳儿、melog 的商店链接和标价，以及 Screen Studio 的 29 / 108 美元，目前只能视为文中报价，我没有在商店结算页或官网定价页逐项核对。</div><h4>不必因为「值得关注」就装</h4><div>派评的体例就是编辑推荐，带主观体验和价格信息，不是对照实验。Affinity 是否真能替代你在电脑上的设计流程、Screen Studio 的自动遮罩会不会漏掉关键信息、Grace 是否完整复刻 Niagara，都需要你自己试用才能判断。初试前更没有必要为了「近期值得关注」去装一圈新软件。</div>"
+      },
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了公众号全文，并对照少数派网站原文、Canva 的 Affinity for iPad 新闻室页面、F-Droid 上的 Grace 包页面，以及文中给出的 NotchPeninsula GitHub 仓库",
+        "thesis_html": "这是一份<b>编辑精选清单</b>：6 个 App 的名称、平台和核心功能可以按原文记清楚，但「值得关注」只是少数派的判断，价格和实际体验仍以商店与官网为准。",
+        "facts": [
+          {
+            "html": "少数派微信这篇与网站文章《iOS、Android、PC 近期值得关注的 6 个 App》（<code>https://sspai.com/post/118833</code>）为同一稿，作者栏写「少数派编辑部」",
+            "source": "少数派网站",
+            "year": "2026-11-13",
+            "url": "https://sspai.com/post/118833",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "少数派公众号原文",
+                "url": "https://mp.weixin.qq.com/s?__biz=MzU4Mjg3MDAyMQ==&mid=2247639981&idx=1&sn=6846848b077cb943b05ed304b49a0e01"
+              }
+            ]
+          },
+          {
+            "html": "Canva 新闻室有 Affinity for iPad 的产品介绍，App Store 应用 id 6751323445 与原文给出的链接一致。原文称注册 Canva 账户后即可免费使用，部分 AI 功能需要 Canva 付费订阅——这是产品方公开信息，我没有实际安装验证",
+            "source": "Canva 新闻室",
+            "year": "2026-11",
+            "url": "https://www.canva.com/newsroom/news/affinity-for-ipad/",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "App Store 链接（原文）",
+                "url": "https://apps.apple.com/us/app/id6751323445"
+              }
+            ]
+          },
+          {
+            "html": "原文给出的 Grace 下载地址为 F-Droid 包 <code>com.galaxyrio.gracelauncher</code>，该页面存在，定位为开源 Android 第三方桌面",
+            "source": "F-Droid",
+            "year": "2026-11-15",
+            "url": "https://f-droid.org/packages/com.galaxyrio.gracelauncher/",
+            "corroborated": false
+          },
+          {
+            "html": "原文给出的 NotchPeninsula 地址为 <code>https://github.com/GEORGEWWWU/NotchPeninsula</code>。我打开该仓库，说明文字与「Windows 刘海 / 灵动岛组件、媒体控制与消息弹窗」相符",
+            "source": "GitHub GEORGEWWWU/NotchPeninsula",
+            "year": "2026-11-15",
+            "url": "https://github.com/GEORGEWWWU/NotchPeninsula",
+            "corroborated": false
+          },
+          {
+            "html": "原文引用的应用内价格：套壳儿 Pro 为 12 元/月、58 元/年或 128 元买断；melog Premium 永久版 228 元、月订阅 18 元；Screen Studio 月订阅 29 美元、年订阅 108 美元。这些是文章报价，我没有在结算页核对",
+            "source": "少数派公众号原文",
+            "year": "2026-11-13",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzU4Mjg3MDAyMQ==&mid=2247639981&idx=1&sn=6846848b077cb943b05ed304b49a0e01",
+            "corroborated": false
+          }
+        ],
+        "critique": {
+          "credibility": "B",
+          "credibility_note": "这是编辑部推荐，不是实验室评测。几个产品的存在和下载入口能对上，但「好不好用」「值不值得买」无法独立验证，标价也以商店为准。",
+          "points_html": [
+            "「值得关注」是栏目立场，不是对这 6 个应用做了横向对比后的结论",
+            "价格、内购范围和「免费可用」的边界会变，正文自己也是转述产品页或作者体验，下单前要看商店当前页",
+            "Grace 被写成「几乎百分百复制 Niagara Launcher」——这是体验描述，可能涉及其他产品的设计近似，不能当成法律或技术鉴定",
+            "Screen Studio 的「自动隐藏敏感信息」和「本地完成」是产品宣传，漏检风险和实际识别范围需要自己试，不宜在没试过的情况下用于录含密钥或客户数据的视频",
+            "文末速报里的 Raycast、CleanMyMac、Readwise Books 不是标题中的 6 个 App，不要混进同一份清单"
+          ]
+        },
+        "context_html": [
+          "少数派《派评》是定期的应用推荐栏目，条目由不同编辑分头撰写，力度和口味并不统一",
+          "你目前的主力环境是 Cursor / Grok Bot 和备考，并不缺一套截图套壳或 Windows 灵动岛。和开发更接近的是 Screen Studio（若你以后做演示录像）和 Affinity（若需要在 iPad 上改图），也都不是现在的刚需"
+        ],
+        "relevance": [
+          {
+            "area": "aicoding",
+            "html": "和你当前工作流最接近的是 Screen Studio 4.1 的隐私遮罩：录 Cursor 或终端演示时，自动挡住 API Key、邮箱和验证码，说起来有用。但效果要以实际识别为准，不能只信更新说明"
+          },
+          {
+            "area": "kaoyan",
+            "html": "初试前没有必要为这 6 个应用花时间安装、付费或做美化。把清单收藏即可，等有明确需求再打开对应商店页"
+          }
+        ],
+        "next_html": [
+          "默认动作是不装、不买，只记下名称和平台",
+          "若以后真要用其中某一个，打开原文给出的 App Store、F-Droid、GitHub 或官网，核对当前价格和权限后再决定",
+          "不要把「值得关注」理解成必须关注"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzIxODg1OTk1MA:2247553700:1",
+      "title": "估值缩水6000亿美元，7位创始人准备套现2.5亿，Anthropic世纪IPO还香吗？",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzIxODg1OTk1MA==&mid=2247553700&idx=1&sn=9b82d271de6d0410879021b0dc45f407",
+      "category": "ai",
+      "source": {
+        "account": "JackCui",
+        "published": "2026-11-12"
+      },
+      "added": "2026-11-12",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "JackCui 根据招股书和媒体报道梳理 Anthropic 的 IPO 安排：<b>8.25 亿股 A 类股、每股 70 到 78 美元</b>等条款能在 SEC 文件里对上；但标题里的「估值缩水 6000 亿美元」和「7 位创始人套现 2.5 亿」，并不能当成招股书已经写死的事实。",
+      "points_html": [
+        "<b>招股书能对上的部分：</b>Anthropic, PBC 于 2026-11-10 向 SEC 提交 S-1/A 第 2 号修正。拟发行 8.25 亿股 A 类普通股，其中公司新发 801,351,354 股，售股股东出售 23,648,646 股；发行价区间估计为 70 至 78 美元；申请在纳斯达克全球精选市场以代号 ANT 上市。承销商有权额外购买最多 1.2375 亿股",
+        "<b>标题里的两个数字：</b>「估值缩水 6000 亿美元」来自「前两周市场还在讨论的 2 万亿美元」对上「约 1.4 万亿美元」。招股书本身没有写出一个官方估值；按发行后已发行股本约 130.87 亿股计算，70 到 78 美元对应的是大约 9160 亿到 1.021 万亿美元。1.4 万亿美元是媒体按更宽的摊薄口径、再取区间上限推出来的一种算法。「2.5 亿」在正文里是「7 位创始人合计约 17.5 亿美元、人均约 2.5 亿（美元）」的缩写，标题既没写「人均」，也没写币种",
+        "<b>同步私募：</b>正文写公开发行之外还有 260 亿美元私募，由谷歌、英伟达等七家认购。这与修正案里新增的同步私募安排相符；具体分摊以招股书为准，不要只记自媒体的四舍五入",
+        "<b>文中引用的经营数字：</b>我在已读到的 S-1 摘录里核对到：截至 2026-09-30，净收入留存率约 900%。文中的全年收入、年化 810 亿美元、三季度盈亏切换等，我没有在本次读到的招股书片段里逐条复核，暂不写成已证实事实",
+        "<b>夹带的模型部分：</b>文后半段介绍 Fable 5.2 的定价、速度和 FrontierCode 分数，与 Anthropic 官方公告大体一致；X 上的游戏、短片等「刷屏实测」仍是个案转述"
+      ],
+      "keywords": "Anthropic IPO S-1 ANT 估值 售股股东 Fable 5.2 循环交易 招股书 JackCui",
+      "ticktick_task_id": "6af584f6e4b0dc3df88edd78",
+      "wechat": {
+        "biz": "MzIxODg1OTk1MA==",
+        "mid": "2247553700",
+        "idx": "1",
+        "sn": "9b82d271de6d0410879021b0dc45f407"
+      },
+      "detail": {
+        "summary": "深入讲解 · 先把招股书条款和标题算法分开",
+        "body_html": "<h4>招股书实际写了什么</h4><div>2026-11-10 的 S-1/A 第 2 号修正写得很清楚：本次是 Anthropic, PBC 的 A 类股首次公开发行，共 8.25 亿股，公司自己卖 801,351,354 股，售股股东另卖 23,648,646 股，公司拿不到售股股东那一部分的钱。发行价当时估计在 70 到 78 美元之间，申请以 ANT 登陆纳斯达克全球精选市场。承销商还有最多 1.2375 亿股的超额配售选择权。按 8.25 亿股乘以区间上限 78 美元，毛承销规模约 643.5 亿美元，这里面已经包含售股股东那一部分，不是全部进入公司账户。正文说「最多募资 644 亿美元」，和这个乘法接近，但需要分清毛额、净额，以及有没有把同步私募算进去。</div><h4>标题那两个数字为什么不能直接当事实</h4><div>招股书没有写「公司估值是多少」。估值是用价格乘以股份口径算出来的，而招股书里至少有「发行及同步私募完成后的已发行股本」和「再计入期权、未归属 RSU 等」好几套分母。按文件给出的发行后已发行约 13,086,672,593 股计算，70 美元约 9160 亿美元，78 美元约 1.021 万亿美元，中间价 74 美元约 9680 亿美元。媒体报道里出现的「最多约 1.4 万亿美元」，用的是更宽的摊薄口径再取区间上限。把「市场先前讨论的 2 万亿美元」减去「一种口径下的 1.4 万亿」，得到「缩水 6000 亿」，这是媒体算术，不是 SEC 文件里的一句话。同样，「前一晚预演方案还是 693 亿」属于对投行材料的报道，有媒体写过随后撤回，我没有在这份 S-1/A 里看到 693 亿这个数字。</div><h4>「2.5 亿」该怎么读</h4><div>售股股东出售 23,648,646 股，是招股书里的硬数字。按中间价 74 美元计算，这部分大约是 17.5 亿美元，和正文「合计套现约 17.5 亿美元」一致；再除以 7，才接近「人均约 2.5 亿美元」。标题写成「7 位创始人准备套现 2.5 亿」，省略了「人均」和币种，也容易被读成人民币。我在本次读到的 S-1 封面和发行条款里，核对到了售股股东的总股数，但没有把七位创始人各自出售多少股的表格完整复核，因此不把「七位创始人每人 2.5 亿美元」写成已交叉验证的事实。</div><h4>和你的关系</h4><div>这篇文章的价值不在于回答「还香不香」，而在于提醒：同一份招股书可以被算出「不到一万亿」或「1.4 万亿」，差别在分母。文中关于循环交易、客户集中、新模型收入占比的讨论，需要回到招股书原文核对，不宜只根据这篇转述做判断。文末写「不构成投资建议」是对的：你现在也没有必要、更没有义务去追这只还在路演的新股。</div>"
+      },
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了公众号全文，并对照 Anthropic 2026-11-10 向 SEC 提交的 S-1/A 第 2 号修正封面与发行条款，以及 Anthropic 的 Fable 5.2 官方公告和价目页。部分收入与预测数字未在本次读到的招股书片段中逐条复核",
+        "thesis_html": "招股书能核对的是<b>股数、价格区间和售股股东卖出的总股数</b>；标题里的「估值缩水 6000 亿美元」和「套现 2.5 亿」是对媒体推算和「人均约 2.5 亿美元」的压缩，不能当成已经披露的确定事实。",
+        "facts": [
+          {
+            "html": "Anthropic, PBC 于 2026-11-10 向美国证交会提交 Form S-1/A 第 2 号修正（Registration No. 333-299633）。文件写明拟发行 825,000,000 股 A 类普通股：公司出售 801,351,354 股，售股股东出售 23,648,646 股；公司不会获得售股股东部分的募集资金。发行价当时估计为每股 70.00 至 78.00 美元，并已申请在纳斯达克全球精选市场以代号 ANT 上市",
+            "source": "SEC Form S-1/A Amendment No. 2",
+            "year": "2026-11-10",
+            "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026072484/anthropicpbc-sx1ax2.htm",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "JackCui 公众号原文",
+                "url": "https://mp.weixin.qq.com/s?__biz=MzIxODg1OTk1MA==&mid=2247553700&idx=1&sn=9b82d271de6d0410879021b0dc45f407"
+              }
+            ]
+          },
+          {
+            "html": "同一份发行条款写明：承销商有权按发行价额外向公司购买最多 123,750,000 股 A 类普通股。825,000,000 × 78 美元 = 643.5 亿美元，这是含售股股东份额的毛额上限，不是全部进入公司账户的净募集额",
+            "source": "SEC Form S-1/A Amendment No. 2",
+            "year": "2026-11-10",
+            "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026072484/anthropicpbc-sx1ax2.htm",
+            "corroborated": false
+          },
+          {
+            "html": "招股书给出发行及同步私募完成后的已发行股本为 13,086,672,593 股（含 A 类、N 类及各 1 股的 T 类与 F 类）。按这一口径：70 美元约 9160 亿美元，74 美元约 9680 亿美元，78 美元约 1.021 万亿美元。招股书正文没有写「估值为 1.4 万亿美元」或「较此前 2 万亿美元缩水 6000 亿美元」",
+            "source": "SEC Form S-1/A Amendment No. 2（发行后已发行股本条款）",
+            "year": "2026-11-10",
+            "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026072484/anthropicpbc-sx1ax2.htm",
+            "corroborated": false
+          },
+          {
+            "html": "按中间价 74 美元计算，售股股东的 23,648,646 股约合 17.5 亿美元，与正文「合计套现约 17.5 亿美元」一致。标题中的「2.5 亿」在正文里是「人均约 2.5 亿」，且应为美元。我没有在本次已读的招股书片段中完整复核七位创始人各自的售股表，因此不把「七位创始人每人套现 2.5 亿美元」标成已交叉验证",
+            "source": "SEC Form S-1/A Amendment No. 2 与原文算术",
+            "year": "2026-11-10",
+            "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026072484/anthropicpbc-sx1ax2.htm",
+            "corroborated": false
+          },
+          {
+            "html": "我在该份 S-1/A 中读到：截至 2026-09-30，公司称净收入留存率（Net Revenue Retention）约为 900%。这与原文引用的招股书口径一致",
+            "source": "SEC Form S-1/A Amendment No. 2",
+            "year": "2026-11-10",
+            "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026072484/anthropicpbc-sx1ax2.htm",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "JackCui 公众号原文",
+                "url": "https://mp.weixin.qq.com/s?__biz=MzIxODg1OTk1MA==&mid=2247553700&idx=1&sn=9b82d271de6d0410879021b0dc45f407"
+              }
+            ]
+          },
+          {
+            "html": "文中关于 Fable 5.2 的标准档定价（输入 8 美元 / 百万 token、输出 40 美元，较 5.1 降约 20%）、最多快 30%、可选快速模式再提速 2.5 倍，以及 FrontierCode 2.0 上 49.1%、上一代 32.4%，与 Anthropic 官方公告和价目页一致",
+            "source": "Anthropic 官方公告",
+            "year": "2026-11-09",
+            "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "Claude 官方价目页",
+                "url": "https://platform.claude.com/docs/en/about-claude/pricing"
+              }
+            ]
+          },
+          {
+            "html": "原文还写：路演前一晚发给投行的方案募资额曾是 693 亿美元；发行估值从前两周市场讨论的 2 万亿美元降到约 1.4 万亿美元；上市交易约在 11 月 19 日之后。这些说法来自对路演/媒体的转述，我没有在 S-1/A 正文里看到对应的官方表述，故未核实",
+            "source": "JackCui 公众号原文",
+            "year": "2026-11-12",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzIxODg1OTk1MA==&mid=2247553700&idx=1&sn=9b82d271de6d0410879021b0dc45f407",
+            "corroborated": false
+          }
+        ],
+        "critique": {
+          "credibility": "C",
+          "credibility_note": "正文不少条款能在 S-1/A 里对上，但标题把「一种口径下的估值推算」和「人均约 2.5 亿美元」写成了已发生的确定事件；收入、预测和路演细节又夹杂未复核的转述，不能当招股书摘要来用。",
+          "points_html": [
+            "「估值缩水 6000 亿美元」不是招股书里的句子。2 万亿美元只是文中所说的「市场讨论」，1.4 万亿美元是媒体按较宽摊薄口径、再取 78 美元算出来的一种结果。换用文件给出的已发行股本，区间大部分还在一万亿美元上下",
+            "「7 位创始人准备套现 2.5 亿」省略了「人均」和美元。即使合计 17.5 亿美元与 23,648,646 股乘以中间价相符，也不等于我已经逐人核对过创始人售股表",
+            "「最多募资 644 亿美元」接近 8.25 亿股乘以 78 美元的毛额，其中包含售股股东份额，也还没有扣减承销费用；若再把同步私募加进来，又是另一个数字。不要把几个口径连成一条「募资近 1000 亿」的确定结论后直接使用",
+            "文中 693 亿美元的「前一晚方案」有媒体报道称随后撤回，我未在这份修正案中看到该数字",
+            "全年收入、年化收入、三季度盈亏、算力承诺、2028 年收入预测等，原文声称来自招股书，但我没有在本次阅读范围内逐条核对，因此不写入已证实事实",
+            "后半段大量 X 个案和「还香不香」的判断，属于内容评论，不是披露文件"
+          ]
+        },
+        "context_html": [
+          "同一份招股书可以同时支撑「不到一万亿」和「1.4 万亿」两种标题，差别在于你数的是发行后已发行股本，还是把期权、未归属 RSU、配股权等一并算进去。读这类稿子，先问分母，再看百分数",
+          "售股股东卖出的是老股，钱不进公司；公司真正拿到的是新股部分（还要扣费用），以及文件中另行安排的同步私募。把这两块和毛承销额混在一起，会高估「Anthropic 这次能进账多少」",
+          "你正在用的 Claude 相关工具，和这家公司是否上市、定价高低，不是同一件事。招股书里的收入留存率和模型发布，不能直接换算成你该不该追新股"
+        ],
+        "relevance": [
+          {
+            "area": "agents",
+            "html": "文中把 IPO 和 Fable 5.2 放在一起写，容易造成「模型更强所以上市更值」的联想。模型发布是产品事件，发行价是股份和预期的定价，二者不要互相证明"
+          },
+          {
+            "area": "aicoding",
+            "html": "对你来说，更值得记住的是官方价目和「Fable 不是默认日常模型」这一条，而不是路演估值。日常编码仍应看账单和任务难度，而不是看公司值多少钱"
+          },
+          {
+            "area": "kaoyan",
+            "html": "初试前没有必要跟踪这只还在路演的股票，更不要被标题里的「6000 亿」「2.5 亿」带着走。如果以后要读招股书，直接打开 SEC 文件，先对股数和价格区间"
+          }
+        ],
+        "next_html": [
+          "不要把标题里的 6000 亿美元和 2.5 亿记成已证实事实",
+          "若要核对条款，打开 <code>https://www.sec.gov/Archives/edgar/data/2130357/000162828026072484/anthropicpbc-sx1ax2.htm</code>，先看发行股数、价格区间和售股股东总股数",
+          "初试前把这篇当「如何读估值标题」的反面教材即可，不用据此做任何投资或换模型的决定"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzI2MjIyMTQxMw:2247489300:1",
+      "title": "嵌入式杂谈介绍 MOTO GPS：GitHub 上的摩托车圆屏导航，仓库在、许可是非商用，能跑的是微雪成品板",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzI2MjIyMTQxMw==&mid=2247489300&idx=1&sn=d1d46142ae466c2e6b689678173d15c0",
+      "category": "emb",
+      "source": {
+        "account": "嵌入式杂谈",
+        "published": "2026-11-11"
+      },
+      "added": "2026-11-12",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "嵌入式杂谈介绍 GitHub 项目 <b>MOTO GPS</b>（作者 Maler X）：手机算路，微雪 ESP32-S3 1.75 寸圆屏只显示裁剪后的导航状态。仓库存在，关键硬件规格和 BLE 协议能对上；许可证是 <b>PolyForm Noncommercial 1.0.0</b>，自研四层板仍标着 DO NOT ORDER，现在能跑的是微雪成品板加 iPhone。",
+      "points_html": [
+        "<b>仓库：</b><code>https://github.com/mx3353672833-debug/moto-gps-waveshare</code>，写稿时正文称 500 多星、90 多个 fork；我 2026-11-15 经 API 看到约 591 星、107 次 fork",
+        "<b>当前能跑的硬件：</b>微雪 ESP32-S3-Touch-AMOLED-1.75C。1.75 英寸 466×466 AMOLED，驱动 CO5300（QSPI），触摸 CST9217，六轴 QMI8658，电源 AXP2101，32 MB Flash + 8 MB PSRAM",
+        "<b>分工：</b>iPhone 用 Core Location 定位，搜索和路线走高德（Key 放自建 HTTPS 网关），共享 C++ NavCore 在手机上做路线推进和偏航；圆屏只收导航快照和局部几何，经 NavPresenter 交给 LVGL",
+        "<b>蓝牙：</b>ESP32 做 GATT peripheral，帧头魔数 0xB7，带版本、类型、flags、序号、分片偏移、整包长度和 CRC16；ATT MTU 23 时净载荷 8 字节；快照最高 5 Hz，心跳 1 秒，需确认的命令 750 ms 未 ACK 则重发，最多两次；安全基线是 LE Secure Connections + bonding + Just Works，没有 MITM",
+        "<b>自研板：</b>仓库有 Ø52 mm 四层板 A1 和 V3 外壳资料，但目录和说明保留 DO NOT ORDER，作者标明尚未生产放行",
+        "<b>许可：</b>PolyForm Noncommercial 1.0.0，源码公开但不允许按该许可商用；App 未上架"
+      ],
+      "keywords": "MOTO GPS 摩托车 圆屏导航 ESP32-S3 Waveshare CO5300 LVGL PolyForm Maler X AMOLED BLE",
+      "ticktick_task_id": "6af518aae4b0987aa1ea287c",
+      "wechat": {
+        "biz": "MzI2MjIyMTQxMw==",
+        "mid": "2247489300",
+        "idx": "1",
+        "sn": "d1d46142ae466c2e6b689678173d15c0"
+      },
+      "detail": {
+        "summary": "深入讲解 · 工程完整度高，但不要把效果图和自研板当成已经量产的车机",
+        "body_html": "<h4>这篇在讲什么</h4><div>不是把手机画面投到车把上，而是把导航状态机留在手机，圆屏只渲染当前路段。公众号把仓库里的硬件清单、协议和显示链路写得很细，并提醒限速数字是演示数据、自研板不要下单。这比很多只放效果图的开源项目介绍更可核对。</div><h4>和仓库、微雪文档对得上的部分</h4><div>仓库 README、产品参数页和 BLE 协议文档，与正文的主控分工、器件名单、软件版本（ESP-IDF 5.5.5、LVGL 9.5.0、微雪 BSP 3.0.0、iOS 17+）、帧格式和许可一致。微雪官方文档确认这块 1.75C 板是 ESP32-S3、466×466、CO5300、CST9217、QMI8658、AXP2101、32 MB Flash 和 8 MB PSRAM。我打开的官方原理图里，LCD_CS=GPIO12、QSPI_SCL=GPIO38、LCD_TE=GPIO13，触摸 SDA/SCL 在 GPIO15/14，INT/RST 为 GPIO11 和 GPIO2，与原文一致；QSPI_SI1–SI3 在 GPIO5–7，和「D0–D3 在 GPIO4–7」大体相符。济南离线底图在英文 README 里写为 9.73 MiB、47468 条道路、26702 个建筑。MapScene 协议限制为最多 24 条道路、合计 192 个道路点，以及最多 16 个建筑、合计 128 个建筑点。</div><h4>还要看清的边界</h4><div>自研 A1 板和 V3 外壳是归档的工程审阅资料，Gerber 目录仍叫 <code>review_gerbers_DO_NOT_ORDER</code>。ERC/DRC 全过只说明文件自洽。当前运行版本仍是微雪成品板 + iPhone；真实路况限速和红绿灯倒计时，README 写尚未接通。文中「两片 320 行的 PSRAM 绘图缓冲」我没有在 README 里对上这一句，只核到了 PSRAM 缓冲、QSPI DMA 和 25 ms 目标节拍。仓库现在也有 Android 源码，但说明真机配对与骑行仍在验证，依然没有应用商店上架入口。</div>"
+      },
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了公众号全文，并对照 GitHub 仓库 README / 产品参数 / BLE 协议 / LICENSE.md、GitHub API 元数据，以及微雪 ESP32-S3-Touch-AMOLED-1.75C 文档和官方原理图 PDF",
+        "thesis_html": "这是一个<b>确实存在、文档较完整的源码公开项目</b>，手机算路、圆屏只负责显示的边界划得清楚；但它是实验性样机，许可不允许按默认条款商用，自研板也还不能下单。",
+        "facts": [
+          {
+            "html": "仓库 <code>mx3353672833-debug/moto-gps-waveshare</code> 存在，创建于 2026-09-05，描述为 MOTO GPS · Waveshare ESP32-S3 1.75C 圆屏导航 + iPhone App，作者 Maler X。我 2026-11-15 经 GitHub API 看到约 591 星、107 次 fork。许可证文件为 PolyForm Noncommercial License 1.0.0：允许许可范围内的个人学习、研究和非商业使用，销售预装设备或收费分发须另行取得商业授权",
+            "source": "GitHub mx3353672833-debug/moto-gps-waveshare",
+            "year": "2026-11-15",
+            "url": "https://github.com/mx3353672833-debug/moto-gps-waveshare",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "仓库 LICENSE.md（PolyForm Noncommercial 1.0.0）",
+                "url": "https://github.com/mx3353672833-debug/moto-gps-waveshare/blob/main/LICENSE.md"
+              }
+            ]
+          },
+          {
+            "html": "仓库 README 与产品参数页把当前适配硬件写成 Waveshare ESP32-S3-Touch-AMOLED-1.75C：ESP32-S3，32 MB Flash、8 MB PSRAM，1.75 英寸 466×466 AMOLED，驱动 CO5300（QSPI），触摸 CST9217，六轴 QMI8658，电源 AXP2101。微雪文档列出的芯片、分辨率和存储器与之一致",
+            "source": "仓库 README / 产品参数",
+            "year": "2026-11-15",
+            "url": "https://github.com/mx3353672833-debug/moto-gps-waveshare",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "Waveshare 文档 ESP32-S3-Touch-AMOLED-1.75C",
+                "url": "https://docs.waveshare.com/ESP32-S3-Touch-AMOLED-1.75C"
+              }
+            ]
+          },
+          {
+            "html": "微雪官方原理图中的连接与原文大体一致：LCD_CS 在 GPIO12，QSPI_SCL 在 GPIO38，LCD_TE 在 GPIO13；触摸 TP_SDA / TP_SCL 在 GPIO15 / GPIO14，TP_INT 在 GPIO11，TP_RESET 在 GPIO2。原理图里 QSPI_SI1、SI2、SI3 分别在 GPIO5、GPIO6、GPIO7",
+            "source": "微雪 ESP32-S3-Touch-AMOLED-1.75C 原理图 PDF",
+            "year": "2026-11-15",
+            "url": "https://files.waveshare.com/wiki/ESP32-S3-Touch-AMOLED-1.75C/ESP32-S3-Touch-AMOLED-1.75C-schematic.pdf",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "嵌入式杂谈公众号原文",
+                "url": "https://mp.weixin.qq.com/s?__biz=MzI2MjIyMTQxMw==&mid=2247489300&idx=1&sn=d1d46142ae466c2e6b689678173d15c0"
+              }
+            ]
+          },
+          {
+            "html": "仓库写明的软件环境与原文一致：圆屏固件用 ESP-IDF 5.5.5、微雪 BSP 3.0.0，共享 UI 为 LVGL 9.5.0 对应固定提交，iPhone App 要求 iOS 17+，路线网关为 Node.js。架构是手机保存完整路线并运行共享 C++ 导航核心，圆屏接收裁剪后的显示数据并交给 NavPresenter / LVGL；搜索、算路和偏航重算仍然要联网。内置济南离线底图在英文 README 中写为 9.73 MiB、47468 条道路、26702 个建筑，只作覆盖范围内的本地兜底",
+            "source": "仓库 README / 英文 README",
+            "year": "2026-11-15",
+            "url": "https://github.com/mx3353672833-debug/moto-gps-waveshare",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "仓库产品参数页",
+                "url": "https://github.com/mx3353672833-debug/moto-gps-waveshare/blob/main/docs/PRODUCT_SPECIFICATIONS.md"
+              }
+            ]
+          },
+          {
+            "html": "BLE 协议文档确认：ESP32 为 GATT peripheral，手机为 central；每帧魔数为 <code>0xB7</code>，随后是版本、类型、flags、序号、分片偏移、整包长度、载荷和 CRC16；禁止依赖 Long Write。ATT MTU 23 时 characteristic value 为 20 字节，去掉 12 字节头和 CRC 后净载荷 8 字节。导航快照最高 5 Hz，建议心跳 1000 ms，重组超时 1000 ms；带 ACK 的命令 750 ms 未见匹配 ACK 则用同一序号重发，最多重试 2 次。安全基线为 LE Secure Connections + bonding + Just Works，文档写明 Just Works 不提供 MITM 认证。MapScene 窗口上限为道路 0–24 条、全帧道路点合计 ≤192，建筑 0–16 个、全帧建筑点合计 ≤128",
+            "source": "仓库 BLE 协议文档 ble-navigation-v1.md",
+            "year": "2026-11-15",
+            "url": "https://github.com/mx3353672833-debug/moto-gps-waveshare/blob/main/shared/protocol/ble-navigation-v1.md",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "嵌入式杂谈公众号原文",
+                "url": "https://mp.weixin.qq.com/s?__biz=MzI2MjIyMTQxMw==&mid=2247489300&idx=1&sn=d1d46142ae466c2e6b689678173d15c0"
+              }
+            ]
+          },
+          {
+            "html": "自研主板 H0175 EVT A1 使用 ESP32-S3-WROOM-1U-N16R8、LC76G GNSS、QMI8658A 和 IIS2MDC、BQ25628E + TPS63070 + TUSB320LAI，名义直径 Ø52 mm、四层板；V3 外壳设计值为 Ø61×16 mm，卡口面向 Garmin 四分之一转。产品参数页和硬件 README 写明这些是工程审阅 / 归档资料，尚未生产放行；制造文件目录保留 <code>review_gerbers_DO_NOT_ORDER</code>。当前软件样机仍是微雪成品板 + iPhone",
+            "source": "仓库硬件 README / 产品参数",
+            "year": "2026-11-15",
+            "url": "https://github.com/mx3353672833-debug/moto-gps-waveshare/blob/main/hardware/README.md",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "产品参数页",
+                "url": "https://github.com/mx3353672833-debug/moto-gps-waveshare/blob/main/docs/PRODUCT_SPECIFICATIONS.md"
+              }
+            ]
+          },
+          {
+            "html": "原文写显示链路使用「两片 320 行的 PSRAM 绘图缓冲」。仓库 README 只写了 PSRAM 绘图缓冲、QSPI DMA 与 LVGL 交替，以及 CO5300 的 TE 用于帧首同步、目标节拍 25 ms，我没有在 README 里核到「两片 320 行」这一句",
+            "source": "嵌入式杂谈公众号原文",
+            "year": "2026-11-11",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzI2MjIyMTQxMw==&mid=2247489300&idx=1&sn=d1d46142ae466c2e6b689678173d15c0",
+            "corroborated": false
+          }
+        ],
+        "critique": {
+          "credibility": "B",
+          "credibility_note": "项目确实存在，许可、器件、协议和「自研板不要下单」都能在仓库和微雪原理图对上；但这是二次介绍，我没有实车复现，圆屏录屏里的限速数字作者自己也说是演示数据。",
+          "points_html": [
+            "封面和部分界面图是产品外观效果图或演示数据。仓库写明真实道路限速和红绿灯倒计时尚未接通，不能把录屏里的数字当成路测结果",
+            "「工程完整度高」不等于成品。App 未上架，README 还列出 BLE 重连、跨城路线一致性、持续帧率和供电温升等仍在回归的项目",
+            "许可证是 source-available 非商用，不是常见的 MIT/Apache。学习可以，想卖预装设备或用于商业产品要另谈授权",
+            "自研四层板即使 ERC/DRC 为 0，也不表示屏幕 FPC、电源切换、射频和装车振动已经验证。目录名里的 DO NOT ORDER 应当照字面执行",
+            "「两片 320 行缓冲」这一处我没有在仓库 README 对上，阅读时不要把公众号里所有实现细节都当成已核对"
+          ]
+        },
+        "context_html": [
+          "同一公众号这周还有 Fable 5.2 做电子原型的转述。两篇的可核对程度不同：这篇能打开仓库和原理图，那篇的一级材料是官方研究笔记，没有公开工程文件",
+          "高德 Key 必须放在自建 HTTPS 网关，不能写进固件或客户端。这是地图商业 API 的常见约束，也是「ESP32 不重新跑路线、不碰高德」这一边界的原因之一",
+          "你规划中的小车和这块摩托车圆屏没有直接对应。它更适合当作「手机算、端侧只显示」和 BLE 分片协议的案例，而不是课设要立即仿做的车机"
+        ],
+        "relevance": [
+          {
+            "area": "robotics",
+            "html": "值得看的是职责划分：定位、搜索、偏航和重算留在手机，终端只收窗口数据并用 IMU 做相对转向。嵌入式端的难点变成协议、显示同步（TE）和功耗，而不是在 ESP32 上重写一套导航引擎"
+          },
+          {
+            "area": "kaoyan",
+            "html": "初试前不要买圆屏、也不要开始配高德网关。许可、DO NOT ORDER 和「演示数字不是路测」这三句话记住就够"
+          }
+        ],
+        "next_html": [
+          "核对细节时直接打开仓库 README、产品参数和 <code>shared/protocol/ble-navigation-v1.md</code>，不要只看公众号配图",
+          "不要按 A1 / V3 的制造文件下单。若初试后只是想在桌上复现显示，应使用微雪成品板，并自己准备高德 Key 和开发者签名",
+          "如果只是学习 BLE 分片和 LVGL 圆屏，先读协议文档和 Web 预览说明，不必先造车把支架"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzI2MjIyMTQxMw:2247489313:1",
+      "title": "嵌入式杂谈写 Claude Fable 5.2 做了三款电子原型：官方笔记能对上，但不是 AI 已经能独立完成硬件",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzI2MjIyMTQxMw==&mid=2247489313&idx=1&sn=9139f876e9dac48542656516977c9cb7",
+      "category": "emb",
+      "source": {
+        "account": "嵌入式杂谈",
+        "published": "2026-11-11"
+      },
+      "added": "2026-11-12",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "嵌入式杂谈转述 Anthropic 2026-11-09 的研究笔记：<b>Claude Fable 5.2</b> 按短提示词设计了 USB-C 音箱、家用语音中枢和掌上电子宠物，由 Diode 的工程师制板、装配和测试。Fable 5.2 是已发布模型，官方演示存在；但 KiCad 工程和测试报告没有公开，Anthropic 自己也写了没做电气验证和认证，不能写成「AI 已经能独立完成硬件」。",
+      "points_html": [
+        "<b>模型：</b>Claude Fable 5.2。Anthropic 在 2026-11-09 的产品发布稿和研究笔记里都用了这个名字，API 型号为 <code>claude-fable-5-2</code>",
+        "<b>三款原型：</b>官方笔记从左到右列为电池供电的掌上宠物、家用语音中枢、USB 音箱（提示词示例是插在电脑上的 USB-C 圆饼，带麦克风、扬声器和蓝牙 PCB 天线）",
+        "<b>流程：</b>模型写规格、原理图、PCB、外壳、固件和 BOM；Diode 按设计文件制板并跑固件。Anthropic 脚注写明与 Diode 有商业关系",
+        "<b>官方自己划的边界：</b>三台都是早期原型，没有电气验证、天线调谐、热测试和认证，也不是为量产设计；Claude 没有接测试仪器和贴片机，板子是 Diode 的人做出来的",
+        "<b>分数：</b>研究笔记写 Diode 内部基准 PCB Gym 上 Fable 5.2 为 69%、上一代 Fable 5 为 25%；公开基准 BenchCAD 2.1 为 83.5%。这些是官方自报，不是第三方复现"
+      ],
+      "keywords": "Claude Fable 5.2 Anthropic Diode PCB 电子原型 USB-C 音箱 语音中枢 电子宠物 KiCad PCB Gym",
+      "ticktick_task_id": "6af5076ee4b0ea87e02b4451",
+      "wechat": {
+        "biz": "MzI2MjIyMTQxMw==",
+        "mid": "2247489313",
+        "idx": "1",
+        "sn": "9139f876e9dac48542656516977c9cb7"
+      },
+      "detail": {
+        "summary": "深入讲解 · 正文其实相当谨慎，标题更容易让人读过头",
+        "body_html": "<h4>这篇在讲什么</h4><div>标题问「AI 抢硬件工程师的饭碗还有多远」，正文主体却是对 Anthropic 研究笔记的转述，而且已经写了不该急着喊「AI 硬件工程师」：三台是原型，没有认证，人还是负责制板和测试，公开材料只有笔记、图片和演示视频。对嵌入式读者，作者把意义放在「哪些耗时细节可能被接走」，而不是「岗位已经没了」。这个判断和官方原文的语气大体一致。</div><h4>和官方材料对得上的部分</h4><div>Anthropic 同日发布了 Fable 5.2 / Mythos 5.2，并单独写了《Testing Claude on real-world electronics design》。三台设备、短提示词、Diode 制板、「电路未改仍能工作、用了几周」、四层板、触摸轮下避免过孔、语音中枢差分对和蛇形补偿、自己写网格搜索布线器（约半小时，长线大约一秒一根）、读充电芯片数据手册并预判指示灯会闪、六处过细阻焊开窗、25 mm 音孔约 3.4 kHz 共振改为约 10 mm / 8.9 kHz、音箱板要斜约 25 度装进外壳——这些都能在官方笔记里对上。PCB Gym 69% 对 25%、BenchCAD 2.1 的 83.5%，也是官方写明的数字。</div><h4>不能写成事实的部分</h4><div>「没有返工」「用了几周也没坏」是 Anthropic 和 Diode 的说法。官方脚注承认双方有商业关系。我没有找到公开的 KiCad 工程、完整 BOM、测试报告或第三方拆解。PCB Gym 是 Diode 内部基准；BenchCAD 测的是从图纸重建 3D 和板子，不等于信号完整性或量产可靠性。人仍然完成了制造、装配和测试，Claude 也没有接仪器。下一步「更密、更快、接仿真、用实测反哺」只是官方计划。</div>"
+      },
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了公众号全文，并对照 Anthropic 2026-11-09 的 Fable 5.2 发布页和研究笔记《Testing Claude on real-world electronics design》；没有找到公开的 KiCad 工程、BOM 或测试报告",
+        "thesis_html": "Fable 5.2 和三款原型的官方演示是存在的，公众号把限制也转述得比较完整；但<b>这只能说明「在厂商配套环境和工程师制造下，模型能给出可点亮的原型设计」</b>，不能写成 AI 已经能独立完成硬件，或硬件工程师岗位已被替代。",
+        "facts": [
+          {
+            "html": "Anthropic 于 2026-11-09 发布 Claude Fable 5.2 与 Claude Mythos 5.2，发布稿写 Fable 5.2 在预发布测试中「designed three working electronic devices from scratch」。平台文档中的模型 ID 为 <code>claude-fable-5-2</code>",
+            "source": "Anthropic 发布稿 Introducing Claude Fable 5.2 and Claude Mythos 5.2",
+            "year": "2026-11-09",
+            "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "Claude 平台文档 Fable 5.2 overview",
+                "url": "https://platform.claude.com/docs/en/models/fable-5-2/overview"
+              }
+            ]
+          },
+          {
+            "html": "同日研究笔记写明：与 Diode Computers 合作，让 Claude Fable 5.2 设计三台设备——speakerphone（USB-C 圆饼，带麦克风、扬声器、蓝牙和 PCB 天线）、voice-assistant hub、handheld virtual pet；模型写规格、原理图、PCB 布局布线、3D 外壳、固件和零件清单，Diode 在其指导下装配并运行固件。笔记还写三台「weeks of use」后仍能工作。脚注 1：Anthropic 与 Diode 有商业关系",
+            "source": "Anthropic 研究笔记 Testing Claude on real-world electronics design",
+            "year": "2026-11-09",
+            "url": "https://www.anthropic.com/research/claude-electronics-design",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "嵌入式杂谈公众号原文",
+                "url": "https://mp.weixin.qq.com/s?__biz=MzI2MjIyMTQxMw==&mid=2247489313&idx=1&sn=9139f876e9dac48542656516977c9cb7"
+              }
+            ]
+          },
+          {
+            "html": "官方「 Limitations and next steps」写：三台仍是原型，没有经过电气验证、天线调谐、热测试或认证，也不是为量产设计；Claude 没有连接测试设备或制板/贴片设备，因此 Diode 的工程师必须实际制造和测试这些原型",
+            "source": "Anthropic 研究笔记",
+            "year": "2026-11-09",
+            "url": "https://www.anthropic.com/research/claude-electronics-design",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "嵌入式杂谈公众号原文",
+                "url": "https://mp.weixin.qq.com/s?__biz=MzI2MjIyMTQxMw==&mid=2247489313&idx=1&sn=9139f876e9dac48542656516977c9cb7"
+              }
+            ]
+          },
+          {
+            "html": "研究笔记写：Diode 内部基准 PCB Gym 上 Fable 5.2 得 69%，Fable 5 为 25%；公开基准 BenchCAD 2.1（从图纸和渲染图重建 3D 零件、装配和电路板）上 Fable 5.2 得 83.5%，约为前代 Fable 5.1 的近两倍。PCB Gym 被明确写成 internal benchmark",
+            "source": "Anthropic 研究笔记",
+            "year": "2026-11-09",
+            "url": "https://www.anthropic.com/research/claude-electronics-design",
+            "corroborated": false
+          },
+          {
+            "html": "研究笔记中与原文一致的过程细节包括：音箱为四层板，触摸轮下把信号改到其他引脚以保持单层走线、避免过孔；语音中枢先布 USB/以太网差分对并加蛇形补偿；模型自己写了网格搜索布线器，约半小时可用、长线大约一秒一根；读充电芯片手册后称不放电池只插 USB 也能工作，但充电指示灯可能会闪；DFM 查出六处过细阻焊并加宽开窗、未移动器件；语音中枢 25 mm 麦克风孔被计算为约 3.4 kHz 共振，外壳改成楔形后孔长约 10 mm、共振约 8.9 kHz；音箱板因静音开关会撞后壁，需倾斜约 25 度再放平。这些都是官方自述，不是第三方复测",
+            "source": "Anthropic 研究笔记",
+            "year": "2026-11-09",
+            "url": "https://www.anthropic.com/research/claude-electronics-design",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "嵌入式杂谈公众号原文",
+                "url": "https://mp.weixin.qq.com/s?__biz=MzI2MjIyMTQxMw==&mid=2247489313&idx=1&sn=9139f876e9dac48542656516977c9cb7"
+              }
+            ]
+          },
+          {
+            "html": "我检索后只看到 Anthropic 研究笔记、配图和演示视频，以及二次转述；没有找到这三台设备公开的 KiCad 工程、完整 BOM、测试报告或第三方拆解。因此「三台都能工作、没有返工」目前只能作为官方说法，不能独立复核",
+            "source": "对公开材料的检索（2026-11-15）",
+            "year": "2026-11-15",
+            "url": "https://www.anthropic.com/research/claude-electronics-design",
+            "corroborated": false
+          }
+        ],
+        "critique": {
+          "credibility": "B",
+          "credibility_note": "主体能对上 Anthropic 官方研究笔记和产品发布，作者也写了原型边界；但标题偏煽情，PCB Gym 等关键效果数字来自官方与合作厂商，且双方有商业关系，没有第三方复现。",
+          "points_html": [
+            "标题「AI 抢硬件工程师的饭碗还有多远」容易让人读成岗位结论。正文其实反对急着喊「AI 硬件工程师」，阅读时应以正文和官方限制段落为准",
+            "「没有返工」「用了几周也没坏」是 Anthropic / Diode 的说法。官方脚注写明存在商业关系，不能当成中立的长期可靠性报告",
+            "PCB Gym 是 Diode 内部基准，69% 对 25% 不能外推成「已经达到可用的布线工程师水平」。BenchCAD 2.1 的 83.5% 测的是从图纸重建，不是信号完整性、EMC 或认证通过率",
+            "制造、装配、上电和测试仍由人完成。官方写得清楚：模型没有接测试仪器，也没有接制板和贴片设备",
+            "公开材料里没有可下载的工程文件。想复现或审查叠层、阻抗和 DFM 细节的人，目前看不成源文件",
+            "「下一步接仿真和实测反哺」是官方计划，不是已经发生的事"
+          ]
+        },
+        "context_html": [
+          "你已经在用 Cursor / Grok Bot 写软件。这篇对应的是同一类「模型外面包工具和环境」的变化，只是对象换成了原理图、PCB 和外壳。工具链和制造约束仍然在人这边",
+          "同一公众号这周还有摩托车圆屏导航的仓库评述，那篇至少能打开 GitHub 对照；这篇的一级来源是官方研究笔记，不是开源仓库",
+          "OpenAI 最近也写过用模型设计手持设备，官方笔记提到了这一点。那是另一家的同类演示，同样要看有没有公开工程和独立测试，不能互相证明「硬件设计已经被自动化」"
+        ],
+        "relevance": [
+          {
+            "area": "robotics",
+            "html": "对嵌入式来说，可迁移的不是「模型会做产品」，而是它可能先接走摆件、拉电源、查阻焊、对 BOM、把外壳和板边对一遍这类耗时活。架构、选型、测试和认证的责任还在人。没有公开工程文件，你现在也无法把这三台设备当课设参考"
+          },
+          {
+            "area": "aicoding",
+            "html": "官方写模型能调 KiCad 布线器、读数据手册、自己写网格搜索布线脚本。这和你在 Cursor 里让模型改代码是同一类「工具使用」，差别是硬件的对错要等制板和测试，反馈周期比编译长得多"
+          },
+          {
+            "area": "kaoyan",
+            "html": "初试前把官方笔记当一则行业消息即可，不要顺着标题去讨论「饭碗」。复试如果被问到 AI 与硬件，更站得住的表述是：有官方原型演示，但限制写在同一页，制造和测试仍由工程师完成"
+          }
+        ],
+        "next_html": [
+          "要核对细节，直接读 <code>https://www.anthropic.com/research/claude-electronics-design</code>，不要只停留在公众号标题",
+          "在官方或 Diode 公开 KiCad / BOM / 测试报告之前，不要把「三台都能工作」写进自己的笔记当已验证结论",
+          "初试前不必跟做这类演示，也不必为此换工具链"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzYyNTk1MzUwMQ:2247485246:1",
+      "title": "亚瑟爱数学推荐的 bbkaoyan.cn：网站在，真题目录能查到，模拟卷未登录看不到；不必写成「非常牛逼」",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzYyNTk1MzUwMQ==&mid=2247485246&idx=1&sn=0116e55ec39374e5ce190f0d2600f3bf",
+      "category": "kaoyan",
+      "source": {
+        "account": "亚瑟爱数学",
+        "published": "2026-10-14"
+      },
+      "added": "2026-11-12",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "作者说和「做题本」一起做了网站 <code>bbkaoyan.cn</code>，真题免费，模拟卷试用后收费 9.9 到考前，还可拉人减免。2026 年 11 月 15 日我打开该站：站点存在，首页标题是「疾风劲草模拟卷」；未登录的公开接口能列出数学二 1987–2026 年共 40 套真题，模拟卷列表是空的。标题里的「非常牛逼」无法验证。",
+      "points_html": [
+        "<b>原文怎么说：</b>网站有考研数学真题和「大多数模拟卷」，「有 23–26 的资料，还在扩充中」；可选题导出、拼自己的精选套，并称 AI 找题「也很强」；真题完全免费，模拟卷可免费使用几天，之后收费 9.9 到考前，可通过拉人减免",
+        "<b>我打开网站看到的：</b>https://bbkaoyan.cn/ 可以打开，页面标题为「疾风劲草模拟卷」，页脚展示备案号「陕ICP备2025073400号-3」，页眉有售后群号 1094624751。首页有解题 / 找题 / 复盘，以及历年真题、模拟卷、真题分类、模拟卷分类、题篮和对战大厅入口",
+        "<b>真题：</b>未登录访问公开接口 <code>/api/papers?kind=official&amp;subject=math2</code>，返回数学二历年真题 40 套，年份从 1987 年到 2026 年。2026 年数学二真题在目录中为 22 题（选择题 10、填空题 6、解答题 6），来源标注含「李艳芳图片版」。我没有把题干或答案写入本分析，也没有逐题核对对错",
+        "<b>模拟卷和收费：</b>未登录时，数学一、数学二的模拟卷接口返回 0 套；页面有 23–27 模拟卷标签，但显示「当前没有可用的模拟卷」。站点前端写明：普通会员可免费使用真题全部功能；模拟卷需要高级会员，价格为 9.9 元，有效期至 2026 年 12 月 31 日，受邀用户可用 2 元抵扣券。试用次数在前端也被写明（如查看答案 3 次、导出 2 次、找题 3 次），我没有注册或付款，所以没有验证支付和登录后的模拟卷内容",
+        "<b>限制：</b>前端写有「此功能仅通过平板/电脑端使用」。我用浏览器打开真题列表页时，页面一度显示「当前没有通过复审并公开的历年真题」，与公开接口的 40 套目录不一致；因此是否「打开就能看见全部真题」，还受登录状态和设备/界面限制影响"
+      ],
+      "keywords": "亚瑟爱数学 bbkaoyan.cn 疾风劲草 模拟卷 考研数学 数学二 真题 9.9 会员 做题本 李艳芳",
+      "ticktick_task_id": "6af59c96e4b02c1cd95c713e",
+      "wechat": {
+        "biz": "MzYyNTk1MzUwMQ==",
+        "mid": "2247485246",
+        "idx": "1",
+        "sn": "0116e55ec39374e5ce190f0d2600f3bf"
+      },
+      "detail": {
+        "summary": "深入讲解 · 我实际打开后能确认什么、不能确认什么",
+        "body_html": "<h4>网站是存在的，但不是一篇评测</h4><div>原文很短，核心是作者自荐：他和「做题本」筹划了这个网站，功能是选题、导出、拼卷和 AI 找题，并给出域名和 9.9 元收费。标题「分类非常牛逼」是评价，不是可核对的指标。作者与网站有直接利益关系，读的时候应当作产品推介。</div><h4>2026-11-15 核到的部分</h4><div>站点可以打开，产品名是「疾风劲草模拟卷」，不是原文里的口头叫法。未登录的公开接口能列出数学一、数学二、数学三各自 40 套历年真题（1987–2026）。我抽查了 2026 年数学二真题的目录结构，题量是 22 道，来源写的是「李艳芳图片版」——说明这是民间整理稿，不是考试机构发布的官方电子卷。题干、答案和解析在未登录接口里也能取到，我没有转载，也没有核对正误或排版是否完整。</div><div>模拟卷是另一回事。未登录接口返回 0 套，页面虽有 23 到 27 年的标签，但当前显示没有可用模拟卷。这与原文「有 23–26 的资料」并不自动等同：要么需要登录或会员后才列出，要么公开目录现在就是空的。前端把高级会员写成 9.9 元至 2026-12-31，并可用 2 元邀请抵扣，与原文「收费 9.9 到考前，可通过拉人减免」大体相符；「免费使用几天」在我看到的前端文案里，更多是按次数计的试用，而不是我已经核到的自然日试用期。支付是否可下单、登录后模拟卷有多少套，我没有注册，所以未核实。</div><h4>不要为这句话去改复习系统</h4><div>离初试大约 5 周，你并不缺「再发现一个题库」。如果只是想用分类或导出，可以先只看免费真题部分，用你已经在做的数学二真题对照是否好用；不要因为 AI 找题或「非常牛逼」在冲刺期付费、搬家或花时间熟悉新界面。首页还有「比豆包更聪明的问答模型」「找到不会的题，做它 20 道」这类口号，都没有独立证据。</div>"
+      },
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了公众号全文，并于 2026-11-15 打开 https://bbkaoyan.cn/ 首页、数学二真题页和模拟卷页，查询未登录状态下的公开接口 /api/papers。没有注册或付款，因此未验证登录后的模拟卷内容和支付流程",
+        "thesis_html": "这个网站现在<b>确实存在，真题目录也能在未登录接口里查到</b>；但模拟卷公开列表是空的，分类和 AI 好不好用无法验证，标题里的「非常牛逼」只是作者自评。",
+        "facts": [
+          {
+            "html": "2026 年 11 月 15 日访问 https://bbkaoyan.cn/ ，站点可以打开，页面标题为「疾风劲草模拟卷」；页脚展示备案号「陕ICP备2025073400号-3」（链向备案查询页），页眉展示售后群 1094624751。首页可见解题、找题、复盘，以及历年真题、模拟卷、真题分类、模拟卷分类、题篮、对战大厅入口",
+            "source": "bbkaoyan.cn 首页",
+            "year": "2026-11-15",
+            "url": "https://bbkaoyan.cn/",
+            "corroborated": false
+          },
+          {
+            "html": "未登录请求公开接口 <code>/api/papers?kind=official&amp;subject=math2&amp;page_size=100&amp;directory_only=true</code>，返回 total=40，年份覆盖 1987–2026，均为数学二历年真题。同一接口下数学一、数学三也各返回 40 套、同样的年份范围",
+            "source": "bbkaoyan.cn 公开试卷接口",
+            "year": "2026-11-15",
+            "url": "https://bbkaoyan.cn/api/papers?kind=official&subject=math2&page_size=100&directory_only=true",
+            "corroborated": false
+          },
+          {
+            "html": "该目录中的「2026 年考研数学二真题」（id 277）元数据写 question_count=22，题目结构为选择题 10 道、填空题 6 道、解答题 6 道；来源标注含「李艳芳图片版」。未登录也可取到题目内容，我没有转载题干或答案，也没有核对正误",
+            "source": "bbkaoyan.cn 试卷接口",
+            "year": "2026-11-15",
+            "url": "https://bbkaoyan.cn/api/papers/277",
+            "corroborated": false
+          },
+          {
+            "html": "未登录请求模拟卷接口（数学一、数学二，以及 2025–2027 年等筛选）均返回 total=0。网站模拟卷页有「23模拟卷」至「27模拟卷」标签，但选中 26 模拟卷时页面显示「当前没有可用的模拟卷」",
+            "source": "bbkaoyan.cn 模拟卷页与公开接口",
+            "year": "2026-11-15",
+            "url": "https://bbkaoyan.cn/mock-papers?subject=math2",
+            "corroborated": false
+          },
+          {
+            "html": "站点前端写明：普通会员可免费使用真题全部功能；模拟卷需要高级会员，价格为 9.9 元，有效期至 2026-12-31，受邀用户可用 2 元抵扣券；试用文案包括查看答案 3 次、导出 2 次、找题 3 次等按次限制。我没有注册或付款，支付是否可完成、登录后能否看到模拟卷，未核实",
+            "source": "bbkaoyan.cn 前端会员说明",
+            "year": "2026-11-15",
+            "url": "https://bbkaoyan.cn/",
+            "corroborated": false
+          },
+          {
+            "html": "原文称作者与「做题本」共同筹划该网站，真题完全免费，模拟卷可免费使用几天后收费 9.9 到考前，并可通过拉人减免；还说 AI 找题「也很强」，他以前的张宇八套卷精选题就是这样选的。除收费区间和邀请减免能与前端文案大致对应外，AI 效果和「免费使用几天」的自然日含义都没有独立证据",
+            "source": "亚瑟爱数学公众号原文",
+            "year": "2026-10-14",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzYyNTk1MzUwMQ==&mid=2247485246&idx=1&sn=0116e55ec39374e5ce190f0d2600f3bf",
+            "corroborated": false
+          }
+        ],
+        "critique": {
+          "credibility": "C",
+          "credibility_note": "这是站点参与者的自荐短文。网站存在、真题目录和标价可以部分核对，但分类质量、AI 找题是否强、模拟卷登录后有多少套，核心卖点都无法独立验证。",
+          "points_html": [
+            "「非常牛逼」是标题评价，不是测量结果。我只确认网站在、真题目录在，不评价它比其他题库更好",
+            "「有 23–26 的资料，还在扩充中」与未登录模拟卷列表为空并不自动对得上。可能要登录或付费后才可见，我没有跨过这一步去证实",
+            "真题来源标注为「李艳芳图片版」这类民间整理，可能有录题或解析错误，不能当成官方电子卷",
+            "首页「比豆包更聪明」「做它 20 道」是营销句，没有对比测试",
+            "作者与网站有直接利益，还设计了邀请减免。推荐的分量要按自荐来读，而不是按中立评测"
+          ]
+        },
+        "context_html": [
+          "考研数学真题在很多免费渠道都能找到。一个新网站的主要差别是分类、导出和模拟卷整合，而不是「终于有真题了」",
+          "离初试约 5 周，换题库的成本很高。数学二更需要的是把已做过的真题和错题吃透，而不是再发现一套 23–27 的模拟卷标签",
+          "站点提示部分功能建议在平板或电脑上使用。用手机打开若看到空白或被限制，不一定等于没有内容，但冲刺期也不值得为此再适配一套新工具"
+        ],
+        "relevance": [
+          {
+            "area": "kaoyan",
+            "html": "你考数学二。如果只是想按章节抽真题，可以先只用免费真题目录试一次，对照你已有的纸质或 PDF 真题，看分类是否省时间。不要在 11 月为 9.9 元会员或 AI 找题改复习系统"
+          },
+          {
+            "area": "aicoding",
+            "html": "这个站的「解题 / 找题 / 复盘」是它自己的产品功能，和你已经在用的 Cursor / Grok Bot 不是同一套工具。初试前不必把数学练习接到新的 AI 流程里"
+          }
+        ],
+        "next_html": [
+          "默认不用它改计划。继续用你已经在做的数学二真题和错题",
+          "如果只想试分类或导出：只看免费真题部分，用已核对过的卷子对照几道题的分类和原文是否一致，有出入就停",
+          "不要为「非常牛逼」或邀请减免开通 9.9 元会员；模拟卷登录后有什么，这篇推送和未登录页面都还证明不了"
+        ]
+      }
+    },
+    {
+      "id": "wx:Mzk0NzY4MjM5MA:2247530589:1",
+      "title": "Hi Bro！元宝搜索",
+      "url": "https://mp.weixin.qq.com/s?__biz=Mzk0NzY4MjM5MA==&mid=2247530589&idx=1&sn=58afdfa4d74213de0761ad01c2228d1a",
+      "category": "ai",
+      "source": {
+        "account": "元宝",
+        "published": "2026-11-11"
+      },
+      "added": "2026-11-11",
+      "status": "fetch_failed",
+      "summary_label": "仅标题收录",
+      "summary_html": "已经打开「元宝」公众号页面，但正文几乎全是图片或海报，可提取的可读文字主要是 <code>so.qq.com</code> 以及关注、分享等页面控件，无法按原文核实产品说明。不把图片里可能写着的文案当成已读。",
+      "points_html": [
+        "标题提示这是与「元宝搜索」有关的推送，但功能、入口和活动规则都看不到",
+        "页面里出现 so.qq.com，只说明可能和腾讯搜索或元宝的搜索入口有关，不能据此补写产品细节",
+        "以后若在客户端里打开并能看到完整画面，再补读；目前不做深入讲解"
+      ],
+      "keywords": "元宝搜索 so.qq.com 图片稿 抓取失败 仅标题",
+      "ticktick_task_id": "6af45d7ee4b0987aa1e216dc",
+      "wechat": {
+        "biz": "Mzk0NzY4MjM5MA==",
+        "mid": "2247530589",
+        "idx": "1",
+        "sn": "58afdfa4d74213de0761ad01c2228d1a"
+      },
+      "analysis": {
+        "verified": "title_only",
+        "verified_note": "页面已打开，但正文区域几乎全是图片，可提取文字不足，无法按原文核实。不根据海报猜测功能",
+        "thesis_html": "现在只能判断这是元宝账号关于「搜索」的一条推送；<b>具体在宣传什么功能，还没有可读正文</b>。",
+        "facts": [
+          {
+            "html": "抓取时在页面上能看到 <code>so.qq.com</code> 以及关注、分享等控件，除此之外没有可核对的正文。这不能证明本次更新的具体能力",
+            "source": "抓取记录",
+            "year": "2026-11-11",
+            "corroborated": false
+          }
+        ],
+        "critique": {
+          "credibility": "D",
+          "credibility_note": "官方账号发布的图片稿，不等于已经读到产品说明。在文字或可访问的文档出现之前，可信度只能按「几乎没有可核内容」来评。",
+          "points_html": [
+            "不要根据「Hi Bro」或「元宝搜索」补写新功能、活动或入口",
+            "so.qq.com 只是页面上出现的域名，不是一篇产品文档"
+          ]
+        },
+        "context_html": [
+          "元宝是腾讯的 AI 助手产品，搜索相关能力会不时更新。这条微信推送本身还没被读到，不能拿来比较你正在用的搜索或对话工具"
+        ],
+        "relevance": [
+          {
+            "area": "agents",
+            "html": "若以后确认是搜索能力更新，再和你现在用的工具对比也不迟。现在没有任何可比较的功能点"
+          }
+        ],
+        "next_html": [
+          "以后在微信里打开这条图文，或等到有官方文字说明时再读",
+          "在此之前不要把标题理解成一次已核实的产品发布"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzA4MDUwMzAxNA:2651443352:1",
+      "title": "徐涛带背 D24：多选错因可以当复盘框架，但不要把培训带背当成官方规则",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzA4MDUwMzAxNA==&mid=2651443352&idx=1&sn=5be24a792d959e0f92c8780f12395605",
+      "category": "kaoyan",
+      "source": {
+        "account": "考研政治徐涛",
+        "published": "2026-11-11"
+      },
+      "added": "2026-11-11",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "考研政治徐涛把多选错因分成「没懂」「没记」「被坑」三类，后半是新思想带背第 2 天（D24），对应《27核心背诵笔记》指定页码和「徐涛考研政治」小程序。这是培训账号的带背和补救方法，不是官方考试说明。",
+      "points_html": [
+        "<b>错因三分：</b>没懂型——原理没通，尤其是马原概念辨析，应回到背诵笔记把对应章节重看并讲给自己听，不宜继续题海；没记型——原理懂但记岔了，错题本只记「第几章-对应知识点」，不抄题干，12 月后再集中回顾；被坑型——干扰项没识别出来，作者归纳了偷换主体、扩大范围、颠倒关系三招，并提醒看到「全部」「唯一」「根本保证」要多留心",
+        "<b>当天带背：</b>D24 为「新思想 2」，覆盖第二章至第三章，对应《27核心背诵笔记》P136–138、P139–140 的背诵部分，以及小程序「选择题考点带背」模块 Day24",
+        "<b>带背条目：</b>文中列出中国梦的本质、总任务、2035 年和 21 世纪中叶目标、中国式现代化的五个特色及其「显著标志」、党的领导相关表述等约 20 条填空。文末另有一组选择题答案（1.A、2.C、3.B、4.ABC），题干在抓取文本里不完整，像是配了图片",
+        "<b>引流：</b>后台回复「挖空文档」领取默写版 PDF，并导向 AI 交互式问答；结尾要求打卡，并回顾往期带背"
+      ],
+      "keywords": "徐涛 带背 D24 多选题 考研政治 核心背诵笔记 新思想 中国式现代化 错因 小程序 挖空文档 27考研",
+      "ticktick_task_id": "6af3df84e4b03a16e5d0735a",
+      "wechat": {
+        "biz": "MzA4MDUwMzAxNA==",
+        "mid": "2651443352",
+        "idx": "1",
+        "sn": "5be24a792d959e0f92c8780f12395605"
+      },
+      "detail": {
+        "summary": "深入讲解 · 方法可借用，带背清单要自己对原文",
+        "body_html": "<h4>前半段方法在做什么</h4><div>「多选错太多」是培训号 11 月常见的焦虑切口。作者给的补救不是再买一套卷，而是先把错题分成三种：概念没通、知识点没记牢、干扰项没识破。这个框架本身不神秘，但对 11 月复盘是可用的：没懂就停下来讲清楚，没记就做薄薄的知识点账本，被坑就专门收集「全部 / 唯一 / 根本保证」这类绝对化表述。它不是教育部或考试大纲里的评分规则，只是做题经验。</div><h4>后半段是带背，也是产品入口</h4><div>D24 明确绑定《27核心背诵笔记》页码和「徐涛考研政治」小程序 Day24，文末还用「挖空文档」PDF 和 AI 交互背诵收口。你 10 月收过同一账号《背诵笔记》怎么用的那篇，当时已经把带背预告和「研途考研」小程序推广区分开。这篇是那条产品线的日常更新，不是新的官方材料。</div><h4>带背条文不要直接当已核对答案</h4><div>文中若干表述是常见的规范提法，例如「中国梦的本质是国家富强、民族振兴、人民幸福」，「中国特色社会主义最本质的特征是中国共产党的领导」。但带背为了便于填空，会对官方文件做压缩或改写，例如把到 21 世纪中叶的目标收成「全体人民共同富裕基本实现」一句。我没有对这 20 多条逐句对照党的二十大报告、党章或其他现行文件，所以不在事实栏把它们写成已核实的官方原文。要用，就对着你手头的背诵笔记和现行官方文本核对，不要只背这一篇推送里的短句。</div><div>文末选择题答案的题干在抓取到的正文里不完整，不能根据解析去反推题干再当例题用。</div>"
+      },
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了公众号全文。错因分类和带背安排按原文归纳；带背中的政治表述没有逐条对照现行官方文件，因此不把这些填空答案写成已交叉验证的事实",
+        "thesis_html": "前半段的错因分类可以当 11 月复盘框架；后半段是<b>绑定教材页码和小程序的培训带背</b>，补救方法和默写材料都不是官方规则，条文也需要你自己对现行文件。",
+        "facts": [
+          {
+            "html": "作者把政治多选错因分成三类：没懂型（回到背诵笔记把对应章节重看并讲给自己听，不继续题海）；没记型（错题本只记「第几章-对应知识点」，不抄题干，12 月后再回顾）；被坑型（干扰项常见手法写成偷换主体、扩大范围、颠倒关系，并提醒「全部」「唯一」「根本保证」这类词）",
+            "source": "考研政治徐涛公众号原文",
+            "year": "2026-11-11",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzA4MDUwMzAxNA==&mid=2651443352&idx=1&sn=5be24a792d959e0f92c8780f12395605",
+            "corroborated": false
+          },
+          {
+            "html": "当天带背为 D24「新思想 2」，对应《27核心背诵笔记》P136–138、P139–140 的背诵部分，以及小程序「徐涛考研政治」中「选择题考点带背」模块 Day24。文末提供后台回复「挖空文档」领取默写版 PDF，并导向 AI 交互式背诵和打卡",
+            "source": "考研政治徐涛公众号原文",
+            "year": "2026-11-11",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzA4MDUwMzAxNA==&mid=2651443352&idx=1&sn=5be24a792d959e0f92c8780f12395605",
+            "corroborated": false
+          },
+          {
+            "html": "你 10 月收录的同一账号文章已经预告：冲刺班不逐页讲背诵部分，改用带背，预计 10 月 19 日左右开始，有正版背诵笔记即可参与。这篇 D24 与当时的带背安排在产品线上是连续的，但那篇预告本身也不是官方通知",
+            "source": "考研政治徐涛《新大纲背景下，《背诵笔记》怎么用？》",
+            "year": "2026-10-04",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzA4MDUwMzAxNA==&mid=2651442345&idx=1&sn=2b776fd06610d3dfd831e04f8056d3cc",
+            "corroborated": false
+          }
+        ],
+        "critique": {
+          "credibility": "C",
+          "credibility_note": "这是培训账号的日常带背和错题补救帖，核心是把复习动作接到《核心背诵笔记》、小程序和挖空文档上；方法好不好用、带背条文是否与现行官方表述完全一致，都无法从这篇推送独立验证。",
+          "points_html": [
+            "错因三分是经验方法，不是考试大纲或评分规则。它对复盘有用，但不能保证多选分数会上升，也不要把它理解成「官方推荐补救法」",
+            "带背内容绑定指定教材页码、小程序 Day24、挖空 PDF 和 AI 交互，是明确的产品路径。有正版笔记可以顺着用，没有必要为了打卡再开通一层付费或把复习迁到新工具里",
+            "为了填空，条文可能被压缩。我没有逐条对照现行官方文件，因此不把文中 20 多条填空答案当成已核对原文",
+            "文末选择题的题干在抓取文本中不完整，不要根据答案解析去补题干",
+            "同一账号 10 月那篇已经提示过：不要把文末的小程序推广当成复习建议。这篇同样适用"
+          ]
+        },
+        "context_html": [
+          "教育部规定的政治初试时间是 2026 年 12 月 19 日上午。带背可以当零碎时间的默写材料，不应占掉数学二和专业课的整块时段",
+          "同一周苦瓜学长的建议是：11 月先做真题选择和必要的模拟卷，大题等到 12 月初。和徐涛这篇并不矛盾——这篇主要在处理选择题知识点和错因，而不是让你现在开始写分析题",
+          "培训号 11 月会密集输出「多选崩了怎么办」「今天必须打卡」这类内容，目的之一是维持日常打开率。安排复习时以你自己的错题和进度为准，而不是以更新日历为准"
+        ],
+        "relevance": [
+          {
+            "area": "kaoyan",
+            "html": "如果你已经在用徐涛的背诵笔记，可以把 D24 当当天的默写清单，先对笔记原文再背。如果你用的是别的材料，不必为了跟 Day24 而换体系。错因分类可以立刻用在你现有的错题上"
+          }
+        ],
+        "next_html": [
+          "先用自己的多选错题做一次三分法复盘：没懂的停下来讲清楚，没记的只记知识点条目，被坑的单独收集绝对化表述",
+          "如果手里已经有正版《核心背诵笔记》，按 P136–140 背诵部分默写即可，不必为了 PDF 或 AI 交互再开一个入口",
+          "带背条文要用的话，对照笔记和现行官方表述，发现压缩或口语句就改回来，不要只背这篇推送"
+        ]
+      }
+    },
+    {
+      "id": "url:35ef29c6ad56644d5b3d",
+      "title": "算法大赛-天池大赛-阿里云的赛制",
+      "url": "https://tianchi.aliyun.com/competition/entrance/532536",
+      "category": "dev",
+      "added": "2026-11-11",
+      "status": "fetch_failed",
+      "summary_label": "仅标题收录",
+      "summary_html": "滴答里的原链是短地址 <code>https://tianchi.aliyun.com/s/00ba9996849a041827d28dce648e806f?appId=1000500</code>，请求后被重定向到天池比赛入口 <code>https://tianchi.aliyun.com/competition/entrance/532536</code>（入口编号 532536）。该页依赖前端渲染，普通 HTTP 抓取只能拿到站点外壳（关注阿里云、客服电话等），看不到具体赛制。本条 id 按最终入口地址计算。除标题和这个入口编号外，不猜测是哪一场比赛。",
+      "points_html": [
+        "目前没有可靠的比赛名称、赛程、数据说明或评分规则可摘",
+        "不要根据「算法大赛 / 天池 / 阿里云」这些词，自行补一场正在进行的竞赛",
+        "以后需要在浏览器里打开入口 532536，等页面渲染后再读赛制"
+      ],
+      "keywords": "天池 阿里云 532536 赛制 抓取失败 前端渲染 仅标题",
+      "ticktick_task_id": "6af4224ee4b0277b89e35686",
+      "analysis": {
+        "verified": "title_only",
+        "verified_note": "短链会跳转到 competition/entrance/532536，但抓取结果只有站点公共页脚和客服电话，没有比赛正文。不根据标题推测赛事",
+        "thesis_html": "现在能确定的只有：这条收藏指向天池入口 <b>532536</b>；<b>赛制本身还没读到</b>，不能当成已经了解比赛规则。",
+        "facts": [
+          {
+            "html": "收藏的短链 <code>https://tianchi.aliyun.com/s/00ba9996849a041827d28dce648e806f?appId=1000500</code> 会进入天池比赛入口页 <code>https://tianchi.aliyun.com/competition/entrance/532536</code>。本次抓取未获得该比赛的赛制正文",
+            "source": "抓取记录（短链跳转与入口编号）",
+            "year": "2026-11-15",
+            "url": "https://tianchi.aliyun.com/competition/entrance/532536",
+            "corroborated": false
+          }
+        ],
+        "critique": {
+          "credibility": "D",
+          "credibility_note": "没有赛制正文，标题只是分类说明。任何关于题目、奖金、时间或是否值得报名的判断，目前都没有依据。",
+          "points_html": [
+            "入口编号不等于已经读过规则",
+            "天池同一域名下比赛很多，不能用「算法大赛」四个字对号入座"
+          ]
+        },
+        "context_html": [
+          "天池是阿里云的竞赛平台，页面通常要登录或等前端脚本加载后才能看到完整规则。这是抓取失败的技术原因，不是比赛不存在"
+        ],
+        "relevance": [
+          {
+            "area": "aicoding",
+            "html": "若这是一道算法或数据竞赛，可能和编程练习有关，但在规则出现之前，不要为此改学习安排或报名"
+          },
+          {
+            "area": "kaoyan",
+            "html": "距离初试还有 34 天。即使以后确认是合适的比赛，现在也优先保证数学二复习，而不是在赛制未明时报名"
+          }
+        ],
+        "next_html": [
+          "以后用浏览器打开 <code>https://tianchi.aliyun.com/competition/entrance/532536</code>，读完赛制、时间和报名条件再决定",
+          "在此之前不要根据标题猜测比赛内容或时间表"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzcwNjM5NDE4Nw:2247494500:1",
+      "title": "代充小店营业额接近8W了...",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzcwNjM5NDE4Nw==&mid=2247494500&idx=1&sn=eb5d49a929f060943aaf6ce353fedaff",
+      "category": "life",
+      "added": "2026-11-11",
+      "status": "fetch_failed",
+      "summary_label": "仅标题收录",
+      "summary_html": "原链是微信 <code>image_detail</code> 图片页，抓取时被验证码拦截，没有得到任何正文。标题里的「营业额接近 8W」只是作者自述的数字，不能当成已证实的经营数据。除标题外不生成深入讲解。",
+      "points_html": [
+        "目前不知道这是总结、晒单、招生还是广告，也看不到时间范围和统计口径",
+        "「8W」未标明币种和周期，更没有原始账单，打开原文之前都不应引用",
+        "账号名称和发布日期在收藏信息里也缺失，这里不强行补写"
+      ],
+      "keywords": "代充小店 8W 抓取失败 微信验证 图片页 仅标题",
+      "ticktick_task_id": "6af48374e4b07013b1e0ec3f",
+      "wechat": {
+        "biz": "MzcwNjM5NDE4Nw==",
+        "mid": "2247494500",
+        "idx": "1",
+        "sn": "eb5d49a929f060943aaf6ce353fedaff"
+      },
+      "analysis": {
+        "verified": "title_only",
+        "verified_note": "原链为 image_detail 图片页，抓取时微信返回验证码页面，正文为空。不根据标题编造经营情况",
+        "thesis_html": "现在只能看到有人用标题宣称代充小店「接近 8 万」；<b>这个数字未经证实，也不能从标题推出可复制的生意方法</b>。",
+        "facts": [],
+        "critique": {
+          "credibility": "D",
+          "credibility_note": "没有正文，标题还给出了无法核对的营业额。按来源不明、关键数字无法复核来评级。",
+          "points_html": [
+            "「接近 8W」可能是夸示、截图或活动话术，缺少周期、成本和口径",
+            "代充类生意本身还涉及平台规则和资金风险，没有原文时更不应把标题当经验分享"
+          ]
+        },
+        "context_html": [
+          "这类晒营业额的图片常见于个人账号，标题数字往往没有审计或公开财报支撑"
+        ],
+        "next_html": [
+          "以后若能打开原图或原文，再判断它到底在说什么",
+          "在此之前不要把「8 万」当成事实记录下来，也不要据此模仿"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzI1NDczNTAwMA:2247593985:1",
+      "title": "Claude Fable 5.2 首发实测，顶级的审美，蛋疼的价格。。",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzI1NDczNTAwMA==&mid=2247593985&idx=1&sn=0a647f4b2a574cf1247f1117aacc2c20",
+      "category": "ai",
+      "source": {
+        "account": "程序员鱼皮",
+        "published": "2026-11-10"
+      },
+      "added": "2026-11-10",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "程序员鱼皮在 Cursor 里用 <b>Claude Fable 5.2</b> 做了三个纯前端项目（上古卷轴学习路线、重庆城市生成器、瑶琳仙境溶洞），认为审美仍是顶级，但对比 Opus 5.5「提升并不明显」，三个项目合计花了 <b>500 多块</b>。官方定价和部分基准能对上；作者自己的花费、耗时和观感是单一来源。",
+      "points_html": [
+        "<b>官方发布：</b>Anthropic 于 2026-11-09 发布 Claude Fable 5.2 与 Claude Mythos 5.2。二者是同一底层模型：Fable 加了网络安全和生物方向护栏，向所有用户开放；Mythos 面向通过审核的安全与生物医药机构",
+        "<b>定价（官方价目页）：</b>Fable 5.2 每百万 token 输入 8 美元、输出 40 美元；上一代 Fable 5.1 为 10 / 50 美元，单价约降 20%。另有可选快速模式，输入 16、输出 80 美元，官方称生成速度最多再提 2.5 倍。文中主要写了标准档降价，没有展开快速模式",
+        "<b>基准（官方公告表）：</b>FrontierCode 2.0 上 Fable 5.2 为 49.1%（Xhigh），Opus 5.5 为 45.5%，GPT-6 Astra 为 42.8%，与原文一致。Chartography（无工具）表内 Fable 5.2 为 73.4%、Fable 5.1 为 44.8%，也对得上；同一页写 Medium 档时 Fable 5.2 是 66.4%",
+        "<b>作者的三个项目：</b>全部限定纯前端、强调审美。自报墙钟大约 86、88、91 分钟；溶洞项目还要求大黄狗和场景都用代码生成、不用现成模型和贴图。这些过程、截图效果和「500 多块」都是作者自报",
+        "<b>作者结论：</b>审美仍是顶级，但「没有网上吹得那么过」；没感觉比 Opus 5.5 更快；并说对这种模型「拿后端工程去测试都是对它的轻视」。最后建议「不是要做大结果产品，就先别用」"
+      ],
+      "keywords": "Claude Fable 5.2 Mythos Opus 5.5 GPT-6 Astra FrontierCode Chartography 程序员鱼皮 Cursor 定价 Anthropic",
+      "ticktick_task_id": "6af31cf2e4b0ea87e00f74fe",
+      "wechat": {
+        "biz": "MzI1NDczNTAwMA==",
+        "mid": "2247593985",
+        "idx": "1",
+        "sn": "0a647f4b2a574cf1247f1117aacc2c20"
+      },
+      "detail": {
+        "summary": "深入讲解 · 官方定价和基准能对上，贵不贵要看你怎么用，审美是观感",
+        "body_html": "<h4>这篇在测什么</h4><div>这是一篇个人首发测评，不是官方技术报告。作者明确说这次不测后端，三个题目都用来看前端审美和细节：把长文做成上古卷轴网页、用同一套旧提示词重跑重庆 8D 城市生成器、再用代码捏瑶琳仙境溶洞并放进一只大黄狗。他在 Cursor 里同时开 3 个子 Agent，自称全程不干预，最后再验收。所以你读到的「顶级」「人上人」「夯」，首先是他对成品截图的主观判断。</div><h4>和官网对得上的部分</h4><div>发布日、Fable / Mythos 分工、标准档 8 / 40 美元、比 5.1 最多快 30%、FrontierCode 2.0 的 49.1% / 45.5% / 42.8%，以及 Chartography 表内的 73.4% 对 44.8%，都能在 Anthropic 2026-11-09 的公告和官方价目页对上。官方也写了：在 FrontierCode 上，Fable 5.2 开到 High 档，分数大约能跟 Opus 5.5 的最高档打平（45.3% 对 45.5%），每个任务花费大约一半。原文转述了这张成本对比的大意。官方还写过：一名工程师让 Fable 5.2 调度 1000 多个子 Agent、连续 8 天从空目录写出可在笔记本启动的原型操作系统；另用约 1000 个 Agent 在 30 小时内完成费马大定理的形式化证明。这些是官方演示，不是作者复现的结果。</div><h4>需要对一下的细节</h4><div>原文写 Opus 5.5 在同样配置下「只完成了 27%」；我读到的官方公告是：同样约 1000 个 Agent 的设置下，Opus 5.5 在 18 小时完成 26%，30 小时后几乎没有更多进展。差一个百分点，更可能是口误或取整，但不宜把 27% 当成官网原文。另外，官方「最多快 30%」比的是 Fable 5.1 的生成速度，不是和 Opus 5.5 比墙钟；作者说「没感觉比 Opus 5.5 有提升」，和官方这句话并不在同一条比较轴上。单价降了 20%，作者三个项目却比测 5.1 时的「将近 470 块」更贵，可能是 token 用量、档位、Cursor 计费或重试次数不同，文中没有给出可复核的账单。</div><h4>你不必跟着下同样的结论</h4><div>「后端已经不用测了」是作者的夸张判断，没有对照实验。「顶级审美」无法独立打分。三个演示都很耗时、也很贵，适合当「旗舰模型现在能独立把复杂前端页面跑出来」的个案，不适合当你选日常模型的充分证据。</div>"
+      },
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了公众号全文，并对照 Anthropic 2026-11-09 的 Fable / Mythos 5.2 公告、官方价目页，以及公告里的 FrontierCode、Chartography 和形式化证明说明",
+        "thesis_html": "这是一篇<b>个人前端审美测评</b>：官方单价和部分基准能核对，但「顶级」「并不比 Opus 5.5 强多少」和「花了 500 多块」都是作者自己的项目观感，不能直接当成通用结论。",
+        "facts": [
+          {
+            "html": "Anthropic 于 2026-11-09 发布 Claude Fable 5.2 和 Claude Mythos 5.2，并写明二者是同一底层模型：Fable 带有更强的网络安全与生物安全护栏，向所有用户开放；Mythos 需通过生命科学或网络验证项目申请",
+            "source": "Anthropic 官方公告",
+            "year": "2026-11-09",
+            "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "程序员鱼皮公众号原文",
+                "url": "https://mp.weixin.qq.com/s?__biz=MzI1NDczNTAwMA==&mid=2247593985&idx=1&sn=0a647f4b2a574cf1247f1117aacc2c20"
+              }
+            ]
+          },
+          {
+            "html": "官方价目页：Claude Fable 5.2（及有限开放的 Mythos 5.2）每百万 token 输入 8 美元、输出 40 美元；Fable 5.1 / Mythos 5.1 为输入 10 美元、输出 50 美元。与原文「降了 20%」一致。快速模式为输入 16、输出 80 美元",
+            "source": "Claude 官方价目页",
+            "year": "2026-11-15",
+            "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "Anthropic 官方公告",
+                "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2"
+              }
+            ]
+          },
+          {
+            "html": "官方公告写生成速度比 Fable 5.1 / Mythos 5.1 最多快 30%；快速模式还可再提速最多 2.5 倍",
+            "source": "Anthropic 官方公告",
+            "year": "2026-11-09",
+            "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+            "corroborated": false
+          },
+          {
+            "html": "官方基准表：FrontierCode 2.0 上 Fable 5.2 为 49.1%（Xhigh effort），Fable 5.1 为 32.4%，Opus 5.5 为 45.5%，GPT-6 Astra 为 42.8%。公告正文还写：High effort 下 Fable 5.2 约 45.3%，与 Opus 5.5 最高分 45.5% 接近，每个任务花费大约一半。Chartography（无工具）表内为 73.4%（Fable 5.2）对 44.8%（Fable 5.1）；同一页写 Medium effort 时 Fable 5.2 为 66.4%",
+            "source": "Anthropic 官方公告",
+            "year": "2026-11-09",
+            "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "程序员鱼皮公众号原文",
+                "url": "https://mp.weixin.qq.com/s?__biz=MzI1NDczNTAwMA==&mid=2247593985&idx=1&sn=0a647f4b2a574cf1247f1117aacc2c20"
+              }
+            ]
+          },
+          {
+            "html": "官方演示：一名工程师让 Fable 5.2 调度 1000 多个子 Agent，连续 8 天从空目录写出可在笔记本电脑启动的原型操作系统。另有约 1000 个 Fable 5.2 Agent 在 30 小时内完成费马大定理的形式化证明；同样设置下，官方写 Opus 5.5 在 18 小时完成 26%，30 小时后几乎没有更多进展。原文把后者写成了 27%",
+            "source": "Anthropic 官方公告",
+            "year": "2026-11-09",
+            "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+            "corroborated": false
+          },
+          {
+            "html": "作者自报：此前测 Fable 5.1 的三个项目花了将近 470 元；这次三个前端项目合计「500 多块」，墙钟大约 86、88、91 分钟。我没有看到账单或可复现的实验记录",
+            "source": "程序员鱼皮公众号原文",
+            "year": "2026-11-10",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzI1NDczNTAwMA==&mid=2247593985&idx=1&sn=0a647f4b2a574cf1247f1117aacc2c20",
+            "corroborated": false
+          }
+        ],
+        "critique": {
+          "credibility": "B",
+          "credibility_note": "发布、定价和几项官方基准能在 Anthropic 公告与价目页对上；但项目好不好看、花了多少钱、比 Opus 5.5 快多少，都是作者自己的一次测评，无法独立复现，文中也有一处和官网差一个百分点。",
+          "points_html": [
+            "「顶级的审美」是观感，不是可复核指标。作者自己也写，和已经让他很满意的 Opus 5.5 比，这次「提升并不明显」",
+            "官方「最多快 30%」比的是 Fable 5.1 的生成速度；作者感觉「不比 Opus 5.5 快」，比较对象不同，不能说官方在夸大，也不能说作者证伪了官方",
+            "单价降 20%，总花费却比测 5.1 时更高。可能和用量、重试、档位或 Cursor 的计费方式有关，文中没有给出账单，不能据此判断「其实更贵」或「官方降价是假的」",
+            "原文写 Opus 5.5 完成了 27%，官方公告写的是 26%。不要把二手转述里的这个数字再往外传",
+            "「拿后端工程去测试都是对它的轻视」是夸张句，没有对照实验。官方演示（操作系统、形式化证明）也是厂商自己的高配实验，不能直接外推到你的日常任务",
+            "三个项目都在 Cursor 里用子 Agent 跑很长时间。账单和官方 API 标价不一定是一回事"
+          ]
+        },
+        "context_html": [
+          "Anthropic 同时建议：大多数日常编程和知识任务先从 Claude Opus 5.5 用起，再按任务难度上到 Fable / Mythos，或下到 Sonnet 5.5、Haiku 5.5。Fable 被定位成「最难、最开放」的那档，不是默认日常模型",
+          "官方价目页上，Opus 5.5 是每百万 token 输入 4 美元、输出 20 美元，标准档单价明显低于 Fable 5.2 的 8 / 40 美元。只看「旗舰降价了」容易忽略：它仍比官方推荐的日常旗舰贵一倍",
+          "你已经在用 Cursor 和 Grok Bot。这篇测的是把 Fable 5.2 接到 Cursor 子 Agent 里做纯前端，并不是要你换一套工作台"
+        ],
+        "relevance": [
+          {
+            "area": "aicoding",
+            "html": "如果只是日常改代码、写分析或做小工具，官方自己也把 Opus 5.5 当作主力日常模型。Fable 5.2 更像贵而慢的「压轴档」。初试前不必为了这篇测评去开三个长时间子 Agent"
+          },
+          {
+            "area": "agents",
+            "html": "作者用的是 Cursor 里并行的三个子 Agent；官方演示是上千个 Agent 连续跑很多小时。规模差了两个数量级，不能把官方操作系统和形式化证明，理解成你在 Cursor 里开三个窗口就能复现的效果"
+          },
+          {
+            "area": "kaoyan",
+            "html": "距离 12 月 19 日初试还有 34 天。三个项目各跑一个半小时、再花 500 多块看前端效果，对复习没有帮助。把这篇当「旗舰模型更贵、官方基准和个人观感不是一回事」的备忘就够了"
+          }
+        ],
+        "next_html": [
+          "初试前默认动作是不换模型、不拿真实项目去「复现」这篇测评",
+          "如果只想核对价格和基准，直接看 <code>https://www.anthropic.com/claude-fable-and-mythos-5-2</code> 和官方价目页，不要只记转述里的 27% 或「便宜了 20%」",
+          "初试之后如果真要试 Fable，先看 Cursor 或 API 的实际账单和用量上限，不要默认官方订阅额度够你跑数小时子 Agent"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzU0MjUxNDIxMw:2248477558:1",
+      "title": "成都面包节感觉有一亿人!!接下来还有……",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzU0MjUxNDIxMw==&mid=2248477558&idx=1&sn=02907a8bf2817dffa0511d906fe97d09",
+      "category": "life",
+      "added": "2026-11-10",
+      "status": "fetch_failed",
+      "summary_label": "仅标题收录",
+      "summary_html": "抓取时未能得到正文（提取结果为 0 字），页面很可能被微信验证拦截，或本身主要是图片。标题里的「一亿人」是夸张说法，不能当成现场人数。除标题外没有可靠正文，因此不生成深入讲解。",
+      "points_html": [
+        "目前只能看到标题，无法确认活动时间、地点、主办方，以及「接下来还有」指什么",
+        "「感觉有一亿人」即使将来打开原文，也多半是观感或修辞，在没有官方统计前不能当成事实",
+        "对应滴答任务仍保留未完成，等以后能打开原文再补读"
+      ],
+      "keywords": "成都面包节 一亿人 抓取失败 仅标题 微信验证",
+      "ticktick_task_id": "6af31d2ae4b03a16e5b90759",
+      "wechat": {
+        "biz": "MzU0MjUxNDIxMw==",
+        "mid": "2248477558",
+        "idx": "1",
+        "sn": "02907a8bf2817dffa0511d906fe97d09"
+      },
+      "analysis": {
+        "verified": "title_only",
+        "verified_note": "未能提取到正文。工作记录显示页面可能需验证或仅为图片页，提取结果为 0 字。不根据标题编造活动细节",
+        "thesis_html": "现在只能知道标题在说成都面包节显得很拥挤；<b>「一亿人」不能当成人数</b>，后续活动内容也完全未知。",
+        "facts": [],
+        "critique": {
+          "credibility": "D",
+          "credibility_note": "没有正文可核对，标题本身又使用了明显夸张的人数，来源和具体主张都无法评估。",
+          "points_html": [
+            "「感觉有一亿人」即使是原文修辞，也不是统计数字",
+            "在打开原文之前，不能判断这是活动预告、现场感受还是广告"
+          ]
+        },
+        "context_html": [
+          "成都本地周末活动类推送很多，标题党或现场感叹也很常见。没有正文时，不必据此安排行程"
+        ],
+        "relevance": [
+          {
+            "area": "kaoyan",
+            "html": "这和初试无关。即使以后打开原文，也只是生活信息，不必为此改复习计划"
+          }
+        ],
+        "next_html": [
+          "以后如果能在微信里打开原文，再看活动时间和是否值得去",
+          "在此之前不要把「一亿人」写进任何笔记或转发说明"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzE5OTI3MDk5Nw:2247682980:1",
+      "title": "立创转载的机器鸭：泰山派 + 15 个舵机的 EasyDuck，开源页能对上，文末在发券",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzE5OTI3MDk5Nw==&mid=2247682980&idx=1&sn=d7f8ba373593f03ccc84ed5306b76619",
+      "category": "emb",
+      "source": {
+        "account": "立创开源硬件平台",
+        "published": "2026-11-09"
+      },
+      "added": "2026-11-09",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "立创开源硬件平台转载并推销的 EasyDuck：用<b>泰山派 1M + 自制扩展板 + 15 个串口舵机</b>做一只会走、能捡东西的机器鸭，控制走 ONNX 动作模型。开源页和 GitHub 仓库存在，也能对上 XgoDuck 来源；标题里「拿外卖」只是想象，文末是嘉立创打板免单券。",
+      "points_html": [
+        "<b>这是什么：</b>平台自己的开源项目推介，不是第三方评测。正文写基于 XgoDuck 方案，泰山派跑 Linux 和 EasyDuck 控制软件，扩展板接舵机和 IMU，用户用网页下发动作",
+        "<b>怎么控 15 个舵机：</b>文中说扩展板上 U9、U4、U5 三组接口并联到同一条 DATA 总线，靠总线 ID 寻址；14 个关节由动作模型统一算，嘴部舵机单独控制",
+        "<b>「站得稳」怎么解释：</b>LSM6DSV16X 六轴 IMU 加舵机反馈，主控把状态送进 ONNX 模型，闭环改关节目标。这是方案描述，不是第三方实测「推不倒」",
+        "<b>开源入口：</b>正文指向 <code>https://oshwhub.com/li-chuang-kai-fa-ban/project_xyaqiktm</code>；软件仓库在 GitHub <code>jlckfb/easyduck</code>，许可证 Apache-2.0",
+        "<b>文末：</b>PCB / 3D / 面板打样「免单券」链接，并声明转载可能删改，以开源页为准"
+      ],
+      "keywords": "EasyDuck 机器鸭 泰山派 立创 舵机 ONNX LSM6DSV16X XgoDuck MicroDuck oshwhub jlckfb RK3566",
+      "ticktick_task_id": "6af1a9f2e4b03a16e57acf0c",
+      "wechat": {
+        "biz": "MzE5OTI3MDk5Nw==",
+        "mid": "2247682980",
+        "idx": "1",
+        "sn": "d7f8ba373593f03ccc84ed5306b76619"
+      },
+      "detail": {
+        "summary": "深入讲解 · 仓库和教程在，但「拿外卖」和「推不倒」是宣传",
+        "body_html": "<h4>这篇在卖什么</h4><div>标题先把「帮我拿外卖」放上来，正文很快承认这只是对「用嘴捡东西」的想象，真正要讲的是：一块泰山派怎么通过一条串口总线管 15 个可寻址舵机，以及 IMU + ONNX 动作模型的闭环。结构是典型的平台稿：能力展示 → 方案框图 → 开源链接 → 打板券。它几乎不谈复刻成本、标定失败会怎样、动作模型和上游许可有没有含糊之处。</div><h4>和开源页、仓库对得上的部分</h4><div>立创开源页《微型双足机器人 - EasyDuck》和 GitHub <code>jlckfb/easyduck</code> 都写明：主控是泰山派 1M（RK3566），15 个 HD1910 / HD-1910-C001 串口舵机，姿态传感器用 <code>LSM6DSV16X</code>（仓库还支持 BNO085），板端跑导出的 ONNX 策略，网页或手柄遥控，能走、站、坐下起立、倒地恢复、捡物和转头。开源页把谱系写得很清楚：Pollen Robotics 的 MicroDuck → Luwu Dynamics 的 XgoDuck → 本项目把控制核心换成泰山派。文档中心的物料页要求泰山派 1M 内存至少 2+16G，并列出扩展板需自行打样、电池 7.4V 等。舵机 ID 分配教程把 15 个关节编成右腿 10–14、左腿 20–24、头颈部和嘴部 30–34，和「一条总线、按 ID 寻址」的说法一致。</div><h4>需要打折看的部分</h4><div>「拿外卖」「厕所递纸」不是现有功能。开源页给的复刻成本是 2500 元，这是平台自报，我没有按当前店铺价重算。仓库 NOTICE 写了根许可证是 Apache-2.0，但部分动作模型的再分发条款尚未明确，要按具体文件核对。文末三张免单券是嘉立创体系的获客入口，和这只鸭子能不能走没有关系。</div>"
+      },
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了公众号全文，并对照立创开源页、GitHub jlckfb/easyduck 中文 README / 许可证，以及立创文档中心的物料清单和舵机 ID 分配教程",
+        "thesis_html": "这是一篇<b>平台转载加促销的项目推介</b>：EasyDuck 的硬件组成、总线控制和开源入口能在官方页和仓库里对上；标题里的外卖和「推不倒」，以及文末的免单券，不能当成已经验证的能力或成本核算。",
+        "facts": [
+          {
+            "html": "立创开源硬件平台项目页《微型双足机器人 - EasyDuck》存在，地址与原文一致；页面写明基于泰山派 1M-RK3566（2+16G）、15 个串口舵机，许可证为 Apache 2.0，创建时间 2026-11-04，更新时间 2026-11-06，并写「复刻成本：￥2500」",
+            "source": "立创开源硬件平台 EasyDuck 项目页",
+            "year": "2026-11-15",
+            "url": "https://oshwhub.com/li-chuang-kai-fa-ban/project_xyaqiktm",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "立创开源硬件平台公众号原文",
+                "url": "https://mp.weixin.qq.com/s?__biz=MzE5OTI3MDk5Nw==&mid=2247682980&idx=1&sn=d7f8ba373593f03ccc84ed5306b76619"
+              }
+            ]
+          },
+          {
+            "html": "软件仓库 <code>jlckfb/easyduck</code> 公开，GitHub 记录创建于 2026-10-21，许可证 Apache License 2.0；我查看时约 24 星、2 次 fork。中文 README 写：泰山派 1M（RK3566）+ 15 个 HD1910 舵机（默认 UART3 半双工）+ LSM6DSV16X 或 BNO085，板端用 ONNX Runtime 跑动作策略，并提供网页/手柄遥控、标定和低电量保护（有效平滑总线电压 ≤6.2V 时抢占控制）",
+            "source": "GitHub jlckfb/easyduck",
+            "year": "2026-11-15",
+            "url": "https://github.com/jlckfb/easyduck",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "立创开源页 EasyDuck",
+                "url": "https://oshwhub.com/li-chuang-kai-fa-ban/project_xyaqiktm"
+              }
+            ]
+          },
+          {
+            "html": "开源页和仓库都把方案谱系写成：Pollen Robotics 的 MicroDuck → Luwu Dynamics 的 XgoDuck（3D 打印结构、1910 串口舵机）→ 本项目把控制核心换成泰山派，软件整理为 EasyDuck；姿态传感器从参考方案的 QMI8658A 换成独立的 LSM6DSV16X",
+            "source": "立创开源页 EasyDuck",
+            "year": "2026-11-15",
+            "url": "https://oshwhub.com/li-chuang-kai-fa-ban/project_xyaqiktm",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "GitHub jlckfb/easyduck 中文 README",
+                "url": "https://github.com/jlckfb/easyduck"
+              }
+            ]
+          },
+          {
+            "html": "立创文档中心物料页要求泰山派 1M 主控板必须 2+16G 及以上，列出 15 个 HD-1910-C001 舵机、需自行打样的扩展板、7.4V 电池（≥2500mAh，5A 输出，XH2.54）和全套结构件；舵机 ID 分配教程把 15 个关节编为右腿 10–14、左腿 20–24、头颈部和嘴部 30–34，并说明出厂 ID 默认为 1，必须先逐只编号再接齐，否则会总线冲突",
+            "source": "立创开发板技术文档中心 · 物料采购 / ID 分配",
+            "year": "2026-11-15",
+            "url": "https://wiki.lckfb.com/zh-hans/tspi-rk3566/project-case/microduck/material-purchase.html",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "立创文档中心 · 第 6 章 ID 分配",
+                "url": "https://openkits-wiki.easyeda.com/zh-hans/tspi-rk3566/project-case/microduck/id-assignment.html"
+              }
+            ]
+          },
+          {
+            "html": "仓库根许可证为 Apache-2.0，但 README 的「致谢与许可证」写明：第三方内容保留各自许可；记录的上游版本中，四个动作模型和部分衍生内容的再分发条款尚未明确，需按具体文件核对",
+            "source": "GitHub jlckfb/easyduck 中文 README",
+            "year": "2026-11-15",
+            "url": "https://github.com/jlckfb/easyduck",
+            "corroborated": false
+          },
+          {
+            "html": "原文标题和开头把「从门口捡个外卖」「厕所递纸」写成想象中的扩展，并在文末放置嘉立创 PCB、3D、面板打样免单券；正文也声明转载可能删改，以开源平台项目描述为准。这些是平台推介和营销，不是已实现功能或第三方成本核算",
+            "source": "立创开源硬件平台公众号原文",
+            "year": "2026-11-09",
+            "corroborated": false
+          }
+        ],
+        "critique": {
+          "credibility": "C",
+          "credibility_note": "平台给自己站上的项目做推介，关键组成能在开源页和仓库对上，但「好不好复刻、站得有多稳、2500 元够不够」无法独立验证，文末还夹带打板券。",
+          "points_html": [
+            "「以后让它帮我拿外卖」是标题营销。正文自己把捡外卖、递纸写成联想，开源页和仓库列出的能力是走、站、坐、倒地恢复和用嘴捡东西，没有门到门配送",
+            "「不怕摔倒」「推不倒」是演示口径。仓库把它写成零速站立和倒地恢复，并且明确动作可用性取决于模型、标定、供电和反馈；我没有看到第三方抗扰或推倒测试",
+            "开源页写复刻成本 2500 元，这是平台自报，未附按当前店铺价逐项加总的清单时效。舵机、电池和 3D 件价格会变",
+            "许可证不是「整仓都可以随便商用拷走」：根协议是 Apache-2.0，但上游动作模型的再分发条款仓库自己说尚未明确",
+            "文末免单券和「点击阅读原文查看原工程」是嘉立创获客路径，和这只鸭子的控制原理无关",
+            "GitHub 仓库的硬件入口写成 oshwlab.com 上的另一个项目路径，和推送里的 oshwhub.com 链接不是同一串 URL。复刻前以开源页当前项目为准，不要混用旧链接"
+          ]
+        },
+        "context_html": [
+          "你已经收过同一公众号 11 月 2 日「今年热度最高的 4 个开源项目」和 11 月 6 日双十一促销稿，当时的判断都是标题和平台自我介绍大于可核对的技术内容。这篇至少把具体项目和仓库亮了出来，但体裁仍是官方推介",
+          "EasyDuck 是把已有开源双足方案迁到立创自己的泰山派上，不是从零发明结构和强化学习。上游是 Pollen Robotics 的 MicroDuck 和 Luwu Dynamics 的 XgoDuck",
+          "泰山派 1M 是 RK3566 的 Linux 开发板，和你手里的树莓派 5、STM32F103 套件不是同一层：它跑的是板端 ONNX 策略和网页服务，不是裸机 PID"
+        ],
+        "relevance": [
+          {
+            "area": "robotics",
+            "html": "如果你以后想做「板端跑动作模型的小型腿足」，这套「IMU + 关节反馈 + ONNX + 总线舵机 ID」的闭环值得当参考架构。它和规划中的分层差速小车不是同一条路径，也不必为了这篇去再买一块泰山派"
+          },
+          {
+            "area": "kaoyan",
+            "html": "初试在 12 月 19 日。现在按教程买 15 个舵机、打扩展板、做标定，会占掉复习时间。把开源页和仓库当索引收藏即可，不要在冲刺期开工"
+          }
+        ],
+        "next_html": [
+          "默认动作是不买、不复刻。需要核对细节时，打开开源页和 <code>https://github.com/jlckfb/easyduck</code>，不要只凭这篇推送和免单券下单",
+          "如果初试后真要做，先读文档中心的物料页和 ID 分配教程，并核对模型目录里的许可说明，再决定是否打板",
+          "不要把「开源了」理解成「源码、模型、结构件的许可都一样」"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzI5NzQxNzU0Ng:2247493720:1",
+      "title": "LabHub 介绍 ZSWatch：Zephyr + nRF5340 的开源手表，规格对得上仓库，但成品小表还在开发",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzI5NzQxNzU0Ng==&mid=2247493720&idx=1&sn=3ab149db365fa2f9bc3507e4064e54e3",
+      "category": "emb",
+      "source": {
+        "account": "LabHub",
+        "published": "2026-10-16"
+      },
+      "added": "2026-11-09",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "LabHub 对照仓库写的 ZSWatch 介绍：<b>Zephyr RTOS + u-blox NORA-B10 里的双核 nRF5340</b>，硬件 KiCad 开源，许可证 GPL-3.0。关键规格和 WatchDK 99 美元套件能在 GitHub 与 zswatch.dev 对上；作者也写了成品微型表还在开发，不能当「买来就能戴」的产品。",
+      "points_html": [
+        "<b>项目：</b>ZSWatch（Zephyr Smartwatch），GitHub <code>ZSWatch/ZSWatch</code>，文档站 <code>https://zswatch.dev</code>",
+        "<b>主控：</b>nRF5340 封装在 u-blox NORA-B10 模块里，文中写 128 MHz 双核、512 KB RAM、1 MB Flash；用模块是为了避开自己做天线和射频认证",
+        "<b>外围：</b>240×240 圆形 IPS 触控屏（30 MHz SPI）、BMI270 IMU、BMP581 气压计、磁力计、环境光、RTC、64 MB 外挂 Flash、I2S 麦克风、nPM1300 PMIC；喇叭要 HR 扩展板",
+        "<b>为什么用 Zephyr：</b>作者认为手表要把实时内核、BLE 协议栈、驱动和电源管理放在一起，裸机或自己拼 FreeRTOS 成本太高",
+        "<b>边界（原文和 README 都写了）：</b>成品小表硬件仍在开发；HR 扩展板标 WIP；Android 官方伴侣应用要邀请，稳定方案走 GadgetBridge；GPL-3.0 要求改动开源回馈"
+      ],
+      "keywords": "ZSWatch Zephyr nRF5340 NORA-B10 WatchDK nPM1300 GadgetBridge GPL-3.0 LabHub 开源手表",
+      "ticktick_task_id": "6af1ced2e4b0ea87dff7de1f",
+      "wechat": {
+        "biz": "MzI5NzQxNzU0Ng==",
+        "mid": "2247493720",
+        "idx": "1",
+        "sn": "3ab149db365fa2f9bc3507e4064e54e3"
+      },
+      "detail": {
+        "summary": "深入讲解 · 这是能对照仓库读的介绍，不是成品评测",
+        "body_html": "<h4>正文在讲什么</h4><div>LabHub 把智能手表当成「嵌入式期末考」：显示、无线、传感、电源、RTOS 要一起塞进表盘。ZSWatch 的价值是把 PCB 到固件都摊开。文章按 README 抄了器件清单，解释为什么用 Zephyr 和 nRF5340 双核、为什么用 SoM 模块而不是裸片，并给出两条上手路径：先买 99 美元的 WatchDK 写软件，或自己去硬件仓库打板。</div><h4>和仓库、文档对得上的部分</h4><div>GitHub 仓库说明、许可证、WatchDK 定价、器件名单、iOS / Android 连接方式和「成品微型表仍在开发」，与 zswatch.dev 的硬件概述页一致。文档把 nRF5340 写成双核 ARM Cortex-M33，封装在 NORA-B10 里；屏幕、BMI270、BMP581（约 20 cm 气压精度）、64 MB Flash、nPM1300 都能对上。GPL-3.0 那段「改动要回馈，不同意可以找作者聊」也是 README 原文大意，不是作者发挥。</div><h4>我没有独立复核的部分</h4><div>文中「GitHub 上 3.3k 颗星」是发表时的约数；我 2026-11-15 经 API 看到约 3445 星、331 次 fork。Nordic 官方产品页这次访问被拦截，双核「应用核 / 网络核」分工我是按项目文档和常见 nRF5340 架构来理解的，没有打开 Nordic 数据手册原文。文中提到的触觉马达 DRV2603，我在当前软件仓库 README 和 zswatch.dev 硬件表里没有单独核对到这一型号，不把它写成已核实器件。</div>"
+      },
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了公众号全文，并对照 GitHub ZSWatch/ZSWatch 的 README 与许可证、GitHub API 元数据、zswatch.dev 硬件概述，以及 Linux Foundation 2016 年宣布托管 Zephyr 的新闻稿",
+        "thesis_html": "这是一份<b>基本能对照官方仓库和文档核对的第三方介绍</b>；ZSWatch 确实把手表这一整条嵌入式栈开源了，但它现在首先是开发套件和进行中的硬件，不是可以当成品买来戴的表。",
+        "facts": [
+          {
+            "html": "仓库 <code>ZSWatch/ZSWatch</code> 存在，创建于 2022-08-27，许可证 GNU GPL-3.0，主页 <code>https://zswatch.dev</code>；我 2026-11-15 经 GitHub API 看到约 3445 星、331 次 fork。README 写明这是基于 Zephyr 的开源智能手表，包含硬件和固件",
+            "source": "GitHub ZSWatch/ZSWatch",
+            "year": "2026-11-15",
+            "url": "https://github.com/ZSWatch/ZSWatch",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "ZSWatch 文档站",
+                "url": "https://zswatch.dev/docs/intro"
+              }
+            ]
+          },
+          {
+            "html": "README 和 zswatch.dev 硬件概述列出的主控与存储器，与原文一致：nRF5340（u-blox NORA-B10 模块），128 MHz 双核，512 KB RAM，1 MB Flash，屏幕走 30 MHz SPI；显示为 240×240 圆形触控屏。文档站补充其为双核 ARM Cortex-M33，屏幕写 1.28 英寸圆形 IPS、驱动 GC9A01",
+            "source": "GitHub ZSWatch/ZSWatch README",
+            "year": "2026-11-15",
+            "url": "https://github.com/ZSWatch/ZSWatch",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "ZSWatch Hardware Overview",
+                "url": "https://zswatch.dev/docs/getting-started/hardware"
+              }
+            ]
+          },
+          {
+            "html": "传感器和电源名单也可对上：IMU Bosch BMI270，气压计 Bosch BMP581（约 20 cm 精度），磁力计 ST LIS2MDL，环境光 Broadcom APDS-9306，RTC Micro Crystal RV-8263，外挂 64 MB NOR Flash（Macronix MX25U51245G），I2S 麦克风 Knowles SPK0641HT4H-1，PMIC Nordic nPM1300；喇叭需要 HR 扩展板",
+            "source": "GitHub ZSWatch/ZSWatch README",
+            "year": "2026-11-15",
+            "url": "https://github.com/ZSWatch/ZSWatch",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "ZSWatch Hardware Overview",
+                "url": "https://zswatch.dev/docs/getting-started/hardware"
+              }
+            ]
+          },
+          {
+            "html": "README 把 WatchDK 写成 99 美元的开发套件，与成品表同款 nRF5340、传感器和屏幕，但板子更大，带排针、USB-C（SWD/UART）、功耗测量和调试口，电池可选、可用 USB-C 供电；并写明「最终那种微型手表硬件仍在开发中」。HR 扩展板被标成 WIP，设计、BOM 和固件支持可能变化",
+            "source": "GitHub ZSWatch/ZSWatch README",
+            "year": "2026-11-15",
+            "url": "https://github.com/ZSWatch/ZSWatch",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "LabHub 公众号原文",
+                "url": "https://mp.weixin.qq.com/s?__biz=MzI5NzQxNzU0Ng==&mid=2247493720&idx=1&sn=3ab149db365fa2f9bc3507e4064e54e3"
+              }
+            ]
+          },
+          {
+            "html": "连接方式：iOS 可用官方 Companion App（README 给出 App Store 链接）并支持苹果通知/媒体服务；Android 的官方应用目前需要邀请，稳定方案是 GadgetBridge。许可证说明与原文一致：基于它做改动需要开源回馈，作者认为这样公平，并写明如有不同意见可以联系、甚至愿意改许可。资金部分来自 NLnet 的 NGI0 Commons Fund，PCB 打样由 PCBWay 赞助",
+            "source": "GitHub ZSWatch/ZSWatch README",
+            "year": "2026-11-15",
+            "url": "https://github.com/ZSWatch/ZSWatch",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "Gadgetbridge 项目页",
+                "url": "https://codeberg.org/Freeyourgadget/Gadgetbridge"
+              }
+            ]
+          },
+          {
+            "html": "Linux Foundation 于 2016-02-17 宣布成立 Zephyr Project，将其作为面向物联网设备的开源实时操作系统协作项目托管。这与原文「2016 年交给 Linux Foundation 托管」一致；新闻稿写的是公开启动日期，不等同于代码的最早提交日期",
+            "source": "Linux Foundation 新闻稿",
+            "year": "2016-02-17",
+            "url": "https://www.linuxfoundation.org/press/press-release/the-linux-foundation-announces-project-to-build-real-time-operating-system-for-internet-of-things-devices",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "Zephyr Project 官网",
+                "url": "https://www.zephyrproject.org/"
+              }
+            ]
+          }
+        ],
+        "critique": {
+          "credibility": "B",
+          "credibility_note": "关键规格、许可、套件价格和「还不是成品表」都能在仓库和文档对上；但这是技术公众号的介绍，带有推荐口吻，我没有实机复现，Nordic 官方产品页这次也没打开。",
+          "points_html": [
+            "「3.3k 颗星」是约数。我查看时是约 3445 星，不能把星数当成「已经能当日常手表用」的证据",
+            "「智能手表是最能看出一支团队功底的品类」是作者评价，不是可核对事实",
+            "双核分工（应用核跑 UI、网络核跑 BLE）是 nRF5340 的常见架构描述。我核对了项目文档里的双核和存储器数字，但这次没能打开 Nordic 官方产品页（访问被拦截），不要把转述当成我读过数据手册",
+            "文中点名的触觉马达 DRV2603，我未在当前 README 和文档站硬件表里单独对上型号，暂不当作已核实的 BOM 项",
+            "WatchDK 99 美元是仓库标价，下单页、运费、是否含税以 Elecrow 当前页面为准",
+            "GPL-3.0 对想做闭源产品或课程周边的人是硬约束。作者态度开放，不等于你可以按 MIT 来用"
+          ]
+        },
+        "context_html": [
+          "nRF5340 用模块（NORA-B10）而不是裸片，是原型阶段常见的取舍：把天线、射频认证包进已经过认证的 SiP，换的是成本和板面积，不是「双核本身更神奇」",
+          "GadgetBridge 是 Android 上常见的开源可穿戴伴侣，不是 ZSWatch 官方应用。邀请制官方 App 和它是两条线",
+          "你已有的硬件是树莓派 5 和 STM32F103 套件；ZSWatch 是另一条「BLE + 屏幕 + 电源管理 + RTOS」的完整题目，和差速小车主路径不重叠"
+        ],
+        "relevance": [
+          {
+            "area": "robotics",
+            "html": "值得看的不是「做一块表」，而是它把无线协议栈、电源管理、设备树和 UI 框架都放在 Zephyr 里，应用核与网络核分开。这比再买一块入门板更能解释「为什么手表这类设备很难裸机堆出来」"
+          },
+          {
+            "area": "kaoyan",
+            "html": "初试前足够把仓库和 zswatch.dev 当索引。现在买 99 美元套件或打 38 mm 圆板，会占复习时间，也用不上「先跑通软件再造表」这条建议的窗口"
+          }
+        ],
+        "next_html": [
+          "初试前不要下单 WatchDK，也不要开始打手表 PCB",
+          "若只想建立一个正确印象：ZSWatch 是 GPL-3.0 的开源手表项目，文档在 zswatch.dev，现在更合适的入口是开发套件，不是成品表",
+          "初试之后如果要做系统级嵌入式练习：从官方文档的 WatchDK 快速开始和「怎么写 App」读起，先看许可和配套手机应用的边界"
+        ]
+      }
+    },
+    {
+      "id": "wx:MzI1MTY5Mjc0Mw:2247512920:1",
+      "title": "汤家凤谈 27 考研准考证：官方只写了「考前十天左右」，「12 月 9 日前后开放」是推算",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzI1MTY5Mjc0Mw==&mid=2247512920&idx=1&sn=ccd240dcd9b82594832387cb6891e9c5",
+      "category": "kaoyan",
+      "source": {
+        "account": "数学汤家凤",
+        "published": "2026-11-04"
+      },
+      "added": "2026-11-09",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "汤家凤把准考证流程写成一份操作清单，并写初试在 2026 年 12 月 19 日至 20 日、考前十天左右登录研招网下载。这两点能对上教育部规定和研招网公告；文中「系统大概率在 12 月 9 日前后开放，当天凌晨就可以下载」并不是官方确定的开放日。",
+      "points_html": [
+        "<b>已能核对的官方信息：</b>教育部 2026 年 9 月印发《2027年全国硕士研究生招生工作管理规定》，初试时间为 2026 年 12 月 19 日至 20 日；研招网公告写「考生在考前十天左右，凭网上报名的用户名和密码登录研招网自行下载打印《准考证》」",
+        "<b>作者的推算：</b>按 12 月 19 日往前十天，他写成「系统大概率在 12 月 9 日前后开放，当天凌晨就可以下载」，并提醒具体哪天要盯研招网。这是推算，不是已公布的开放日",
+        "<b>下载与打印：</b>登录研招网（yz.chsi.com.cn）用户中心下载 PDF，用 A4 幅面白纸打印，黑白彩色均可，但字迹、照片、条形码要清晰，不要缩放或裁切；建议多打几份、电子版另存",
+        "<b>核对重点：</b>左栏考生信息（条形码、考生编号、姓名、证件号、单位和专业代码）有误立刻联系报考点；中栏看考点地址、考场号、座位号，需要订酒店就当天订；右栏考生须知、报考点说明和招生单位说明必须逐字看",
+        "<b>硬规矩：</b>正反面在使用期间不得涂改或写字。研招网报名页也写了同样的话，并用了 A4 白纸、凭准考证和有效身份证件参加初试和复试",
+        "<b>未完全核对的部分：</b>文中「用的是网报账号，不是学信网账号」只是作者的提醒，官方表述是「网上报名的用户名和密码」；江苏计算器规定、贵州甘肃青海「往年统一配发文具」，我没有核到 2027 年对应公告，要以准考证上的说明为准"
+      ],
+      "keywords": "汤家凤 准考证 27考研 研招网 考前十天 2026-12-19 教育部 管理规定 A4 不得涂改 网报账号 计算器 文具",
+      "ticktick_task_id": "6af160a2e4b07013b1a64580",
+      "wechat": {
+        "biz": "MzI1MTY5Mjc0Mw==",
+        "mid": "2247512920",
+        "idx": "1",
+        "sn": "ccd240dcd9b82594832387cb6891e9c5"
+      },
+      "detail": {
+        "summary": "深入讲解 · 我核对到了哪一步",
+        "body_html": "<h4>官方文本对得上的部分</h4><div>教育部《2027年全国硕士研究生招生工作管理规定》（教学〔2026〕2号，2026 年 9 月 21 日印发，教育部网站 9 月 24 日发布）第三十六条写明：初试方式均为笔试，初试时间为 2026 年 12 月 19 日至 20 日；19 日上午 8:30—11:30 思想政治理论或管理类综合能力，下午 14:00—17:00 外国语；20 日上午 8:30—11:30 业务课（一）或专业基础综合，下午 14:00 开始业务课（二）。你的数学二在 20 日上午。</div><div>准考证下载时间不在这份规定的报名章里写死。研招网 2026 年 9 月 27 日发布的《2027年全国硕士研究生招生考试公告》第十三条，以及研招网网上报名页的「准考证下载」说明，写的都是：考生在<b>考前十天左右</b>，凭<b>网上报名的用户名和密码</b>登录研招网自行下载打印；须用 <b>A4 幅面白纸</b>；<b>正、反两面在使用期间不得涂改或书写</b>；凭准考证和有效身份证件参加初试和复试。报名页还加了一句「24 小时开通」，指开放之后全天可下载，并不是已经宣布了 12 月 9 日凌晨开放。</div><h4>还只是作者推算的部分</h4><div>「系统大概率在 12 月 9 日前后开放，当天凌晨就可以下载」是把「考前十天左右」按 12 月 19 日往前数的结果。官方没有公布一个确定的开放日期。标题写成「打印时间定了」，比原文和官方文本都更满。正确做法是：把 12 月上旬写成提醒，开放当日以研招网为准，系统一开就下载、核对地址、需要的话当天订住宿。</div><h4>文具和计算器，不要提前当成全国统一规则</h4><div>作者写江苏省公告称：统考科目里只有农学门类联考化学可以带科学计算器，其他统考科目一律不允许；并说贵州、甘肃、青海「往年」统一配发文具。我没有核到 2027 年江苏或这三省的应试须知。即使往年有过类似规定，2027 年仍以你准考证上的报考点说明、招生单位说明为准。你考数学二，在没有书面允许之前，不要把计算器、手表带进考场。</div>"
+      },
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了公众号全文，并对照教育部《2027年全国硕士研究生招生工作管理规定》原文、研招网 2026-09-27 考试公告第十三条，以及研招网网上报名页的准考证下载说明。江苏计算器规则和西部省份统一配发文具，未核到 2027 年官方公告",
+        "thesis_html": "初试日期和「考前十天左右登录研招网下载准考证」是官方已经写明的；<b>「12 月 9 日前后开放」只是推算</b>，标题里的「时间定了」并不等于已经公布了具体开放日。",
+        "facts": [
+          {
+            "html": "教育部《2027年全国硕士研究生招生工作管理规定》（教学〔2026〕2号，2026 年 9 月 21 日印发，教育部网站 9 月 24 日发布）第三十六条：初试时间为 2026 年 12 月 19 日至 20 日。12 月 19 日上午 8:30—11:30 为思想政治理论或管理类综合能力，下午 14:00—17:00 为外国语；12 月 20 日上午 8:30—11:30 为业务课（一）或专业基础综合，下午 14:00 开始为业务课（二）。考试时间以北京时间为准",
+            "source": "教育部《2027年全国硕士研究生招生工作管理规定》",
+            "year": "2026-09-24",
+            "url": "http://www.moe.gov.cn/srcsite/A15/moe_778/s3261/202609/t20260923_1451734.html",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "中国研究生招生信息网《2027年全国硕士研究生招生考试公告》",
+                "url": "https://yz.chsi.com.cn/kyzx/other/202609/20260927/2293973606.html"
+              },
+              {
+                "source": "研招网网上报名页",
+                "url": "https://yz.chsi.com.cn/yzwb/"
+              }
+            ]
+          },
+          {
+            "html": "研招网《2027年全国硕士研究生招生考试公告》第十三条原文：「考生在考前十天左右，凭网上报名的用户名和密码登录“研招网”自行下载打印《准考证》。考生凭下载打印的《准考证》及有效身份证件参加初试和复试。」这与正文引用的「考前十天左右」一致。我在教育部该《规定》全文中没有读到同样的准考证条款，下载规则以研招网公告和报名页为准",
+            "source": "中国研究生招生信息网《2027年全国硕士研究生招生考试公告》",
+            "year": "2026-09-27",
+            "url": "https://yz.chsi.com.cn/kyzx/other/202609/20260927/2293973606.html",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "研招网网上报名页「准考证下载」说明",
+                "url": "https://yz.chsi.com.cn/yzwb/"
+              }
+            ]
+          },
+          {
+            "html": "研招网网上报名页在「准考证下载」下还写明：准考证须使用 A4 幅面白纸自行下载打印；正、反两面在使用期间不得涂改或书写；开放后「24 小时开通」。这与正文里 A4 打印、正反面不许写字的提醒一致。页面没有写死 12 月 9 日或「当天凌晨开放」",
+            "source": "研招网网上报名页",
+            "year": "2026-11-15",
+            "url": "https://yz.chsi.com.cn/yzwb/",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "汤家凤公众号原文",
+                "url": "https://mp.weixin.qq.com/s?__biz=MzI1MTY5Mjc0Mw==&mid=2247512920&idx=1&sn=ccd240dcd9b82594832387cb6891e9c5"
+              }
+            ]
+          },
+          {
+            "html": "正文把开放日写成「系统大概率在 12 月 9 日前后开放，当天凌晨就可以下载」，并说「具体哪天，盯紧研招网」。这是按 12 月 19 日往前约十天做的推算，不是教育部或研招网已经公布的确定日期",
+            "source": "数学汤家凤公众号原文",
+            "year": "2026-11-04",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzI1MTY5Mjc0Mw==&mid=2247512920&idx=1&sn=ccd240dcd9b82594832387cb6891e9c5",
+            "corroborated": false
+          },
+          {
+            "html": "官方用语是「凭网上报名的用户名和密码登录研招网」。正文进一步写成「用的是网报账号，不是学信网账号，别搞混了」。2027 年报名已要求通过学信网 App 拍摄并上传报名照片，网报与学信网账号是否为两套完全不同的账号，我没有从官方文本里核到「不是学信网账号」这一句。下载时用你网报时实际使用的用户名和密码，搞不清就走研招网的找回功能或问报考点",
+            "source": "中国研究生招生信息网《2027年全国硕士研究生招生考试公告》",
+            "year": "2026-09-27",
+            "url": "https://yz.chsi.com.cn/kyzx/other/202609/20260927/2293973606.html",
+            "corroborated": false
+          },
+          {
+            "html": "正文称江苏省公告明确：统考科目中只有农学门类联考化学可以带科学计算器，其他统考科目一律不允许；并称贵州、甘肃、青海往年统一配发文具。我没有核到 2027 年江苏或这三省的应试须知，不能把往年或未注明年份的转述当成今年规则",
+            "source": "数学汤家凤公众号原文",
+            "year": "2026-11-04",
+            "url": "https://mp.weixin.qq.com/s?__biz=MzI1MTY5Mjc0Mw==&mid=2247512920&idx=1&sn=ccd240dcd9b82594832387cb6891e9c5",
+            "corroborated": false
+          }
+        ],
+        "critique": {
+          "credibility": "B",
+          "credibility_note": "初试日期、考前十天左右下载、A4 打印和准考证不得涂改，都能在教育部规定或研招网公告里对上；但标题把推算写成「时间定了」，账号区分、省级计算器与文具规则没有 2027 年一手公告可核对。作者是考研培训教师，文章也有稳定考生、维持账号影响力的动机。",
+          "points_html": [
+            "标题「打印时间定了」容易让人以为已经公布了具体日期。官方目前只有「考前十天左右」，12 月 9 日是推算",
+            "「当天凌晨就可以下载」只能理解为：系统开放后，研招网写了 24 小时开通。它不能证明 12 月 9 日 0 点一定能下",
+            "「不是学信网账号」是作者的提醒，不是我核到的官方原句。2027 年报名已经使用学信网 App 采集照片，下载时以网报用户名和密码为准，不要在两种说法之间自己发明一套登录方式",
+            "江苏计算器、西部省份统一发文具，属于可能过时或未注明年份的转述。数学二在没有书面允许前不要带计算器，但最终以准考证上的报考点说明为准",
+            "「书包、住处、外套口袋各放一份」是防丢失建议，不是官方份数要求。正反面不得写公式，这一点官方写得很硬，不要把准考证当草稿纸"
+          ]
+        },
+        "context_html": [
+          "2027 年研招统考网报已结束。研招网报名页显示「2027年研招统考网报已结束」，现在能做的是等准考证开放，而不是回填报名信息",
+          "教育部部署 2027 年研考时还写了：报名系统升级，考生通过学信网 App 在线拍摄并上传照片，网上报名和网上确认一体化。这与「下载准考证用网报用户名和密码」并不冲突，只说明账号体系不要想当然",
+          "从今天（2026-11-15）到初试首日 12 月 19 日还有 34 天，大约 5 周；按「考前十天左右」估算，下载窗口大约在 12 月上旬，但开放日以研招网为准"
+        ],
+        "relevance": [
+          {
+            "area": "kaoyan",
+            "html": "你在成都应考，准考证一出来就要看考场地址和交通时间，需要住宿的当天订。数学二在 12 月 20 日上午，计算器不要带；手表、手机按准考证和考场规则处理，不要用往年口口相传代替书面说明"
+          }
+        ],
+        "next_html": [
+          "在日历上把 12 月上旬标成「盯研招网准考证」，不要把 12 月 9 日当成已经公布的开放日",
+          "系统一开放：用网报用户名和密码登录 yz.chsi.com.cn 下载 PDF，发到自己的邮箱或网盘，A4 原尺寸打印，检查照片和条形码，正反面不写字",
+          "当天核对考场地址和交通，需要订酒店就当天订；文具、计算器、手表以准考证上的报考点说明为准，有疑问直接问报考点，不要只看培训号转述"
+        ]
+      }
+    },
+    {
+      "id": "wx:Mzk2NDU3MDczMQ:2247487146:1",
+      "title": "苦瓜学长的政治十一月规划：先做真题选择，大题等到肖四；这是个人经验，不是官方节奏",
+      "url": "https://mp.weixin.qq.com/s?__biz=Mzk2NDU3MDczMQ==&mid=2247487146&idx=1&sn=1c92a86a5f2cc7a59f7275c91473bab5",
+      "category": "kaoyan",
+      "source": {
+        "account": "苦瓜学长",
+        "published": "2026-11-09"
+      },
+      "added": "2026-11-09",
+      "status": "ok",
+      "summary_label": "一句话",
+      "summary_html": "苦瓜学长建议 11 月政治不要再拖：先做真题选择题（时政题可暂时放过），再刷模拟卷练手感，12 月前的模拟分数不必在意；大题不提前模拟，不冲 400 分就等 12 月初的肖四 / 大牙精简版。全文是个人经验，不是教育部或研招网的安排。",
+      "points_html": [
+        "<b>起步：</b>作者认为现在政治「怎么着都得开了」，不建议裸考；如果刚开始，直接从真题选择题入手，按题型或整套都可以，时政相关的先当自己对了",
+        "<b>模拟卷：</b>真题选择结束后再进入模拟卷，用来保持手感、接触当年时政题；作者写明网上看法两极分化，12 月前刷的都比较难、不必看分数，不适合就停",
+        "<b>作者主观推荐：</b>他觉得米鹏 3 套卷不错，并称自己考前刷这三套的分数和最后真题选择分数「十分接近」。这一点只有他自己的回忆，无法复核",
+        "<b>大题：</b>考前不需要进行模拟，除非其他科目已经很稳。想冲 400+ 可以看大李子思维觉醒，或张修齐十页纸、曲艺等；不冲这个分数，就等 12 月初大多数人会用的肖四、大牙精简版",
+        "<b>答法：</b>无论用谁的大题，都要结合抄材料；可看大牙或「牢宇」的抄材料视频。作者提醒政治答题卡没有辅助线，英语作文题型有；他在拼多多买过辅助工具并带进考场，但没用，考后后悔。文末写了「仅个人备考经历分享」"
+      ],
+      "keywords": "苦瓜学长 考研政治 27考研 真题选择 模拟卷 米鹏三套卷 肖四 大牙 张修齐 曲艺 大李子 思维觉醒 答题卡 辅助线 400分",
+      "ticktick_task_id": "6af15f80e4b07013b1a625ed",
+      "wechat": {
+        "biz": "Mzk2NDU3MDczMQ==",
+        "mid": "2247487146",
+        "idx": "1",
+        "sn": "1c92a86a5f2cc7a59f7275c91473bab5"
+      },
+      "detail": {
+        "summary": "深入讲解 · 节奏建议可以参考，推荐清单不要照单全收",
+        "body_html": "<h4>这篇实际在说什么</h4><div>结构很清楚：11 月先把政治选择题开起来，顺序是真题选择 → 模拟卷；大题放到 12 月，用大多数人会用的肖四、大牙精简版，而不是现在就开始模拟整张大题。时政题在真题阶段可以先放过，到模拟卷再接触当年时政。作者反复写「一切看个人」「不适合就停」，这比标题里的「极限规划」更接近正文。它没有给出每天时数、也没有对照 2027 年考试大纲，不能当成课表。</div><h4>和官方安排的关系</h4><div>教育部《2027年全国硕士研究生招生工作管理规定》只规定初试在 2026 年 12 月 19 日至 20 日举行，其中 19 日上午是思想政治理论。规定里没有「11 月必须开始政治」「必须先做真题再做模拟卷」「必须等肖四」这类复习节奏。所以这篇是备考经验，不是规则。</div><h4>需要打折看的部分</h4><div>「米鹏三套卷分数和真题选择十分接近」是作者自己的一次经历，没有卷面、没有对照样本，不能外推到你身上。冲 400+ 才看大李子、张修齐、曲艺，不冲就等肖四——这是按目标分数做的资料分层，也是内容创作者常用的推荐方式；「一荣俱荣，一损俱损」说的是评分时大家用同一套材料的现象，不是官方评分规则。政治答题卡有没有辅助线、拼多多那件工具能不能带进你的考场，要以准考证上的报考点说明和考场规则为准，这篇里的回忆不能代替。</div>"
+      },
+      "analysis": {
+        "verified": "original",
+        "verified_note": "读了公众号全文，并对照教育部《2027年全国硕士研究生招生工作管理规定》第三十六条的初试时间；没有找到可将文中模拟卷分数或资料效果独立复核的来源",
+        "thesis_html": "这是一份<b>可以参考顺序、不能当成课表的个人经验</b>：11 月先做政治真题选择，模拟卷只练手感，大题等到 12 月初的肖四；文中对米鹏、肖四和答题辅助工具的判断都无法独立验证。",
+        "facts": [
+          {
+            "html": "教育部《2027年全国硕士研究生招生工作管理规定》第三十六条规定，初试时间为 2026 年 12 月 19 日至 20 日；其中 12 月 19 日上午 8:30—11:30 为思想政治理论或管理类综合能力",
+            "source": "教育部《2027年全国硕士研究生招生工作管理规定》",
+            "year": "2026-09-24",
+            "url": "http://www.moe.gov.cn/srcsite/A15/moe_778/s3261/202609/t20260923_1451734.html",
+            "corroborated": true,
+            "also": [
+              {
+                "source": "中国研究生招生信息网《2027年全国硕士研究生招生考试公告》",
+                "url": "https://yz.chsi.com.cn/kyzx/other/202609/20260927/2293973606.html"
+              },
+              {
+                "source": "研招网网上报名页",
+                "url": "https://yz.chsi.com.cn/yzwb/"
+              }
+            ]
+          },
+          {
+            "html": "作者给出的复习顺序是：现在就开政治，刚开始就先做真题选择题（时政题可先当作对了），再进入模拟卷保持手感、接触当年时政题；12 月前的模拟卷不必看分数，不适合就停。大题方面，不冲 400+ 就等 12 月初的肖四、大牙精简版，考前不必专门模拟大题",
+            "source": "苦瓜学长公众号原文",
+            "year": "2026-11-09",
+            "url": "https://mp.weixin.qq.com/s?__biz=Mzk2NDU3MDczMQ==&mid=2247487146&idx=1&sn=1c92a86a5f2cc7a59f7275c91473bab5",
+            "corroborated": false
+          },
+          {
+            "html": "作者称自己考前刷米鹏 3 套卷的分数和最后真题选择分数「十分接近」，并列举大李子思维觉醒、张修齐十页纸、曲艺等作为冲击 400+ 的大题选项。这些都是个人回忆和推荐，我没有找到可核对的成绩或抽样数据",
+            "source": "苦瓜学长公众号原文",
+            "year": "2026-11-09",
+            "url": "https://mp.weixin.qq.com/s?__biz=Mzk2NDU3MDczMQ==&mid=2247487146&idx=1&sn=1c92a86a5f2cc7a59f7275c91473bab5",
+            "corroborated": false
+          },
+          {
+            "html": "作者还写：政治答题卡没有辅助线、英语作文题型有；他在拼多多买过辅助工具并带进考场，但没用，考后后悔。文末写明「仅个人备考经历分享，买与不买看个人」。我没有找到 2027 年关于答题卡辅助线或该工具是否允许携带的官方说明",
+            "source": "苦瓜学长公众号原文",
+            "year": "2026-11-09",
+            "url": "https://mp.weixin.qq.com/s?__biz=Mzk2NDU3MDczMQ==&mid=2247487146&idx=1&sn=1c92a86a5f2cc7a59f7275c91473bab5",
+            "corroborated": false
+          }
+        ],
+        "critique": {
+          "credibility": "B",
+          "credibility_note": "正文是个人备考经验，关键时间节点能和教育部的初试安排对上；但模拟卷好不好用、分数是否接近真题、该买谁的大题，都无法第三方复核，作者作为考研内容创作者也有推荐资料的利益相关。",
+          "points_html": [
+            "标题里的「极限规划」比正文更满。正文其实是「先做真题选择，再按需刷模拟卷，大题等肖四」，并多次写「一切看个人」，并不是一份强制课表",
+            "「米鹏三套卷分数十分接近真题选择」只有作者自己的一次回忆，没有卷面、没有样本，不能当成选卷依据",
+            "「一荣俱荣，一损俱损」是对阅卷趋同现象的口语概括，不是评分规则。肖四用的人多，不等于它更准，也不等于不用它就会吃亏",
+            "大李子、张修齐、曲艺、大牙、拼多多辅助工具，都是具体产品推荐。作者自己写了「买与不买看个人」，读的时候要把方法和带货分开",
+            "答题卡辅助线、能否把辅助工具带进考场，以你准考证上的报考点说明和当场规则为准，不要只凭这篇里的往年经验"
+          ]
+        },
+        "context_html": [
+          "同一周还收了苦瓜学长 11 月 15 日答肖八的一篇，以及徐涛 11 月 11 日的带背 D24。三篇都在讲 11 月政治怎么排，但口径不完全一样：苦瓜把大题放到 12 月，徐涛在带背选择题知识点并推销小程序和挖空文档",
+          "你在 10 月已经收过徐涛《背诵笔记》怎么用的那篇，当时的判断是 10 月仍以选择题为先。这篇等于把同一件事推到了 11 月：选择还没做完就不要提前模拟大题",
+          "2027 考研初试在 2026 年 12 月 19 日至 20 日。从这篇发布的 11 月 9 日算，到政治开考大约还有 5 周"
+        ],
+        "relevance": [
+          {
+            "area": "kaoyan",
+            "html": "你考数学二，政治不应占掉数学和专业课的整块时间。更可执行的是：用零碎时间把真题选择过一遍，模拟卷按需少量练手，大题等到 12 月初资料到手再背。不要为了「极限」新开一套完整的政治工程"
+          }
+        ],
+        "next_html": [
+          "如果政治选择题还没系统做，从真题选择开始，而不是先买新的模拟卷或大题资料",
+          "模拟卷最多用来保持手感和看当年时政题怎么问；分数低不要据此加时或换老师",
+          "大题先记在 12 月初的待办里，等肖四或你已经决定要用的那一份精简稿，现在不必模拟整张分析题"
+        ]
+      }
+    },
+    {
       "id": "wx:MzA5Nzk3MDQ4OQ:2649736365:1",
       "title": "不缺 Token 的 Tibo 怎么工作：把「人」从流程里拿出来",
       "url": "https://mp.weixin.qq.com/s?__biz=MzA5Nzk3MDQ4OQ==&mid=2649736365&idx=1&sn=28c07d18532e207247ba00b0b7a972d0&chksm=89174dfdd54bb951c01316214e7c847ce5d2bd30dde5b64dcc5619cccee112b8d1ddceb31183&mpshare=1&scene=1&srcid=1005Y2IRIcauecT2XceYeGlv&sharer_shareinfo=b49cf88fb49e1db172a6733e320b4fbb&sharer_shareinfo_first=b49cf88fb49e1db172a6733e320b4fbb#rd",
@@ -1828,6 +4343,247 @@
     }
   ],
   "studies": [
+    {
+      "id": "2026-w46-kaoyan-sprint",
+      "kicker": "专题研究 · 第 46 周",
+      "title": "离 27 考研初试约 5 周：准考证只写了「考前十天左右」，政治和报名人数都不要被培训话术带着跑",
+      "published": "2026-11-15",
+      "dek_html": "本周 5 篇收藏都围着 27 考研 11 月冲刺：政治节奏、准考证、肖八和模拟卷、一个数学题库，以及报名人数。教育部已经敲定初试在 2026 年 12 月 19 日至 20 日，报名人数为 347 万；准考证开放日仍只有「考前十天左右」。政治资料和网站推荐是培训经验或自荐，不是官方规则。",
+      "article_ids": [
+        "wx:Mzk2NDU3MDczMQ:2247487146:1",
+        "wx:MzI1MTY5Mjc0Mw:2247512920:1",
+        "wx:MzA4MDUwMzAxNA:2651443352:1",
+        "wx:MzYyNTk1MzUwMQ:2247485246:1",
+        "wx:Mzk2NDU3MDczMQ:2247487155:1"
+      ],
+      "sections": [
+        {
+          "heading": "结论先说",
+          "body_html": "<p>从今天（2026 年 11 月 15 日）到初试首日 12 月 19 日还有 34 天，大约 5 周。这 5 篇收藏看起来都在「催你做点什么」，真正经得起核对的只有很少几句官方文本，其余是经验、推算和产品推介。</p>\n<ol>\n<li><b>已经敲定的：</b>初试为 2026 年 12 月 19 日至 20 日；你的政治在 19 日上午，英语在 19 日下午，数学二在 20 日上午。2027 年报名人数的官方统计是 347 万，比 2026 年的 343 万多 4 万。</li>\n<li><b>还没有敲定的：</b>准考证开放日。官方只写「考前十天左右，凭网上报名的用户名和密码登录研招网下载」，并要求 A4 白纸打印、正反面不得涂改或书写。汤家凤写成「12 月 9 日前后、当天凌晨可下载」，这是推算，不是已公布的日期。</li>\n<li><b>政治：</b>苦瓜的最小步骤比较可执行——先做真题选择，模拟卷和肖八都只用来保持手感，分数低不必解读，大题等到 12 月初的肖四。徐涛的错因分类可以用，带背是绑定教材和小程序的培训更新，不要当成官方规则，也不要为打卡换体系。</li>\n<li><b>数学题库：</b><code>bbkaoyan.cn</code> 现在存在，未登录也能查到数学二 1987–2026 年共 40 套真题目录；模拟卷公开列表是空的，9.9 元会员和「非常牛逼」都还不能当成已经验证的效果。冲刺期不必为它改系统。</li>\n<li><b>对你：</b>报名已经结束，347 万改变不了卷面。把整块时间留给数学二和专业课；政治用零碎时间做选择和错题；12 月上旬盯研招网，系统一开就下载准考证、核对考场并处理住宿。</li>\n</ol>"
+        },
+        {
+          "heading": "官方已经写明的，和还只是推算的",
+          "body_html": "<p>教育部《2027年全国硕士研究生招生工作管理规定》（教学〔2026〕2号，2026 年 9 月 21 日印发，9 月 24 日在教育部网站发布）第三十六条写明初试时间。研招网 9 月 27 日的考试公告第十三条，以及网上报名页的「准考证下载」说明，补充了准考证规则。核对结果如下。</p>\n<table>\n<thead><tr><th>事项</th><th>官方文本</th><th>培训号里容易被写满的部分</th></tr></thead>\n<tbody>\n<tr><td>初试日期</td><td>2026 年 12 月 19 日至 20 日；19 日上午思想政治理论，下午外国语；20 日上午业务课（一）（数学二在这一场），下午 14:00 起业务课（二）</td><td>与官方一致，无需打折</td></tr>\n<tr><td>准考证何时可下载</td><td>「考前十天左右」登录研招网；开放后「24 小时开通」</td><td>「打印时间定了」「12 月 9 日前后开放，当天凌晨可下载」是按十天往前数的推算，不是已公布日期</td></tr>\n<tr><td>怎么登录、怎么打</td><td>凭网上报名的用户名和密码；A4 幅面白纸；正反面在使用期间不得涂改或书写；凭准考证和有效身份证件参加初试和复试</td><td>「不是学信网账号」不是我核到的官方原句；2027 年报名已用学信网 App 采集照片，下载时用网报时的用户名和密码即可</td></tr>\n<tr><td>计算器、文具</td><td>以准考证上的报考点说明、招生单位说明为准</td><td>江苏只允许农学化学带计算器、黔甘青往年统一发文具，我没有核到 2027 年对应公告</td></tr>\n</tbody>\n</table>\n<p class=\"caveat\">标题写成「时间定了」，不等于开放日已经公布。正确动作是把 12 月上旬标成提醒，开放当天以研招网为准，第一时间下载、核对地址、需要的话当天订住宿。准考证不是草稿纸。</p>"
+        },
+        {
+          "heading": "政治：把经验、带背和广告分开",
+          "body_html": "<p>三篇政治相关收藏其实可以收成一套很窄的做法，前提是先去掉销售话术。</p>\n<ul>\n<li><b>11 月主做选择题。</b>苦瓜建议刚开始就从真题选择入手，时政题可先放过；真题后再按需刷模拟卷，12 月前的分数不必在意。徐涛把错题分成没懂、没记、被坑三类，并提醒「全部」「唯一」「根本保证」这类表述。这些是方法，不是大纲。</li>\n<li><b>大题放到 12 月初。</b>苦瓜两篇都说：肖八大题不用看，分析题等到肖四或精简版；不冲 400 分不必提前模拟整张大题。徐涛这篇 D24 也是选择题带背，并没有要求你现在开始写分析题。</li>\n<li><b>肖八只先做一套选择。</b>不适合就停；分数低不能说明你「这个月白学了」。所谓「大多数人要到肖四才巅峰」没有抽样数据，只能当止损提醒，不能当预测。</li>\n</ul>\n<p>需要反驳的是另外几句。米鹏三套卷「分数十分接近真题」、某位老师的大题「更适合冲击 400+」、徐涛带背清单「已经是标准答案」——这些都没有独立证据。D24 明确绑定《27核心背诵笔记》页码、小程序 Day24、挖空 PDF 和 AI 交互，这是产品更新。带背条文为了填空可能被压缩，不应当成已核对的官方原文。你 10 月已经收过同一账号讲《背诵笔记》怎么用的一篇，当时就把文末小程序推广排除在建议之外；这次仍然适用。</p>\n<p class=\"caveat\">政治不应占掉数学二和专业课的整块时间。有正版笔记就按现有材料默写；没有，也不必为了跟 Day24 或打卡而换体系。</p>"
+        },
+        {
+          "heading": "一个数学题库，以及它实际能看到什么",
+          "body_html": "<p>亚瑟爱数学 10 月 14 日那篇把 <code>bbkaoyan.cn</code> 写成「真题和模拟卷分类非常牛逼的网站」，并说明自己参与筹划：真题免费，模拟卷试用后 9.9 元到考前，可拉人减免。这是自荐，不是评测。</p>\n<p>2026 年 11 月 15 日实际打开的结果是：站点存在，产品名是「疾风劲草模拟卷」，页脚有备案号。未登录的公开接口能列出数学二历年真题 40 套（1987–2026）；我抽查 2026 年数学二真题，目录结构是 22 题（选择 10、填空 6、解答 6），来源标注含「李艳芳图片版」，也就是民间整理，不是考试机构官方电子卷。模拟卷则是另一回事：未登录接口返回 0 套，页面虽有 23 到 27 年的标签，但显示「当前没有可用的模拟卷」。前端把高级会员写成 9.9 元至 2026 年 12 月 31 日，可减 2 元，与原文收费口径大体相符；登录后模拟卷有多少、好不好用，没有注册，所以未核实。</p>\n<p class=\"caveat\">「非常牛逼」、AI 找题「也很强」、首页「比豆包更聪明」，都没有独立证据。冲刺期你并不缺真题来源。若只想试分类或导出，只看免费真题部分，并用已经核对过的卷子对照；不要为 9.9 元或邀请减免改复习系统。</p>"
+        },
+        {
+          "heading": "347 万：上升了，但幅度很小",
+          "body_html": "<p>苦瓜 11 月 15 日只写「考研报名人数上升」，没有给数字，并认为看这个几乎没有意义。后半句是对的；前半句需要用官方数字补全，而不是用传闻补全。</p>\n<p>教育部网站 2026 年 11 月 13 日在考试安全工作报道中写明：2027 年全国硕士研究生招生考试报名人数为 347 万。新华社、中新社同一天引述教育部，数字相同。上一年同一口径、教育部网站 2025 年 11 月 24 日的报道写的是 343 万。347 万比 343 万多 4 万，确是上升，但幅度很小，不能支持「今年突然更卷」的叙事，更不能回头改志愿——网报已经结束。</p>\n<p class=\"caveat\">以后如果再看到培训号转图或口头人数，先回到教育部网站核对；找不到就明确写「未核实」，不要沿用。人数解决不了数学二下一道错题。</p>"
+        },
+        {
+          "heading": "对你的可执行安排",
+          "body_html": "<p>初试倒计时约 5 周。下面这些事按时间顺序做，不需要额外的鸡汤。</p>\n<ol>\n<li><b>现在到 12 月上旬：</b>整块时间给数学二和专业课。政治只用零碎时间：把真题选择过完，错题按「没懂 / 没记 / 被坑」复盘。肖八若已有，先做一套选择，不适合就停，大题不做；没有也不必专门下单。模拟卷分数不作自我定性。</li>\n<li><b>12 月上旬：</b>盯研招网（<code>yz.chsi.com.cn</code>），不要把 12 月 9 日当成已经公布的开放日。系统一开，用网报用户名和密码下载准考证 PDF，A4 原尺寸打印，检查照片和条形码，正反面不写字；当天看考场地址和交通，需要住宿就当天订。文具、计算器、手表以准考证说明为准，有疑问问报考点。</li>\n<li><b>12 月初资料到手后：</b>再背政治大题。用你已经决定的那一份（多数人会用肖四或精简版），结合材料写，而不是现在提前模拟整张试卷。</li>\n<li><b>不要做的事：</b>为报名人数加时或改情绪；为徐涛打卡或挖空 PDF 换体系；为 bbkaoyan.cn 的「非常牛逼」付费或搬家；把准考证背面当成公式纸；在没有书面允许时把计算器带进数学二考场。</li>\n</ol>\n<p>你已经在用 Cursor / Grok Bot，初试前足够把它们当查询和整理工具，不必再接一套新的「AI 找题」流程。5 周里，能改变结果的是已经决定要做的题，不是又一篇培训更新。</p>"
+        }
+      ],
+      "sources": [
+        {
+          "title": "教育部关于印发《2027年全国硕士研究生招生工作管理规定》的通知",
+          "site": "教育部",
+          "date": "2026-09-24",
+          "url": "http://www.moe.gov.cn/srcsite/A15/moe_778/s3261/202609/t20260923_1451734.html"
+        },
+        {
+          "title": "2027年全国硕士研究生招生考试公告",
+          "site": "中国研究生招生信息网",
+          "date": "2026-09-27",
+          "url": "https://yz.chsi.com.cn/kyzx/other/202609/20260927/2293973606.html"
+        },
+        {
+          "title": "全国硕士研究生招生考试网上报名（准考证下载说明）",
+          "site": "中国研究生招生信息网",
+          "date": "2026-11-15",
+          "url": "https://yz.chsi.com.cn/yzwb/"
+        },
+        {
+          "title": "教育部部署2027年全国硕士研究生考试招生工作",
+          "site": "中国研究生招生信息网",
+          "date": "2026-09-24",
+          "url": "https://yz.chsi.com.cn/kyzx/jybzc/202609/20260924/2293971512.html"
+        },
+        {
+          "title": "2027年全国硕士研究生招生考试安全工作视频会召开（含报名人数 347 万）",
+          "site": "教育部",
+          "date": "2026-11-13",
+          "url": "http://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/moe_1485/202611/t20261113_1458104.html"
+        },
+        {
+          "title": "2027年全国硕士研究生招生考试报名人数347万",
+          "site": "新华网",
+          "date": "2026-11-13",
+          "url": "https://www.news.cn/20261113/3ea12851bcdc47b497022ddd58b6971f/c.html"
+        },
+        {
+          "title": "中国教育部：2027年全国硕士研究生报考人数为347万",
+          "site": "中新网",
+          "date": "2026-11-13",
+          "url": "https://www.chinanews.com.cn/sh/2026/11-13/10731427.shtml"
+        },
+        {
+          "title": "教育部部署2026年全国硕士研究生招生考试安全工作（含报名人数 343 万）",
+          "site": "教育部",
+          "date": "2025-11-24",
+          "url": "http://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/moe_1485/202511/t20251124_1421370.html"
+        },
+        {
+          "title": "政治十一月开极限规划",
+          "site": "苦瓜学长",
+          "date": "2026-11-09",
+          "url": "https://mp.weixin.qq.com/s?__biz=Mzk2NDU3MDczMQ==&mid=2247487146&idx=1&sn=1c92a86a5f2cc7a59f7275c91473bab5"
+        },
+        {
+          "title": "27考研准考证打印时间定了！这几步千万别漏",
+          "site": "数学汤家凤",
+          "date": "2026-11-04",
+          "url": "https://mp.weixin.qq.com/s?__biz=MzI1MTY5Mjc0Mw==&mid=2247512920&idx=1&sn=ccd240dcd9b82594832387cb6891e9c5"
+        },
+        {
+          "title": "徐涛带背D24‼️多选错太多？教你这样补救",
+          "site": "考研政治徐涛",
+          "date": "2026-11-11",
+          "url": "https://mp.weixin.qq.com/s?__biz=MzA4MDUwMzAxNA==&mid=2651443352&idx=1&sn=5be24a792d959e0f92c8780f12395605"
+        },
+        {
+          "title": "真题和模拟卷分类非常牛逼的网站",
+          "site": "亚瑟爱数学",
+          "date": "2026-10-14",
+          "url": "https://mp.weixin.qq.com/s?__biz=MzYyNTk1MzUwMQ==&mid=2247485246&idx=1&sn=0116e55ec39374e5ce190f0d2600f3bf"
+        },
+        {
+          "title": "肖八和考研报名人数问题回答",
+          "site": "苦瓜学长",
+          "date": "2026-11-15",
+          "url": "https://mp.weixin.qq.com/s?__biz=Mzk2NDU3MDczMQ==&mid=2247487155&idx=1&sn=6206a64ecfd2be170b742fc0b55c6f71"
+        },
+        {
+          "title": "疾风劲草模拟卷",
+          "site": "bbkaoyan.cn",
+          "date": "2026-11-15",
+          "url": "https://bbkaoyan.cn/"
+        }
+      ]
+    },
+    {
+      "id": "2026-w46-open-embedded",
+      "kicker": "专题研究 · 第 46 周",
+      "title": "仓库在不在、许可是什么、演示能不能复现：开源嵌入式和 AI 硬件该怎么核对",
+      "published": "2026-11-15",
+      "dek_html": "本周硬件相关收藏里，机器鸭、ZSWatch 和摩托车圆屏都能打开仓库，Fable 5.2 则只有官方研究笔记。把它们放在一起，不是为了推荐你现在去做这些项目，而是回答一件更实用的事：面对开源作品和「AI 做出了硬件」的演示，先核对什么，哪些话要打折。",
+      "article_ids": [
+        "wx:MzE5OTI3MDk5Nw:2247682980:1",
+        "wx:MzI5NzQxNzU0Ng:2247493720:1",
+        "wx:MzI2MjIyMTQxMw:2247489313:1",
+        "wx:MzI2MjIyMTQxMw:2247489300:1"
+      ],
+      "sections": [
+        {
+          "heading": "结论先说",
+          "body_html": "<p>这四篇看起来分别是机器鸭、开源手表、AI 做板子和摩托车圆屏，真正共通的问题只有一个：<b>公开材料够不够让你核对「它是什么、现在处于哪一步、你能不能用」</b>。</p><ol><li><b>先找一级材料。</b>有 GitHub / 开源页，就对仓库、许可证、README 里的边界和官方原理图；只有研究笔记和演示视频，就只能把「能工作」当成官方说法。</li><li><b>许可证和「开源」不是同义词。</b>EasyDuck 根协议是 Apache-2.0，但动作模型再分发条款仓库自己说尚未明确；ZSWatch 是 GPL-3.0，改动要回馈；MOTO GPS 是 PolyForm Noncommercial，默认不能商用。</li><li><b>「能跑」要看当前硬件，而不是效果图。</b>ZSWatch 现在更合适的是 WatchDK，成品小表还在开发；MOTO GPS 能跑的是微雪成品板，自研板仍标着 DO NOT ORDER；机器鸭的「拿外卖」只是标题想象。</li><li><b>Fable 5.2 的官方演示存在，但不等于 AI 已经能独立完成硬件。</b>模型有产品发布和研究笔记，三台原型由 Diode 的工程师制造和测试，官方写明没有电气验证和认证，也没有公开 KiCad 工程。</li><li><b>对你：</b>初试在 12 月 19 日，现在不要开工复刻。把核对清单留下来，比跟着推送下单或讨论「饭碗」更有用。</li></ol>"
+        },
+        {
+          "heading": "三份开源作品，对上的程度不一样",
+          "body_html": "<p>机器鸭、ZSWatch 和 MOTO GPS 都给出了可点击的项目地址，但这并不意味着三篇推送的可信度、完成度和许可风险一样。</p><p>ZSWatch 最好对。LabHub 的器件表、99 美元 WatchDK、GPL-3.0 说明和「微型表还在开发」，都能在 <code>ZSWatch/ZSWatch</code> 与 zswatch.dev 对上。它从 2022 年做到现在，文档把 iOS 官方应用、Android 邀请制和 GadgetBridge 也写清楚了。这是「第三方介绍基本忠于仓库」的例子。</p><p>MOTO GPS 同样能打开仓库，而且协议文档比公众号还细：帧头 <code>0xB7</code>、ATT MTU 23 时净载荷 8 字节、Just Works 没有 MITM、MapScene 的点数上限，都能在 <code>ble-navigation-v1.md</code> 里找到。微雪原理图也对上了 TE、触摸和多数 QSPI 脚。需要单独划出来的是许可和硬件状态：源码公开不等于可以商用；自研四层板哪怕 ERC/DRC 全过，目录名仍然是 DO NOT ORDER。公众号把这两点写进来了，这是它比一般效果图转载可靠的地方。</p><p>EasyDuck 的组成也能对上：立创开源页和 <code>jlckfb/easyduck</code> 都写了泰山派 1M、15 个 HD1910、LSM6DSV16X 和板端 ONNX，谱系是 MicroDuck → XgoDuck → 迁到泰山派。但它出现在立创自己的公众号里，文末是打板免单券，标题还把「拿外卖」提前。仓库和教程在，不等于「推不倒」已经被第三方验证，也不等于 2500 元复刻成本现在仍然成立。</p><p class=\"caveat\">核对开源嵌入式作品，建议固定问四句：仓库还在吗？许可证允许你打算做的事吗？README 有没有写「不要下单 / 仍在开发 / 演示数据」？当前能跑的是成品模块，还是一张效果图里的自研板？</p>"
+        },
+        {
+          "heading": "AI 做硬件：官方笔记能对上，工程文件对不上",
+          "body_html": "<p>嵌入式杂谈那篇 Fable 5.2 和前三篇不是同一种材料。Anthropic 在 2026-11-09 确实发布了 Claude Fable 5.2，并写了研究笔记：模型按短提示词设计 USB-C 音箱、语音中枢和掌上电子宠物，Diode 的工程师把板子做出来、装上、测过。笔记里的布线取舍、自写网格布线器、阻焊开窗、音孔共振和 25 度装配角度，公众号基本是在转述，而且把「没有电气验证、没有认证、人还在做制造和测试」也写进去了。</p><p>真正缺的是可独立复核的工程。我没有找到公开的 KiCad 工程、完整 BOM、测试报告或第三方拆解。PCB Gym 的 69% 对 25% 是 Diode 内部基准，官方脚注还写明 Anthropic 与 Diode 有商业关系。「用了几周也没坏」「没有返工」只能留在官方说法里。BenchCAD 2.1 的 83.5% 测的是从图纸重建 3D 和板子，不是信号完整性，更不是可以量产。</p><p>所以这里的正确读法不是「AI 已经能独立完成硬件」，而是：<b>在厂商提供的设计环境和工程师负责制造测试的前提下，模型可以把第一版原型设计推到能点亮</b>。责任边界没有变，公开可审查的程度也明显低于 ZSWatch 或 MOTO GPS 这种把仓库摊开的项目。</p>"
+        },
+        {
+          "heading": "哪些话要打折",
+          "body_html": "<ul><li><b>标题承诺。</b>「拿外卖」「抢饭碗」都比正文更满。读正文和一级材料，不要把标题抄进笔记当结论。</li><li><b>平台稿和官方稿都有利益。</b>立创推自己板上的项目并夹带打板券；Anthropic 与代工设计的 Diode 有商业关系；华为那篇穿戴支付是开发者方案介绍，没有放进本专题，原因也一样——厂商自述不等于已验证的产品能力。</li><li><b>星数和内部基准。</b>ZSWatch 三千多星、MOTO GPS 五百多星，只说明有人关注。PCB Gym 没有第三方复现，不能外推成「布线已经自动化」。</li><li><b>文件自洽不是实物验证。</b>A1 板 ERC/DRC 全过，只说明设计规则检查通过；屏幕 FPC、射频、振动和认证都还没做。Fable 5.2 的三台设备同样没有公开认证。</li><li><b>旧帖不要混进本周硬件动态。</b>力扣那份苹果嵌入式面经写于 2023-03-10，且是匿名回忆，没有放进本专题，也不能当成 2026 年的招聘现状。</li></ul>"
+        },
+        {
+          "heading": "对你的启示与行动",
+          "body_html": "<p>初试在 12 月 19 日，现在不是复刻机器鸭、打手表圆板或配摩托车导航网关的窗口。这些项目和你手里的树莓派 5、STM32F103 套件，以及规划中的差速小车，也不是同一条必须马上接通的路径。</p><p>更值得留下的是核对习惯：看到开源硬件，先打开仓库和许可证；看到「AI 做了硬件」，先找官方原文，再问有没有工程文件和独立测试；看到效果图，先找「当前能跑的是哪一块板」。初试之后如果要做系统级练习，ZSWatch 的文档和 WatchDK 路径最完整，但也要先接受 GPL-3.0；想看协议和显示分工，读 MOTO GPS 的协议文档即可，不必先下单自研板。</p><p>和你正在用的 Cursor / Grok Bot 是同一类变化：模型可以加快画图、布线、写固件和查手册，但制造、测试和责任仍在人这边。把这个界限看清楚，比讨论「饭碗还有多远」更有用。</p>"
+        }
+      ],
+      "sources": [
+        {
+          "title": "以后，让它帮我拿外卖！我用泰山派+15个舵机，做了个机器鸭",
+          "site": "立创开源硬件平台",
+          "date": "2026-11-09",
+          "url": "https://mp.weixin.qq.com/s?__biz=MzE5OTI3MDk5Nw==&mid=2247682980&idx=1&sn=d7f8ba373593f03ccc84ed5306b76619"
+        },
+        {
+          "title": "微型双足机器人 - EasyDuck",
+          "site": "立创开源硬件平台",
+          "date": "2026-11-15",
+          "url": "https://oshwhub.com/li-chuang-kai-fa-ban/project_xyaqiktm"
+        },
+        {
+          "title": "jlckfb/easyduck",
+          "site": "GitHub",
+          "date": "2026-11-15",
+          "url": "https://github.com/jlckfb/easyduck"
+        },
+        {
+          "title": "从零造一块智能手表：Zephyr RTOS + 双核 nRF5340，硬件软件全开源",
+          "site": "LabHub",
+          "date": "2026-10-16",
+          "url": "https://mp.weixin.qq.com/s?__biz=MzI5NzQxNzU0Ng==&mid=2247493720&idx=1&sn=3ab149db365fa2f9bc3507e4064e54e3"
+        },
+        {
+          "title": "ZSWatch/ZSWatch",
+          "site": "GitHub",
+          "date": "2026-11-15",
+          "url": "https://github.com/ZSWatch/ZSWatch"
+        },
+        {
+          "title": "ZSWatch Hardware Overview",
+          "site": "zswatch.dev",
+          "date": "2026-11-15",
+          "url": "https://zswatch.dev/docs/getting-started/hardware"
+        },
+        {
+          "title": "The Linux Foundation Announces Project to Build Real-Time Operating System for Internet of Things Devices",
+          "site": "Linux Foundation",
+          "date": "2016-02-17",
+          "url": "https://www.linuxfoundation.org/press/press-release/the-linux-foundation-announces-project-to-build-real-time-operating-system-for-internet-of-things-devices"
+        },
+        {
+          "title": "Claude Fable 5.2 根据提示词做出三款电子原型，AI抢硬件工程师的饭碗还有多远？",
+          "site": "嵌入式杂谈",
+          "date": "2026-11-11",
+          "url": "https://mp.weixin.qq.com/s?__biz=MzI2MjIyMTQxMw==&mid=2247489313&idx=1&sn=9139f876e9dac48542656516977c9cb7"
+        },
+        {
+          "title": "Testing Claude on real-world electronics design",
+          "site": "Anthropic",
+          "date": "2026-11-09",
+          "url": "https://www.anthropic.com/research/claude-electronics-design"
+        },
+        {
+          "title": "Introducing Claude Fable 5.2 and Claude Mythos 5.2",
+          "site": "Anthropic",
+          "date": "2026-11-09",
+          "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2"
+        },
+        {
+          "title": "Github 上硬核嵌入式项目之——摩托车圆屏导航",
+          "site": "嵌入式杂谈",
+          "date": "2026-11-11",
+          "url": "https://mp.weixin.qq.com/s?__biz=MzI2MjIyMTQxMw==&mid=2247489300&idx=1&sn=d1d46142ae466c2e6b689678173d15c0"
+        },
+        {
+          "title": "mx3353672833-debug/moto-gps-waveshare",
+          "site": "GitHub",
+          "date": "2026-11-15",
+          "url": "https://github.com/mx3353672833-debug/moto-gps-waveshare"
+        },
+        {
+          "title": "ESP32-S3-Touch-AMOLED-1.75C",
+          "site": "Waveshare Documentation",
+          "date": "2026-11-15",
+          "url": "https://docs.waveshare.com/ESP32-S3-Touch-AMOLED-1.75C"
+        }
+      ]
+    },
     {
       "id": "2026-w45-agent-orchestration",
       "kicker": "专题研究 · 第 45 周",
